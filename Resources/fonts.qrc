@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/fonts">
+        <file>fonts/hiragana_tfb.ttf</file>
+        <file>fonts/HIRAGANA.ttf</file>
+        <file>fonts/Hiragana_Script.ttf</file>
+    </qresource>
+</RCC>

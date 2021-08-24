@@ -1,0 +1,7 @@
+# Launch Plato via KFMon
+# NOTE: .adds/nm/kfmon will generate this automatically
+#menu_item : main : longName : shortName     : shortName.png
+
+# Launch Plato directly via NM
+#menu_item : main : longName : cmd_spawn : quiet : exec launcherAddress
+
