@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/pictures">
+        <file>pictures/obenkyoQrCode.png</file>
+    </qresource>
+</RCC>

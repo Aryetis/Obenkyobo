@@ -2,12 +2,15 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>632</width>
-    <height>840</height>
+    <width>827</width>
+    <height>609</height>
    </rect>
   </property>
   <property name="font">
@@ -19,61 +22,35 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLabel" name="mainLabelTest">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>601</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>PJ Hiragana</family>
-      <pointsize>30</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>AaBbYyZz</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>430</y>
-      <width>111</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Click me</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="button1Label">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>430</y>
-      <width>151</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>1</string>
-    </property>
-   </widget>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="WidgetWelcome" name="widget" native="true">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>632</width>
+     <width>827</width>
      <height>20</height>
     </rect>
    </property>
@@ -132,6 +109,14 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>WidgetWelcome</class>
+   <extends>QWidget</extends>
+   <header>widgetwelcome.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

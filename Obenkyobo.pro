@@ -31,30 +31,43 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        widgetwelcome.cpp
 
 RESOURCES += \
         Resources/fonts.qrc \
+        Resources/pictures.qrc
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+        widgetwelcome.h
 
 OTHER_FILES += \
         OtherFiles/*
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+        widgetwelcome.ui
 
-# contains everything (use target to only ship binary)
-customTarget.path = /mnt/onboard/.adds
-customTarget.files = $$files($${OUT_PWD}/Output/.adds/**)
+# "everything" contains ... everything including qt libs (=>slow deployment)
+everything.path = /mnt/onboard/.adds
+everything.files = $$files($${OUT_PWD}/Output/.adds/**)
+
+# "everythingButLibs" contains ... everything bug qt libs (=>fast deployment)
+everythingButLibs.path = /mnt/onboard/.adds
+everythingButLibs.files = $$files($${OUT_PWD}/Output/.adds/**)
+everythingButLibs.files -= $$files($${OUT_PWD}/Output/.adds/qt-linux-*)
 
 # just the thumbnail
 thumbnail.path = /mnt/onboard/
-thumbnail.files += $$files($${OUT_PWD}/Output/$${TARGET}.png)
+thumbnail.files = $$files($${OUT_PWD}/Output/$${TARGET}.png)
 
+# target contains only executable
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /mnt/onboard/.adds/$${TARGET}
-!isEmpty(target.path):
-#INSTALLS += customTarget thumbnail
-INSTALLS += target thumbnail
+
+INSTALLS += everythingButLibs thumbnail
+#INSTALLS += everything thumbnail
+#INSTALLS += target thumbnail
+
+DISTFILES +=

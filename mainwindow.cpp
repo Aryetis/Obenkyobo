@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     int id = QFontDatabase::addApplicationFont(":/fonts/fonts/HIRAGANA.ttf");
     QString family = QFontDatabase::applicationFontFamilies(id).at(0);
     QFont hiragana(family);
-    ui->mainLabelTest->setFont(hiragana);
+//    ui->mainLabelTest->setFont(hiragana);
 }
 
 MainWindow::~MainWindow()
@@ -25,8 +25,8 @@ void MainWindow::on_actionExit_triggered()
     QApplication::quit();
 }
 
-void MainWindow::on_pushButton_clicked()
-{
-    int foo = std::atoi(ui->button1Label->text().toStdString().c_str()) +1;
-    ui->button1Label->setText(std::to_string(foo).c_str());
-}
+//void MainWindow::on_pushButton_clicked()
+//{
+//    int foo = std::atoi(ui->button1Label->text().toStdString().c_str()) +1;
+//    ui->button1Label->setText(std::to_string(foo).c_str());
+//}
