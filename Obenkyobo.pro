@@ -32,7 +32,10 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-        widgetwelcome.cpp
+        widgetwelcome.cpp \
+    qcmexercice.cpp \
+    keyboardexercice.cpp \
+    qcmentryguess.cpp
 
 RESOURCES += \
         Resources/fonts.qrc \
@@ -40,14 +43,20 @@ RESOURCES += \
 
 HEADERS += \
         mainwindow.h \
-        widgetwelcome.h
+        widgetwelcome.h \
+    qcmexercice.h \
+    keyboardexercice.h \
+    qcmentryguess.h
 
 OTHER_FILES += \
         OtherFiles/*
 
 FORMS += \
         mainwindow.ui \
-        widgetwelcome.ui
+        widgetwelcome.ui \
+    qcmexercice.ui \
+    keyboardexercice.ui \
+    qcmentryguess.ui
 
 # "everything" contains ... everything including qt libs (=>slow deployment)
 everything.path = /mnt/onboard/.adds

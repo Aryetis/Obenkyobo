@@ -30,3 +30,18 @@ void MainWindow::on_actionExit_triggered()
 //    int foo = std::atoi(ui->button1Label->text().toStdString().c_str()) +1;
 //    ui->button1Label->setText(std::to_string(foo).c_str());
 //}
+
+void MainWindow::on_actionHiragana_triggered()
+{
+    ui->ContentStackedWidget->setCurrentIndex(1);
+}
+
+void MainWindow::on_actionKatakana_triggered()
+{
+    ui->ContentStackedWidget->setCurrentIndex(1);
+}
+
+void MainWindow::on_actionAbout_triggered()
+{
+    ui->ContentStackedWidget->setCurrentIndex(0);
+}

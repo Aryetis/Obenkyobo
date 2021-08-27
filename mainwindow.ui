@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>827</width>
-    <height>609</height>
+    <width>551</width>
+    <height>491</height>
    </rect>
   </property>
   <property name="font">
@@ -27,15 +27,14 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="WidgetWelcome" name="widget" native="true">
-        <property name="enabled">
-         <bool>true</bool>
+       <widget class="QStackedWidget" name="ContentStackedWidget">
+        <property name="currentIndex">
+         <number>0</number>
         </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
+        <widget class="WidgetWelcome" name="WelcomePage"/>
+        <widget class="QcmExercice" name="Exercice"/>
        </widget>
       </item>
      </layout>
@@ -50,7 +49,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>827</width>
+     <width>551</width>
      <height>20</height>
     </rect>
    </property>
@@ -60,6 +59,7 @@
     </property>
     <addaction name="actionHiragana"/>
     <addaction name="actionKatakana"/>
+    <addaction name="actionAbout"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -107,6 +107,11 @@
     <string>Select set</string>
    </property>
   </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -114,6 +119,12 @@
    <class>WidgetWelcome</class>
    <extends>QWidget</extends>
    <header>widgetwelcome.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QcmExercice</class>
+   <extends>QWidget</extends>
+   <header>qcmexercice.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

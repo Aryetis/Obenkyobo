@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QcmExercice</class>
+ <widget class="QWidget" name="QcmExercice">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>550</width>
+    <height>451</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="ScoringHorizontalLayout">
+     <item>
+      <layout class="QVBoxLayout" name="ScoringVerticalLayout">
+       <property name="leftMargin">
+        <number>10</number>
+       </property>
+       <property name="topMargin">
+        <number>10</number>
+       </property>
+       <property name="rightMargin">
+        <number>10</number>
+       </property>
+       <property name="bottomMargin">
+        <number>10</number>
+       </property>
+       <item>
+        <layout class="QHBoxLayout" name="ScoreHorizontalLayout">
+         <item>
+          <widget class="QLabel" name="ScoreText">
+           <property name="text">
+            <string>Score :</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="ScoreCounter">
+           <property name="text">
+            <string>0</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="ErrorHorizontalLayout">
+         <item>
+          <widget class="QLabel" name="ErrorsText">
+           <property name="lineWidth">
+            <number>0</number>
+           </property>
+           <property name="text">
+            <string>Errors :</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="ErrorsCounter">
+           <property name="text">
+            <string>0</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="GameHorizontalLayout">
+     <item>
+      <layout class="QVBoxLayout" name="GameVerticalLayout">
+       <item>
+        <widget class="QLabel" name="GuessMe">
+         <property name="font">
+          <font>
+           <family>PJ Hiragana</family>
+          </font>
+         </property>
+         <property name="text">
+          <string>azerty</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="EntriesGridLayout">
+         <item row="4" column="0">
+          <widget class="QcmEntryGuess" name="EntryGuess_2" native="true"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QcmEntryGuess" name="EntryGuess_3" native="true"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QcmEntryGuess" name="EntryGuess_4" native="true"/>
+         </item>
+         <item row="5" column="0">
+          <widget class="QcmEntryGuess" name="EntryGuess_1" native="true"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QcmEntryGuess" name="EntryGuess_5" native="true"/>
+         </item>
+         <item row="0" column="0">
+          <widget class="QcmEntryGuess" name="EntryGuess_6" native="true"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QcmEntryGuess</class>
+   <extends>QWidget</extends>
+   <header>qcmentryguess.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

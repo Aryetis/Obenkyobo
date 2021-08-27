@@ -21,6 +21,12 @@ private slots:
 
 //    void on_pushButton_clicked();
 
+    void on_actionHiragana_triggered();
+
+    void on_actionKatakana_triggered();
+
+    void on_actionAbout_triggered();
+
 private:
     Ui::MainWindow *ui;
 };
