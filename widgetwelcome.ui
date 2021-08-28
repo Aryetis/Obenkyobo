@@ -29,7 +29,7 @@
          <property name="text">
           <string>Welcome to Obenkyobo ! 
  
- A japanese language learning designed to help you memorize hiraganas, katakanas and numbers. 
+ A japanese language learning application designed to help you memorize hiraganas, katakanas and numbers. 
  This application is very inspired by the android application Obenko, scan the QRCode to learn more.</string>
          </property>
          <property name="wordWrap">

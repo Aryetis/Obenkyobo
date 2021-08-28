@@ -15,6 +15,8 @@ public:
     explicit QcmEntryGuess(QWidget *parent = nullptr);
     ~QcmEntryGuess();
 
+    void SetGuessText(std::string s);
+
 private:
     Ui::QcmEntryGuess *ui;
 };

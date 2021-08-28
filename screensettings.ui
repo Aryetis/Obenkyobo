@@ -6,20 +6,71 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>586</width>
+    <height>506</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="2,4,4">
    <item>
-    <widget class="QLabel" name="placeholder">
+    <widget class="QLabel" name="PageTitle">
      <property name="text">
       <string>screenSettingsPage placeholder</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="LuminosityLayout" stretch="2,8">
+     <item>
+      <widget class="QLabel" name="LuminosityLabel">
+       <property name="text">
+        <string>Luminosity : </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="LuminositySlider">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="invertedAppearance">
+        <bool>false</bool>
+       </property>
+       <property name="invertedControls">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="TintLayout" stretch="2,8">
+     <item>
+      <widget class="QLabel" name="TintLabel">
+       <property name="text">
+        <string>Tint : </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="TintSlider">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

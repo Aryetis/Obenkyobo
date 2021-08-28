@@ -78,16 +78,24 @@
      <item>
       <layout class="QVBoxLayout" name="GameVerticalLayout">
        <item>
-        <widget class="QLabel" name="GuessMe">
-         <property name="font">
-          <font>
-           <family>PJ Hiragana</family>
-          </font>
-         </property>
-         <property name="text">
-          <string>azerty</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="GuessMeLayout">
+         <item>
+          <widget class="QLabel" name="GuessMe">
+           <property name="font">
+            <font>
+             <family>PJ Hiragana</family>
+             <pointsize>25</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>azerty</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <layout class="QGridLayout" name="EntriesGridLayout">

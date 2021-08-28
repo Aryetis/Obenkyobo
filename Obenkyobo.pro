@@ -54,7 +54,9 @@ HEADERS += \
     symbolsetting.h \
     appsettings.h \
     fntsetting.h \
-    screensettings.h
+    screensettings.h \
+    symbolstables.h \
+    tools.h
 
 OTHER_FILES += \
         OtherFiles/*

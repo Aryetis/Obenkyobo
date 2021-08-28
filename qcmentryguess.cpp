@@ -12,3 +12,9 @@ QcmEntryGuess::~QcmEntryGuess()
 {
     delete ui;
 }
+
+
+void QcmEntryGuess::SetGuessText(std::string s)
+{
+    ui->EntryGuess->setText(QString::fromStdString(s));
+}
