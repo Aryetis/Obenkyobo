@@ -34,7 +34,12 @@
          <number>0</number>
         </property>
         <widget class="WidgetWelcome" name="WelcomePage"/>
-        <widget class="QcmExercice" name="Exercice"/>
+        <widget class="QcmExercice" name="ExerciceQcmPage"/>
+        <widget class="KeyboardExercice" name="ExerciceKbdPage"/>
+        <widget class="SymbolSetting" name="ExerciceSetSettingPage"/>
+        <widget class="AppSettings" name="AppSettingsPage"/>
+        <widget class="FntSetting" name="FontSettingPage"/>
+        <widget class="ScreenSettings" name="ScreenSettingsPage"/>
        </widget>
       </item>
      </layout>
@@ -53,31 +58,47 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="defaultUp">
+    <bool>false</bool>
+   </property>
    <widget class="QMenu" name="menuMain">
     <property name="title">
      <string>Main</string>
     </property>
-    <addaction name="actionHiragana"/>
-    <addaction name="actionKatakana"/>
+    <widget class="QMenu" name="menuKatakana">
+     <property name="title">
+      <string>Katakana</string>
+     </property>
+     <addaction name="actionKatakana_to_Romanji_QCM"/>
+     <addaction name="actionRomanji_to_Katakana_QCM"/>
+     <addaction name="actionKatakana_to_Romanji_Kbd"/>
+     <addaction name="actionEdit_Katakana_Set"/>
+    </widget>
+    <widget class="QMenu" name="menuHiragana">
+     <property name="title">
+      <string>Hiragana</string>
+     </property>
+     <addaction name="actionHiragana_to_Romanji_QCM"/>
+     <addaction name="actionRomanji_to_Hiragana_QCM"/>
+     <addaction name="actionHiragana_to_Romanji_Kbd"/>
+     <addaction name="actionEdit_Hiragana_Set"/>
+    </widget>
+    <addaction name="menuHiragana"/>
+    <addaction name="menuKatakana"/>
     <addaction name="actionAbout"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
-   <widget class="QMenu" name="menuabout">
+   <widget class="QMenu" name="menuSettings">
     <property name="title">
-     <string>Fonts</string>
+     <string>Settings</string>
     </property>
-    <addaction name="actionsomething"/>
-   </widget>
-   <widget class="QMenu" name="menuRules">
-    <property name="title">
-     <string>Rules</string>
-    </property>
-    <addaction name="actionSelect_set"/>
+    <addaction name="actionApplication_Setting"/>
+    <addaction name="actionFonts_Setting"/>
+    <addaction name="actionScreen_Setting"/>
    </widget>
    <addaction name="menuMain"/>
-   <addaction name="menuRules"/>
-   <addaction name="menuabout"/>
+   <addaction name="menuSettings"/>
   </widget>
   <action name="actionExit">
    <property name="text">
@@ -87,29 +108,64 @@
     <font/>
    </property>
   </action>
-  <action name="actionsomething">
-   <property name="text">
-    <string>TODO</string>
-   </property>
-  </action>
-  <action name="actionHiragana">
-   <property name="text">
-    <string>Hiragana</string>
-   </property>
-  </action>
-  <action name="actionKatakana">
-   <property name="text">
-    <string>Katakana</string>
-   </property>
-  </action>
-  <action name="actionSelect_set">
-   <property name="text">
-    <string>Select set</string>
-   </property>
-  </action>
   <action name="actionAbout">
    <property name="text">
     <string>About</string>
+   </property>
+  </action>
+  <action name="actionRomanji_to_Hiragana_QCM">
+   <property name="text">
+    <string>Romanji to Hiragana (QCM)</string>
+   </property>
+  </action>
+  <action name="actionHiragana_to_Romanji_Kbd">
+   <property name="text">
+    <string>Hiragana to Romanji (Kbd)</string>
+   </property>
+  </action>
+  <action name="actionKatakana_to_Romanji_QCM">
+   <property name="text">
+    <string>Katakana to Romanji (QCM)</string>
+   </property>
+  </action>
+  <action name="actionRomanji_to_Katakana_QCM">
+   <property name="text">
+    <string>Romanji to Katakana (QCM)</string>
+   </property>
+  </action>
+  <action name="actionKatakana_to_Romanji_Kbd">
+   <property name="text">
+    <string>Katakana to Romanji (Kbd)</string>
+   </property>
+  </action>
+  <action name="actionHiragana_to_Romanji_QCM">
+   <property name="text">
+    <string>Hiragana to Romanji (QCM)</string>
+   </property>
+  </action>
+  <action name="actionApplication_Setting">
+   <property name="text">
+    <string>Application</string>
+   </property>
+  </action>
+  <action name="actionEdit_Hiragana_Set">
+   <property name="text">
+    <string>Edit Hiragana Set</string>
+   </property>
+  </action>
+  <action name="actionEdit_Katakana_Set">
+   <property name="text">
+    <string>Edit Katakana Set</string>
+   </property>
+  </action>
+  <action name="actionFonts_Setting">
+   <property name="text">
+    <string>Fonts</string>
+   </property>
+  </action>
+  <action name="actionScreen_Setting">
+   <property name="text">
+    <string>Screen</string>
    </property>
   </action>
  </widget>
@@ -125,6 +181,36 @@
    <class>QcmExercice</class>
    <extends>QWidget</extends>
    <header>qcmexercice.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>KeyboardExercice</class>
+   <extends>QWidget</extends>
+   <header>keyboardexercice.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SymbolSetting</class>
+   <extends>QWidget</extends>
+   <header>symbolsetting.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AppSettings</class>
+   <extends>QWidget</extends>
+   <header>appsettings.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FntSetting</class>
+   <extends>QWidget</extends>
+   <header>fntsetting.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ScreenSettings</class>
+   <extends>QWidget</extends>
+   <header>screensettings.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

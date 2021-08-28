@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>KeyboardExercice</class>
- <widget class="QWidget" name="KeyboardExercice">
+ <class>ScreenSettings</class>
+ <widget class="QWidget" name="ScreenSettings">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,7 +17,7 @@
    <item>
     <widget class="QLabel" name="placeholder">
      <property name="text">
-      <string>keyboardExercicePage placeholder</string>
+      <string>screenSettingsPage placeholder</string>
      </property>
     </widget>
    </item>

@@ -35,7 +35,11 @@ SOURCES += \
         widgetwelcome.cpp \
     qcmexercice.cpp \
     keyboardexercice.cpp \
-    qcmentryguess.cpp
+    qcmentryguess.cpp \
+    symbolsetting.cpp \
+    appsettings.cpp \
+    fntsetting.cpp \
+    screensettings.cpp
 
 RESOURCES += \
         Resources/fonts.qrc \
@@ -46,7 +50,11 @@ HEADERS += \
         widgetwelcome.h \
     qcmexercice.h \
     keyboardexercice.h \
-    qcmentryguess.h
+    qcmentryguess.h \
+    symbolsetting.h \
+    appsettings.h \
+    fntsetting.h \
+    screensettings.h
 
 OTHER_FILES += \
         OtherFiles/*
@@ -56,7 +64,11 @@ FORMS += \
         widgetwelcome.ui \
     qcmexercice.ui \
     keyboardexercice.ui \
-    qcmentryguess.ui
+    qcmentryguess.ui \
+    symbolsetting.ui \
+    appsettings.ui \
+    fntsetting.ui \
+    screensettings.ui
 
 # "everything" contains ... everything including qt libs (=>slow deployment)
 everything.path = /mnt/onboard/.adds
