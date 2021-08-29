@@ -3,6 +3,7 @@
 #include "QFontDatabase"
 #include <iostream>
 #include <string>
+#include "qcmexercice.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow)
@@ -46,6 +47,12 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_actionHiragana_to_Romanji_QCM_triggered()
 {
     ui->ContentStackedWidget->setCurrentIndex(1);
+    QcmExercice* exercice = static_cast<QcmExercice*>(ui->ContentStackedWidget->currentWidget());
+//    ui->ContentStackedWidget->currentWidget()
+    if (exercice)
+    {
+        exercice->InitializeExercice();
+    }
 }
 
 

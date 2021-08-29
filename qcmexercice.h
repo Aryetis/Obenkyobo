@@ -14,7 +14,7 @@ class QcmExercice : public QWidget
 public:
     explicit QcmExercice(QWidget *parent = nullptr);
     ~QcmExercice();
-
+    void InitializeExercice();
 private:
     Ui::QcmExercice *ui;
 };

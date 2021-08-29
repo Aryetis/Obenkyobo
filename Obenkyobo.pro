@@ -89,8 +89,8 @@ thumbnail.files = $$files($${OUT_PWD}/Output/$${TARGET}.png)
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /mnt/onboard/.adds/$${TARGET}
 
-INSTALLS += everythingButLibs thumbnail
-#INSTALLS += everything thumbnail
+INSTALLS += target everythingButLibs thumbnail
+#INSTALLS += target everything thumbnail
 #INSTALLS += target thumbnail
 
 DISTFILES +=

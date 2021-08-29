@@ -98,25 +98,28 @@
         </layout>
        </item>
        <item>
-        <layout class="QGridLayout" name="EntriesGridLayout">
-         <item row="4" column="0">
-          <widget class="QcmEntryGuess" name="EntryGuess_2" native="true"/>
-         </item>
-         <item row="3" column="0">
-          <widget class="QcmEntryGuess" name="EntryGuess_3" native="true"/>
-         </item>
-         <item row="2" column="0">
-          <widget class="QcmEntryGuess" name="EntryGuess_4" native="true"/>
-         </item>
-         <item row="5" column="0">
-          <widget class="QcmEntryGuess" name="EntryGuess_1" native="true"/>
-         </item>
-         <item row="1" column="0">
-          <widget class="QcmEntryGuess" name="EntryGuess_5" native="true"/>
-         </item>
-         <item row="0" column="0">
-          <widget class="QcmEntryGuess" name="EntryGuess_6" native="true"/>
-         </item>
+        <layout class="QGridLayout" name="EntriesGridLayout" rowstretch="0" columnstretch="0">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetDefaultConstraint</enum>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="horizontalSpacing">
+          <number>0</number>
+         </property>
+         <property name="verticalSpacing">
+          <number>6</number>
+         </property>
         </layout>
        </item>
       </layout>
@@ -125,14 +128,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QcmEntryGuess</class>
-   <extends>QWidget</extends>
-   <header>qcmentryguess.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
