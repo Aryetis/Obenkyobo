@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.14.1, 2021-08-30T19:27:29. -->
+<!-- Written by QtCreator 4.14.1, 2021-08-30T19:36:56. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -161,8 +161,7 @@
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.2">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
       <value type="QString" key="ProjectExplorer.ProcessStep.Arguments">%{ActiveProject:BuildConfig:Type} %{sourceDir} %{ActiveProject:BuildConfig:Path} %{ActiveProject:Name}</value>
-      <value type="QString" key="ProjectExplorer.ProcessStep.Command">%{sourceDir}/OtherFiles/packager.sh
-</value>
+      <value type="QString" key="ProjectExplorer.ProcessStep.Command">%{sourceDir}/OtherFiles/packager.sh</value>
       <value type="QString" key="ProjectExplorer.ProcessStep.WorkingDirectory">%{sourceDir}</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.ProcessStep</value>
      </valuemap>

@@ -15,7 +15,7 @@ mkdir -p $3/Output/.adds/$4
 cp $3/$4 $3/Output/.adds/$4/$4
 cp $2/OtherFiles/Resources/launcher.sh $3/Output/.adds/$4/launcher.sh
 sed  -i "1s/.*/""export APPNAME=$4""/" $3/Output/.adds/$4/launcher.sh
-if [[ $0 == debug ]];
+if [[ $1 == debug ]];
 then
     cp $2/OtherFiles/Resources/launcher.sh $3/Output/.adds/$4/debugEnv.sh
     sed  -i "1s/.*/""export APPNAME=$4""/" $3/Output/.adds/$4/debugEnv.sh
