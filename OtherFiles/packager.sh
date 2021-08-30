@@ -17,7 +17,7 @@ cp $2/OtherFiles/Resources/launcher.sh $3/Output/.adds/$4/launcher.sh
 sed  -i "1s/.*/""export APPNAME=$4""/" $3/Output/.adds/$4/launcher.sh
 if [[ $1 == debug ]];
 then
-    cp $2/OtherFiles/Resources/launcher.sh $3/Output/.adds/$4/debugEnv.sh
+    cp $2/OtherFiles/Resources/debugEnv.sh $3/Output/.adds/$4/debugEnv.sh
     sed  -i "1s/.*/""export APPNAME=$4""/" $3/Output/.adds/$4/debugEnv.sh
 fi
 cp $2/OtherFiles/Resources/start_nickel.sh $3/Output/.adds/$4/start_nickel.sh

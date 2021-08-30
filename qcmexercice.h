@@ -2,6 +2,7 @@
 #define QCMEXERCICE_H
 
 #include <QWidget>
+#include "qcmentryguess.h"
 
 namespace Ui {
 class QcmExercice;
@@ -17,6 +18,7 @@ public:
     void InitializeExercice();
 private:
     Ui::QcmExercice *ui;
+    QList<QcmEntryGuess*> guesses;
 };
 
 #endif // QCMEXERCICE_H
