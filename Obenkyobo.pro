@@ -6,6 +6,7 @@
 #        - 3 subcategories for hiragana / katakana tenten
 #        - handakuten / dakuten mode / etc
 #        - weighted random list
+#        - tweak packager.sh so it creates a RTU .zip
 #
 #-------------------------------------------------
 

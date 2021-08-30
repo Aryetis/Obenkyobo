@@ -19,6 +19,7 @@ public:
 private:
     Ui::QcmExercice *ui;
     QList<QcmEntryGuess*> guesses;
+    int scoreCounter, errorCounter;
 };
 
 #endif // QCMEXERCICE_H

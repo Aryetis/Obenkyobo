@@ -20,10 +20,10 @@ void QcmExercice::InitializeExercice()
     ui->GuessMe->setText(QString::fromStdString(answer));
 
     std::vector<std::string> shuffledSymbols = std::vector<std::string>(SymbolsTables::HIRAGANA_GOJUON);
-    std::default_random_engine rng = std::default_random_engine{};
-    std::shuffle(std::begin(shuffledSymbols), std::end(shuffledSymbols), rng);
+    std::shuffle(std::begin(shuffledSymbols), std::end(shuffledSymbols), Tools::rng_engine);
 
     qDeleteAll(guesses);
+    guesses.clear();
 
     int answerSlot = Tools::GetRandomInt(0, ENTRY_SIZE_POOL);
     for(int i= 0; i<ENTRY_SIZE_POOL; ++i)
@@ -44,8 +44,8 @@ void QcmExercice::InitializeExercice()
         }
     }
 
-    ui->ScoreCounter->setNum(Tools::GetRandomInt());
-    ui->ErrorsCounter->setNum(Tools::GetRandomInt());
+    ui->ScoreCounter->setNum(scoreCounter);
+    ui->ErrorsCounter->setNum(errorCounter);
 }
 
 QcmExercice::~QcmExercice()

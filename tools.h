@@ -5,6 +5,8 @@
 
 namespace Tools
 {
+    static std::default_random_engine rng_engine = std::default_random_engine{};
+
     template<typename Iter, typename RandomGenerator>
     Iter GetRandom(Iter start, Iter end, RandomGenerator& gen)
     {
@@ -16,18 +18,13 @@ namespace Tools
     template<typename Iter>
     Iter GetRandom(Iter start, Iter end)
     {
-        static std::random_device rd;
-        static std::mt19937 gen(rd());
-        return GetRandom(start, end, gen);
+        return GetRandom(start, end, rng_engine);
     }
 
     int GetRandomInt(int rangeStart = 0, int rangeEnd = 100)
     {
-        std::random_device rd;
-        std::mt19937 gen(rd());
         std::uniform_int_distribution<> distr(rangeStart, rangeEnd);
-
-        return distr(gen);
+        return distr(rng_engine);
     }
 }
 
