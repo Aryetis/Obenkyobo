@@ -28,3 +28,11 @@ QT_QPA_PLATFORM=kobo
 (for both Release and debug)
 
 Should create everyfile needed and send them over to the kobo, stop nickel and start the application upon clicking the run button. Ok bye !
+
+------------
+Ereader is rebooting upon Deployment ? Probably because kfmon/nm is scanning for the freshly installed/deployed launcher.sh and reboots the device to update its nickelMenu entry
+
+=> only select INSTALLS += target , when working daily
+
+------------
+NEVER ever modify .sh scripts under windows.... Thanks for inserting different line ending character and fucking up the whole script

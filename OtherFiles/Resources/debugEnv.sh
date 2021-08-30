@@ -4,8 +4,6 @@ export APPPATH=${ADDSPATH}/${APPNAME}
 
 LOGFILE=${APPPATH}/log.txt
 
-sleep 5
-
 # kill nickel
 source ${APPPATH}/exit_nickel.sh
 
