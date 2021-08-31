@@ -10,10 +10,15 @@
 // handle disable / enable set => handle edge cases like "not enough data to initialize entriesGridLayout", etc
 struct Symbol
 {
+    Symbol() = default;
     Symbol(std::string r_, QString j_)
         :romanji(r_), jp(j_)
     {}
 
+    bool operator==(Symbol const & rhs) const
+    {
+        return (this->romanji== rhs.romanji && this->jp == rhs.jp);
+    }
     std::string romanji;
     QString jp;
 };
@@ -27,11 +32,11 @@ namespace SymbolsTables
         Symbol{"u", QStringLiteral("う")},
         Symbol{"e", QStringLiteral("え")},
         Symbol{"o", QStringLiteral("お")},
-        Symbol{"ka", QStringLiteral( u"か")},
-        Symbol{"ki", QStringLiteral( u"き")},
-        Symbol{"ku", QStringLiteral( u"く")},
-        Symbol{"ke", QStringLiteral( u"け")},
-        Symbol{"ko", QStringLiteral( u"こ")}
+        Symbol{"ka", QStringLiteral("か")},
+        Symbol{"ki", QStringLiteral("き")},
+        Symbol{"ku", QStringLiteral("く")},
+        Symbol{"ke", QStringLiteral("け")},
+        Symbol{"ko", QStringLiteral("こ")}
     };
 
 //    static const std::vector<std::string> HIRAGANA_GOJUON_HANDAKUTEN =
