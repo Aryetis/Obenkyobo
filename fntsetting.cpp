@@ -10,6 +10,8 @@ FntSetting::FntSetting(QWidget *parent) :
     currentKatakanaFnt = QFont(":/HiraganaFonts/DotGothic16-Regular.ttf", QFont::Normal);
     currentRomanjiFnt = QFont(":/HiraganaFonts/DotGothic16-Regular.ttf", QFont::Normal);
 
+    InitializeFntSetting();
+
     ui->setupUi(this);
 }
 
@@ -18,6 +20,7 @@ FntSetting::~FntSetting()
     delete ui;
 }
 
+// TODO now fix called multiple time / each time you enter the page ... duh
 void FntSetting::InitializeFntSetting()
 {
     for (QString fntName : hiraganaFonts)
