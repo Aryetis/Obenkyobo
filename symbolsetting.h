@@ -3,8 +3,9 @@
 
 #include <QWidget>
 
-namespace Ui {
-class SymbolSet;
+namespace Ui
+{
+    class SymbolSet;
 }
 
 class SymbolSetting : public QWidget

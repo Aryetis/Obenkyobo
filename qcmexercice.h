@@ -2,35 +2,45 @@
 #define QCMEXERCICE_H
 
 #include <QWidget>
-#include "qcmentryguess.h"
 
 namespace Ui
 {
     class QcmExercice;
 }
 
+class QcmEntryGuess;
+
 class QcmExercice : public QWidget
 {
     Q_OBJECT
 
 public:
+    explicit QcmExercice(QWidget* parent = nullptr); // fugly
+    enum QcmExerciceType
+    {
+        Hiragana_to_Romanji_QCM,
+        Romanji_to_Hiragana_QCM,
+        Hiragana_to_Romanji_Kbd,
+        Katakana_to_Romanji_QCM,
+        Romanji_to_Katakana_QCM,
+        Katakana_to_Romanji_Kbd
+    };
+
     static QcmExercice& GetInstance()
     {
         static QcmExercice instance;
         return instance;
     }
-    ~QcmExercice();
+    ~QcmExercice() override;
 
-    void InitializeExercice();
+    void InitializeExercice(QcmExercice::QcmExerciceType qcmType);
     void OnGuessClicked(bool correct);
 
 private:
-    explicit QcmExercice(QWidget* parent = nullptr);
-
     Ui::QcmExercice *ui;
     QList<QcmEntryGuess*> guesses;
     int scoreCounter, errorCounter;
-
+    QcmExercice::QcmExerciceType currentQcmType;
 };
 
 #endif // QCMEXERCICE_H

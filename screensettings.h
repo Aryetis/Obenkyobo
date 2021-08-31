@@ -3,8 +3,9 @@
 
 #include <QWidget>
 
-namespace Ui {
-class ScreenSettings;
+namespace Ui
+{
+    class ScreenSettings;
 }
 
 class ScreenSettings : public QWidget

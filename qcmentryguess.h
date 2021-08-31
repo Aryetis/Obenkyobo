@@ -3,9 +3,12 @@
 
 #include <QWidget>
 #include <QString>
+#include "symbolstables.h"
+#include "qcmexercice.h"
 
-namespace Ui {
-class QcmEntryGuess;
+namespace Ui
+{
+    class QcmEntryGuess;
 }
 
 class QcmEntryGuess : public QWidget
@@ -14,9 +17,9 @@ class QcmEntryGuess : public QWidget
 
 public:
     explicit QcmEntryGuess(QWidget *parent = nullptr);
-    ~QcmEntryGuess();
+    ~QcmEntryGuess() override;
 
-    void SetGuess(QString s, bool b);
+    void SetGuess(Symbol s, QcmExercice::QcmExerciceType qcmType, bool);
 
 private slots:
     void on_EntryGuess_clicked();

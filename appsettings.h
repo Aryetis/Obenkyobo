@@ -3,8 +3,9 @@
 
 #include <QWidget>
 
-namespace Ui {
-class AppSettings;
+namespace Ui
+{
+    class AppSettings;
 }
 
 class AppSettings : public QWidget

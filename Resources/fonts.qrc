@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>fonts/PJ_Hiragana.ttf</file>
-        <file>fonts/DotGothic16-Regular.ttf</file>
-    </qresource>
-</RCC>

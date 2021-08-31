@@ -21,6 +21,7 @@ struct Symbol
     }
     std::string romanji;
     QString jp;
+    // TODO add a "learning state" (red/orange/green)
 };
 
 namespace SymbolsTables

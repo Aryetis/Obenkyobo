@@ -3,8 +3,9 @@
 
 #include <QWidget>
 
-namespace Ui {
-class KeyboardExercice;
+namespace Ui
+{
+    class KeyboardExercice;
 }
 
 class KeyboardExercice : public QWidget

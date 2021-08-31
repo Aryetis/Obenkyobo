@@ -15,11 +15,58 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="placeholder">
-     <property name="text">
-      <string>fntSettingPage placeholder</string>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="HiraganaContainer">
+     <item>
+      <layout class="QHBoxLayout" name="HiraganaSubContainer">
+       <item>
+        <widget class="QLabel" name="hiraganaLabel">
+         <property name="text">
+          <string>Hiragana : </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="hiraganaDropdown"/>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="KatakanaContainer">
+     <item>
+      <layout class="QHBoxLayout" name="KatakanaSubContainer">
+       <item>
+        <widget class="QLabel" name="katakanaLabel">
+         <property name="text">
+          <string>Katakana : </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="KatakanaDropdown"/>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="RomanjiContainer">
+     <item>
+      <layout class="QHBoxLayout" name="RomanjiSubContainer">
+       <item>
+        <widget class="QLabel" name="RomanjiLabel">
+         <property name="text">
+          <string>Romanji : </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="RomanjiDropdown"/>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
