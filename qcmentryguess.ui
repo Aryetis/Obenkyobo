@@ -13,25 +13,24 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_2">
+  <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLabel" name="EntryGuess">
-       <property name="frameShape">
-        <enum>QFrame::Box</enum>
+      <widget class="QPushButton" name="EntryGuess">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
-       <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
-       </property>
-       <property name="lineWidth">
-        <number>3</number>
+       <property name="font">
+        <font>
+         <family>DotGothic16</family>
+        </font>
        </property>
        <property name="text">
-        <string>A</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <string>あああaaa</string>
        </property>
       </widget>
      </item>

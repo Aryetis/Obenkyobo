@@ -2,6 +2,7 @@
 #define QCMENTRYGUESS_H
 
 #include <QWidget>
+#include <QString>
 
 namespace Ui {
 class QcmEntryGuess;
@@ -15,10 +16,14 @@ public:
     explicit QcmEntryGuess(QWidget *parent = nullptr);
     ~QcmEntryGuess();
 
-    void SetGuessText(std::string s);
+    void SetGuess(QString s, bool b);
+
+private slots:
+    void on_EntryGuess_clicked();
 
 private:
     Ui::QcmEntryGuess *ui;
+    bool correctGuess;
 };
 
 #endif // QCMENTRYGUESS_H

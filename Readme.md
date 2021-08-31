@@ -36,3 +36,6 @@ Ereader is rebooting upon Deployment ? Probably because kfmon/nm is scanning for
 
 ------------
 NEVER ever modify .sh scripts under windows.... Thanks for inserting different line ending character and fucking up the whole script
+
+------------
+Force wifi-on in dev mode cause ... yeah do it

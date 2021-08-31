@@ -1,5 +1,6 @@
 #include "qcmentryguess.h"
 #include "ui_qcmentryguess.h"
+#include "qcmexercice.h"
 
 QcmEntryGuess::QcmEntryGuess(QWidget *parent) :
     QWidget(parent),
@@ -14,7 +15,14 @@ QcmEntryGuess::~QcmEntryGuess()
 }
 
 
-void QcmEntryGuess::SetGuessText(std::string s)
+void QcmEntryGuess::SetGuess(QString s, bool b)
 {
-    ui->EntryGuess->setText(QString::fromStdString(s));
+    ui->EntryGuess->setText(s);
+    correctGuess = b;
+}
+
+
+void QcmEntryGuess::on_EntryGuess_clicked()
+{
+    QcmExercice::GetInstance().OnGuessClicked(correctGuess);
 }

@@ -83,7 +83,7 @@
           <widget class="QLabel" name="GuessMe">
            <property name="font">
             <font>
-             <family>PJ Hiragana</family>
+             <family>Sans Serif</family>
              <pointsize>25</pointsize>
             </font>
            </property>

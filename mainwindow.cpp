@@ -10,27 +10,14 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    int id = QFontDatabase::addApplicationFont(":/fonts/fonts/HIRAGANA.ttf");
-    QString family = QFontDatabase::applicationFontFamilies(id).at(0);
-    QFont hiragana(family);
+    QFontDatabase::addApplicationFont(":/fonts/PJ_Hirgana.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/DotGothic16-Regular.ttf");
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-void on_actionHiragana_to_Romanji_QCM_triggered();
-void on_actionRomanji_to_Hiragana_QCM_triggered();
-void on_actionHiragana_to_Romanji_Kbd_triggered();
-
-void on_actionKatakana_to_Romanji_QCM_triggered();
-void on_actionRomanji_to_Katakana_QCM_triggered();
-void on_actionKatakana_to_Romanji_Kbd_triggered();
-
-void on_actionEdit_Symbols_Set_triggered();
-void on_actionApplication_Setting_triggered();
-
 
 //===========================================================================
 void MainWindow::on_actionAbout_triggered()

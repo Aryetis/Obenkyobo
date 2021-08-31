@@ -9,17 +9,22 @@
 #define ENTRY_PER_LINE 3
 
 QcmExercice::QcmExercice(QWidget *parent) :
-    QWidget(parent), ui(new Ui::QcmExercice)
+    QWidget(parent), ui(new Ui::QcmExercice), scoreCounter(0), errorCounter(0)
 {
     ui->setupUi(this);
 }
 
+QcmExercice::~QcmExercice()
+{
+    delete ui;
+}
+
 void QcmExercice::InitializeExercice()
 {
-    std::string answer = *Tools::GetRandom(SymbolsTables::HIRAGANA_GOJUON.begin(), SymbolsTables::HIRAGANA_GOJUON.end());
-    ui->GuessMe->setText(QString::fromStdString(answer));
+    Symbol answer = *Tools::GetRandom(SymbolsTables::HIRAGANA_GOJUON.begin(), SymbolsTables::HIRAGANA_GOJUON.end());
+    ui->GuessMe->setText(QString::fromStdString(answer.romanji));
 
-    std::vector<std::string> shuffledSymbols = std::vector<std::string>(SymbolsTables::HIRAGANA_GOJUON);
+    std::vector<Symbol> shuffledSymbols = std::vector<Symbol>(SymbolsTables::HIRAGANA_GOJUON);
     std::shuffle(std::begin(shuffledSymbols), std::end(shuffledSymbols), Tools::rng_engine);
 
     qDeleteAll(guesses);
@@ -34,12 +39,12 @@ void QcmExercice::InitializeExercice()
 
         if (i == answerSlot)
         {
-            foo->SetGuessText(answer);
+            foo->SetGuess(answer.jp, true);
             ui->EntriesGridLayout->addWidget(foo, entryPos.quot, entryPos.rem);
         }
         else
         {
-            foo->SetGuessText(shuffledSymbols[i]);
+            foo->SetGuess(shuffledSymbols[i].jp, false);
             ui->EntriesGridLayout->addWidget(foo, entryPos.quot, entryPos.rem);
         }
     }
@@ -48,7 +53,14 @@ void QcmExercice::InitializeExercice()
     ui->ErrorsCounter->setNum(errorCounter);
 }
 
-QcmExercice::~QcmExercice()
+void QcmExercice::OnGuessClicked(bool correct)
 {
-    delete ui;
+    if (correct)
+        ++scoreCounter;
+    else
+        ++errorCounter;
+
+    // TODO feedback and print correct answer (if wrong or right) for a few second (can be tweaked)
+
+    InitializeExercice();
 }
