@@ -47,7 +47,7 @@ void QcmExercice::InitializeExercice()
         }
         else
         {
-            foo->SetGuess(shuffledSymbols[i].jp, false);
+            foo->SetGuess(shuffledSymbols[static_cast<std::vector<Symbol>::size_type>(i)].jp, false);
             ui->EntriesGridLayout->addWidget(foo, entryPos.quot, entryPos.rem);
         }
     }
