@@ -1,6 +1,7 @@
 #include "qcmentryguess.h"
 #include "ui_qcmentryguess.h"
 #include "fntsetting.h"
+#include "GetMy.h"
 
 QcmEntryGuess::QcmEntryGuess(QWidget *parent) :
     QWidget(parent),
@@ -49,5 +50,5 @@ void QcmEntryGuess::SetGuess(Symbol s, QcmExercice::QcmExerciceType qcmType, boo
 
 void QcmEntryGuess::on_EntryGuess_clicked()
 {
-    QcmExercice::GetInstance().OnGuessClicked(correctGuess);
+    GetMy::GetInstance().QcmExerciceWidget().OnGuessClicked(correctGuess);
 }

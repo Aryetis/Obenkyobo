@@ -1,7 +1,7 @@
 #ifndef TOOLS_H
 #define TOOLS_H
-#include  <random>
-#include  <iterator>
+#include <random>
+#include <iterator>
 
 namespace Tools
 {

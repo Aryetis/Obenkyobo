@@ -1,6 +1,5 @@
 #ifndef FNTSETTING_H
 #define FNTSETTING_H
-#include <string>
 #include <QWidget>
 #include <QString>
 #include <vector>
@@ -10,17 +9,13 @@ namespace Ui
     class FntSetting;
 }
 
-class FntSetting final : public QWidget
+class FntSetting : public QWidget
 {
     Q_OBJECT
 
 public:
+    explicit FntSetting(QWidget *parent = nullptr);
     ~FntSetting() override;
-    static FntSetting& GetInstance()
-    {
-        static FntSetting instance;
-        return instance;
-    }
 
     void InitializeFntSetting();
 
@@ -37,7 +32,6 @@ private slots:
     void on_RomanjiDropdown_activated(const QString &arg1);
 
 private:
-    explicit FntSetting(QWidget *parent = nullptr);
     Ui::FntSetting *ui;
 
     QString GetFontName(std::string fntAddress);

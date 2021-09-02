@@ -1,16 +1,18 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <iostream>
-#include <string>
-#include "qcmexercice.h"
 #include "fntsetting.h"
+#include "qcmexercice.h"
+#include "GetMy.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-    FntSetting& fntSettings = FntSetting::GetInstance();
+    // Register shortcut because QtWidget hates singleton
+    GetMy::GetInstance().SetFntSettingWidget(static_cast<FntSetting*>(ui->ContentStackedWidget->widget(5)));
+
+    FntSetting& fntSettings = GetMy::GetInstance().FntSettingWidget();
     // Registering Hiragana fonts
     fntSettings.RegisterHiraganaFont(":/HiraganaFonts/PJ_Hiragana.ttf");
     fntSettings.RegisterHiraganaFont(":/HiraganaFonts/DotGothic16-Regular.ttf");
@@ -51,21 +53,13 @@ void MainWindow::on_actionExit_triggered()
 //===========================================================================
 void MainWindow::on_actionHiragana_to_Romanji_QCM_triggered()
 {
+    GetMy::GetInstance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM);
     ui->ContentStackedWidget->setCurrentIndex(1);
-    QcmExercice* exercice = static_cast<QcmExercice*>(ui->ContentStackedWidget->currentWidget());
-    if (exercice)
-    {
-        exercice->InitializeExercice(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM);
-    }
 }
 
 void MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()
 {
-    QcmExercice* exercice = static_cast<QcmExercice*>(ui->ContentStackedWidget->currentWidget());
-    if (exercice)
-    {
-        exercice->InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM);
-    }
+    GetMy::GetInstance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM);
     ui->ContentStackedWidget->setCurrentIndex(1);
 }
 
@@ -85,21 +79,13 @@ void MainWindow::on_actionEdit_Hiragana_Set_triggered()
 
 void MainWindow::on_actionKatakana_to_Romanji_QCM_triggered()
 {
-    QcmExercice* exercice = static_cast<QcmExercice*>(ui->ContentStackedWidget->currentWidget());
-    if (exercice)
-    {
-        exercice->InitializeExercice(QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM);
-    }
+    GetMy::GetInstance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM);
     ui->ContentStackedWidget->setCurrentIndex(1);
 }
 
 void MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()
 {
-    QcmExercice* exercice = static_cast<QcmExercice*>(ui->ContentStackedWidget->currentWidget());
-    if (exercice)
-    {
-        exercice->InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM);
-    }
+    GetMy::GetInstance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM);
     ui->ContentStackedWidget->setCurrentIndex(1);
 }
 

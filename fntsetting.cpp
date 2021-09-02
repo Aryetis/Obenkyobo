@@ -1,6 +1,7 @@
 #include "fntsetting.h"
 #include "ui_fntsetting.h"
 #include <QFontDatabase>
+#include "GetMy.h"
 
 FntSetting::FntSetting(QWidget *parent) :
     QWidget(parent),
@@ -13,6 +14,8 @@ FntSetting::FntSetting(QWidget *parent) :
     InitializeFntSetting();
 
     ui->setupUi(this);
+
+    GetMy::GetInstance().SetFntSettingWidget(this);
 }
 
 FntSetting::~FntSetting()
@@ -20,7 +23,6 @@ FntSetting::~FntSetting()
     delete ui;
 }
 
-// TODO now fix called multiple time / each time you enter the page ... duh
 void FntSetting::InitializeFntSetting()
 {
     for (QString fntName : hiraganaFonts)

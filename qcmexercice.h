@@ -25,18 +25,13 @@ public:
         Katakana_to_Romanji_Kbd
     };
 
-    static QcmExercice& GetInstance()
-    {
-        static QcmExercice instance;
-        return instance;
-    }
+    explicit QcmExercice(QWidget* parent = nullptr);
     ~QcmExercice() override;
 
     void InitializeExercice(QcmExercice::QcmExerciceType qcmType);
     void OnGuessClicked(bool correct);
 
 private:
-    explicit QcmExercice(QWidget* parent = nullptr); // fugly
     Ui::QcmExercice *ui;
     QList<QcmEntryGuess*> guesses;
     int scoreCounter, errorCounter;

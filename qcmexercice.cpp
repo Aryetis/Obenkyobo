@@ -1,11 +1,11 @@
 #include "qcmexercice.h"
 #include "ui_qcmexercice.h"
 #include "qcmentryguess.h"
-#include <string>
 #include "symbolstables.h"
-#include "tools.h"
-#include <algorithm>
 #include "fntsetting.h"
+#include "tools.h"
+#include "GetMy.h"
+#include <algorithm>
 
 #define ENTRY_SIZE_POOL 9
 #define ENTRY_PER_LINE 3
@@ -15,6 +15,7 @@ QcmExercice::QcmExercice(QWidget *parent) :
   , currentQcmType(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM)
 {
     ui->setupUi(this);
+    GetMy::GetInstance().SetQcmExerciceWidget(this);
 }
 
 QcmExercice::~QcmExercice()
@@ -24,7 +25,7 @@ QcmExercice::~QcmExercice()
 
 void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType)
 {
-    FntSetting& fntSetting = FntSetting::GetInstance();
+    FntSetting& fntSetting = GetMy::GetInstance().FntSettingWidget();
 
     if (currentQcmType != qcmType)
     {
@@ -42,7 +43,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType)
         case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
         case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
         {
-            ui->GuessMe->setFont(fntSetting.GetCurrentRomanjiFnt());// TODO NOW set romanji font .... whatever it is
+            ui->GuessMe->setFont(fntSetting.GetCurrentRomanjiFnt());
             ui->GuessMe->setText(QString::fromStdString(answer.romanji));
             break;
         }

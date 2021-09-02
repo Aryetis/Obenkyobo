@@ -47,6 +47,7 @@ RESOURCES += \
         Resources/Pictures.qrc
 
 HEADERS += \
+    GetMy.h \
         mainwindow.h \
         widgetwelcome.h \
     qcmexercice.h \
