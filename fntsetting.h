@@ -10,22 +10,26 @@ namespace Ui
     class FntSetting;
 }
 
-class FntSetting : public QWidget
+class FntSetting final : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit FntSetting(QWidget *parent = nullptr);
     ~FntSetting() override;
+    static FntSetting& GetInstance()
+    {
+        static FntSetting instance;
+        return instance;
+    }
 
     void InitializeFntSetting();
 
-    static void RegisterHiraganaFont(std::string fntAddress);
-    static void RegisterKatakanaFont(std::string fntAddress);
-    static void RegisterRomanjiFont(std::string fntAddress);
-    static QFont& GetCurrentHiraganaFnt() { return currentHiraganaFnt; }
-    static QFont& GetCurrentKatakanaFnt() { return currentKatakanaFnt; }
-    static QFont& GetCurrentRomanjiFnt() { return currentRomanjiFnt; }
+    void RegisterHiraganaFont(std::string fntAddress);
+    void RegisterKatakanaFont(std::string fntAddress);
+    void RegisterRomanjiFont(std::string fntAddress);
+    QFont& GetCurrentHiraganaFnt() { return currentHiraganaFnt; }
+    QFont& GetCurrentKatakanaFnt() { return currentKatakanaFnt; }
+    QFont& GetCurrentRomanjiFnt() { return currentRomanjiFnt; }
 
 private slots:
     void on_hiraganaDropdown_activated(const QString &arg1);
@@ -33,15 +37,16 @@ private slots:
     void on_RomanjiDropdown_activated(const QString &arg1);
 
 private:
+    explicit FntSetting(QWidget *parent = nullptr);
     Ui::FntSetting *ui;
 
-    static QString GetFontName(std::string fntAddress);
-    inline static std::vector<QString> hiraganaFonts{};
-    inline static std::vector<QString> katakanaFonts{};
-    inline static std::vector<QString> romanjiFonts{};
-    inline static QFont currentHiraganaFnt;
-    inline static QFont currentKatakanaFnt;
-    inline static QFont currentRomanjiFnt;
+    QString GetFontName(std::string fntAddress);
+    std::vector<QString> hiraganaFonts{};
+    std::vector<QString> katakanaFonts{};
+    std::vector<QString> romanjiFonts{};
+    QFont currentHiraganaFnt;
+    QFont currentKatakanaFnt;
+    QFont currentRomanjiFnt;
 };
 
 #endif // FNTSETTING_H

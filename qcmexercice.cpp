@@ -24,6 +24,8 @@ QcmExercice::~QcmExercice()
 
 void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType)
 {
+    FntSetting& fntSetting = FntSetting::GetInstance();
+
     if (currentQcmType != qcmType)
     {
         currentQcmType = qcmType;
@@ -32,7 +34,6 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType)
     }
 
     Symbol answer = *Tools::GetRandom(SymbolsTables::HIRAGANA_GOJUON.begin(), SymbolsTables::HIRAGANA_GOJUON.end());
-ui->GuessMe->setFont(FntSetting::GetCurrentKatakanaFnt());
     switch (qcmType)
     {
         // TODO now fix font size
@@ -41,19 +42,19 @@ ui->GuessMe->setFont(FntSetting::GetCurrentKatakanaFnt());
         case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
         case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
         {
-            ui->GuessMe->setFont(FntSetting::GetCurrentRomanjiFnt());// TODO NOW set romanji font .... whatever it is
+            ui->GuessMe->setFont(fntSetting.GetCurrentRomanjiFnt());// TODO NOW set romanji font .... whatever it is
             ui->GuessMe->setText(QString::fromStdString(answer.romanji));
             break;
         }
         case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :
         {
-            ui->GuessMe->setFont(FntSetting::GetCurrentHiraganaFnt());
+            ui->GuessMe->setFont(fntSetting.GetCurrentHiraganaFnt());
             ui->GuessMe->setText(answer.jp);
             break;
         }
         case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
         {
-            ui->GuessMe->setFont(FntSetting::GetCurrentKatakanaFnt());
+            ui->GuessMe->setFont(fntSetting.GetCurrentKatakanaFnt());
             ui->GuessMe->setText(answer.jp);
             break;
         }
@@ -76,9 +77,9 @@ ui->GuessMe->setFont(FntSetting::GetCurrentKatakanaFnt());
         guesses.append(foo);
 
         if (i == answerSlot)
-            foo->SetGuess(answer, qcmType, true);
+            foo->SetGuess(answer, currentQcmType, true);
         else
-            foo->SetGuess(shuffledSymbols[static_cast<std::vector<Symbol>::size_type>(i)], qcmType, false);
+            foo->SetGuess(shuffledSymbols[static_cast<std::vector<Symbol>::size_type>(i)], currentQcmType, false);
 
         ui->EntriesGridLayout->addWidget(foo, entryPos.quot, entryPos.rem);
     }

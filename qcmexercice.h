@@ -10,12 +10,11 @@ namespace Ui
 
 class QcmEntryGuess;
 
-class QcmExercice : public QWidget
+class QcmExercice final : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit QcmExercice(QWidget* parent = nullptr); // fugly
     enum QcmExerciceType
     {
         Hiragana_to_Romanji_QCM,
@@ -37,6 +36,7 @@ public:
     void OnGuessClicked(bool correct);
 
 private:
+    explicit QcmExercice(QWidget* parent = nullptr); // fugly
     Ui::QcmExercice *ui;
     QList<QcmEntryGuess*> guesses;
     int scoreCounter, errorCounter;

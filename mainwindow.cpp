@@ -10,16 +10,18 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    FntSetting& fntSettings = FntSetting::GetInstance();
     // Registering Hiragana fonts
-    FntSetting::RegisterHiraganaFont(":/HiraganaFonts/PJ_Hiragana.ttf");
-    FntSetting::RegisterHiraganaFont(":/HiraganaFonts/DotGothic16-Regular.ttf");
+    fntSettings.RegisterHiraganaFont(":/HiraganaFonts/PJ_Hiragana.ttf");
+    fntSettings.RegisterHiraganaFont(":/HiraganaFonts/DotGothic16-Regular.ttf");
 
     // Registering Katakana fonts
-    FntSetting::RegisterKatakanaFont(":/HiraganaFonts/DotGothic16-Regular.ttf");
+    fntSettings.RegisterKatakanaFont(":/HiraganaFonts/DotGothic16-Regular.ttf");
 
     // Registering Romanji fonts
-    FntSetting::RegisterRomanjiFont(":/HiraganaFonts/DotGothic16-Regular.ttf");
+    fntSettings.RegisterRomanjiFont(":/HiraganaFonts/DotGothic16-Regular.ttf");
 
+    fntSettings.InitializeFntSetting();
     // Set Romanji font across the whole application (probably not the best idea)
 //    QFont font(FntSetting::GetCurrentRomanjiFnt());
 //    font.setStyleHint(QFont::Monospace);
@@ -122,11 +124,6 @@ void MainWindow::on_actionApplication_Setting_triggered()
 void MainWindow::on_actionFonts_Setting_triggered()
 {
     ui->ContentStackedWidget->setCurrentIndex(5);
-    FntSetting* fntSettingWidget = static_cast<FntSetting*>(ui->ContentStackedWidget->currentWidget());
-    if (fntSettingWidget)
-    {
-        fntSettingWidget->InitializeFntSetting();
-    }
 }
 
 void MainWindow::on_actionScreen_Setting_triggered()
