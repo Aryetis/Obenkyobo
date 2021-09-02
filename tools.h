@@ -26,6 +26,9 @@ namespace Tools
         std::uniform_int_distribution<> distr(rangeStart, rangeEnd);
         return distr(rng_engine);
     }
+
+    // TODO NOW add https://github.com/Rain92/qt5-kobo-platform-plugin to the target and src
+    // KoboDeviceDescriptor koboDevice = KoboPlatformFunctions::getKoboDeviceDescriptor();
 }
 
 #endif // TOOLS_H

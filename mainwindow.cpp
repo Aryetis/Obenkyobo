@@ -9,9 +9,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // Register shortcut because QtWidget hates singleton
-    GetMy::GetInstance().SetFntSettingWidget(static_cast<FntSetting*>(ui->ContentStackedWidget->widget(5)));
-
     FntSetting& fntSettings = GetMy::GetInstance().FntSettingWidget();
     // Registering Hiragana fonts
     fntSettings.RegisterHiraganaFont(":/HiraganaFonts/PJ_Hiragana.ttf");
@@ -24,10 +21,6 @@ MainWindow::MainWindow(QWidget *parent) :
     fntSettings.RegisterRomanjiFont(":/HiraganaFonts/DotGothic16-Regular.ttf");
 
     fntSettings.InitializeFntSetting();
-    // Set Romanji font across the whole application (probably not the best idea)
-//    QFont font(FntSetting::GetCurrentRomanjiFnt());
-//    font.setStyleHint(QFont::Monospace);
-//    QApplication::setFont(font);
 }
 
 MainWindow::~MainWindow()
