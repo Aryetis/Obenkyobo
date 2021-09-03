@@ -41,6 +41,9 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -65,6 +68,12 @@
      </item>
      <item>
       <widget class="QSlider" name="TintSlider">
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="singleStep">
+        <number>1</number>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>

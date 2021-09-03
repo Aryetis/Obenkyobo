@@ -28,12 +28,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-CONFIG += c++17
+#qt5-kobo-platform-plugin stuff
+INCLUDEPATH += $$PWD/libs/qt5-kobo-platform-plugin/src
+
+##########################################
+CONFIG += c++17 \
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp \
-        widgetwelcome.cpp \
+    main.cpp \
+    mainwindow.cpp \
+    widgetwelcome.cpp \
     qcmexercice.cpp \
     keyboardexercice.cpp \
     qcmentryguess.cpp \
@@ -43,13 +47,13 @@ SOURCES += \
     screensettings.cpp
 
 RESOURCES += \
-        Resources/HiraganaFonts.qrc \
-        Resources/Pictures.qrc
+    Resources/HiraganaFonts.qrc \
+    Resources/Pictures.qrc
 
 HEADERS += \
     GetMy.h \
-        mainwindow.h \
-        widgetwelcome.h \
+    mainwindow.h \
+    widgetwelcome.h \
     qcmexercice.h \
     keyboardexercice.h \
     qcmentryguess.h \
@@ -64,8 +68,8 @@ OTHER_FILES += \
         OtherFiles/*
 
 FORMS += \
-        mainwindow.ui \
-        widgetwelcome.ui \
+    mainwindow.ui \
+    widgetwelcome.ui \
     qcmexercice.ui \
     keyboardexercice.ui \
     qcmentryguess.ui \
