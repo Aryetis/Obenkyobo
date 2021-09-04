@@ -2,18 +2,16 @@
 #include "ui_fntsetting.h"
 #include <QFontDatabase>
 #include "GetMy.h"
+#include <QDirIterator>
+#include <QDir>
 
 FntSetting::FntSetting(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FntSetting)
 {
-    currentHiraganaFnt = QFont(":/HiraganaFonts/DotGothic16-Regular.ttf");
-    currentKatakanaFnt = QFont(":/HiraganaFonts/DotGothic16-Regular.ttf");
-    currentRomanjiFnt = QFont(":/HiraganaFonts/DotGothic16-Regular.ttf");
-
-    InitializeFntSetting();
-
     ui->setupUi(this);
+
+    RegisterFntsFromResources();
 
     GetMy::GetInstance().SetFntSettingWidget(this);
 }
@@ -23,34 +21,51 @@ FntSetting::~FntSetting()
     delete ui;
 }
 
-void FntSetting::InitializeFntSetting()
+void FntSetting::RegisterFntsFromResources()
 {
-    for (QString fntName : hiraganaFonts)
+    QDirIterator it(":/HiraganaFonts",  {"*.ttf"}, QDir::Files);
+    while (it.hasNext())
+        RegisterHiraganaFont(it.next());
+
+    // TODO import proper fonts for those
+    RegisterKatakanaFont(":/HiraganaFonts/DotGothic16-Regular.ttf");
+    RegisterRomanjiFont(":/HiraganaFonts/DotGothic16-Regular.ttf");
+
+    for (QString fntName : hiraganaFontsNames)
         ui->hiraganaDropdown->addItem(fntName);
-    for (QString fntName : katakanaFonts)
+    for (QString fntName : katakanaFontsNames)
         ui->KatakanaDropdown->addItem(fntName);
-    for (QString fntName : romanjiFonts)
+    for (QString fntName : romanjiFontsNames)
         ui->RomanjiDropdown->addItem(fntName);
+
+    ui->hiraganaDropdown->setCurrentIndex(0);
+    ui->KatakanaDropdown->setCurrentIndex(0);
+    ui->RomanjiDropdown->setCurrentIndex(0);
+
+    // TODO use .cfg to store those
+    currentHiraganaFnt = QFont(ui->hiraganaDropdown->itemText(0));
+    currentKatakanaFnt = QFont(ui->KatakanaDropdown->itemText(0));
+    currentRomanjiFnt = QFont(ui->RomanjiDropdown->itemText(0));
 }
 
-void FntSetting::RegisterHiraganaFont(std::string fntAddress)
+void FntSetting::RegisterHiraganaFont(QString fntAddress)
 {
-    hiraganaFonts.emplace_back(GetFontName(fntAddress));
+    hiraganaFontsNames.emplace_back(GetFontName(fntAddress));
 }
 
-void FntSetting::RegisterKatakanaFont(std::string fntAddress)
+void FntSetting::RegisterKatakanaFont(QString fntAddress)
 {
-    katakanaFonts.emplace_back(GetFontName(fntAddress));
+    katakanaFontsNames.emplace_back(GetFontName(fntAddress));
 }
 
-void FntSetting::RegisterRomanjiFont(std::string fntAddress)
+void FntSetting::RegisterRomanjiFont(QString fntAddress)
 {
-    romanjiFonts.emplace_back(GetFontName(fntAddress));
+    romanjiFontsNames.emplace_back(GetFontName(fntAddress));
 }
 
-QString FntSetting::GetFontName(std::string fntAddress)
+QString FntSetting::GetFontName(QString fntAddress)
 {
-    int id = QFontDatabase::addApplicationFont(QString::fromStdString(fntAddress));
+    int id = QFontDatabase::addApplicationFont(fntAddress);
     return QFontDatabase::applicationFontFamilies(id).at(0);
 }
 

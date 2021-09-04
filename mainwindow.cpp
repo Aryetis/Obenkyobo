@@ -8,19 +8,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    FntSetting& fntSettings = GetMy::GetInstance().FntSettingWidget();
-    // Registering Hiragana fonts
-    fntSettings.RegisterHiraganaFont(":/HiraganaFonts/PJ_Hiragana.ttf");
-    fntSettings.RegisterHiraganaFont(":/HiraganaFonts/DotGothic16-Regular.ttf");
-
-    // Registering Katakana fonts
-    fntSettings.RegisterKatakanaFont(":/HiraganaFonts/DotGothic16-Regular.ttf");
-
-    // Registering Romanji fonts
-    fntSettings.RegisterRomanjiFont(":/HiraganaFonts/DotGothic16-Regular.ttf");
-
-    fntSettings.InitializeFntSetting();
 }
 
 MainWindow::~MainWindow()

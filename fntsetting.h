@@ -17,11 +17,6 @@ public:
     explicit FntSetting(QWidget *parent = nullptr);
     ~FntSetting() override;
 
-    void InitializeFntSetting();
-
-    void RegisterHiraganaFont(std::string fntAddress);
-    void RegisterKatakanaFont(std::string fntAddress);
-    void RegisterRomanjiFont(std::string fntAddress);
     QFont& GetCurrentHiraganaFnt() { return currentHiraganaFnt; }
     QFont& GetCurrentKatakanaFnt() { return currentKatakanaFnt; }
     QFont& GetCurrentRomanjiFnt() { return currentRomanjiFnt; }
@@ -32,12 +27,18 @@ private slots:
     void on_RomanjiDropdown_activated(const QString &arg1);
 
 private:
+    void RegisterFntsFromResources();
+
+    void RegisterHiraganaFont(QString fntAddress);
+    void RegisterKatakanaFont(QString fntAddress);
+    void RegisterRomanjiFont(QString fntAddress);
+
     Ui::FntSetting *ui;
 
-    QString GetFontName(std::string fntAddress);
-    std::vector<QString> hiraganaFonts{};
-    std::vector<QString> katakanaFonts{};
-    std::vector<QString> romanjiFonts{};
+    QString GetFontName(QString fntAddress);
+    std::vector<QString> hiraganaFontsNames{};
+    std::vector<QString> katakanaFontsNames{};
+    std::vector<QString> romanjiFontsNames{};
     QFont currentHiraganaFnt;
     QFont currentKatakanaFnt;
     QFont currentRomanjiFnt;
