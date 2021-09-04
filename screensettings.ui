@@ -15,9 +15,9 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="2,4,4">
    <item>
-    <widget class="QLabel" name="PageTitle">
+    <widget class="QLabel" name="NoSettingsAvailable">
      <property name="text">
-      <string>screenSettingsPage placeholder</string>
+      <string>No Settings Available for your ereader</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
