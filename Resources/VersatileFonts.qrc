@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>VersatileFonts/DotGothic16-Regular.ttf</file>
+    </qresource>
+</RCC>

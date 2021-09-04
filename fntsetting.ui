@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>448</width>
+    <height>484</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,56 +15,302 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="HiraganaContainer">
+    <layout class="QVBoxLayout" name="HiraganaContainer">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
      <item>
-      <layout class="QHBoxLayout" name="HiraganaSubContainer">
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="Line" name="HiraganaLine">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="HiraganaTitle">
+       <property name="text">
+        <string>Hiragana Settings : </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="HiraganaFtSubContainer">
        <item>
-        <widget class="QLabel" name="hiraganaLabel">
+        <widget class="QLabel" name="HiraganaFntLabel">
          <property name="text">
-          <string>Hiragana : </string>
+          <string>Font : </string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="hiraganaDropdown"/>
+        <widget class="QComboBox" name="HiraganaFntDropdown"/>
        </item>
       </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="HiraganaSizeSubContainer">
+       <item>
+        <widget class="QLabel" name="HiraganaSizeLabel">
+         <property name="text">
+          <string>Size : </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="HiraganaSizeValueLabel">
+         <property name="text">
+          <string>15</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="HiraganaSizeSlider">
+         <property name="minimum">
+          <number>9</number>
+         </property>
+         <property name="maximum">
+          <number>40</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="KatakanaContainer">
+    <layout class="QVBoxLayout" name="KatakanaContainer">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
      <item>
-      <layout class="QHBoxLayout" name="KatakanaSubContainer">
+      <spacer name="verticalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="Line" name="KatakanaLine">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="KatakanaTitle">
+       <property name="text">
+        <string>Katakana Settings :</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="KatakanaFntSubContainer">
        <item>
-        <widget class="QLabel" name="katakanaLabel">
+        <widget class="QLabel" name="katakanaFntLabel">
          <property name="text">
-          <string>Katakana : </string>
+          <string>Font  : </string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="KatakanaDropdown"/>
+        <widget class="QComboBox" name="KatakanaFntDropdown"/>
        </item>
       </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="KatakanaSizeSubContainer">
+       <item>
+        <widget class="QLabel" name="KatakanaSizeLabel">
+         <property name="text">
+          <string>Size : </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="KatakanaSizeValueLabel">
+         <property name="text">
+          <string>15</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="KatakanaSizeSlider">
+         <property name="minimum">
+          <number>9</number>
+         </property>
+         <property name="maximum">
+          <number>40</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="RomanjiContainer">
+    <layout class="QVBoxLayout" name="RomanjiContainer">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
      <item>
-      <layout class="QHBoxLayout" name="RomanjiSubContainer">
+      <spacer name="verticalSpacer_5">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="Line" name="RomanjiLine">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="RomanjiTitle">
+       <property name="text">
+        <string>Romanji Settings : </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="RomanjiFntSubContainer">
        <item>
-        <widget class="QLabel" name="RomanjiLabel">
+        <widget class="QLabel" name="RomanjiFntLabel">
          <property name="text">
-          <string>Romanji : </string>
+          <string>Font : </string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="RomanjiDropdown"/>
+        <widget class="QComboBox" name="RomanjiFntDropdown"/>
        </item>
       </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="RomanjiSizeSubContainer">
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="RomanjiSizeLabel">
+         <property name="text">
+          <string>Size : </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="RomanjiSizeValueLabel">
+         <property name="text">
+          <string>15</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="RomanjiSizeSlider">
+         <property name="minimum">
+          <number>9</number>
+         </property>
+         <property name="maximum">
+          <number>40</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_6">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>

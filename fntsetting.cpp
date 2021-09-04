@@ -4,6 +4,9 @@
 #include "GetMy.h"
 #include <QDirIterator>
 #include <QDir>
+#include "SettingsSerializer.h"
+
+#define DEFAULT_FNT_SIZE 15
 
 FntSetting::FntSetting(QWidget *parent) :
     QWidget(parent),
@@ -23,63 +26,115 @@ FntSetting::~FntSetting()
 
 void FntSetting::RegisterFntsFromResources()
 {
-    QDirIterator it(":/HiraganaFonts",  {"*.ttf"}, QDir::Files);
-    while (it.hasNext())
-        RegisterHiraganaFont(it.next());
+    std::unique_ptr<QDirIterator> it (new QDirIterator(":/HiraganaFonts",  {"*.ttf"}, QDir::Files));
+    while (it->hasNext())
+        RegisterHiraganaFont(it->next());
 
-    // TODO import proper fonts for those
-    RegisterKatakanaFont(":/HiraganaFonts/DotGothic16-Regular.ttf");
-    RegisterRomanjiFont(":/HiraganaFonts/DotGothic16-Regular.ttf");
+    it.reset(new QDirIterator(":/KatakanaFonts",  {"*.ttf"}, QDir::Files));
+    while (it->hasNext())
+        RegisterKatakanaFont(it->next());
 
-    for (QString fntName : hiraganaFontsNames)
-        ui->hiraganaDropdown->addItem(fntName);
-    for (QString fntName : katakanaFontsNames)
-        ui->KatakanaDropdown->addItem(fntName);
-    for (QString fntName : romanjiFontsNames)
-        ui->RomanjiDropdown->addItem(fntName);
+    it.reset(new QDirIterator(":/RomanjiFonts",  {"*.ttf"}, QDir::Files));
+    while (it->hasNext())
+        RegisterRomanjiFont(it->next());
 
-    ui->hiraganaDropdown->setCurrentIndex(0);
-    ui->KatakanaDropdown->setCurrentIndex(0);
-    ui->RomanjiDropdown->setCurrentIndex(0);
+    it.reset(new QDirIterator(":/VersatileFonts",  {"*.ttf"}, QDir::Files));
+    while (it->hasNext())
+    {
+        QString fntAddress = it->next();
+        RegisterHiraganaFont(fntAddress);
+        RegisterKatakanaFont(fntAddress);
+        RegisterRomanjiFont(fntAddress);
+    }
 
-    // TODO use .cfg to store those
-    currentHiraganaFnt = QFont(ui->hiraganaDropdown->itemText(0));
-    currentKatakanaFnt = QFont(ui->KatakanaDropdown->itemText(0));
-    currentRomanjiFnt = QFont(ui->RomanjiDropdown->itemText(0));
+    for (QFont fnt : hiraganaFonts)
+        ui->HiraganaFntDropdown->addItem(fnt.family());
+    for (QFont fnt : katakanaFonts)
+        ui->KatakanaFntDropdown->addItem(fnt.family());
+    for (QFont fnt : romanjiFonts)
+        ui->RomanjiFntDropdown->addItem(fnt.family());
+
+    currentHiraganFntIdx = SettingsSerializer::settings.value("FntSettings/HiraganaFntIdx", 0).toInt();
+    currentKatakanaFntIdx = SettingsSerializer::settings.value("FntSettings/KatakanaFntIdx", 0).toInt();
+    currentRomanjiFntIdx = SettingsSerializer::settings.value("FntSettings/RomanjiFntIdx", 0).toInt();
+    ui->HiraganaFntDropdown->setCurrentIndex(currentHiraganFntIdx);
+    ui->KatakanaFntDropdown->setCurrentIndex(currentKatakanaFntIdx);
+    ui->RomanjiFntDropdown->setCurrentIndex(currentRomanjiFntIdx);
+
+    currentHiraganaSize =  SettingsSerializer::settings.value("FntSettings/HiraganaFntSize", DEFAULT_FNT_SIZE).toInt();
+    currentKatakanaSize =  SettingsSerializer::settings.value("FntSettings/KatakanaFntSize", DEFAULT_FNT_SIZE).toInt();
+    currentRomanjiSize =  SettingsSerializer::settings.value("FntSettings/RomanjiFntSize", DEFAULT_FNT_SIZE).toInt();
+    ui->HiraganaSizeValueLabel->setText(QString::number(currentHiraganaSize));
+    ui->HiraganaSizeSlider->setValue(currentHiraganaSize);
+    ui->KatakanaSizeValueLabel->setText(QString::number(currentKatakanaSize));
+    ui->KatakanaSizeSlider->setValue(currentKatakanaSize);
+    ui->RomanjiSizeValueLabel->setText(QString::number(currentRomanjiSize));
+    ui->RomanjiSizeSlider->setValue(currentRomanjiSize);
 }
 
 void FntSetting::RegisterHiraganaFont(QString fntAddress)
 {
-    hiraganaFontsNames.emplace_back(GetFontName(fntAddress));
+    hiraganaFonts.emplace_back(GetFont(fntAddress));
 }
 
 void FntSetting::RegisterKatakanaFont(QString fntAddress)
 {
-    katakanaFontsNames.emplace_back(GetFontName(fntAddress));
+    katakanaFonts.emplace_back(GetFont(fntAddress));
 }
 
 void FntSetting::RegisterRomanjiFont(QString fntAddress)
 {
-    romanjiFontsNames.emplace_back(GetFontName(fntAddress));
+    romanjiFonts.emplace_back(GetFont(fntAddress));
 }
 
-QString FntSetting::GetFontName(QString fntAddress)
+QFont FntSetting::GetFont(QString fntAddress)
 {
     int id = QFontDatabase::addApplicationFont(fntAddress);
-    return QFontDatabase::applicationFontFamilies(id).at(0);
+    QString name = QFontDatabase::applicationFontFamilies(id).at(0);
+    return QFont(name, DEFAULT_FNT_SIZE);
 }
 
-void FntSetting::on_hiraganaDropdown_activated(const QString &arg1)
+void FntSetting::on_hiraganaDropdown_activated(int index)
 {
-    currentHiraganaFnt = QFont(arg1, QFont::Normal);
+    currentHiraganFntIdx = index;
+    SettingsSerializer::settings.setValue("FntSettings/HiraganaFntIdx", index);
+    // TODO update fnt size of stocked
 }
 
-void FntSetting::on_KatakanaDropdown_activated(const QString &arg1)
+void FntSetting::on_KatakanaDropdown_activated(int index)
 {
-    currentKatakanaFnt = QFont(arg1, QFont::Normal);
+    currentKatakanaFntIdx = index;
+    SettingsSerializer::settings.setValue("FntSettings/KatakanaFntIdx", index);
+    // TODO update fnt size of stocked
 }
 
-void FntSetting::on_RomanjiDropdown_activated(const QString &arg1)
+void FntSetting::on_RomanjiDropdown_activated(int index)
 {
-    currentRomanjiFnt = QFont(arg1, QFont::Normal);
+    currentRomanjiFntIdx = index;
+    SettingsSerializer::settings.setValue("FntSettings/RomanjiFntIdx", index);
+    // TODO update fnt size of stocked
+}
+
+void FntSetting::on_HiraganaSizeSlider_actionTriggered(int size)
+{
+    // TODO update fnt size of stocked
+    currentHiraganaSize = size;
+    ui->HiraganaSizeValueLabel->setText(QString::number(size));
+    SettingsSerializer::settings.setValue("FntSettings/HiraganaFntSize", size);
+}
+
+void FntSetting::on_KatakanaSizeSlider_actionTriggered(int size)
+{
+    // TODO update fnt size of stocked
+    currentKatakanaSize = size;
+    ui->KatakanaSizeValueLabel->setText(QString::number(size));
+    SettingsSerializer::settings.setValue("FntSettings/KatakanaFntSize", size);
+}
+
+void FntSetting::on_RomanjiSizeSlider_actionTriggered(int size)
+{
+    // TODO update fnt size of stocked
+    currentRomanjiSize = size;
+    ui->RomanjiSizeValueLabel->setText(QString::number(size));
+    SettingsSerializer::settings.setValue("FntSettings/RomanjiFntSize", size);
 }

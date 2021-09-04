@@ -48,6 +48,9 @@ SOURCES += \
 
 RESOURCES += \
     Resources/HiraganaFonts.qrc \
+    Resources/KatakanaFonts.qrc \
+    Resources/RomanjiFonts.qrc \
+    Resources/VersatileFonts.qrc \
     Resources/Pictures.qrc
 
 HEADERS += \

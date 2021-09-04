@@ -17,31 +17,40 @@ public:
     explicit FntSetting(QWidget *parent = nullptr);
     ~FntSetting() override;
 
-    QFont& GetCurrentHiraganaFnt() { return currentHiraganaFnt; }
-    QFont& GetCurrentKatakanaFnt() { return currentKatakanaFnt; }
-    QFont& GetCurrentRomanjiFnt() { return currentRomanjiFnt; }
+    QFont& GetCurrentHiraganaFnt() { return hiraganaFonts[static_cast<std::vector<QFont>::size_type>(currentHiraganFntIdx)]; }
+    QFont& GetCurrentKatakanaFnt() { return katakanaFonts[static_cast<std::vector<QFont>::size_type>(currentHiraganFntIdx)]; }
+    QFont& GetCurrentRomanjiFnt() { return romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentHiraganFntIdx)]; }
+
 
 private slots:
-    void on_hiraganaDropdown_activated(const QString &arg1);
-    void on_KatakanaDropdown_activated(const QString &arg1);
-    void on_RomanjiDropdown_activated(const QString &arg1);
+    void on_hiraganaDropdown_activated(int index);
+    void on_KatakanaDropdown_activated(int index);
+    void on_RomanjiDropdown_activated(int index);
+
+    void on_HiraganaSizeSlider_actionTriggered(int size);
+    void on_KatakanaSizeSlider_actionTriggered(int size);
+    void on_RomanjiSizeSlider_actionTriggered(int size);
 
 private:
+    Ui::FntSetting *ui;
+
     void RegisterFntsFromResources();
 
     void RegisterHiraganaFont(QString fntAddress);
     void RegisterKatakanaFont(QString fntAddress);
     void RegisterRomanjiFont(QString fntAddress);
 
-    Ui::FntSetting *ui;
+    QFont GetFont(QString fntAddress);
 
-    QString GetFontName(QString fntAddress);
-    std::vector<QString> hiraganaFontsNames{};
-    std::vector<QString> katakanaFontsNames{};
-    std::vector<QString> romanjiFontsNames{};
-    QFont currentHiraganaFnt;
-    QFont currentKatakanaFnt;
-    QFont currentRomanjiFnt;
+    std::vector<QFont> hiraganaFonts{};
+    std::vector<QFont> katakanaFonts{};
+    std::vector<QFont> romanjiFonts{};
+    int currentHiraganFntIdx;
+    int currentKatakanaFntIdx;
+    int currentRomanjiFntIdx;
+    int currentHiraganaSize;
+    int currentKatakanaSize;
+    int currentRomanjiSize;
 };
 
 #endif // FNTSETTING_H

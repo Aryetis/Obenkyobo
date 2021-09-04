@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>HiraganaFonts/PJ_Hiragana.ttf</file>
+        <file>RomanjiFonts/RobotoMono-Medium.ttf</file>
     </qresource>
 </RCC>
