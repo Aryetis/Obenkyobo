@@ -6,7 +6,7 @@
 #include <QDir>
 #include "SettingsSerializer.h"
 
-#define DEFAULT_FNT_SIZE 15
+#define DEFAULT_FNT_SIZE 50
 
 FntSetting::FntSetting(QWidget *parent) :
     QWidget(parent),
@@ -98,43 +98,46 @@ void FntSetting::on_hiraganaDropdown_activated(int index)
 {
     currentHiraganFntIdx = index;
     SettingsSerializer::settings.setValue("FntSettings/HiraganaFntIdx", index);
-    // TODO update fnt size of stocked
+    hiraganaFonts[static_cast<std::vector<QFont>::size_type>(currentHiraganFntIdx)].setFamily(
+                ui->HiraganaFntDropdown->itemText(currentHiraganFntIdx));
 }
 
 void FntSetting::on_KatakanaDropdown_activated(int index)
 {
     currentKatakanaFntIdx = index;
     SettingsSerializer::settings.setValue("FntSettings/KatakanaFntIdx", index);
-    // TODO update fnt size of stocked
+    katakanaFonts[static_cast<std::vector<QFont>::size_type>(currentKatakanaFntIdx)].setFamily(
+                ui->KatakanaFntDropdown->itemText(currentKatakanaFntIdx));
 }
 
 void FntSetting::on_RomanjiDropdown_activated(int index)
 {
     currentRomanjiFntIdx = index;
     SettingsSerializer::settings.setValue("FntSettings/RomanjiFntIdx", index);
-    // TODO update fnt size of stocked
+    romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentRomanjiFntIdx)].setFamily(
+                ui->RomanjiFntDropdown->itemText(currentRomanjiFntIdx));
 }
 
-void FntSetting::on_HiraganaSizeSlider_actionTriggered(int size)
+void FntSetting::on_HiraganaSizeSlider_valueChanged(int size)
 {
-    // TODO update fnt size of stocked
     currentHiraganaSize = size;
     ui->HiraganaSizeValueLabel->setText(QString::number(size));
     SettingsSerializer::settings.setValue("FntSettings/HiraganaFntSize", size);
+    hiraganaFonts[static_cast<std::vector<QFont>::size_type>(currentHiraganFntIdx)].setPixelSize(size);
 }
 
-void FntSetting::on_KatakanaSizeSlider_actionTriggered(int size)
+void FntSetting::on_KatakanaSizeSlider_valueChanged(int size)
 {
-    // TODO update fnt size of stocked
     currentKatakanaSize = size;
     ui->KatakanaSizeValueLabel->setText(QString::number(size));
     SettingsSerializer::settings.setValue("FntSettings/KatakanaFntSize", size);
+    katakanaFonts[static_cast<std::vector<QFont>::size_type>(currentKatakanaFntIdx)].setPixelSize(size);
 }
 
-void FntSetting::on_RomanjiSizeSlider_actionTriggered(int size)
+void FntSetting::on_RomanjiSizeSlider_valueChanged(int size)
 {
-    // TODO update fnt size of stocked
     currentRomanjiSize = size;
     ui->RomanjiSizeValueLabel->setText(QString::number(size));
     SettingsSerializer::settings.setValue("FntSettings/RomanjiFntSize", size);
+    romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentRomanjiFntIdx)].setPixelSize(size);
 }

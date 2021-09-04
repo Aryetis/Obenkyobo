@@ -27,9 +27,9 @@ private slots:
     void on_KatakanaDropdown_activated(int index);
     void on_RomanjiDropdown_activated(int index);
 
-    void on_HiraganaSizeSlider_actionTriggered(int size);
-    void on_KatakanaSizeSlider_actionTriggered(int size);
-    void on_RomanjiSizeSlider_actionTriggered(int size);
+    void on_HiraganaSizeSlider_valueChanged(int size);
+    void on_KatakanaSizeSlider_valueChanged(int size);
+    void on_RomanjiSizeSlider_valueChanged(int size);
 
 private:
     Ui::FntSetting *ui;

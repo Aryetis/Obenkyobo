@@ -20,7 +20,6 @@ void QcmEntryGuess::SetGuess(Symbol s, QcmExercice::QcmExerciceType qcmType, boo
 {
     switch (qcmType)
     {
-        // TODO now fix font size
         case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
         case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_Kbd :
         {
