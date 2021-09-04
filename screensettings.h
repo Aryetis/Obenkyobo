@@ -14,8 +14,8 @@ class ScreenSettings : public QWidget
     Q_OBJECT
 
 public:
-    explicit ScreenSettings(QWidget *parent = nullptr);
-    ~ScreenSettings();
+    explicit             ScreenSettings(QWidget *parent = nullptr);
+    ~ScreenSettings()    override;
 
 private slots:
     void                 on_TintSlider_valueChanged(int value);
@@ -24,8 +24,8 @@ private slots:
 
 private:
     Ui::ScreenSettings*  ui;
-    int                  luminosity; // [0;100]
-    int                  tint;       // [0;10]
+    int                  luminosity;
+    int                  tint;
     bool                 noSettingAvailable;
     KoboDeviceDescriptor desc;
 };

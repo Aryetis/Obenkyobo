@@ -52,6 +52,7 @@ RESOURCES += \
 
 HEADERS += \
     GetMy.h \
+    SettingsSerializer.h \
     mainwindow.h \
     widgetwelcome.h \
     qcmexercice.h \

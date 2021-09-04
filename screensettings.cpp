@@ -1,9 +1,6 @@
 #include "screensettings.h"
 #include "ui_screensettings.h"
-
-// TODO NOW initialize value from system file
-//    ui->LuminositySlider->SetValue();
-//    ui->TintSlider->setValue();
+#include "SettingsSerializer.h"
 
 ScreenSettings::ScreenSettings(QWidget *parent) :
     QWidget(parent),
@@ -17,17 +14,19 @@ ScreenSettings::ScreenSettings(QWidget *parent) :
     desc = KoboPlatformFunctions::getKoboDeviceDescriptor();
     if (desc.frontlightSettings.hasFrontLight)
     {
-        luminosity = desc.frontlightSettings.frontlightMax / 2;
+        luminosity = SettingsSerializer::settings.value("ScreenSettings/luminosity", desc.frontlightSettings.frontlightMax / 2).toInt();
+        ui->LuminositySlider->setValue(luminosity);
         ui->LuminositySlider->setMinimum(desc.frontlightSettings.frontlightMin);
         ui->LuminositySlider->setMaximum(desc.frontlightSettings.frontlightMax);
         noSettingAvailable = false;
-    } // TODO hide those by default and have a "woops sorry no screen settings" in case / or unregister the widget
+    }
     else
         ui->LuminositySlider->setVisible(false);
 
     if (desc.frontlightSettings.hasNaturalLight)
     {
-        tint = desc.frontlightSettings.naturalLightMax / 2;
+        tint = SettingsSerializer::settings.value("ScreenSettings/tint", desc.frontlightSettings.naturalLightMax / 2).toInt();
+        ui->TintSlider->setValue(tint);
         ui->TintSlider->setMinimum(desc.frontlightSettings.naturalLightMin);
         ui->TintSlider->setMaximum(desc.frontlightSettings.naturalLightMax);
         noSettingAvailable = false;
@@ -50,11 +49,13 @@ ScreenSettings::~ScreenSettings()
 void ScreenSettings::on_LuminositySlider_valueChanged(int value)
 {
     luminosity = value;
+    SettingsSerializer::settings.setValue("ScreenSettings/luminosity", value);
     KoboPlatformFunctions::setFrontlightLevel(luminosity, tint);
 }
 
 void ScreenSettings::on_TintSlider_valueChanged(int value)
 {
     tint = value;
+    SettingsSerializer::settings.setValue("ScreenSettings/tint", value);
     KoboPlatformFunctions::setFrontlightLevel(luminosity, tint);
 }
