@@ -2,6 +2,8 @@
 #include "ui_screensettings.h"
 #include "SettingsSerializer.h"
 
+// TODO : fix weird layout empty space
+
 ScreenSettings::ScreenSettings(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ScreenSettings),

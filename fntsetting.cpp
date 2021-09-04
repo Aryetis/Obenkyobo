@@ -7,6 +7,10 @@
 #include "SettingsSerializer.h"
 
 #define DEFAULT_FNT_SIZE 50
+#define DEFAULT_STEM_BOOST_SIZE 20
+
+// TODO set max size of fonts depending of screen size and dpi
+// TODO add an option to make stem [0;30] biger than entries
 
 FntSetting::FntSetting(QWidget *parent) :
     QWidget(parent),
@@ -70,6 +74,9 @@ void FntSetting::RegisterFntsFromResources()
     ui->KatakanaSizeSlider->setValue(currentKatakanaSize);
     ui->RomanjiSizeValueLabel->setText(QString::number(currentRomanjiSize));
     ui->RomanjiSizeSlider->setValue(currentRomanjiSize);
+
+    stemBoostSize =  SettingsSerializer::settings.value("FntSettings/stemBoostSize", DEFAULT_STEM_BOOST_SIZE).toInt();
+    ui->BoostStemSlider->setValue(stemBoostSize);
 }
 
 void FntSetting::RegisterHiraganaFont(QString fntAddress)
@@ -140,4 +147,11 @@ void FntSetting::on_RomanjiSizeSlider_valueChanged(int size)
     ui->RomanjiSizeValueLabel->setText(QString::number(size));
     SettingsSerializer::settings.setValue("FntSettings/RomanjiFntSize", size);
     romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentRomanjiFntIdx)].setPixelSize(size);
+}
+
+void FntSetting::on_BoostStemSlider_valueChanged(int size)
+{
+    stemBoostSize = size;
+    ui->BoostStemValueLabel->setText(QString::number(size));
+    SettingsSerializer::settings.setValue("FntSettings/stemBoostSize", size);
 }

@@ -14,6 +14,93 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="topMargin">
+    <number>9</number>
+   </property>
+   <item>
+    <layout class="QVBoxLayout" name="OverallContainer">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <spacer name="verticalSpacer_8">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="Line" name="OverallLine">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="OverallTitle">
+       <property name="text">
+        <string>Overall QCM Settings : </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="BoostStemSizeContainer">
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="BoostStemLabel">
+         <property name="text">
+          <string>Increase stem's size by : </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="BoostStemValueLabel">
+         <property name="text">
+          <string>20</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="BoostStemSlider">
+         <property name="maximum">
+          <number>20</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_7">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
    <item>
     <layout class="QVBoxLayout" name="HiraganaContainer">
      <property name="topMargin">
@@ -88,7 +175,7 @@
           <number>20</number>
          </property>
          <property name="maximum">
-          <number>80</number>
+          <number>70</number>
          </property>
          <property name="value">
           <number>20</number>
@@ -192,7 +279,7 @@
           <number>20</number>
          </property>
          <property name="maximum">
-          <number>80</number>
+          <number>70</number>
          </property>
          <property name="value">
           <number>20</number>
@@ -296,7 +383,7 @@
           <number>20</number>
          </property>
          <property name="maximum">
-          <number>80</number>
+          <number>70</number>
          </property>
          <property name="value">
           <number>20</number>

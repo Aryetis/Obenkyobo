@@ -14,7 +14,12 @@ class AppSettings : public QWidget
 
 public:
     explicit AppSettings(QWidget *parent = nullptr);
-    ~AppSettings();
+    ~AppSettings() override;
+
+    void InitializeAppSettings();
+
+private slots:
+    void on_ResetStatsButton_clicked();
 
 private:
     Ui::AppSettings *ui;

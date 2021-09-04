@@ -4,6 +4,7 @@
 
 class QcmExercice;
 class FntSetting;
+class AppSettings;
 class GetMy
 {
 public:
@@ -19,10 +20,14 @@ public:
     void SetFntSettingWidget(FntSetting* fntSetting) { fntSettingInstance = fntSetting;}
     FntSetting& FntSettingWidget() { return *fntSettingInstance; }
 
+    void SetAppSettingWidget(AppSettings* appSetting) { appSettingsInstance = appSetting;}
+    AppSettings& AppSettingWidget() { return *appSettingsInstance; }
+
 private :
     GetMy() = default;
     QcmExercice* qcmExerciceInstance;
     FntSetting* fntSettingInstance;
+    AppSettings* appSettingsInstance;
 };
 
 

@@ -28,7 +28,7 @@ public:
     explicit QcmExercice(QWidget* parent = nullptr);
     ~QcmExercice() override;
 
-    void InitializeExercice(QcmExercice::QcmExerciceType qcmType);
+    void InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool newQcmRequested = false);
     void OnGuessClicked(bool correct);
 
 private:

@@ -21,6 +21,7 @@ public:
     QFont& GetCurrentKatakanaFnt() { return katakanaFonts[static_cast<std::vector<QFont>::size_type>(currentHiraganFntIdx)]; }
     QFont& GetCurrentRomanjiFnt() { return romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentHiraganFntIdx)]; }
 
+    int GetStemBoostSize() const { return stemBoostSize; }
 
 private slots:
     void on_hiraganaDropdown_activated(int index);
@@ -30,6 +31,8 @@ private slots:
     void on_HiraganaSizeSlider_valueChanged(int size);
     void on_KatakanaSizeSlider_valueChanged(int size);
     void on_RomanjiSizeSlider_valueChanged(int size);
+
+    void on_BoostStemSlider_valueChanged(int size);
 
 private:
     Ui::FntSetting *ui;
@@ -51,6 +54,8 @@ private:
     int currentHiraganaSize;
     int currentKatakanaSize;
     int currentRomanjiSize;
+
+    int stemBoostSize;
 };
 
 #endif // FNTSETTING_H
