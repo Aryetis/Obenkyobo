@@ -17,12 +17,15 @@ public:
     ~AppSettings() override;
 
     void InitializeAppSettings();
+    int GetNumberOfEntryLine() const { return nbrOfEntryLinesIdx+1; }
 
 private slots:
     void on_ResetStatsButton_clicked();
+    void on_nbrOfEntryLinesDropdown_activated(int index);
 
 private:
     Ui::AppSettings *ui;
+    int nbrOfEntryLinesIdx;
 };
 
 #endif // APPSETTINGS_H

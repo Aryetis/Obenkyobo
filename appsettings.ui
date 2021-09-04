@@ -30,16 +30,32 @@
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="EntriesLineSetting">
+      <layout class="QHBoxLayout" name="nbrOfEntryLinesSettings">
        <item>
-        <widget class="QLabel" name="lineSettingLabel">
+        <widget class="QLabel" name="nbrOfEntryLinesLabel">
          <property name="text">
           <string>QCM configuration : </string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="LineSettingDropdown"/>
+        <widget class="QComboBox" name="nbrOfEntryLinesDropdown">
+         <item>
+          <property name="text">
+           <string>1x3</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>2x3</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>3x3</string>
+          </property>
+         </item>
+        </widget>
        </item>
       </layout>
      </item>
@@ -48,12 +64,23 @@
        <item>
         <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>Randomness Type : (TODO)</string>
+          <string>Randomness Type : </string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox"/>
+        <widget class="QComboBox" name="comboBox">
+         <item>
+          <property name="text">
+           <string>Weighted Random</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>True Random</string>
+          </property>
+         </item>
+        </widget>
        </item>
       </layout>
      </item>

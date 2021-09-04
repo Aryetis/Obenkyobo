@@ -24,9 +24,9 @@ public:
     int GetStemBoostSize() const { return stemBoostSize; }
 
 private slots:
-    void on_hiraganaDropdown_activated(int index);
-    void on_KatakanaDropdown_activated(int index);
-    void on_RomanjiDropdown_activated(int index);
+    void on_HiraganaFntDropdown_activated(int index);
+    void on_KatakanaFntDropdown_activated(int index);
+    void on_RomanjiFntDropdown_activated(int index);
 
     void on_HiraganaSizeSlider_valueChanged(int size);
     void on_KatakanaSizeSlider_valueChanged(int size);

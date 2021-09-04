@@ -18,6 +18,9 @@ void AppSettings::InitializeAppSettings()
     ui->ScoreCounterValueLabel->setText(QString::number(appStatisticsScore));
     int appStatisticsError = SettingsSerializer::settings.value("AppStatistics/error", 0).toInt();
     ui->ErrorsCounterValueLabel->setText(QString::number(appStatisticsError));
+
+    nbrOfEntryLinesIdx = SettingsSerializer::settings.value("AppStatistics/entriesPerLine", 0).toInt();
+    ui->nbrOfEntryLinesDropdown->setCurrentIndex(nbrOfEntryLinesIdx);
 }
 
 AppSettings::~AppSettings()
@@ -32,4 +35,10 @@ void AppSettings::on_ResetStatsButton_clicked()
 
     ui->ScoreCounterValueLabel->setText("0");
     ui->ErrorsCounterValueLabel->setText("0");
+}
+
+void AppSettings::on_nbrOfEntryLinesDropdown_activated(int index)
+{
+    nbrOfEntryLinesIdx = index;
+    SettingsSerializer::settings.setValue("AppStatistics/entriesPerLine", index);
 }

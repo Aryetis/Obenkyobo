@@ -101,7 +101,7 @@ QFont FntSetting::GetFont(QString fntAddress)
     return QFont(name, DEFAULT_FNT_SIZE);
 }
 
-void FntSetting::on_hiraganaDropdown_activated(int index)
+void FntSetting::on_HiraganaFntDropdown_activated(int index)
 {
     currentHiraganFntIdx = index;
     SettingsSerializer::settings.setValue("FntSettings/HiraganaFntIdx", index);
@@ -109,7 +109,7 @@ void FntSetting::on_hiraganaDropdown_activated(int index)
                 ui->HiraganaFntDropdown->itemText(currentHiraganFntIdx));
 }
 
-void FntSetting::on_KatakanaDropdown_activated(int index)
+void FntSetting::on_KatakanaFntDropdown_activated(int index)
 {
     currentKatakanaFntIdx = index;
     SettingsSerializer::settings.setValue("FntSettings/KatakanaFntIdx", index);
@@ -117,7 +117,7 @@ void FntSetting::on_KatakanaDropdown_activated(int index)
                 ui->KatakanaFntDropdown->itemText(currentKatakanaFntIdx));
 }
 
-void FntSetting::on_RomanjiDropdown_activated(int index)
+void FntSetting::on_RomanjiFntDropdown_activated(int index)
 {
     currentRomanjiFntIdx = index;
     SettingsSerializer::settings.setValue("FntSettings/RomanjiFntIdx", index);

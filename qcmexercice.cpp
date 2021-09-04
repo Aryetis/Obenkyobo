@@ -7,9 +7,9 @@
 #include "GetMy.h"
 #include <algorithm>
 #include "SettingsSerializer.h"
+#include "appsettings.h"
 
-#define ENTRY_SIZE_POOL 9
-#define ENTRY_PER_LINE 3
+#define ENTRY_PER_ROW 3
 
 QcmExercice::QcmExercice(QWidget *parent) :
     QWidget(parent), ui(new Ui::QcmExercice), scoreCounter(0), errorCounter(0)
@@ -68,6 +68,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     }
 
     std::vector<Symbol> shuffledSymbols{};
+    int NbrOfEntriesLine = GetMy::GetInstance().AppSettingWidget().GetNumberOfEntryLine();
     // TODO NOW do a very basic hirahana / katakana swap
     shuffledSymbols.reserve(SymbolsTables::HIRAGANA_GOJUON.size()-1);
     std::remove_copy(SymbolsTables::HIRAGANA_GOJUON.begin(), SymbolsTables::HIRAGANA_GOJUON.end(), std::back_inserter(shuffledSymbols), stem);
@@ -76,10 +77,10 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     qDeleteAll(guesses);
     guesses.clear();
 
-    int stemSlot = Tools::GetRandomInt(0, ENTRY_SIZE_POOL-1);
-    for(int i= 0; i<ENTRY_SIZE_POOL; ++i)
+    int stemSlot = Tools::GetRandomInt(0, (NbrOfEntriesLine*ENTRY_PER_ROW)-1);
+    for(int i= 0; i<NbrOfEntriesLine*ENTRY_PER_ROW; ++i)
     {
-        div_t entryPos = div(i, ENTRY_PER_LINE);
+        div_t entryPos = div(i, NbrOfEntriesLine);
         QcmEntryGuess* foo = new QcmEntryGuess();
         guesses.append(foo);
 
@@ -88,7 +89,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
         else
             foo->SetGuess(shuffledSymbols[static_cast<std::vector<Symbol>::size_type>(i)], currentQcmType, false);
 
-        ui->EntriesGridLayout->addWidget(foo, entryPos.quot, entryPos.rem);
+        ui->EntriesGridLayout->addWidget(foo, entryPos.rem, entryPos.quot);
     }
 
     ui->ScoreCounter->setNum(scoreCounter);
