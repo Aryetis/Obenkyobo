@@ -102,13 +102,13 @@ void QcmExercice::OnGuessClicked(bool correct)
     {
         ++scoreCounter;
         int appStatisticsScore = SettingsSerializer::settings.value("AppStatistics/score", 0).toInt();
-        SettingsSerializer::settings.setValue("AppStatistics/score", appStatisticsScore+scoreCounter);
+        SettingsSerializer::settings.setValue("AppStatistics/score", ++appStatisticsScore);
     }
     else
     {
         ++errorCounter;
         int appStatisticsError = SettingsSerializer::settings.value("AppStatistics/error", 0).toInt();
-        SettingsSerializer::settings.setValue("AppStatistics/error", appStatisticsError+errorCounter);
+        SettingsSerializer::settings.setValue("AppStatistics/error", ++appStatisticsError);
     }
 
     // TODO feedback and print previous answer in upper right counter ?

@@ -10,7 +10,6 @@
 #define DEFAULT_STEM_BOOST_SIZE 20
 
 // TODO set max size of fonts depending of screen size and dpi
-// TODO add an option to make stem [0;30] biger than entries
 
 FntSetting::FntSetting(QWidget *parent) :
     QWidget(parent),
