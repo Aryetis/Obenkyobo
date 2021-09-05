@@ -103,7 +103,7 @@ namespace SymbolsTables
 
         Symbol{"da", QStringLiteral("だ")},
         Symbol{"ji", QStringLiteral("じ")},
-        Symbol{"zu", QStringLiteral("ず")},
+        Symbol{"(d)zu", QStringLiteral("ず")},
         Symbol{"de", QStringLiteral("で")},
         Symbol{"do", QStringLiteral("ど")},
 
@@ -176,6 +176,153 @@ namespace SymbolsTables
     };
 
     //========================================== KATAKANA ==========================================
+    static const std::vector<Symbol> KATAKANA_GOJUON =
+    {
+        Symbol{"a", QStringLiteral("ア")},
+        Symbol{"i", QStringLiteral("イ")},
+        Symbol{"u", QStringLiteral("ウ")},
+        Symbol{"e", QStringLiteral("エ")},
+        Symbol{"o", QStringLiteral("オ")},
+
+        Symbol{"ka", QStringLiteral("カ")},
+        Symbol{"ki", QStringLiteral("キ")},
+        Symbol{"ku", QStringLiteral("ク")},
+        Symbol{"ke", QStringLiteral("ケ")},
+        Symbol{"ko", QStringLiteral("コ")},
+
+
+        Symbol{"sa", QStringLiteral("サ")},
+        Symbol{"si", QStringLiteral("シ")},
+        Symbol{"su", QStringLiteral("ス")},
+        Symbol{"se", QStringLiteral("セ")},
+        Symbol{"so", QStringLiteral("ソ")},
+
+        Symbol{"ta", QStringLiteral("タ")},
+        Symbol{"chi", QStringLiteral("チ")},
+        Symbol{"tsu", QStringLiteral("ツ")},
+        Symbol{"te", QStringLiteral("テ")},
+        Symbol{"to", QStringLiteral("ト")},
+
+        Symbol{"na", QStringLiteral("バ")},
+        Symbol{"ni", QStringLiteral("ニ")},
+        Symbol{"nu", QStringLiteral("ヌ")},
+        Symbol{"ne", QStringLiteral("ネ")},
+        Symbol{"no", QStringLiteral("ノ")},
+
+        Symbol{"ha", QStringLiteral("ハ")},
+        Symbol{"hi", QStringLiteral("ヒ")},
+        Symbol{"fu", QStringLiteral("フ")},
+        Symbol{"he", QStringLiteral("ヘ")},
+        Symbol{"ho", QStringLiteral("ホ")},
+
+        Symbol{"ma", QStringLiteral("マ")},
+        Symbol{"mi", QStringLiteral("ミ")},
+        Symbol{"mu", QStringLiteral("ム")},
+        Symbol{"me", QStringLiteral("メ")},
+        Symbol{"mo", QStringLiteral("モ")},
+
+        Symbol{"ya", QStringLiteral("ヤ")},
+        Symbol{"yu", QStringLiteral("ユ")},
+        Symbol{"yo", QStringLiteral("ヨ")},
+
+        Symbol{"ra", QStringLiteral("ラ")},
+        Symbol{"ri", QStringLiteral("リ")},
+        Symbol{"ru", QStringLiteral("ル")},
+        Symbol{"re", QStringLiteral("レ")},
+        Symbol{"ro", QStringLiteral("ロ")},
+
+        Symbol{"wa", QStringLiteral("ワ")},
+        Symbol{"(w)o", QStringLiteral("ヲ")},
+        Symbol{"n", QStringLiteral("ン")},
+    };
+
+    static const std::vector<Symbol> KATAKANA_GOJUON_HANDAKUTEN =
+    {
+        Symbol{"ga", QStringLiteral("ガ")},
+        Symbol{"gi", QStringLiteral("ギ")},
+        Symbol{"gu", QStringLiteral("グ")},
+        Symbol{"ge", QStringLiteral("ゲ")},
+        Symbol{"go", QStringLiteral("ゴ")},
+
+        Symbol{"za", QStringLiteral("ザ")},
+        Symbol{"zi", QStringLiteral("ジ")},
+        Symbol{"zu", QStringLiteral("ズ")},
+        Symbol{"ze", QStringLiteral("ゼ")},
+        Symbol{"zo", QStringLiteral("ゾ")},
+
+        Symbol{"da", QStringLiteral("ダ")},
+        Symbol{"ji", QStringLiteral("ヂ")},
+        Symbol{"(d)zu", QStringLiteral("ヅ")},
+        Symbol{"de", QStringLiteral("デ")},
+        Symbol{"do", QStringLiteral("ド")},
+
+        Symbol{"ba", QStringLiteral("バ")},
+        Symbol{"bi", QStringLiteral("ビ")},
+        Symbol{"bu", QStringLiteral("ブ")},
+        Symbol{"be", QStringLiteral("ベ")},
+        Symbol{"bo", QStringLiteral("ボ")},
+
+        Symbol{"pa", QStringLiteral("パ")},
+        Symbol{"pi", QStringLiteral("ピ")},
+        Symbol{"pu", QStringLiteral("プ")},
+        Symbol{"pe", QStringLiteral("ペ")},
+        Symbol{"po", QStringLiteral("ポ")},
+    };
+
+    static const std::vector<Symbol> KATAKANA_YOON =
+    {
+        Symbol{"kya", QStringLiteral("キャ")},
+        Symbol{"kyu", QStringLiteral("キュ")},
+        Symbol{"kyo", QStringLiteral("キョ")},
+
+        Symbol{"sha", QStringLiteral("シャ")},
+        Symbol{"shu", QStringLiteral("シュ")},
+        Symbol{"sho", QStringLiteral("ショ")},
+
+        Symbol{"cha", QStringLiteral("チャ")},
+        Symbol{"chu", QStringLiteral("チュ")},
+        Symbol{"cho", QStringLiteral("チョ")},
+
+        Symbol{"nya", QStringLiteral("ニャ")},
+        Symbol{"nyu", QStringLiteral("ニュ")},
+        Symbol{"nyo", QStringLiteral("ニョ")},
+
+        Symbol{"hya", QStringLiteral("ヒャ")},
+        Symbol{"hyu", QStringLiteral("ヒュ")},
+        Symbol{"hyo", QStringLiteral("ヒョ")},
+
+        Symbol{"mya", QStringLiteral("ミャ")},
+        Symbol{"myu", QStringLiteral("ミュ")},
+        Symbol{"myo", QStringLiteral("ミョ")},
+
+        Symbol{"rya", QStringLiteral("リャ")},
+        Symbol{"ryu", QStringLiteral("リュ")},
+        Symbol{"ryo", QStringLiteral("リョ")},
+    };
+
+
+    static const std::vector<Symbol> KATAKANA_YOON_HANDAKUTEN =
+    {
+        Symbol{"gya", QStringLiteral("ギャ")},
+        Symbol{"gyu", QStringLiteral("ギュ")},
+        Symbol{"gyo", QStringLiteral("ギョ")},
+
+        Symbol{"zya/ja", QStringLiteral("ジャ")},
+        Symbol{"zyu/ju", QStringLiteral("ジュ")},
+        Symbol{"zyo/jo", QStringLiteral("ジョ")},
+
+        Symbol{"dya/ja", QStringLiteral("ヂャ")},
+        Symbol{"dyu/ju", QStringLiteral("ヂュ")},
+        Symbol{"dyo/jo", QStringLiteral("ヂョ")},
+
+        Symbol{"bya", QStringLiteral("ビャ")},
+        Symbol{"byu", QStringLiteral("ビュ")},
+        Symbol{"byo", QStringLiteral("ビョ")},
+
+        Symbol{"pya", QStringLiteral("ピャ")},
+        Symbol{"pyu", QStringLiteral("ピュ")},
+        Symbol{"pyo", QStringLiteral("ピョ")},
+    };
 }
 
 #endif // SYMBOLSTABLES_H
