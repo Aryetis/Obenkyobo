@@ -4,7 +4,6 @@
 #include "GetMy.h"
 #include <QDirIterator>
 #include <QDir>
-#include "SettingsSerializer.h"
 
 #define DEFAULT_FNT_SIZE 50
 #define DEFAULT_STEM_BOOST_SIZE 20
@@ -13,12 +12,13 @@
 
 FntSetting::FntSetting(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::FntSetting)
+    ui(new Ui::FntSetting),
+    settingsSerializer(GetMy::GetInstance().SettingSerializer())
 {
     ui->setupUi(this);
 
-    RegisterFntsFromResources();
-
+    // Fonts must be ready before switching widget => don't delay the initialization
+    RegisterFntsFromResources(); // must be done before anything needing fonts => don't move into InitializeFntSetting
     GetMy::GetInstance().SetFntSettingWidget(this);
 }
 
@@ -57,16 +57,16 @@ void FntSetting::RegisterFntsFromResources()
     for (QFont fnt : romanjiFonts)
         ui->RomanjiFntDropdown->addItem(fnt.family());
 
-    currentHiraganFntIdx = SettingsSerializer::settings.value("FntSettings/HiraganaFntIdx", 0).toInt();
-    currentKatakanaFntIdx = SettingsSerializer::settings.value("FntSettings/KatakanaFntIdx", 0).toInt();
-    currentRomanjiFntIdx = SettingsSerializer::settings.value("FntSettings/RomanjiFntIdx", 0).toInt();
+    currentHiraganFntIdx = settingsSerializer->value("FntSettings/HiraganaFntIdx", 0).toInt();
+    currentKatakanaFntIdx = settingsSerializer->value("FntSettings/KatakanaFntIdx", 0).toInt();
+    currentRomanjiFntIdx = settingsSerializer->value("FntSettings/RomanjiFntIdx", 0).toInt();
     ui->HiraganaFntDropdown->setCurrentIndex(currentHiraganFntIdx);
     ui->KatakanaFntDropdown->setCurrentIndex(currentKatakanaFntIdx);
     ui->RomanjiFntDropdown->setCurrentIndex(currentRomanjiFntIdx);
 
-    currentHiraganaSize =  SettingsSerializer::settings.value("FntSettings/HiraganaFntSize", DEFAULT_FNT_SIZE).toInt();
-    currentKatakanaSize =  SettingsSerializer::settings.value("FntSettings/KatakanaFntSize", DEFAULT_FNT_SIZE).toInt();
-    currentRomanjiSize =  SettingsSerializer::settings.value("FntSettings/RomanjiFntSize", DEFAULT_FNT_SIZE).toInt();
+    currentHiraganaSize =  settingsSerializer->value("FntSettings/HiraganaFntSize", DEFAULT_FNT_SIZE).toInt();
+    currentKatakanaSize =  settingsSerializer->value("FntSettings/KatakanaFntSize", DEFAULT_FNT_SIZE).toInt();
+    currentRomanjiSize =  settingsSerializer->value("FntSettings/RomanjiFntSize", DEFAULT_FNT_SIZE).toInt();
     ui->HiraganaSizeValueLabel->setText(QString::number(currentHiraganaSize));
     ui->HiraganaSizeSlider->setValue(currentHiraganaSize);
     ui->KatakanaSizeValueLabel->setText(QString::number(currentKatakanaSize));
@@ -74,7 +74,7 @@ void FntSetting::RegisterFntsFromResources()
     ui->RomanjiSizeValueLabel->setText(QString::number(currentRomanjiSize));
     ui->RomanjiSizeSlider->setValue(currentRomanjiSize);
 
-    stemBoostSize =  SettingsSerializer::settings.value("FntSettings/stemBoostSize", DEFAULT_STEM_BOOST_SIZE).toInt();
+    stemBoostSize =  settingsSerializer->value("FntSettings/stemBoostSize", DEFAULT_STEM_BOOST_SIZE).toInt();
     ui->BoostStemSlider->setValue(stemBoostSize);
 }
 
@@ -103,7 +103,7 @@ QFont FntSetting::GetFont(QString fntAddress)
 void FntSetting::on_HiraganaFntDropdown_activated(int index)
 {
     currentHiraganFntIdx = index;
-    SettingsSerializer::settings.setValue("FntSettings/HiraganaFntIdx", index);
+    settingsSerializer->setValue("FntSettings/HiraganaFntIdx", index);
     hiraganaFonts[static_cast<std::vector<QFont>::size_type>(currentHiraganFntIdx)].setFamily(
                 ui->HiraganaFntDropdown->itemText(currentHiraganFntIdx));
 }
@@ -111,7 +111,7 @@ void FntSetting::on_HiraganaFntDropdown_activated(int index)
 void FntSetting::on_KatakanaFntDropdown_activated(int index)
 {
     currentKatakanaFntIdx = index;
-    SettingsSerializer::settings.setValue("FntSettings/KatakanaFntIdx", index);
+    settingsSerializer->setValue("FntSettings/KatakanaFntIdx", index);
     katakanaFonts[static_cast<std::vector<QFont>::size_type>(currentKatakanaFntIdx)].setFamily(
                 ui->KatakanaFntDropdown->itemText(currentKatakanaFntIdx));
 }
@@ -119,7 +119,7 @@ void FntSetting::on_KatakanaFntDropdown_activated(int index)
 void FntSetting::on_RomanjiFntDropdown_activated(int index)
 {
     currentRomanjiFntIdx = index;
-    SettingsSerializer::settings.setValue("FntSettings/RomanjiFntIdx", index);
+    settingsSerializer->setValue("FntSettings/RomanjiFntIdx", index);
     romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentRomanjiFntIdx)].setFamily(
                 ui->RomanjiFntDropdown->itemText(currentRomanjiFntIdx));
 }
@@ -128,7 +128,7 @@ void FntSetting::on_HiraganaSizeSlider_valueChanged(int size)
 {
     currentHiraganaSize = size;
     ui->HiraganaSizeValueLabel->setText(QString::number(size));
-    SettingsSerializer::settings.setValue("FntSettings/HiraganaFntSize", size);
+    settingsSerializer->setValue("FntSettings/HiraganaFntSize", size);
     hiraganaFonts[static_cast<std::vector<QFont>::size_type>(currentHiraganFntIdx)].setPixelSize(size);
 }
 
@@ -136,7 +136,7 @@ void FntSetting::on_KatakanaSizeSlider_valueChanged(int size)
 {
     currentKatakanaSize = size;
     ui->KatakanaSizeValueLabel->setText(QString::number(size));
-    SettingsSerializer::settings.setValue("FntSettings/KatakanaFntSize", size);
+    settingsSerializer->setValue("FntSettings/KatakanaFntSize", size);
     katakanaFonts[static_cast<std::vector<QFont>::size_type>(currentKatakanaFntIdx)].setPixelSize(size);
 }
 
@@ -144,7 +144,7 @@ void FntSetting::on_RomanjiSizeSlider_valueChanged(int size)
 {
     currentRomanjiSize = size;
     ui->RomanjiSizeValueLabel->setText(QString::number(size));
-    SettingsSerializer::settings.setValue("FntSettings/RomanjiFntSize", size);
+    settingsSerializer->setValue("FntSettings/RomanjiFntSize", size);
     romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentRomanjiFntIdx)].setPixelSize(size);
 }
 
@@ -152,5 +152,5 @@ void FntSetting::on_BoostStemSlider_valueChanged(int size)
 {
     stemBoostSize = size;
     ui->BoostStemValueLabel->setText(QString::number(size));
-    SettingsSerializer::settings.setValue("FntSettings/stemBoostSize", size);
+    settingsSerializer->setValue("FntSettings/stemBoostSize", size);
 }

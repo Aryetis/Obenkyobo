@@ -1,9 +1,15 @@
 #include "mainwindow.h"
 #include <QApplication>
+#include "GetMy.h"
+#include "SettingsSerializer.h"
+
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    QSettings serializer = QSettings(QString(QCoreApplication::applicationDirPath() + "/config.cfg"), QSettings::IniFormat);
+    GetMy::GetInstance().SetSettingSerialier(&serializer);
 
     MainWindow w;
     w.show();

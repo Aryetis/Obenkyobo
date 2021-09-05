@@ -19,7 +19,6 @@ public:
 
 private slots:
     void                 on_TintSlider_valueChanged(int value);
-
     void                 on_LuminositySlider_valueChanged(int value);
 
 private:
@@ -28,6 +27,8 @@ private:
     int                  tint;
     bool                 noSettingAvailable;
     KoboDeviceDescriptor desc;
+
+    QSettings* settingsSerializer;
 };
 
 #endif // SCREENSETTINGS_H

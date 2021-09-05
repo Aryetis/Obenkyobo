@@ -24,21 +24,21 @@ void QcmEntryGuess::SetGuess(Symbol s, QcmExercice::QcmExerciceType qcmType, boo
         case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_Kbd :
         {
             ui->EntryGuess->setFont(GetMy::GetInstance().FntSettingWidget().GetCurrentHiraganaFnt());
-            ui->EntryGuess->setText(s.jp);
+            ui->EntryGuess->setText(s.JP());
             break;
         }
         case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
         case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
         {
             ui->EntryGuess->setFont(GetMy::GetInstance().FntSettingWidget().GetCurrentKatakanaFnt());
-            ui->EntryGuess->setText(s.jp);
+            ui->EntryGuess->setText(s.JP());
             break;
         }
         case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :
         case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
         {
             ui->EntryGuess->setFont(GetMy::GetInstance().FntSettingWidget().GetCurrentRomanjiFnt());
-            ui->EntryGuess->setText(QString::fromStdString(s.romanji));
+            ui->EntryGuess->setText(QString::fromStdString(s.Romanji()));
             break;
         }
     }

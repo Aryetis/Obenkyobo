@@ -2,6 +2,7 @@
 #define APPSETTINGS_H
 
 #include <QWidget>
+#include <QSettings>
 
 namespace Ui
 {
@@ -16,7 +17,6 @@ public:
     explicit AppSettings(QWidget *parent = nullptr);
     ~AppSettings() override;
 
-    void InitializeAppSettings();
     int GetNumberOfEntryLine() const { return nbrOfEntryLinesIdx+1; }
 
 private slots:
@@ -26,6 +26,8 @@ private slots:
 private:
     Ui::AppSettings *ui;
     int nbrOfEntryLinesIdx;
+
+    QSettings* settingsSerializer;
 };
 
 #endif // APPSETTINGS_H

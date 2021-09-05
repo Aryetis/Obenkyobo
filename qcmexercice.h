@@ -2,6 +2,8 @@
 #define QCMEXERCICE_H
 
 #include <QWidget>
+#include "symbolstables.h"
+#include <QSettings>
 
 namespace Ui
 {
@@ -36,6 +38,9 @@ private:
     QList<QcmEntryGuess*> guesses;
     int scoreCounter, errorCounter;
     QcmExercice::QcmExerciceType currentQcmType;
+    Symbol* stem; // Answer to guess
+
+    QSettings* settingsSerializer;
 };
 
 #endif // QCMEXERCICE_H

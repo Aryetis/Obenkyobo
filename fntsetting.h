@@ -3,6 +3,7 @@
 #include <QWidget>
 #include <QString>
 #include <vector>
+#include <QSettings>
 
 namespace Ui
 {
@@ -56,6 +57,8 @@ private:
     int currentRomanjiSize;
 
     int stemBoostSize;
+
+    QSettings* settingsSerializer;
 };
 
 #endif // FNTSETTING_H

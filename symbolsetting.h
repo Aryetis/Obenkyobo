@@ -1,23 +1,32 @@
 #ifndef SYMBOLSET_H
 #define SYMBOLSET_H
-
 #include <QWidget>
+#include "symbolstables.h"
 
 namespace Ui
 {
-    class SymbolSet;
+    class SymbolSetting;
 }
 
 class SymbolSetting : public QWidget
 {
     Q_OBJECT
 
+    enum SymbolFamilyEnum
+    {
+        hiragana,
+        katakana
+    };
+
 public:
     explicit SymbolSetting(QWidget *parent = nullptr);
-    ~SymbolSetting();
+    ~SymbolSetting() override;
+
+    void InitializeSymbolSetting(SymbolFamilyEnum _symbolFamily);
 
 private:
-    Ui::SymbolSet *ui;
+    Ui::SymbolSetting *ui;
+    SymbolFamilyEnum symbolFamily;
 };
 
 #endif // SYMBOLSET_H

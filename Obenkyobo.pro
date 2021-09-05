@@ -38,6 +38,8 @@ CONFIG += c++17 \
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    symbolsettingentry.cpp \
+    symbolsettingsection.cpp \
     widgetwelcome.cpp \
     qcmexercice.cpp \
     keyboardexercice.cpp \
@@ -58,6 +60,8 @@ HEADERS += \
     GetMy.h \
     SettingsSerializer.h \
     mainwindow.h \
+    symbolsettingentry.h \
+    symbolsettingsection.h \
     widgetwelcome.h \
     qcmexercice.h \
     keyboardexercice.h \
@@ -74,6 +78,8 @@ OTHER_FILES += \
 
 FORMS += \
     mainwindow.ui \
+    symbolsettingentry.ui \
+    symbolsettingsection.ui \
     widgetwelcome.ui \
     qcmexercice.ui \
     keyboardexercice.ui \

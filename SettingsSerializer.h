@@ -1,9 +1,30 @@
-#ifndef SETTINGSSERIALIZER_H
-#define SETTINGSSERIALIZER_H
-#include <QSettings>
+//#ifndef SETTINGSSERIALIZER_H
+//#define SETTINGSSERIALIZER_H
+//#include <QSettings>
+//#include <QCoreApplication>
+//#include "GetMy.h"
 
-namespace SettingsSerializer
-{
-    static QSettings settings(QString("config.cfg"), QSettings::IniFormat);
-}
-#endif // SETTINGSSERIALIZER_H
+//class SettingsSerializer
+//{
+//public :
+//    SettingsSerializer()
+//    {
+//        GetMy::GetInstance().SetSettingSerialier(this);
+//    }
+
+//    ~SettingsSerializer()
+//    {
+//        delete settings;
+//    }
+
+////    void InitializeSettingSerializer()
+////    {
+////        settings = new QSettings(QString(QCoreApplication::applicationDirPath() + "/config.cfg"), QSettings::IniFormat);
+////    }
+
+//    QSettings* Settings() { return settings; }
+
+//private :
+//    QSettings* settings;
+//};
+//#endif // SETTINGSSERIALIZER_H

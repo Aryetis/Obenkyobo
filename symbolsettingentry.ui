@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QcmEntryGuess</class>
- <widget class="QWidget" name="QcmEntryGuess">
+ <class>SymbolSettingEntry</class>
+ <widget class="QWidget" name="SymbolSettingEntry">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,24 +13,19 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0">
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QPushButton" name="EntryGuess">
+      <widget class="QPushButton" name="SymbolSettingEntryButton">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="font">
-        <font>
-         <family>DotGothic16</family>
-        </font>
-       </property>
        <property name="text">
-        <string>あああaaa</string>
+        <string>azerty</string>
        </property>
       </widget>
      </item>
