@@ -1,6 +1,7 @@
 #include "symbolsetting.h"
 #include "ui_symbolsetting.h"
 #include "GetMy.h"
+#include "symbolsettingsection.h"
 
 SymbolSetting::SymbolSetting(QWidget *parent) :
     QWidget(parent),
@@ -19,4 +20,19 @@ SymbolSetting::~SymbolSetting()
 void SymbolSetting::InitializeSymbolSetting(SymbolFamilyEnum _symbolFamily)
 {
     symbolFamily = _symbolFamily;
+    std::vector<SymbolsTables::SymbolsTableSection>& symbolsTableFamilyTarget = (symbolFamily)
+            ? SymbolsTables::HiraganaSymbolsTableFamily.Data()
+            : SymbolsTables::KatakanaSymbolsTableFamily.Data();
+
+    qDeleteAll(symbolsTableSections);
+    symbolsTableSections.clear();
+
+    for (SymbolsTables::SymbolsTableSection& symbolTableSection : symbolsTableFamilyTarget )
+    {
+        SymbolSettingSection* symbolSettingSection = new SymbolSettingSection();
+        symbolSettingSection->InitializeSymbolSettingSection(symbolTableSection);
+        symbolsTableSections.append(symbolSettingSection);
+
+        ui->SymbolSettingContainer->addWidget(symbolSettingSection);
+    }
 }

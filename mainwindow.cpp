@@ -3,6 +3,7 @@
 #include "fntsetting.h"
 #include "qcmexercice.h"
 #include "GetMy.h"
+#include "symbolsetting.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow)
@@ -51,7 +52,7 @@ void MainWindow::on_actionHiragana_to_Romanji_Kbd_triggered()
 
 void MainWindow::on_actionEdit_Hiragana_Set_triggered()
 {
-    // TODO set init
+    GetMy::GetInstance().SymbolSettingWidget().InitializeSymbolSetting(SymbolSetting::SymbolFamilyEnum::hiragana);
     ui->ContentStackedWidget->setCurrentIndex(3);
 }
 
@@ -79,7 +80,7 @@ void MainWindow::on_actionKatakana_to_Romanji_Kbd_triggered()
 
 void MainWindow::on_actionEdit_Katakana_Set_triggered()
 {
-    // TODO set init
+    GetMy::GetInstance().SymbolSettingWidget().InitializeSymbolSetting(SymbolSetting::SymbolFamilyEnum::katakana);
     ui->ContentStackedWidget->setCurrentIndex(3);
 }
 

@@ -17,6 +17,8 @@ public:
     explicit SymbolSettingEntry(QWidget *parent = nullptr);
     ~SymbolSettingEntry() override;
 
+    void InitializeSymbolSettingEntry(Symbol* _symbol);
+
 private slots:
     void on_pushButton_clicked(bool checked);
 

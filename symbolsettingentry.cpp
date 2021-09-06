@@ -14,6 +14,15 @@ SymbolSettingEntry::~SymbolSettingEntry()
     delete ui;
 }
 
+void SymbolSettingEntry::InitializeSymbolSettingEntry(Symbol* _symbol)
+{
+    symbol = _symbol;
+
+//    const QString aze(symbol.Romanji());
+    QString tamere = symbol->JP() + "\n" /*+ QString(symbol.Romanji())*/;
+    ui->SymbolSettingEntryButton->setText(tamere);
+}
+
 void SymbolSettingEntry::on_pushButton_clicked(bool checked)
 {
     symbol->SetEnabled(checked);

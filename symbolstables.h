@@ -1,14 +1,13 @@
 #ifndef SYMBOLSTABLES_H
 #define SYMBOLSTABLES_H
+
 #include <vector>
 #include <string>
 #include <QStringLiteral>
 #include <QString>
 #include <QPalette>
 
-// <romanji, symbol>
-// TODO create proper class later on so we can only initalize exercice with GOJUON/GOJUON_HANDAKUTEN/etc string
-// handle disable / enable set => handle edge cases like "not enough data to initialize entriesGridLayout", etc
+// TODO handle disable / enable set => handle edge cases like "not enough data to initialize entriesGridLayout", etc
 class  Symbol
 {
 public :
@@ -46,7 +45,7 @@ private :
     std::string romanji;
     QString jp;
     bool enabled;
-    LearningState learningState;
+    LearningState learningState; // TODO turn this into a std::vector<int> and use with std::discrete_distribution to get actually weighted random result
 };
 
 
@@ -56,15 +55,15 @@ namespace SymbolsTables
     class SymbolsTableSection
     {
 public :
-        SymbolsTableSection(std::string _name, std::vector<Symbol> _data)
+        SymbolsTableSection(QString _name, std::vector<Symbol> _data)
             : name(_name), data(_data)
         {}
 
-        const std::string& Name() const { return name; }
+        const QString& Name() const { return name; }
         std::vector<Symbol>& Data() { return data; } // not const as we need to adjust their LearningState
 
 private :
-        std::string name;
+        QString name;
         std::vector<Symbol> data;
     };
 
@@ -90,7 +89,7 @@ private :
         {
             SymbolsTableSection
             (
-                "HIRAGANA_GOJUON",
+                "Gojūon",
                 std::vector<Symbol>
                 {
                     Symbol{"a", QStringLiteral("あ")},
@@ -154,7 +153,7 @@ private :
 
             SymbolsTableSection
             (
-                "HIRAGANA_GOJUON_HANDAKUTEN",
+                "Gojūon with (han)dakuten",
                 std::vector<Symbol>
                 {
                     Symbol{"ga", QStringLiteral("が")},
@@ -191,7 +190,7 @@ private :
 
             SymbolsTableSection
             (
-                "HIRAGANA_YOON",
+                "Yōon",
                 std::vector<Symbol>
                 {
                     Symbol{"kya", QStringLiteral("きゃ")},
@@ -226,7 +225,7 @@ private :
 
             SymbolsTableSection
             (
-                "HIRAGANA_YOON_HANDAKUTEN",
+                "Yōon with (han)dakuten",
                 std::vector<Symbol>
                 {
                     Symbol{"gya", QStringLiteral("ぎゃ")},
@@ -260,7 +259,7 @@ private :
         {
             SymbolsTableSection
             (
-                "KATAKANA_GOJUON",
+                "Gojūon",
                 std::vector<Symbol>
                 {
                     Symbol{"a", QStringLiteral("ア")},
@@ -324,7 +323,7 @@ private :
 
             SymbolsTableSection
             (
-                "KATAKANA_GOJUON_HANDAKUTEN",
+                "Gojūon with (han)dakuten",
                 std::vector<Symbol>
                 {
                     Symbol{"ga", QStringLiteral("ガ")},
@@ -361,7 +360,7 @@ private :
 
             SymbolsTableSection
             (
-                "KATAKANA_YOON",
+                "Yōon",
                 std::vector<Symbol>
                 {
                     Symbol{"kya", QStringLiteral("キャ")},
@@ -396,7 +395,7 @@ private :
 
             SymbolsTableSection
             (
-                "KATAKANA_YOON_HANDAKUTEN",
+                "Yōon with (han)dakuten",
                 std::vector<Symbol>
                 {
                     Symbol{"gya", QStringLiteral("ギャ")},

@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include "GetMy.h"
-#include "SettingsSerializer.h"
-
 
 int main(int argc, char *argv[])
 {

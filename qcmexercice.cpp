@@ -91,7 +91,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     for(int i= 0; i<NbrOfEntriesLine*ENTRY_PER_ROW; ++i)
     {
         div_t entryPos = div(i, NbrOfEntriesLine);
-        QcmEntryGuess* foo = new QcmEntryGuess();
+        QcmEntryGuess* foo = new QcmEntryGuess(); // TODO get rid of new because we can ?
         guesses.append(foo);
 
         if (i == stemSlot)
