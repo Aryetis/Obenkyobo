@@ -1,8 +1,6 @@
 #ifndef GETMY_H
 #define GETMY_H
-#include <QStackedWidget>
 #include <QSettings>
-#include <QCoreApplication>
 
 class QcmExercice;
 class FntSetting;
@@ -15,7 +13,6 @@ public:
     static GetMy & GetInstance()
     {
         static GetMy instance;
-//        instance.settingSerializerInstance = new QSettings(QString(QCoreApplication::applicationDirPath() + "/config.cfg"), QSettings::IniFormat);
         return instance;
     }
 
