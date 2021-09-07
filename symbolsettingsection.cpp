@@ -21,7 +21,7 @@ void SymbolSettingSection::InitializeSymbolSettingSection(SymbolsTables::Symbols
     ui->SymbolSettingSectionName->setText(symbolTableSection.Name());
 
     int i=0;
-    for (Symbol& symbol : symbolTableSection.Data()) // TODO now hardcode the case skip and fix the style
+    for (Symbol& symbol : symbolTableSection.Data())
     {
         SymbolSettingEntry* symbolEntry = new SymbolSettingEntry();
         symbolEntry->InitializeSymbolSettingEntry(&symbol);

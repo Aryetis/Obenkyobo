@@ -8,6 +8,8 @@ SymbolSettingEntry::SymbolSettingEntry(QWidget *parent) :
     ui->setupUi(this);
 }
 
+// TODO serialize symbol.Enabled() status
+
 SymbolSettingEntry::~SymbolSettingEntry()
 {
     delete ui;
@@ -24,7 +26,6 @@ void SymbolSettingEntry::InitializeSymbolSettingEntry(Symbol* _symbol)
 void SymbolSettingEntry::on_SymbolSettingEntryButton_clicked(bool checked)
 {
     symbol->Enabled(checked);
-//    ui->SymbolSettingEntryButton->update();
 }
 
 void SymbolSettingEntry::FakeClick(bool checked)

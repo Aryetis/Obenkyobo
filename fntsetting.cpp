@@ -10,9 +10,6 @@
 #define DEFAULT_ROMANJI_FNT_SIZE 40
 #define DEFAULT_STEM_BOOST_SIZE 20
 
-// TODO set max size of fonts depending of screen size and dpi
-// TODO fix problem when guessing long symbols in the same line eg : dya/ja + dyu/ju + dyo/jo
-
 FntSetting::FntSetting(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FntSetting),

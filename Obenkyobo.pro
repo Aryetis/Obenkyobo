@@ -1,11 +1,6 @@
 #-------------------------------------------------
 #
-# TODO : - guess hiragana / katakana from romanji mode (4 / 6 / 8 / 10 choices)
-#        - guess romanji from hiragana / katakana mode
-#        - custom selection mode
-#        - 3 subcategories for hiragana / katakana tenten
-#        - handakuten / dakuten mode / etc
-#        - weighted random list
+# TODO : - weighted random list
 #        - tweak packager.sh so it creates a RTU .zip
 #        - handle sleep
 #
