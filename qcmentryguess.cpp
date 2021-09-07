@@ -48,12 +48,12 @@ void QcmEntryGuess::SetGuess(Symbol s, QcmExercice::QcmExerciceType qcmType, boo
 
 void QcmEntryGuess::CorrectFontSize()
 {
-    int h = ui->EntryGuess->rect().height();
     int w = ui->EntryGuess->rect().width();
     int oldFontSize = ui->EntryGuess->font().pixelSize();
     int newFontSize = oldFontSize;
     QRect textRect = ui->EntryGuess->fontMetrics().boundingRect(ui->EntryGuess->text());
-    while ( textRect.height() > h  || textRect.width() >  w ) // TODO reducing too much, fix this
+    while ( textRect.width() >  w ) // rect().h is incorrect, probably cause it get stretched afterwards.
+                                    // TODO try to move this whole thing to resize() or similar ?
     {
         newFontSize -= 5;
         QFont correctedFont = QFont(ui->EntryGuess->font());
