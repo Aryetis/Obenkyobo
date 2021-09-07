@@ -20,6 +20,8 @@ public:
     ~QcmEntryGuess() override;
 
     void SetGuess(Symbol s, QcmExercice::QcmExerciceType qcmType, bool);
+    void CorrectFontSize();
+
 
 private slots:
     void on_EntryGuess_clicked();

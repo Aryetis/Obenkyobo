@@ -9,6 +9,8 @@
 
 #define ENTRY_PER_ROW 3
 
+// TODO adapt font size if taking too much size ? here or in qcmentryguess ?
+
 QcmExercice::QcmExercice(QWidget *parent) :
     QWidget(parent), ui(new Ui::QcmExercice), scoreCounter(0), errorCounter(0),
     currentQcmType(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM),
@@ -101,6 +103,9 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
 
         ui->EntriesGridLayout->addWidget(foo, entryPos.rem, entryPos.quot);
     }
+
+    for (QcmEntryGuess* entry : guesses)
+        entry->CorrectFontSize();
 
     ui->ScoreCounter->setNum(scoreCounter);
     ui->ErrorsCounter->setNum(errorCounter);

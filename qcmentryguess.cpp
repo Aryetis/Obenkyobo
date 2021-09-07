@@ -46,6 +46,23 @@ void QcmEntryGuess::SetGuess(Symbol s, QcmExercice::QcmExerciceType qcmType, boo
     correctGuess = b;
 }
 
+void QcmEntryGuess::CorrectFontSize()
+{
+    int h = ui->EntryGuess->rect().height();
+    int w = ui->EntryGuess->rect().width();
+    int oldFontSize = ui->EntryGuess->font().pixelSize();
+    int newFontSize = oldFontSize;
+    QRect textRect = ui->EntryGuess->fontMetrics().boundingRect(ui->EntryGuess->text());
+    while ( textRect.height() > h  || textRect.width() >  w ) // TODO reducing too much, fix this
+    {
+        newFontSize -= 5;
+        QFont correctedFont = QFont(ui->EntryGuess->font());
+        correctedFont.setPixelSize(newFontSize);
+        ui->EntryGuess->setFont(correctedFont);
+
+        textRect = ui->EntryGuess->fontMetrics().boundingRect(ui->EntryGuess->text());
+    }
+}
 
 void QcmEntryGuess::on_EntryGuess_clicked()
 {
