@@ -36,6 +36,12 @@ private slots:
     void on_BoostStemSlider_valueChanged(int size);
 
 private:
+    enum fntTypeEnum
+    {
+        hiragana,
+        katakana,
+        romanji
+    };
     Ui::FntSetting *ui;
 
     void RegisterFntsFromResources();
@@ -44,7 +50,7 @@ private:
     void RegisterKatakanaFont(QString fntAddress);
     void RegisterRomanjiFont(QString fntAddress);
 
-    QFont GetFont(QString fntAddress);
+    QFont GetFont(QString fntAddress, fntTypeEnum type);
 
     std::vector<QFont> hiraganaFonts{};
     std::vector<QFont> katakanaFonts{};

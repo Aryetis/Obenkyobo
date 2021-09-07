@@ -5,7 +5,9 @@
 #include <QDirIterator>
 #include <QDir>
 
-#define DEFAULT_FNT_SIZE 50
+#define DEFAULT_HIRAGANA_FNT_SIZE 60
+#define DEFAULT_KATAKANA_FNT_SIZE 60
+#define DEFAULT_ROMANJI_FNT_SIZE 40
 #define DEFAULT_STEM_BOOST_SIZE 20
 
 // TODO set max size of fonts depending of screen size and dpi
@@ -65,9 +67,9 @@ void FntSetting::RegisterFntsFromResources()
     ui->KatakanaFntDropdown->setCurrentIndex(currentKatakanaFntIdx);
     ui->RomanjiFntDropdown->setCurrentIndex(currentRomanjiFntIdx);
 
-    currentHiraganaSize =  settingsSerializer->value("FntSettings/HiraganaFntSize", DEFAULT_FNT_SIZE).toInt();
-    currentKatakanaSize =  settingsSerializer->value("FntSettings/KatakanaFntSize", DEFAULT_FNT_SIZE).toInt();
-    currentRomanjiSize =  settingsSerializer->value("FntSettings/RomanjiFntSize", DEFAULT_FNT_SIZE).toInt();
+    currentHiraganaSize =  settingsSerializer->value("FntSettings/HiraganaFntSize", DEFAULT_HIRAGANA_FNT_SIZE).toInt();
+    currentKatakanaSize =  settingsSerializer->value("FntSettings/KatakanaFntSize", DEFAULT_KATAKANA_FNT_SIZE).toInt();
+    currentRomanjiSize =  settingsSerializer->value("FntSettings/RomanjiFntSize", DEFAULT_ROMANJI_FNT_SIZE).toInt();
     ui->HiraganaSizeValueLabel->setText(QString::number(currentHiraganaSize));
     ui->HiraganaSizeSlider->setValue(currentHiraganaSize);
     ui->KatakanaSizeValueLabel->setText(QString::number(currentKatakanaSize));
@@ -81,24 +83,34 @@ void FntSetting::RegisterFntsFromResources()
 
 void FntSetting::RegisterHiraganaFont(QString fntAddress)
 {
-    hiraganaFonts.emplace_back(GetFont(fntAddress));
+    hiraganaFonts.emplace_back(GetFont(fntAddress, fntTypeEnum::hiragana));
 }
 
 void FntSetting::RegisterKatakanaFont(QString fntAddress)
 {
-    katakanaFonts.emplace_back(GetFont(fntAddress));
+    katakanaFonts.emplace_back(GetFont(fntAddress, fntTypeEnum::katakana));
 }
 
 void FntSetting::RegisterRomanjiFont(QString fntAddress)
 {
-    romanjiFonts.emplace_back(GetFont(fntAddress));
+    romanjiFonts.emplace_back(GetFont(fntAddress, fntTypeEnum::romanji));
 }
 
-QFont FntSetting::GetFont(QString fntAddress)
+QFont FntSetting::GetFont(QString fntAddress, fntTypeEnum type)
 {
     int id = QFontDatabase::addApplicationFont(fntAddress);
     QString name = QFontDatabase::applicationFontFamilies(id).at(0);
-    return QFont(name, DEFAULT_FNT_SIZE);
+    switch (type)
+    {
+        case fntTypeEnum::hiragana :
+            return QFont(name, DEFAULT_HIRAGANA_FNT_SIZE);
+        case fntTypeEnum::katakana :
+            return QFont(name, DEFAULT_KATAKANA_FNT_SIZE);
+        case fntTypeEnum::romanji :
+            return QFont(name, DEFAULT_ROMANJI_FNT_SIZE);
+    }
+
+    assert(false);
 }
 
 void FntSetting::on_HiraganaFntDropdown_activated(int index)

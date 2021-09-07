@@ -53,7 +53,7 @@ void QcmEntryGuess::CorrectFontSize()
     int newFontSize = oldFontSize;
     QRect textRect = ui->EntryGuess->fontMetrics().boundingRect(ui->EntryGuess->text());
     while ( textRect.width() >  w ) // rect().h is incorrect, probably cause it get stretched afterwards.
-                                    // TODO try to move this whole thing to resize() or similar ?
+                                    // TODO try to move this whole thing on QResizeEvent or similar ?
     {
         newFontSize -= 5;
         QFont correctedFont = QFont(ui->EntryGuess->font());

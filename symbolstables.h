@@ -37,11 +37,7 @@ public :
     LearningState GetLearningState() const { return learningState; }
     void SetLearningState(LearningState ls) { learningState = ls; }
 
-    inline static QPalette EnabledPal = QPalette(QColor(Qt::white));
-    inline static QPalette DisabledPal = QPalette(QColor(Qt::blue));
-
 private :
-    static QPalette disabledPal, enabledPal;
     QString romanji;
     QString jp;
     bool enabled;

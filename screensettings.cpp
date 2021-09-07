@@ -6,8 +6,9 @@
 
 ScreenSettings::ScreenSettings(QWidget *parent) :
     QWidget(parent), ui(new Ui::ScreenSettings),
-    luminosity(0), tint(0), noSettingAvailable(true), settingsSerializer(GetMy::GetInstance().SettingSerializer()),
-    desc(GetMy::GetInstance().Descriptor())
+    luminosity(0), tint(0), noSettingAvailable(true),
+    desc(GetMy::GetInstance().Descriptor()),
+    settingsSerializer(GetMy::GetInstance().SettingSerializer())
 {
     ui->setupUi(this);
 

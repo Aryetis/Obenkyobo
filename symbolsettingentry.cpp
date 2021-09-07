@@ -4,7 +4,6 @@
 SymbolSettingEntry::SymbolSettingEntry(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SymbolSettingEntry)
-
 {
     ui->setupUi(this);
 }
@@ -24,7 +23,5 @@ void SymbolSettingEntry::InitializeSymbolSettingEntry(Symbol* _symbol)
 void SymbolSettingEntry::on_SymbolSettingEntryButton_clicked(bool checked)
 {
     symbol->SetEnabled(checked);
-    ui->SymbolSettingEntryButton->setAutoFillBackground(true);
-    ui->SymbolSettingEntryButton->setPalette(checked ? Symbol::EnabledPal : Symbol::DisabledPal);
     ui->SymbolSettingEntryButton->update();
 }
