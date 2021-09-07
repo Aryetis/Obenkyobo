@@ -18,6 +18,7 @@ public:
     ~SymbolSettingEntry() override;
 
     void InitializeSymbolSettingEntry(Symbol* _symbol);
+    void FakeClick(bool b);
 
 private slots:
     void on_SymbolSettingEntryButton_clicked(bool checked);

@@ -18,10 +18,17 @@ void SymbolSettingEntry::InitializeSymbolSettingEntry(Symbol* _symbol)
     symbol = _symbol;
 
     ui->SymbolSettingEntryButton->setText(symbol->JP() + "\n" + symbol->Romanji());
+    ui->SymbolSettingEntryButton->setChecked(symbol->Enabled());
 }
 
 void SymbolSettingEntry::on_SymbolSettingEntryButton_clicked(bool checked)
 {
-    symbol->SetEnabled(checked);
-    ui->SymbolSettingEntryButton->update();
+    symbol->Enabled(checked);
+//    ui->SymbolSettingEntryButton->update();
+}
+
+void SymbolSettingEntry::FakeClick(bool checked)
+{
+    symbol->Enabled(checked);
+    ui->SymbolSettingEntryButton->setChecked(checked);
 }

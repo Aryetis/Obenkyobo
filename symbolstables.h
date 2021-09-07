@@ -31,8 +31,8 @@ public :
     const QString& JP() const { return jp; }
     const QString& Romanji() const {return romanji;}
 
-    bool GetEnabled() const { return enabled; }
-    void SetEnabled(bool b) { enabled = b; }
+    bool Enabled() const { return enabled; }
+    void Enabled(bool b) { enabled = b; }
 
     LearningState GetLearningState() const { return learningState; }
     void SetLearningState(LearningState ls) { learningState = ls; }

@@ -19,6 +19,9 @@ public:
 
     void InitializeSymbolSettingSection(SymbolsTables::SymbolsTableSection& symbolTableSection);
 
+private slots:
+    void on_SymbolSettingSectionCheckbox_clicked(bool checked);
+
 private:
     Ui::SymbolSettingSection *ui;
     QList<SymbolSettingEntry*> symbolSettingsEntries;

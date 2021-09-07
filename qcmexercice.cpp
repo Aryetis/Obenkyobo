@@ -42,7 +42,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
 
     for (SymbolsTables::SymbolsTableSection& SymbolSection : symbolsSections )
         for(Symbol& symbol : SymbolSection.Data())
-            if (symbol.GetEnabled())
+            if (symbol.Enabled())
                 entriesPool.push_back(&symbol);
 
     //************************ Initialize Random ************************

@@ -21,7 +21,7 @@ void SymbolSettingSection::InitializeSymbolSettingSection(SymbolsTables::Symbols
     ui->SymbolSettingSectionName->setText(symbolTableSection.Name());
 
     int i=0;
-    for (Symbol symbol : symbolTableSection.Data()) // TODO now hardcode the case skip and fix the style
+    for (Symbol& symbol : symbolTableSection.Data()) // TODO now hardcode the case skip and fix the style
     {
         SymbolSettingEntry* symbolEntry = new SymbolSettingEntry();
         symbolEntry->InitializeSymbolSettingEntry(&symbol);
@@ -35,4 +35,10 @@ void SymbolSettingSection::InitializeSymbolSettingSection(SymbolsTables::Symbols
 
     for (int i=0; i < ui->SymbolSettingSectionEntries->columnCount(); ++i)
         ui->SymbolSettingSectionEntries->setColumnStretch(i, 1);
+}
+
+void SymbolSettingSection::on_SymbolSettingSectionCheckbox_clicked(bool checked)
+{
+    for (SymbolSettingEntry* symbol : symbolSettingsEntries)
+        symbol->FakeClick(checked);
 }
