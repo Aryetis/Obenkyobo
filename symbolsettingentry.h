@@ -20,7 +20,7 @@ public:
     void InitializeSymbolSettingEntry(Symbol* _symbol);
 
 private slots:
-    void on_pushButton_clicked(bool checked);
+    void on_SymbolSettingEntryButton_clicked(bool checked);
 
 private:
     Ui::SymbolSettingEntry *ui;

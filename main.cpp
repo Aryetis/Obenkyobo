@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
     GetMy::GetInstance().SetSettingSerialier(&serializer);
 
     MainWindow w;
+    w.setFixedSize(GetMy::GetInstance().Descriptor().width, GetMy::GetInstance().Descriptor().height);
     w.show();
 #ifdef QT_NO_DEBUG
     return a.exec();

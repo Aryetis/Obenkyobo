@@ -6,13 +6,13 @@
 
 ScreenSettings::ScreenSettings(QWidget *parent) :
     QWidget(parent), ui(new Ui::ScreenSettings),
-    luminosity(0), tint(0), noSettingAvailable(true), settingsSerializer(GetMy::GetInstance().SettingSerializer())
+    luminosity(0), tint(0), noSettingAvailable(true), settingsSerializer(GetMy::GetInstance().SettingSerializer()),
+    desc(GetMy::GetInstance().Descriptor())
 {
     ui->setupUi(this);
 
     // Screen setting must be ready before switching widget (especially if first startup is in the dark)
     // => don't delay the initialization
-    desc = KoboPlatformFunctions::getKoboDeviceDescriptor();
     if (desc.frontlightSettings.hasFrontLight)
     {
         luminosity = settingsSerializer->value("ScreenSettings/luminosity", desc.frontlightSettings.frontlightMax / 2).toInt();

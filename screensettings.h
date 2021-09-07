@@ -2,7 +2,7 @@
 #define SCREENSETTINGS_H
 
 #include <QWidget>
-#include "koboplatformfunctions.h"
+#include "kobodevicedescriptor.h"
 
 namespace Ui
 {
@@ -26,7 +26,7 @@ private:
     int                  luminosity;
     int                  tint;
     bool                 noSettingAvailable;
-    KoboDeviceDescriptor desc;
+    const KoboDeviceDescriptor& desc;
 
     QSettings* settingsSerializer;
 };

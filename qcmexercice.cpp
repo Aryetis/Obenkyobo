@@ -56,7 +56,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
             QFont stemFont = fntSetting.GetCurrentRomanjiFnt();
             stemFont.setPixelSize(stemFont.pixelSize() + fntSetting.GetStemBoostSize());
             ui->GuessMe->setFont(stemFont);
-            ui->GuessMe->setText(QString::fromStdString(stem->Romanji()));
+            ui->GuessMe->setText(stem->Romanji());
             break;
         }
         case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :

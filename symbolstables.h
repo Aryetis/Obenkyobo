@@ -19,7 +19,7 @@ public :
     };
 
     Symbol() = default;
-    Symbol(std::string r_, QString j_)
+    Symbol(QString r_, QString j_)
         :romanji(r_), jp(j_), enabled(true), learningState(LearningState::unknown)
     {}
 
@@ -29,7 +29,7 @@ public :
     }
 
     const QString& JP() const { return jp; }
-    const std::string& Romanji() const {return romanji;}
+    const QString& Romanji() const {return romanji;}
 
     bool GetEnabled() const { return enabled; }
     void SetEnabled(bool b) { enabled = b; }
@@ -42,7 +42,7 @@ public :
 
 private :
     static QPalette disabledPal, enabledPal;
-    std::string romanji;
+    QString romanji;
     QString jp;
     bool enabled;
     LearningState learningState; // TODO turn this into a std::vector<int> and use with std::discrete_distribution to get actually weighted random result
@@ -55,16 +55,18 @@ namespace SymbolsTables
     class SymbolsTableSection
     {
 public :
-        SymbolsTableSection(QString _name, std::vector<Symbol> _data)
-            : name(_name), data(_data)
+        SymbolsTableSection(QString _name, std::vector<Symbol> _data, int _el)
+            : name(_name), data(_data), elementPerColumnInDisplaySet(_el)
         {}
 
         const QString& Name() const { return name; }
         std::vector<Symbol>& Data() { return data; } // not const as we need to adjust their LearningState
+        int ElementPerColumnInDisplaySet() { return elementPerColumnInDisplaySet; }
 
 private :
         QString name;
         std::vector<Symbol> data;
+        int elementPerColumnInDisplaySet;
     };
 
 
@@ -148,7 +150,8 @@ private :
                     Symbol{"wa", QStringLiteral("わ")},
                     Symbol{"(w)o", QStringLiteral("を")},
                     Symbol{"n", QStringLiteral("ん")}
-                }
+                },
+                5
             ),
 
             SymbolsTableSection
@@ -185,7 +188,8 @@ private :
                     Symbol{"pu", QStringLiteral("ぷ")},
                     Symbol{"pe", QStringLiteral("ぺ")},
                     Symbol{"po", QStringLiteral("ぽ")}
-                }
+                },
+                5
             ),
 
             SymbolsTableSection
@@ -220,7 +224,8 @@ private :
                     Symbol{"rya", QStringLiteral("りゃ")},
                     Symbol{"ryu", QStringLiteral("りゅ")},
                     Symbol{"ryo", QStringLiteral("りょ")}
-                }
+                },
+                3
             ),
 
             SymbolsTableSection
@@ -247,7 +252,8 @@ private :
                     Symbol{"pya", QStringLiteral("きゅ")},
                     Symbol{"pyu", QStringLiteral("きゅ")},
                     Symbol{"pyo", QStringLiteral("きょ")}
-                }
+                },
+                3
             )
         }
     );
@@ -318,7 +324,8 @@ private :
                     Symbol{"wa", QStringLiteral("ワ")},
                     Symbol{"(w)o", QStringLiteral("ヲ")},
                     Symbol{"n", QStringLiteral("ン")}
-                }
+                },
+                5
             ),
 
             SymbolsTableSection
@@ -355,7 +362,8 @@ private :
                     Symbol{"pu", QStringLiteral("プ")},
                     Symbol{"pe", QStringLiteral("ペ")},
                     Symbol{"po", QStringLiteral("ポ")}
-                }
+                },
+                5
             ),
 
             SymbolsTableSection
@@ -390,7 +398,8 @@ private :
                     Symbol{"rya", QStringLiteral("リャ")},
                     Symbol{"ryu", QStringLiteral("リュ")},
                     Symbol{"ryo", QStringLiteral("リョ")},
-                }
+                },
+                3
             ),
 
             SymbolsTableSection
@@ -417,7 +426,8 @@ private :
                     Symbol{"pya", QStringLiteral("ピャ")},
                     Symbol{"pyu", QStringLiteral("ピュ")},
                     Symbol{"pyo", QStringLiteral("ピョ")}
-                }
+                },
+                3
             )
         }
     );

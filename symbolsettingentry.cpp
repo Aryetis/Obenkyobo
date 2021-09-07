@@ -18,12 +18,10 @@ void SymbolSettingEntry::InitializeSymbolSettingEntry(Symbol* _symbol)
 {
     symbol = _symbol;
 
-//    const QString aze(symbol.Romanji());
-    QString tamere = symbol->JP() + "\n" /*+ QString(symbol.Romanji())*/;
-    ui->SymbolSettingEntryButton->setText(tamere);
+    ui->SymbolSettingEntryButton->setText(symbol->JP() + "\n" + symbol->Romanji());
 }
 
-void SymbolSettingEntry::on_pushButton_clicked(bool checked)
+void SymbolSettingEntry::on_SymbolSettingEntryButton_clicked(bool checked)
 {
     symbol->SetEnabled(checked);
     ui->SymbolSettingEntryButton->setAutoFillBackground(true);

@@ -1,6 +1,7 @@
 #ifndef GETMY_H
 #define GETMY_H
 #include <QSettings>
+#include "koboplatformfunctions.h"
 
 class QcmExercice;
 class FntSetting;
@@ -34,6 +35,8 @@ public:
     void SetSettingSerialier(QSettings* settingSerializer) { settingSerializerInstance = settingSerializer;}
     QSettings* SettingSerializer() { return settingSerializerInstance; }
 
+    const KoboDeviceDescriptor& Descriptor() { return desc; }
+
 private :
     GetMy() = default;
     QcmExercice* qcmExerciceInstance;
@@ -41,6 +44,8 @@ private :
     AppSettings* appSettingsInstance;
     ScreenSettings* screenSettingsInstance;
     SymbolSetting* symbolSettingInstance;
+
+    KoboDeviceDescriptor desc =  KoboPlatformFunctions::getKoboDeviceDescriptor();
 
     QSettings* settingSerializerInstance;
 };

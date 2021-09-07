@@ -38,7 +38,7 @@ void QcmEntryGuess::SetGuess(Symbol s, QcmExercice::QcmExerciceType qcmType, boo
         case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
         {
             ui->EntryGuess->setFont(GetMy::GetInstance().FntSettingWidget().GetCurrentRomanjiFnt());
-            ui->EntryGuess->setText(QString::fromStdString(s.Romanji()));
+            ui->EntryGuess->setText(s.Romanji());
             break;
         }
     }
