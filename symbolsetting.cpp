@@ -10,10 +10,6 @@ SymbolSetting::SymbolSetting(QWidget *parent) :
     ui->setupUi(this);
 
     GetMy::GetInstance().SetSymbolSettingWidget(this);
-
-//    ui->scrollArea->setFixedWidth(GetMy::GetInstance().Descriptor().width/2);
-//    ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-//    ui->scrollAreaWidgetContents->setFixedSize(GetMy::GetInstance().Descriptor().width/2, GetMy::GetInstance().Descriptor().height);
 }
 
 SymbolSetting::~SymbolSetting()
