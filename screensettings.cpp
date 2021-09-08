@@ -2,11 +2,11 @@
 #include "ui_screensettings.h"
 #include "GetMy.h"
 
-// TODO : fix weird layout empty space
+// TODO : fix tint not taking float value... that's in the qt-platform-plugin tho
 
 ScreenSettings::ScreenSettings(QWidget *parent) :
     QWidget(parent), ui(new Ui::ScreenSettings),
-    luminosity(0), tint(0), noSettingAvailable(true),
+    luminosity(0), tint(0), settingAvailable(false),
     desc(GetMy::GetInstance().Descriptor()),
     settingsSerializer(GetMy::GetInstance().SettingSerializer())
 {
@@ -18,7 +18,8 @@ ScreenSettings::ScreenSettings(QWidget *parent) :
     {
         luminosity = settingsSerializer->value("ScreenSettings/luminosity", desc.frontlightSettings.frontlightMax / 2.0).toFloat();
         ui->LuminositySlider->setValue(static_cast<int>(luminosity));
-        noSettingAvailable = false;
+        ui->LuminosityValue->setText(QString::number(static_cast<int>(luminosity)));
+        settingAvailable = true;
     }
     else
         ui->LuminosityContainer->setEnabled(false);
@@ -27,16 +28,14 @@ ScreenSettings::ScreenSettings(QWidget *parent) :
     {
         tint = settingsSerializer->value("ScreenSettings/tint", desc.frontlightSettings.naturalLightMax / 2.0).toFloat();
         ui->TintSlider->setValue(static_cast<int>(tint));
-        noSettingAvailable = false;
+        ui->TintValue->setText(QString::number(static_cast<double>(tint)));
+        settingAvailable = true;
     }
     else
         ui->TintContainer->setEnabled(false);
 
-    if (!noSettingAvailable)
-    {
-        ui->NoSettingsContainer->setEnabled(false);
+    if (settingAvailable)
         KoboPlatformFunctions::setFrontlightLevel(static_cast<int>(luminosity), static_cast<int>(tint));
-    }
 
     GetMy::GetInstance().SetScreenSettingsWidget(this);
 }
@@ -46,12 +45,23 @@ ScreenSettings::~ScreenSettings()
     delete ui;
 }
 
+bool ScreenSettings::AreSettingsAvailablePopup() const
+{
+    if(!settingAvailable)
+    {
+        GetMy::GetInstance().DisplayPopup("Sorry, no Screen Settings (luminosity, tint) available for your ereader");
+        return false;
+    }
+    return true;
+}
+
 void ScreenSettings::on_LuminositySlider_valueChanged(int value)
 {
     luminosity = ((static_cast<float>(desc.frontlightSettings.frontlightMax - desc.frontlightSettings.frontlightMin)
                    / static_cast<float>(ui->LuminositySlider->maximum()) * static_cast<float>(value)))
                 + static_cast<float>(desc.frontlightSettings.frontlightMin);
     settingsSerializer->setValue("ScreenSettings/luminosity", value);
+    ui->LuminosityValue->setText(QString::number(static_cast<int>(luminosity)));
     KoboPlatformFunctions::setFrontlightLevel(static_cast<int>(luminosity), static_cast<int>(tint));
 }
 
@@ -61,5 +71,6 @@ void ScreenSettings::on_TintSlider_valueChanged(int value)
               / static_cast<float>(ui->TintSlider->maximum()) * static_cast<float>(value)))
            + static_cast<float>(desc.frontlightSettings.naturalLightMin);
     settingsSerializer->setValue("ScreenSettings/tint", value);
+    ui->TintValue->setText(QString::number(static_cast<double>(tint)));
     KoboPlatformFunctions::setFrontlightLevel(static_cast<int>(luminosity), static_cast<int>(tint));
 }

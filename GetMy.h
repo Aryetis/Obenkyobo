@@ -1,6 +1,7 @@
 #ifndef GETMY_H
 #define GETMY_H
 #include <QSettings>
+#include <QMessageBox>
 #include "koboplatformfunctions.h"
 
 class QcmExercice;
@@ -36,6 +37,14 @@ public:
     QSettings* SettingSerializer() { return settingSerializerInstance; }
 
     const KoboDeviceDescriptor& Descriptor() { return desc; }
+
+    void DisplayPopup(QString message) const
+    {
+        QMessageBox popup;
+        popup.setText(message);
+        popup.setStyleSheet("QMessageBox { border: 3px solid black }");
+        popup.exec();
+    }
 
 private :
     GetMy() = default;

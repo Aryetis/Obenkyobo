@@ -15,7 +15,7 @@ AppSettings::AppSettings(QWidget *parent) :
     int appStatisticsError = settingsSerializer->value("AppStatistics/error", 0).toInt();
     ui->ErrorsCounterValueLabel->setText(QString::number(appStatisticsError));
 
-    nbrOfEntryLinesIdx = settingsSerializer->value("AppStatistics/entriesPerLineIdx", 2).toInt();
+    nbrOfEntryLinesIdx = settingsSerializer->value("AppSettings/entriesPerLineIdx", 2).toInt();
     ui->nbrOfEntryLinesDropdown->setCurrentIndex(nbrOfEntryLinesIdx);
 
     GetMy::GetInstance().SetAppSettingWidget(this);
@@ -38,5 +38,5 @@ void AppSettings::on_ResetStatsButton_clicked()
 void AppSettings::on_nbrOfEntryLinesDropdown_activated(int index)
 {
     nbrOfEntryLinesIdx = index;
-    settingsSerializer->setValue("AppStatistics/entriesPerLineIdx", index);
+    settingsSerializer->setValue("AppSettings/entriesPerLineIdx", index);
 }

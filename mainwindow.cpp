@@ -99,5 +99,6 @@ void MainWindow::on_actionFonts_Setting_triggered()
 
 void MainWindow::on_actionScreen_Setting_triggered()
 {
-    ui->ContentStackedWidget->setCurrentIndex(6);
+    if (GetMy::GetInstance().ScreenSettingsWidget().AreSettingsAvailablePopup())
+        ui->ContentStackedWidget->setCurrentIndex(6);
 }
