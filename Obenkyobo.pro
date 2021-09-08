@@ -53,7 +53,6 @@ RESOURCES += \
 
 HEADERS += \
     GetMy.h \
-    SettingsSerializer.h \
     mainwindow.h \
     symbolsetting.h \
     symbolsettingentry.h \

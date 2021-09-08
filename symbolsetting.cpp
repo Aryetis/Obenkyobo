@@ -10,6 +10,10 @@ SymbolSetting::SymbolSetting(QWidget *parent) :
     ui->setupUi(this);
 
     GetMy::GetInstance().SetSymbolSettingWidget(this);
+
+//    ui->scrollArea->setFixedWidth(GetMy::GetInstance().Descriptor().width/2);
+//    ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//    ui->scrollAreaWidgetContents->setFixedSize(GetMy::GetInstance().Descriptor().width/2, GetMy::GetInstance().Descriptor().height);
 }
 
 SymbolSetting::~SymbolSetting()
@@ -20,7 +24,7 @@ SymbolSetting::~SymbolSetting()
 void SymbolSetting::InitializeSymbolSetting(SymbolFamilyEnum _symbolFamily)
 {
     symbolFamily = _symbolFamily;
-    std::vector<SymbolsTables::SymbolsTableSection>& symbolsTableFamilyTarget = (symbolFamily)
+    std::vector<SymbolsTables::SymbolsTableSection>& symbolsTableFamilyTarget = (symbolFamily == SymbolFamilyEnum::hiragana)
             ? SymbolsTables::HiraganaSymbolsTableFamily.Data()
             : SymbolsTables::KatakanaSymbolsTableFamily.Data();
 

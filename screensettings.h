@@ -23,8 +23,8 @@ private slots:
 
 private:
     Ui::ScreenSettings*  ui;
-    int                  luminosity;
-    int                  tint;
+    float                luminosity;
+    float                tint;
     bool                 noSettingAvailable;
     const KoboDeviceDescriptor& desc;
 

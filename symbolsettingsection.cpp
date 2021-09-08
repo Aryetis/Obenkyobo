@@ -33,8 +33,9 @@ void SymbolSettingSection::InitializeSymbolSettingSection(SymbolsTables::Symbols
         ui->SymbolSettingSectionEntries->addWidget(symbolEntry, entryPos.quot, entryPos.rem);
     }
 
-    for (int i=0; i < ui->SymbolSettingSectionEntries->columnCount(); ++i)
-        ui->SymbolSettingSectionEntries->setColumnStretch(i, 1);
+//    for (int i=0; i < ui->SymbolSettingSectionEntries->columnCount(); ++i)
+//        ui->SymbolSettingSectionEntries->setColumnStretch(i, 1);
+
 }
 
 void SymbolSettingSection::on_SymbolSettingSectionCheckbox_clicked(bool checked)
