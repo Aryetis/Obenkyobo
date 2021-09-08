@@ -40,6 +40,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    void keyPressEvent(QKeyEvent *event) override;
 };
 
 #endif // MAINWINDOW_H

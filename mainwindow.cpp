@@ -4,6 +4,10 @@
 #include "qcmexercice.h"
 #include "GetMy.h"
 #include "symbolsetting.h"
+#include <QKeyEvent>
+
+#define POWERBUTTON KoboKey::Key_Power
+#define SLEEPCOVERBUTTON KoboKey::Key_SleepCover
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow)
@@ -16,6 +20,18 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+// TODO handle sleep (irl too, ahahahah ...)
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == POWERBUTTON)
+    {
+        GetMy::GetInstance().DisplayPopup("powerbutton pressed");
+    }
+    else if (event->key() == SLEEPCOVERBUTTON)
+    {
+        GetMy::GetInstance().DisplayPopup("sleep cover button triggered");
+    }
+}
 
 
 //===========================================================================
