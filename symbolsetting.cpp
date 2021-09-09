@@ -2,12 +2,16 @@
 #include "ui_symbolsetting.h"
 #include "GetMy.h"
 #include "symbolsettingsection.h"
+#include "symbolstables.h"
 
 SymbolSetting::SymbolSetting(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SymbolSetting)
 {
     ui->setupUi(this);
+
+    SymbolsTables::HiraganaSymbolsTableFamily.InitializeSerializedVals();
+    SymbolsTables::KatakanaSymbolsTableFamily.InitializeSerializedVals();
 
     GetMy::GetInstance().SetSymbolSettingWidget(this);
 }
