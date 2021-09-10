@@ -20,6 +20,8 @@ QcmExercice::QcmExercice(QWidget *parent) :
 
 QcmExercice::~QcmExercice()
 {
+    qDeleteAll(guesses);
+    guesses.clear();
     delete ui;
 }
 
@@ -91,7 +93,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     for(int i= 0; i<NbrOfEntriesLine*ENTRY_PER_ROW; ++i)
     {
         div_t entryPos = div(i, NbrOfEntriesLine);
-        QcmEntryGuess* foo = new QcmEntryGuess(); // TODO get rid of new because we can ?
+        QcmEntryGuess* foo = new QcmEntryGuess();
         guesses.append(foo);
 
         if (i == stemSlot)

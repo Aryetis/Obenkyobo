@@ -35,6 +35,7 @@ CONFIG += c++17 \
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    symbols.cpp \
     symbolsetting.cpp \
     symbolsettingentry.cpp \
     symbolsettingsection.cpp \
@@ -57,6 +58,7 @@ RESOURCES += \
 HEADERS += \
     GetMy.h \
     mainwindow.h \
+    symbols.h \
     symbolsetting.h \
     symbolsettingentry.h \
     symbolsettingsection.h \

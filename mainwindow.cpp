@@ -62,7 +62,6 @@ void MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()
 
 void MainWindow::on_actionHiragana_to_Romanji_Kbd_triggered()
 {
-    // TODO kbdQcm init
     ui->ContentStackedWidget->setCurrentIndex(2);
 }
 
@@ -90,7 +89,6 @@ void MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()
 
 void MainWindow::on_actionKatakana_to_Romanji_Kbd_triggered()
 {
-    // TODO kbdQcm init
     ui->ContentStackedWidget->setCurrentIndex(2);
 }
 
