@@ -8,8 +8,6 @@ SymbolSettingEntry::SymbolSettingEntry(QWidget *parent) :
     ui->setupUi(this);
 }
 
-// TODO serialize symbol.Enabled() status
-
 SymbolSettingEntry::~SymbolSettingEntry()
 {
     delete ui;

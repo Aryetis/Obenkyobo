@@ -38,6 +38,7 @@ SOURCES += \
     symbolsetting.cpp \
     symbolsettingentry.cpp \
     symbolsettingsection.cpp \
+    symbolstables.cpp \
     widgetwelcome.cpp \
     qcmexercice.cpp \
     keyboardexercice.cpp \
