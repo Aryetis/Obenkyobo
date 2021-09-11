@@ -89,7 +89,7 @@ void AppSettings::on_RandomnessDropdown_currentIndexChanged(int index)
 
 bool AppSettings::IsWeightedRandomEnabled() const
 {
-    return randomChoiceIdx == 0;
+    return randomChoiceIdx == 1;
 }
 
 // TODO now fix
