@@ -109,17 +109,26 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     int NbrOfEntriesLine = GetMy::GetInstance().AppSettingWidget().GetNumberOfEntryLine();
     int NbrOfEntriesRow = GetMy::GetInstance().AppSettingWidget().GetNumberOfEntryRow();
     int stemSlot = Tools::GetRandomInt(0, (NbrOfEntriesLine*NbrOfEntriesRow)-1);
-// TODO now must remove stem from shuffledSymbols to avoid double entries
+    Symbol* joker = nullptr; // Symbol replaced by stem
     for(int i= 0; i<NbrOfEntriesLine*NbrOfEntriesRow; ++i)
     {
         div_t entryPos = div(i, NbrOfEntriesLine);
         QcmEntryGuess* foo = new QcmEntryGuess();
         guesses.append(foo);
+        Symbol* curSym = shuffledSymbols[static_cast<std::vector<Symbol>::size_type>(i)];
 
         if (i == stemSlot)
+        {
             foo->SetGuess(stem, currentQcmType, true);
+            joker = curSym;
+        }
         else
-            foo->SetGuess(shuffledSymbols[static_cast<std::vector<Symbol>::size_type>(i)], currentQcmType, false);
+        {
+            if (curSym == stem) // avoid double entries
+                foo->SetGuess(joker, currentQcmType, false);
+            else
+                foo->SetGuess(curSym, currentQcmType, false);
+        }
 
         ui->EntriesGridLayout->addWidget(foo, entryPos.rem, entryPos.quot);
     }
