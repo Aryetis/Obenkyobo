@@ -7,8 +7,6 @@
 #include <algorithm>
 #include "appsettings.h"
 
-#define ENTRY_PER_ROW 3
-
 QcmExercice::QcmExercice(QWidget *parent) :
     QWidget(parent), ui(new Ui::QcmExercice), scoreCounter(0), errorCounter(0),
     currentQcmType(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM),
@@ -36,11 +34,11 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
 
     //************************ Initialize Entries Pool ************************
     std::vector<Symbol*> entriesPool;
-    std::vector<SymbolsTables::SymbolsTableSection>& symbolsSections = (qcmType < Katakana_to_Romanji_QCM)
+    std::vector<SymbolsTableSection>& symbolsSections = (qcmType < Katakana_to_Romanji_QCM)
             ? SymbolsTables::HiraganaSymbolsTableFamily.Data()  // hiragana QCM
             : SymbolsTables::KatakanaSymbolsTableFamily.Data(); // katakana QCM
 
-    for (SymbolsTables::SymbolsTableSection& SymbolSection : symbolsSections )
+    for (SymbolsTableSection& SymbolSection : symbolsSections )
         for(Symbol& symbol : SymbolSection.Data())
             if (symbol.Enabled())
                 entriesPool.push_back(&symbol);
@@ -89,8 +87,9 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
 
     //************************ Initialize UI stuff ************************
     int NbrOfEntriesLine = GetMy::GetInstance().AppSettingWidget().GetNumberOfEntryLine();
-    int stemSlot = Tools::GetRandomInt(0, (NbrOfEntriesLine*ENTRY_PER_ROW)-1);
-    for(int i= 0; i<NbrOfEntriesLine*ENTRY_PER_ROW; ++i)
+    int NbrOfEntriesRow = GetMy::GetInstance().AppSettingWidget().GetNumberOfEntryRow();
+    int stemSlot = Tools::GetRandomInt(0, (NbrOfEntriesLine*NbrOfEntriesRow)-1);
+    for(int i= 0; i<NbrOfEntriesLine*NbrOfEntriesRow; ++i)
     {
         div_t entryPos = div(i, NbrOfEntriesLine);
         QcmEntryGuess* foo = new QcmEntryGuess();

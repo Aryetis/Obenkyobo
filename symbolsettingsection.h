@@ -17,7 +17,7 @@ public:
     explicit SymbolSettingSection(QWidget *parent = nullptr);
     ~SymbolSettingSection() override;
 
-    void InitializeSymbolSettingSection(SymbolsTables::SymbolsTableSection& symbolTableSection);
+    void InitializeSymbolSettingSection(SymbolsTableSection& symbolTableSection);
 
 private slots:
     void on_SymbolSettingSectionCheckbox_clicked(bool checked);

@@ -13,7 +13,7 @@ SymbolSettingSection::~SymbolSettingSection()
     delete ui;
 }
 
-void SymbolSettingSection::InitializeSymbolSettingSection(SymbolsTables::SymbolsTableSection& symbolTableSection)
+void SymbolSettingSection::InitializeSymbolSettingSection(SymbolsTableSection& symbolTableSection)
 {
     qDeleteAll(symbolSettingsEntries);
     symbolSettingsEntries.clear();
@@ -32,10 +32,6 @@ void SymbolSettingSection::InitializeSymbolSettingSection(SymbolsTables::Symbols
         div_t entryPos = div(i++, symbolTableSection.ElementPerColumnInDisplaySet());
         ui->SymbolSettingSectionEntries->addWidget(symbolEntry, entryPos.quot, entryPos.rem);
     }
-
-//    for (int i=0; i < ui->SymbolSettingSectionEntries->columnCount(); ++i)
-//        ui->SymbolSettingSectionEntries->setColumnStretch(i, 1);
-
 }
 
 void SymbolSettingSection::on_SymbolSettingSectionCheckbox_clicked(bool checked)

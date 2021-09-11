@@ -3,6 +3,9 @@
 
 #include <QWidget>
 #include <QSettings>
+#include "qcmexercice.h"
+
+#define ENTRY_PER_ROW 3
 
 namespace Ui
 {
@@ -18,6 +21,10 @@ public:
     ~AppSettings() override;
 
     int GetNumberOfEntryLine() const { return nbrOfEntryLinesIdx+1; }
+    int GetNumberOfEntryRow() const { return ENTRY_PER_ROW; }
+    int GetNumberOfEntry() const { return (nbrOfEntryLinesIdx+1) * ENTRY_PER_ROW; }
+    bool IsThereEnough(QcmExercice::QcmExerciceType qcmType) const;
+    void InitializeUIValues() const;
 
 private slots:
     void on_ResetStatsButton_clicked();

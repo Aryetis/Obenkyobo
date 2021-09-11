@@ -24,14 +24,14 @@ SymbolSetting::~SymbolSetting()
 void SymbolSetting::InitializeSymbolSetting(SymbolFamilyEnum _symbolFamily)
 {
     symbolFamily = _symbolFamily;
-    std::vector<SymbolsTables::SymbolsTableSection>& symbolsTableFamilyTarget = (symbolFamily == SymbolFamilyEnum::hiragana)
+    std::vector<SymbolsTableSection>& symbolsTableFamilyTarget = (symbolFamily == SymbolFamilyEnum::hiragana)
             ? SymbolsTables::HiraganaSymbolsTableFamily.Data()
             : SymbolsTables::KatakanaSymbolsTableFamily.Data();
 
     qDeleteAll(symbolsTableSections);
     symbolsTableSections.clear();
 
-    for (SymbolsTables::SymbolsTableSection& symbolTableSection : symbolsTableFamilyTarget )
+    for (SymbolsTableSection& symbolTableSection : symbolsTableFamilyTarget )
     {
         SymbolSettingSection* symbolSettingSection = new SymbolSettingSection();
         symbolSettingSection->InitializeSymbolSettingSection(symbolTableSection);

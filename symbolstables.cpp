@@ -1,12 +1,12 @@
 #include "symbolstables.h"
 
 //========================================== HIRAGANA ==========================================
-SymbolsTables::SymbolsTableFamily SymbolsTables::HiraganaSymbolsTableFamily
+SymbolsTableFamily SymbolsTables::HiraganaSymbolsTableFamily
 (
     "Hiragana",
-    std::vector<SymbolsTables::SymbolsTableSection>
+    std::vector<SymbolsTableSection>
     {
-        SymbolsTables::SymbolsTableSection
+        SymbolsTableSection
         (
             "Gojūon",
             std::vector<Symbol>
@@ -71,7 +71,7 @@ SymbolsTables::SymbolsTableFamily SymbolsTables::HiraganaSymbolsTableFamily
             5
         ),
 
-        SymbolsTables::SymbolsTableSection
+        SymbolsTableSection
         (
             "Gojūon with (han)dakuten",
             std::vector<Symbol>
@@ -109,7 +109,7 @@ SymbolsTables::SymbolsTableFamily SymbolsTables::HiraganaSymbolsTableFamily
             5
         ),
 
-        SymbolsTables::SymbolsTableSection
+        SymbolsTableSection
         (
             "Yōon",
             std::vector<Symbol>
@@ -145,7 +145,7 @@ SymbolsTables::SymbolsTableFamily SymbolsTables::HiraganaSymbolsTableFamily
             3
         ),
 
-        SymbolsTables::SymbolsTableSection
+        SymbolsTableSection
         (
             "Yōon with (han)dakuten",
             std::vector<Symbol>
@@ -176,12 +176,12 @@ SymbolsTables::SymbolsTableFamily SymbolsTables::HiraganaSymbolsTableFamily
 );
 
 //========================================== KATAKANA ==========================================
-SymbolsTables::SymbolsTableFamily SymbolsTables::KatakanaSymbolsTableFamily = SymbolsTables::SymbolsTableFamily
+SymbolsTableFamily SymbolsTables::KatakanaSymbolsTableFamily
 (
     "Katakana",
-    std::vector<SymbolsTables::SymbolsTableSection>
+    std::vector<SymbolsTableSection>
     {
-        SymbolsTables::SymbolsTableSection
+        SymbolsTableSection
         (
             "Gojūon",
             std::vector<Symbol>
@@ -246,7 +246,7 @@ SymbolsTables::SymbolsTableFamily SymbolsTables::KatakanaSymbolsTableFamily = Sy
             5
         ),
 
-        SymbolsTables::SymbolsTableSection
+        SymbolsTableSection
         (
             "Gojūon with (han)dakuten",
             std::vector<Symbol>
@@ -284,7 +284,7 @@ SymbolsTables::SymbolsTableFamily SymbolsTables::KatakanaSymbolsTableFamily = Sy
             5
         ),
 
-        SymbolsTables::SymbolsTableSection
+        SymbolsTableSection
         (
             "Yōon",
             std::vector<Symbol>
@@ -320,7 +320,7 @@ SymbolsTables::SymbolsTableFamily SymbolsTables::KatakanaSymbolsTableFamily = Sy
             3
         ),
 
-        SymbolsTables::SymbolsTableSection
+        SymbolsTableSection
         (
             "Yōon with (han)dakuten",
             std::vector<Symbol>

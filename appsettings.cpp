@@ -10,20 +10,51 @@ AppSettings::AppSettings(QWidget *parent) :
 
     // Everything below needs to be ready before switching widget => don't delay the initialization
     settingsSerializer = GetMy::GetInstance().SettingSerializer();
+    nbrOfEntryLinesIdx = settingsSerializer->value("AppSettings/entriesPerLineIdx", 2).toInt();
+
+    InitializeUIValues();
+
+    GetMy::GetInstance().SetAppSettingWidget(this);
+}
+
+void AppSettings::InitializeUIValues() const
+{
     int appStatisticsScore = settingsSerializer->value("AppStatistics/score", 0).toInt();
     ui->ScoreCounterValueLabel->setText(QString::number(appStatisticsScore));
     int appStatisticsError = settingsSerializer->value("AppStatistics/error", 0).toInt();
     ui->ErrorsCounterValueLabel->setText(QString::number(appStatisticsError));
 
-    nbrOfEntryLinesIdx = settingsSerializer->value("AppSettings/entriesPerLineIdx", 2).toInt();
     ui->nbrOfEntryLinesDropdown->setCurrentIndex(nbrOfEntryLinesIdx);
 
-    GetMy::GetInstance().SetAppSettingWidget(this);
 }
 
 AppSettings::~AppSettings()
 {
     delete ui;
+}
+
+bool AppSettings::IsThereEnough(QcmExercice::QcmExerciceType qcmType) const
+{
+    int minRequiredSymbol = GetMy::GetInstance().AppSettingWidget().GetNumberOfEntryLine() *
+                            GetMy::GetInstance().AppSettingWidget().GetNumberOfEntryRow();
+
+    switch (qcmType)
+    {
+        case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
+        case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_Kbd :
+        case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :
+        {
+            return (SymbolsTables::HiraganaSymbolsTableFamily.NbrOfEnabled() >= minRequiredSymbol);
+        }
+        case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
+        case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
+        case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
+        {
+            return (SymbolsTables::KatakanaSymbolsTableFamily.NbrOfEnabled() >= minRequiredSymbol);
+        }
+    }
+
+    assert(false);
 }
 
 void AppSettings::on_ResetStatsButton_clicked()
