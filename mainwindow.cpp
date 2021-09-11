@@ -6,6 +6,10 @@
 #include "symbolsetting.h"
 #include <QKeyEvent>
 
+//#include "kobofbscreen.h"
+//#include "kobodevicedescriptor.h"
+#include "koboplatformfunctions.h"
+
 #define POWERBUTTON KoboKey::Key_Power
 #define SLEEPCOVERBUTTON KoboKey::Key_SleepCover
 

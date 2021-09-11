@@ -162,6 +162,16 @@ void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
         }
     }
 
+    // TODO now why you doing nothing
+    KoboPlatformFunctions::clearScreen(true);
+    KoboPlatformFunctions::clearScreen(true);
+    KoboPlatformFunctions::clearScreen(true);
+    KoboPlatformFunctions::clearScreen(true);
+    KoboPlatformFunctions::clearScreen(true);
+    KoboPlatformFunctions::clearScreen(true);
+    KoboPlatformFunctions::clearScreen(true);
+    KoboPlatformFunctions::clearScreen(true);
+
     // TODO feedback and print previous answer in upper right counter ?
     InitializeExercice(currentQcmType);
 }
