@@ -67,6 +67,8 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     else
         stem = *Tools::GetRandom(shuffledSymbols.begin(), shuffledSymbols.end());
 
+    assert(stem != nullptr);
+
     FntSetting& fntSetting = GetMy::GetInstance().FntSettingWidget();
     switch (qcmType)
     {
@@ -107,6 +109,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     int NbrOfEntriesLine = GetMy::GetInstance().AppSettingWidget().GetNumberOfEntryLine();
     int NbrOfEntriesRow = GetMy::GetInstance().AppSettingWidget().GetNumberOfEntryRow();
     int stemSlot = Tools::GetRandomInt(0, (NbrOfEntriesLine*NbrOfEntriesRow)-1);
+// TODO now must remove stem from shuffledSymbols to avoid double entries
     for(int i= 0; i<NbrOfEntriesLine*NbrOfEntriesRow; ++i)
     {
         div_t entryPos = div(i, NbrOfEntriesLine);
