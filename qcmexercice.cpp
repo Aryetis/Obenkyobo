@@ -56,7 +56,6 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
         int stemWeightedIndexRandom = Tools::GetRandomInt(0, targetFamily.WeightOfEnabled());
         for (Symbol* symbol : shuffledSymbols)
         {
-            // wrong ... the more you learn the more it will be pickd you dum dum
             stemWeightedIndexRandom -= symbol->LearningState();
             if (stemWeightedIndexRandom <= 0)
             {
@@ -141,23 +140,26 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
 
 void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
 {
-    if (correct)
+    if ( correct )
     {
         ++scoreCounter;
         int appStatisticsScore = settingsSerializer->value("AppStatistics/score", 0).toInt();
         settingsSerializer->setValue("AppStatistics/score", ++appStatisticsScore);
-        int learningState = entryGuess->GetSymbol()->LearningState();
-        if (learningState < 5 )
-            entryGuess->GetSymbol()->LearningState(learningState+1);
+        int EntryGuessLearningState = entryGuess->GetSymbol()->LearningState();
+        if ( EntryGuessLearningState > 0 )
+            entryGuess->GetSymbol()->LearningState(EntryGuessLearningState-1);
     }
     else
     {
         ++errorCounter;
         int appStatisticsError = settingsSerializer->value("AppStatistics/error", 0).toInt();
         settingsSerializer->setValue("AppStatistics/error", ++appStatisticsError);
-        int learningState = entryGuess->GetSymbol()->LearningState();
-        if (learningState > 0  )
-            entryGuess->GetSymbol()->LearningState(learningState-1);
+        int EntryGuessLearningState = entryGuess->GetSymbol()->LearningState();
+        if ( EntryGuessLearningState < Symbol::GetMaxlearningState() )
+        {
+            stem->LearningState(stem->LearningState()+1);
+            entryGuess->GetSymbol()->LearningState(EntryGuessLearningState+1);
+        }
     }
 
     // TODO feedback and print previous answer in upper right counter ?

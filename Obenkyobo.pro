@@ -5,6 +5,7 @@
 #        - handle sleep
 #        - full refresh screen every 1/2/5/10/20 guesses
 #        - Wifi switch (for debug or background dl)
+#        - hard refresh at each stacked widget switch
 #
 #-------------------------------------------------
 

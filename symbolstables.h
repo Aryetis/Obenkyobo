@@ -8,6 +8,8 @@
 #include <QPalette>
 #include "GetMy.h"
 
+#define MAX_LEARNING_STATE_VALUE 5
+
 //================================== Symbol ==================================
 class SymbolsTableFamily;
 class Symbol
@@ -25,7 +27,7 @@ public :
         enabledSerializedAddress = "Symbols/enabled_"+serializedAddress+"_"+romanji;
         enabled = GetMy::GetInstance().SettingSerializer()->value(enabledSerializedAddress, true).toBool();
         learningStateSerializedAddress = "Symbols/learningState"+serializedAddress+"_"+romanji;
-        learningState = GetMy::GetInstance().SettingSerializer()->value(learningStateSerializedAddress, 0).toInt();
+        learningState = GetMy::GetInstance().SettingSerializer()->value(learningStateSerializedAddress, 5).toInt();
         return enabled;
     }
 
@@ -41,11 +43,9 @@ public :
     void Enabled(bool b); // inlined at the end because of parentedFamily->NbrOfEnabled
 
     int LearningState() const { return learningState; }
-    void LearningState(int ls)
-    {
-        learningState = ls;
-        GetMy::GetInstance().SettingSerializer()->setValue(learningStateSerializedAddress, learningState);
-    }
+    void LearningState(int ls);
+
+    static int GetMaxlearningState() { return MAX_LEARNING_STATE_VALUE; }
 
 private :
     QString romanji;
@@ -53,7 +53,7 @@ private :
     QString enabledSerializedAddress;
     bool enabled;
     QString learningStateSerializedAddress;
-    int learningState; // 0 <=> unknown, [1;3] learning, [4;5] learned)
+    int learningState; // [0;1] learned, [2;4] learning, 5 unknown)
     SymbolsTableFamily* parentedFamily;
 };
 
@@ -127,6 +127,13 @@ inline void Symbol::Enabled(bool b)
             parentedFamily->WeightOfEnabled(parentedFamily->WeightOfEnabled()-learningState);
         }
     }
+}
+
+inline void Symbol::LearningState(int ls)
+{
+    parentedFamily->WeightOfEnabled( parentedFamily->WeightOfEnabled() + (ls-learningState));
+    learningState = ls;
+    GetMy::GetInstance().SettingSerializer()->setValue(learningStateSerializedAddress, learningState);
 }
 
 
