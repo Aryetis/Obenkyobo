@@ -9,12 +9,13 @@ LongName="Obenkyobo !"
 RemoteIp="192.168.1.18"
 Author="Aryetis"
 KfMonDbComment="Obenkyo clone-ish"
+LauncherName=$4_launcher.sh
 
 #Launcher and application
 mkdir -p $3/Output/.adds/$4
 cp $3/$4 $3/Output/.adds/$4/$4
-cp $2/OtherFiles/Resources/launcher.sh $3/Output/.adds/$4/launcher.sh
-sed  -i "1s/.*/""export APPNAME=$4""/" $3/Output/.adds/$4/launcher.sh
+cp $2/OtherFiles/Resources/launcher.sh $3/Output/.adds/$4/$LauncherName
+sed  -i "1s/.*/""export APPNAME=$4""/" $3/Output/.adds/$4/$LauncherName
 if [[ $1 == debug ]];
 then
     cp $2/OtherFiles/Resources/debugEnv.sh $3/Output/.adds/$4/debugEnv.sh
@@ -33,12 +34,18 @@ cp $2/OtherFiles/Resources/KfMonTemplate.ini $3/Output/.adds/kfmon/config/$4.ini
 sed -i "s/shortName/$4/g" $3/Output/.adds/kfmon/config/$4.ini
 sed -i "s/longName/$LongName/g" $3/Output/.adds/kfmon/config/$4.ini
 sed -i "s/KfMonDbComment/$KfMonDbComment/g" $3/Output/.adds/kfmon/config/$4.ini
+sed -i "s/launcherName/$LauncherName/g" $3/Output/.adds/kfmon/config/$4.ini
 
 #NickelMenu
 mkdir -p $3/Output/.adds/nm
 cp $2/OtherFiles/Resources/nmTemplate $3/Output/.adds/nm/$4
 sed -i "s/shortName/$4/g" $3/Output/.adds/nm/$4
 sed -i "s/longName/$LongName/g" $3/Output/.adds/nm/$4
-sed -i "s~launcherAddress~/mnt/onboard/.adds/$4/launcher.sh~g" $3/Output/.adds/nm/$4
+sed -i "s~launcherAddress~/mnt/onboard/.adds/$4/$LauncherName~g" $3/Output/.adds/nm/$4
 
 #+ zip it up if building release
+if [[ $1 == release ]];
+then
+    cd $3/Output
+    zip -FSr $4_AIO_Release.zip ./
+fi

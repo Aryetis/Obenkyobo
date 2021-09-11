@@ -2,8 +2,6 @@
 #include "ui_screensettings.h"
 #include "GetMy.h"
 
-// TODO seperate val Init && UI init
-
 // Note : the whole kobo family frontlight drivers only take integeter, so we're good setting sliders's step to 1
 ScreenSettings::ScreenSettings(QWidget *parent) :
     QWidget(parent), ui(new Ui::ScreenSettings),
