@@ -34,11 +34,11 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
 
     //************************ Initialize Entries Pool ************************
     std::vector<Symbol*> entriesPool;
-    std::vector<SymbolsTableSection>& symbolsSections = (qcmType < Katakana_to_Romanji_QCM)
-            ? SymbolsTables::HiraganaSymbolsTableFamily.Data()  // hiragana QCM
-            : SymbolsTables::KatakanaSymbolsTableFamily.Data(); // katakana QCM
+    SymbolsTableFamily& targetFamily = (qcmType < Katakana_to_Romanji_QCM)
+            ? SymbolsTables::HiraganaSymbolsTableFamily  // hiragana QCM
+            : SymbolsTables::KatakanaSymbolsTableFamily; // katakana QCM
 
-    for (SymbolsTableSection& SymbolSection : symbolsSections )
+    for (SymbolsTableSection& SymbolSection : targetFamily.Data() )
         for(Symbol& symbol : SymbolSection.Data())
             if (symbol.Enabled())
                 entriesPool.push_back(&symbol);
@@ -50,15 +50,22 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     std::shuffle(std::begin(shuffledSymbols), std::end(shuffledSymbols), Tools::rng_engine);
 
     //************************ Initialize Stem  ************************
-    Symbol* stem;
+    Symbol* stem = nullptr;
     if (GetMy::GetInstance().AppSettingWidget().IsWeightedRandomEnabled())
     {
-        // TODO Now learningState
+        int stemWeightedIndexRandom = Tools::GetRandomInt(0, targetFamily.WeightOfEnabled());
+        for (Symbol* symbol : shuffledSymbols)
+        {
+            stemWeightedIndexRandom -= symbol->LearningState();
+            if (stemWeightedIndexRandom <= 0)
+            {
+                stem = symbol;
+                break;
+            }
+        }
     }
     else
-    {
         stem = *Tools::GetRandom(shuffledSymbols.begin(), shuffledSymbols.end());
-    }
 
     FntSetting& fntSetting = GetMy::GetInstance().FntSettingWidget();
     switch (qcmType)
@@ -117,6 +124,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     for (QcmEntryGuess* entry : guesses)
         entry->CorrectFontSize();
 
+    //************************ UI score error Counters ************************
     ui->ScoreCounter->setNum(scoreCounter);
     ui->ErrorsCounter->setNum(errorCounter);
 }
