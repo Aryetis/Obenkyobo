@@ -42,6 +42,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
         for(Symbol& symbol : SymbolSection.Data())
             if (symbol.Enabled())
                 entriesPool.push_back(&symbol);
+    // TODO Now learningState
 
     //************************ Initialize Random ************************
     FntSetting& fntSetting = GetMy::GetInstance().FntSettingWidget();
@@ -96,9 +97,9 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
         guesses.append(foo);
 
         if (i == stemSlot)
-            foo->SetGuess(*stem, currentQcmType, true);
+            foo->SetGuess(stem, currentQcmType, true);
         else
-            foo->SetGuess(*(shuffledSymbols[static_cast<std::vector<Symbol>::size_type>(i)]), currentQcmType, false);
+            foo->SetGuess(shuffledSymbols[static_cast<std::vector<Symbol>::size_type>(i)], currentQcmType, false);
 
         ui->EntriesGridLayout->addWidget(foo, entryPos.rem, entryPos.quot);
     }
@@ -110,24 +111,26 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     ui->ErrorsCounter->setNum(errorCounter);
 }
 
-void QcmExercice::OnGuessClicked(bool correct)
+void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
 {
     if (correct)
     {
         ++scoreCounter;
         int appStatisticsScore = settingsSerializer->value("AppStatistics/score", 0).toInt();
         settingsSerializer->setValue("AppStatistics/score", ++appStatisticsScore);
+        int learningState = entryGuess->GetSymbol()->LearningState();
+        if (learningState < 5 )
+            entryGuess->GetSymbol()->LearningState(learningState+1);
     }
     else
     {
         ++errorCounter;
         int appStatisticsError = settingsSerializer->value("AppStatistics/error", 0).toInt();
         settingsSerializer->setValue("AppStatistics/error", ++appStatisticsError);
+        int learningState = entryGuess->GetSymbol()->LearningState();
+        if (learningState > 0  )
+            entryGuess->GetSymbol()->LearningState(learningState-1);
     }
-
-    // TODO : increase stem learning state (have a "guessStreak" counter [0;5] in it or something alike
-    // with 0 <=> unknown, [1;3] learning, [4;5] learned)
-    // do we decreased stem learned state or both stem and guessed ?
 
     // TODO feedback and print previous answer in upper right counter ?
     InitializeExercice(currentQcmType);

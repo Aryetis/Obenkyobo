@@ -53,9 +53,7 @@ private :
     QString enabledSerializedAddress;
     bool enabled;
     QString learningStateSerializedAddress;
-    int learningState; // TODO turn this into a std::vector<int> and use with std::discrete_distribution to get actually weighted random result
-                          // NO, that's not the correct approach as enabling/disabling Symbols would shift the indexes giving incorrect results
-                          // => store learningState as int [0;5] with 0<=>Unknown, [1;4]<=>learning, 5<=> learned
+    int learningState; // 0 <=> unknown, [1;3] learning, [4;5] learned)
     SymbolsTableFamily* parentedFamily;
 };
 

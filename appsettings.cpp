@@ -8,9 +8,9 @@ AppSettings::AppSettings(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // Everything below needs to be ready before switching widget => don't delay the initialization
     settingsSerializer = GetMy::GetInstance().SettingSerializer();
     nbrOfEntryLinesIdx = settingsSerializer->value("AppSettings/entriesPerLineIdx", 2).toInt();
+    randomChoiceIdx = settingsSerializer->value("AppSettings/randomChoiceIdx", 1).toInt();
 
     InitializeUIValues();
 
@@ -25,7 +25,7 @@ void AppSettings::InitializeUIValues() const
     ui->ErrorsCounterValueLabel->setText(QString::number(appStatisticsError));
 
     ui->nbrOfEntryLinesDropdown->setCurrentIndex(nbrOfEntryLinesIdx);
-
+    ui->RandomnessDropdown->setCurrentIndex(randomChoiceIdx);
 }
 
 AppSettings::~AppSettings()
@@ -70,4 +70,10 @@ void AppSettings::on_nbrOfEntryLinesDropdown_activated(int index)
 {
     nbrOfEntryLinesIdx = index;
     settingsSerializer->setValue("AppSettings/entriesPerLineIdx", index);
+}
+
+void AppSettings::on_RandomnessDropdown_currentIndexChanged(int index)
+{
+    randomChoiceIdx = index;
+    settingsSerializer->setValue("AppSettings/randomChoiceIdx", index);
 }

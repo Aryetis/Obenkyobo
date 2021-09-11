@@ -69,15 +69,15 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox">
+        <widget class="QComboBox" name="RandomnessDropdown">
          <item>
           <property name="text">
-           <string>Weighted Random</string>
+           <string>True Random</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>True Random</string>
+           <string>Weighted Random</string>
           </property>
          </item>
         </widget>

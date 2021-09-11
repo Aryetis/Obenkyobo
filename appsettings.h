@@ -29,10 +29,12 @@ public:
 private slots:
     void on_ResetStatsButton_clicked();
     void on_nbrOfEntryLinesDropdown_activated(int index);
+    void on_RandomnessDropdown_currentIndexChanged(int index);
 
 private:
     Ui::AppSettings *ui;
     int nbrOfEntryLinesIdx;
+    int randomChoiceIdx;
 
     QSettings* settingsSerializer;
 };
