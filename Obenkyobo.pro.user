@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.14.1, 2021-09-11T15:59:44. -->
+<!-- Written by QtCreator 4.14.1, 2021-09-11T16:53:35. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -1667,6 +1667,7 @@
        <value type="QString">/home/aramir/Workspace/Kobo/Obenkyobo/build-ohbenkyobo-Kobo-Debug/.adds/qt-linux-5.15.2-kobo/qml/QtQuick/Controls.2/Imagine/Drawer.qml</value>
        <value type="QString">/home/aramir/Workspace/Kobo/Obenkyobo/build-ohbenkyobo-Kobo-Debug/.adds/qt-linux-5.15.2-kobo/qml/QtQuick/Controls.2/designer/images/frame-icon.png</value>
        <value type="QString">/home/aramir/Workspace/Kobo/Obenkyobo/build-ohbenkyobo-Kobo-Debug/Output/.adds/qt-linux-5.15.2-kobo/plugins/platforms/libkobo.so</value>
+       <value type="QString">/home/aramir/Workspace/Kobo/Obenkyobo/build-ohbenkyobo-Kobo-Debug/Output/.adds/Obenkyobo/Obenkyobo_launcher.sh</value>
        <value type="QString">/home/aramir/Workspace/Kobo/Obenkyobo/build-ohbenkyobo-Kobo-Debug/.adds/qt-linux-5.15.2-kobo/qml/QtQuick/Controls.2/Imagine/Dial.qml</value>
        <value type="QString">/home/aramir/Workspace/Kobo/Obenkyobo/build-ohbenkyobo-Kobo-Debug/.adds/ohbenkyobo/start_nickel.sh</value>
        <value type="QString">/home/aramir/Workspace/Kobo/Obenkyobo/build-ohbenkyobo-Kobo-Debug/.adds/qt-linux-5.15.2-kobo/qml/QtQuick/Controls.2/designer/images/textfield-icon16.png</value>
@@ -2125,6 +2126,7 @@
        <value type="QString">/home/aramir/Workspace/Kobo/Obenkyobo/build-ohbenkyobo-Kobo-Debug/.adds/qt-linux-5.15.2-kobo/qml/Qt/labs/qmlmodels/plugins.qmltypes</value>
       </valuelist>
       <valuelist type="QVariantList" key="ProjectExplorer.RunConfiguration.LastDeployedHosts">
+       <value type="QString">192.168.1.18</value>
        <value type="QString">192.168.1.18</value>
        <value type="QString">192.168.1.18</value>
        <value type="QString">192.168.1.18</value>
@@ -5481,6 +5483,7 @@
        <value type="QString">/mnt/onboard/.adds/ohbenkyobo/qt-linux-5.15.2-kobo/qml/QtQuick/Controls.2/Imagine</value>
        <value type="QString">/mnt/onboard/.adds//qt-linux-5.15.2-kobo/qml/QtQuick/Controls.2/designer/images</value>
        <value type="QString">/mnt/onboard/.adds/qt-linux-5.15.2-kobo/plugins/platforms</value>
+       <value type="QString">/mnt/onboard/.adds/Obenkyobo</value>
        <value type="QString">/mnt/onboard/.adds//qt-linux-5.15.2-kobo/qml/QtQuick/Controls.2/Imagine</value>
        <value type="QString">/mnt/onboard/.adds//ohbenkyobo</value>
        <value type="QString">/mnt/onboard/.adds//qt-linux-5.15.2-kobo/qml/QtQuick/Controls.2/designer/images</value>
@@ -7844,6 +7847,7 @@
        <value type="QString"></value>
        <value type="QString"></value>
        <value type="QString"></value>
+       <value type="QString"></value>
       </valuelist>
       <value type="bool" key="RemoteLinux.GenericDirectUploadStep.Incremental">false</value>
       <valuelist type="QVariantList" key="RemoteLinux.LastDeployedLocalTimes">
@@ -7886,7 +7890,7 @@
        <value type="QDateTime">2021-07-28T01:04:41.196</value>
        <value type="QDateTime">2021-08-26T01:11:49.112</value>
        <value type="QDateTime">2021-07-28T00:21:27.145</value>
-       <value type="QDateTime">2021-08-31T01:05:15.781</value>
+       <value type="QDateTime">2021-09-11T15:16:53.717</value>
        <value type="QDateTime">2021-07-28T00:21:51.331</value>
        <value type="QDateTime">2021-07-28T01:04:14.080</value>
        <value type="QDateTime">2021-07-28T01:04:01.769</value>
@@ -8074,7 +8078,7 @@
        <value type="QDateTime">2021-08-26T01:11:47.500</value>
        <value type="QDateTime">2021-07-28T00:21:22.937</value>
        <value type="QDateTime">2021-07-28T01:04:30.710</value>
-       <value type="QDateTime">2021-08-31T01:05:15.781</value>
+       <value type="QDateTime">2021-09-11T16:01:01.487</value>
        <value type="QDateTime">2021-07-28T01:03:26.708</value>
        <value type="QDateTime">2021-08-26T01:10:49.899</value>
        <value type="QDateTime">2021-07-28T01:04:22.640</value>
@@ -8087,7 +8091,7 @@
        <value type="QDateTime">2021-08-26T01:11:27.933</value>
        <value type="QDateTime">2021-07-28T01:04:54.833</value>
        <value type="QDateTime">2021-07-28T01:04:46.151</value>
-       <value type="QDateTime">2021-08-31T01:05:15.781</value>
+       <value type="QDateTime">2021-09-11T16:01:00.667</value>
        <value type="QDateTime">2021-08-26T01:11:53.765</value>
        <value type="QDateTime">2021-08-26T01:11:08.670</value>
        <value type="QDateTime">2021-08-26T01:11:52.375</value>
@@ -8184,7 +8188,7 @@
        <value type="QDateTime">2021-08-26T01:11:13.119</value>
        <value type="QDateTime">2021-07-28T01:04:37.424</value>
        <value type="QDateTime">2021-07-28T01:04:51.499</value>
-       <value type="QDateTime">2021-08-31T01:05:15.791</value>
+       <value type="QDateTime">2021-09-11T16:01:01.507</value>
        <value type="QDateTime">2021-07-28T01:04:31.886</value>
        <value type="QDateTime">2021-08-26T01:11:36.721</value>
        <value type="QDateTime">2021-07-28T00:21:41.802</value>
@@ -8556,7 +8560,7 @@
        <value type="QDateTime">2021-07-28T01:04:50.165</value>
        <value type="QDateTime">2021-07-28T01:04:29.208</value>
        <value type="QDateTime">2021-07-28T01:04:34.150</value>
-       <value type="QDateTime">2021-08-31T01:05:15.861</value>
+       <value type="QDateTime">2021-09-11T16:01:03.767</value>
        <value type="QDateTime">2021-08-26T01:11:32.385</value>
        <value type="QDateTime">2021-07-28T01:04:44.090</value>
        <value type="QDateTime">2021-07-28T00:21:33.943</value>
@@ -8780,7 +8784,7 @@
        <value type="QDateTime">2021-07-28T00:21:21.201</value>
        <value type="QDateTime">2021-07-28T01:04:21.025</value>
        <value type="QDateTime">2021-07-28T00:20:17.094</value>
-       <value type="QDateTime">2021-08-31T01:05:15.791</value>
+       <value type="QDateTime">2021-09-11T16:01:01.507</value>
        <value type="QDateTime">2021-07-28T01:04:29.959</value>
        <value type="QDateTime">2021-07-28T01:04:32.946</value>
        <value type="QDateTime">2021-07-28T00:21:47.976</value>
@@ -8904,7 +8908,7 @@
        <value type="QDateTime">2021-08-26T01:11:12.649</value>
        <value type="QDateTime">2021-08-26T01:11:26.936</value>
        <value type="QDateTime">2021-07-28T01:04:52.754</value>
-       <value type="QDateTime">2021-08-31T01:05:15.791</value>
+       <value type="QDateTime">2021-09-11T16:01:01.507</value>
        <value type="QDateTime">2021-07-28T01:04:46.021</value>
        <value type="QDateTime">2021-07-28T00:21:26.607</value>
        <value type="QDateTime">2021-07-28T01:04:17.632</value>
@@ -9296,6 +9300,7 @@
        <value type="QDateTime">2021-07-28T00:21:30.424</value>
        <value type="QDateTime">2021-07-28T01:04:25.796</value>
        <value type="QDateTime">2021-08-26T01:11:06.148</value>
+       <value type="QDateTime">2021-09-11T16:01:00.667</value>
        <value type="QDateTime">2021-07-28T01:04:38.881</value>
        <value type="QDateTime">2021-07-28T01:03:26.384</value>
        <value type="QDateTime">2021-07-28T01:04:29.895</value>
@@ -9530,7 +9535,7 @@
        <value type="QDateTime">2021-08-26T01:11:34.265</value>
        <value type="QDateTime">2021-08-26T01:11:33.524</value>
        <value type="QDateTime">2021-07-28T01:04:48.240</value>
-       <value type="QDateTime">2021-09-11T15:41:28.027</value>
+       <value type="QDateTime">2021-09-11T16:45:13.927</value>
        <value type="QDateTime">2021-08-26T01:10:27.441</value>
        <value type="QDateTime">2021-07-28T01:04:15.486</value>
        <value type="QDateTime">2021-08-26T01:11:32.890</value>
@@ -9624,7 +9629,7 @@
        <value type="QDateTime">2021-08-26T01:11:26.540</value>
        <value type="QDateTime">2021-07-28T00:21:34.015</value>
        <value type="QDateTime">2021-08-26T01:11:45.982</value>
-       <value type="QDateTime">2021-08-31T01:05:15.871</value>
+       <value type="QDateTime">2021-09-11T16:01:04.107</value>
        <value type="QDateTime">2021-08-26T01:11:20.619</value>
        <value type="QDateTime">2021-07-28T01:04:48.880</value>
        <value type="QDateTime">2021-08-26T01:11:22.924</value>
@@ -9793,7 +9798,7 @@
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
-       <value type="QDateTime">2021-08-31T01:05:17.000</value>
+       <value type="QDateTime">2021-09-11T16:01:09.000</value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
@@ -9981,7 +9986,7 @@
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
-       <value type="QDateTime">2021-08-31T01:05:17.000</value>
+       <value type="QDateTime">2021-09-11T16:01:09.000</value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
@@ -9994,7 +9999,7 @@
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
-       <value type="QDateTime">2021-08-31T01:05:48.000</value>
+       <value type="QDateTime">2021-09-11T16:01:50.000</value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
@@ -10091,7 +10096,7 @@
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
-       <value type="QDateTime">2021-08-31T01:05:19.000</value>
+       <value type="QDateTime">2021-09-11T16:01:17.000</value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
@@ -10463,7 +10468,7 @@
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
-       <value type="QDateTime">2021-08-31T01:05:17.000</value>
+       <value type="QDateTime">2021-09-11T16:01:09.000</value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
@@ -10687,7 +10692,7 @@
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
-       <value type="QDateTime">2021-08-31T01:05:19.000</value>
+       <value type="QDateTime">2021-09-11T16:01:17.000</value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
@@ -10811,7 +10816,7 @@
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
-       <value type="QDateTime">2021-08-31T01:05:17.000</value>
+       <value type="QDateTime">2021-09-11T16:01:09.000</value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
@@ -11203,6 +11208,7 @@
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
+       <value type="QDateTime">2021-09-11T16:01:17.000</value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
@@ -11437,7 +11443,7 @@
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
-       <value type="QDateTime">2021-09-11T15:55:07.000</value>
+       <value type="QDateTime">2021-09-11T16:46:01.000</value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
@@ -11531,7 +11537,7 @@
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
-       <value type="QDateTime">2021-08-31T01:05:17.000</value>
+       <value type="QDateTime">2021-09-11T16:01:09.000</value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>
        <value type="QDateTime"></value>

@@ -85,6 +85,32 @@
       </layout>
      </item>
      <item>
+      <layout class="QHBoxLayout" name="WifiSetting">
+       <item>
+        <layout class="QVBoxLayout" name="WifiSettingSubContainer">
+         <item>
+          <layout class="QHBoxLayout" name="WifiLayout">
+           <item>
+            <widget class="QLabel" name="WifiLabel">
+             <property name="text">
+              <string>Wifi : </string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="WifiCheckBox">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="StatsSetting">
        <item>
         <layout class="QVBoxLayout" name="StatSettingSubContainer">

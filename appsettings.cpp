@@ -11,8 +11,16 @@ AppSettings::AppSettings(QWidget *parent) :
     settingsSerializer = GetMy::GetInstance().SettingSerializer();
     nbrOfEntryLinesIdx = settingsSerializer->value("AppSettings/entriesPerLineIdx", 2).toInt();
     randomChoiceIdx = settingsSerializer->value("AppSettings/randomChoiceIdx", 1).toInt();
+#ifdef QT_NO_DEBUG
+    wifi = settingsSerializer->value("AppSettings/wifi", 0).toBool();
+#else
+    wifi = true;
+#endif
 
-    InitializeUIValues();
+    if (wifi)
+        KoboPlatformFunctions::enableWiFiConnection();
+    else
+        KoboPlatformFunctions::disableWiFiConnection();
 
     GetMy::GetInstance().SetAppSettingWidget(this);
 }
@@ -23,6 +31,7 @@ void AppSettings::InitializeUIValues() const
     ui->ScoreCounterValueLabel->setText(QString::number(appStatisticsScore));
     int appStatisticsError = settingsSerializer->value("AppStatistics/error", 0).toInt();
     ui->ErrorsCounterValueLabel->setText(QString::number(appStatisticsError));
+    ui->WifiCheckBox->setChecked(wifi);
 
     ui->nbrOfEntryLinesDropdown->setCurrentIndex(nbrOfEntryLinesIdx);
     ui->RandomnessDropdown->setCurrentIndex(randomChoiceIdx);
@@ -81,4 +90,18 @@ void AppSettings::on_RandomnessDropdown_currentIndexChanged(int index)
 bool AppSettings::IsWeightedRandomEnabled() const
 {
     return randomChoiceIdx == 0;
+}
+
+// TODO now fix
+void AppSettings::on_WifiCheckBox_clicked(bool checked)
+{
+    if (checked != wifi)
+    {
+        wifi = checked;
+        settingsSerializer->value("AppSettings/wifi", wifi).toBool();
+        if (wifi)
+            KoboPlatformFunctions::enableWiFiConnection();
+        else
+            KoboPlatformFunctions::disableWiFiConnection();
+    }
 }

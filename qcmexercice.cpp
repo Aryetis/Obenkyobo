@@ -50,10 +50,12 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     std::shuffle(std::begin(shuffledSymbols), std::end(shuffledSymbols), Tools::rng_engine);
 
     //************************ Initialize Stem  ************************
-    Symbol* stem = nullptr;
+    stem = nullptr;
+int stemWeightedIndexRandom = Tools::GetRandomInt(0, targetFamily.WeightOfEnabled());
+int targetTotalWeight = targetFamily.WeightOfEnabled();
     if (GetMy::GetInstance().AppSettingWidget().IsWeightedRandomEnabled())
     {
-        int stemWeightedIndexRandom = Tools::GetRandomInt(0, targetFamily.WeightOfEnabled());
+//        int stemWeightedIndexRandom = Tools::GetRandomInt(0, targetFamily.WeightOfEnabled());
         for (Symbol* symbol : shuffledSymbols)
         {
             stemWeightedIndexRandom -= symbol->LearningState();
@@ -67,7 +69,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     else
         stem = *Tools::GetRandom(shuffledSymbols.begin(), shuffledSymbols.end());
 
-    assert(stem != nullptr);
+    assert(stem != nullptr); // TODO NOW still triggered after picking top right option 20 or so times (with current seed)
 
     FntSetting& fntSetting = GetMy::GetInstance().FntSettingWidget();
     switch (qcmType)
@@ -157,20 +159,20 @@ void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
         int EntryGuessLearningState = entryGuess->GetSymbol()->LearningState();
         if ( EntryGuessLearningState < Symbol::GetMaxlearningState() )
         {
-            stem->LearningState(stem->LearningState()+1);
             entryGuess->GetSymbol()->LearningState(EntryGuessLearningState+1);
+        }
+        if ( stem->LearningState() < Symbol::GetMaxlearningState() )
+        {
+            stem->LearningState(stem->LearningState()+1);
         }
     }
 
     // TODO now why you doing nothing
-    KoboPlatformFunctions::clearScreen(true);
-    KoboPlatformFunctions::clearScreen(true);
-    KoboPlatformFunctions::clearScreen(true);
-    KoboPlatformFunctions::clearScreen(true);
-    KoboPlatformFunctions::clearScreen(true);
-    KoboPlatformFunctions::clearScreen(true);
-    KoboPlatformFunctions::clearScreen(true);
-    KoboPlatformFunctions::clearScreen(true);
+//    KoboPlatformFunctions::clearScreen(true);
+
+//    KoboPlatformFunctions::doManualRefresh(QRect(QPoint(0,0),
+//        QPoint(GetMy::GetInstance().Descriptor().width, GetMy::GetInstance().Descriptor().height)));
+
 
     // TODO feedback and print previous answer in upper right counter ?
     InitializeExercice(currentQcmType);

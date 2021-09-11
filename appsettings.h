@@ -26,17 +26,19 @@ public:
     bool IsThereEnough(QcmExercice::QcmExerciceType qcmType) const;
     void InitializeUIValues() const;
     bool IsWeightedRandomEnabled() const;
-
+    bool IsWifiOn() const { return wifi; }
 
 private slots:
     void on_ResetStatsButton_clicked();
     void on_nbrOfEntryLinesDropdown_activated(int index);
     void on_RandomnessDropdown_currentIndexChanged(int index);
+    void on_WifiCheckBox_clicked(bool checked);
 
 private:
     Ui::AppSettings *ui;
     int nbrOfEntryLinesIdx;
     int randomChoiceIdx;
+    bool wifi;
 
     QSettings* settingsSerializer;
 };
