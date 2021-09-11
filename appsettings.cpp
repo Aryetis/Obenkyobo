@@ -77,3 +77,8 @@ void AppSettings::on_RandomnessDropdown_currentIndexChanged(int index)
     randomChoiceIdx = index;
     settingsSerializer->setValue("AppSettings/randomChoiceIdx", index);
 }
+
+bool AppSettings::IsWeightedRandomEnabled() const
+{
+    return randomChoiceIdx == 0;
+}

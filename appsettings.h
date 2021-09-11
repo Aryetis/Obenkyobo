@@ -25,6 +25,8 @@ public:
     int GetNumberOfEntry() const { return (nbrOfEntryLinesIdx+1) * ENTRY_PER_ROW; }
     bool IsThereEnough(QcmExercice::QcmExerciceType qcmType) const;
     void InitializeUIValues() const;
+    bool IsWeightedRandomEnabled() const;
+
 
 private slots:
     void on_ResetStatsButton_clicked();

@@ -42,47 +42,55 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
         for(Symbol& symbol : SymbolSection.Data())
             if (symbol.Enabled())
                 entriesPool.push_back(&symbol);
-    // TODO Now learningState
 
     //************************ Initialize Random ************************
-    FntSetting& fntSetting = GetMy::GetInstance().FntSettingWidget();
-    Symbol* stem = *Tools::GetRandom(entriesPool.begin(), entriesPool.end());
-    switch (qcmType)
+    std::vector<Symbol*> shuffledSymbols{};
+
+    if (GetMy::GetInstance().AppSettingWidget().IsWeightedRandomEnabled())
     {
-        case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
-        case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_Kbd :
-        case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
-        case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
+        // TODO Now learningState
+    }
+    else
+    {
+        FntSetting& fntSetting = GetMy::GetInstance().FntSettingWidget();
+        Symbol* stem = *Tools::GetRandom(entriesPool.begin(), entriesPool.end());
+        switch (qcmType)
         {
-            QFont stemFont = fntSetting.GetCurrentRomanjiFnt();
-            stemFont.setPixelSize(stemFont.pixelSize() + fntSetting.GetStemBoostSize());
-            ui->GuessMe->setFont(stemFont);
-            ui->GuessMe->setText(stem->Romanji());
-            break;
+            case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
+            case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_Kbd :
+            case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
+            case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
+            {
+                QFont stemFont = fntSetting.GetCurrentRomanjiFnt();
+                stemFont.setPixelSize(stemFont.pixelSize() + fntSetting.GetStemBoostSize());
+                ui->GuessMe->setFont(stemFont);
+                ui->GuessMe->setText(stem->Romanji());
+                break;
+            }
+            case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :
+            {
+                QFont stemFont = fntSetting.GetCurrentHiraganaFnt();
+                stemFont.setPixelSize(stemFont.pixelSize() + fntSetting.GetStemBoostSize());
+                ui->GuessMe->setFont(stemFont);
+                ui->GuessMe->setText(stem->JP());
+                break;
+            }
+            case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
+            {
+                QFont stemFont = fntSetting.GetCurrentKatakanaFnt();
+                stemFont.setPixelSize(stemFont.pixelSize() + fntSetting.GetStemBoostSize());
+                ui->GuessMe->setFont(stemFont);
+                ui->GuessMe->setText(stem->JP());
+                break;
+            }
         }
-        case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :
-        {
-            QFont stemFont = fntSetting.GetCurrentHiraganaFnt();
-            stemFont.setPixelSize(stemFont.pixelSize() + fntSetting.GetStemBoostSize());
-            ui->GuessMe->setFont(stemFont);
-            ui->GuessMe->setText(stem->JP());
-            break;
-        }
-        case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
-        {
-            QFont stemFont = fntSetting.GetCurrentKatakanaFnt();
-            stemFont.setPixelSize(stemFont.pixelSize() + fntSetting.GetStemBoostSize());
-            ui->GuessMe->setFont(stemFont);
-            ui->GuessMe->setText(stem->JP());
-            break;
-        }
+
+        shuffledSymbols.reserve(entriesPool.size()-1);
+        std::remove_copy(entriesPool.begin(), entriesPool.end(), std::back_inserter(shuffledSymbols), stem);
+        std::shuffle(std::begin(shuffledSymbols), std::end(shuffledSymbols), Tools::rng_engine);
     }
 
-    std::vector<Symbol*> shuffledSymbols{};
-    shuffledSymbols.reserve(entriesPool.size()-1);
-    std::remove_copy(entriesPool.begin(), entriesPool.end(), std::back_inserter(shuffledSymbols), stem);
-    std::shuffle(std::begin(shuffledSymbols), std::end(shuffledSymbols), Tools::rng_engine);
-
+    //************************ Clearing previous board ************************
     qDeleteAll(guesses);
     guesses.clear();
 
