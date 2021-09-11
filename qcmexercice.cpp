@@ -43,58 +43,60 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
             if (symbol.Enabled())
                 entriesPool.push_back(&symbol);
 
-    //************************ Initialize Random ************************
+    //************************ Initialize Shuffled Symbols Pool ************************
     std::vector<Symbol*> shuffledSymbols{};
+    shuffledSymbols.reserve(entriesPool.size()-1);
+    std::remove_copy(entriesPool.begin(), entriesPool.end(), std::back_inserter(shuffledSymbols), stem);
+    std::shuffle(std::begin(shuffledSymbols), std::end(shuffledSymbols), Tools::rng_engine);
 
+    //************************ Initialize Stem  ************************
+    Symbol* stem;
     if (GetMy::GetInstance().AppSettingWidget().IsWeightedRandomEnabled())
     {
         // TODO Now learningState
     }
     else
     {
-        FntSetting& fntSetting = GetMy::GetInstance().FntSettingWidget();
-        Symbol* stem = *Tools::GetRandom(entriesPool.begin(), entriesPool.end());
-        switch (qcmType)
-        {
-            case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
-            case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_Kbd :
-            case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
-            case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
-            {
-                QFont stemFont = fntSetting.GetCurrentRomanjiFnt();
-                stemFont.setPixelSize(stemFont.pixelSize() + fntSetting.GetStemBoostSize());
-                ui->GuessMe->setFont(stemFont);
-                ui->GuessMe->setText(stem->Romanji());
-                break;
-            }
-            case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :
-            {
-                QFont stemFont = fntSetting.GetCurrentHiraganaFnt();
-                stemFont.setPixelSize(stemFont.pixelSize() + fntSetting.GetStemBoostSize());
-                ui->GuessMe->setFont(stemFont);
-                ui->GuessMe->setText(stem->JP());
-                break;
-            }
-            case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
-            {
-                QFont stemFont = fntSetting.GetCurrentKatakanaFnt();
-                stemFont.setPixelSize(stemFont.pixelSize() + fntSetting.GetStemBoostSize());
-                ui->GuessMe->setFont(stemFont);
-                ui->GuessMe->setText(stem->JP());
-                break;
-            }
-        }
+        stem = *Tools::GetRandom(shuffledSymbols.begin(), shuffledSymbols.end());
+    }
 
-        shuffledSymbols.reserve(entriesPool.size()-1);
-        std::remove_copy(entriesPool.begin(), entriesPool.end(), std::back_inserter(shuffledSymbols), stem);
-        std::shuffle(std::begin(shuffledSymbols), std::end(shuffledSymbols), Tools::rng_engine);
+    FntSetting& fntSetting = GetMy::GetInstance().FntSettingWidget();
+    switch (qcmType)
+    {
+        case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
+        case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_Kbd :
+        case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
+        case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
+        {
+            QFont stemFont = fntSetting.GetCurrentRomanjiFnt();
+            stemFont.setPixelSize(stemFont.pixelSize() + fntSetting.GetStemBoostSize());
+            ui->GuessMe->setFont(stemFont);
+            ui->GuessMe->setText(stem->Romanji());
+            break;
+        }
+        case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :
+        {
+            QFont stemFont = fntSetting.GetCurrentHiraganaFnt();
+            stemFont.setPixelSize(stemFont.pixelSize() + fntSetting.GetStemBoostSize());
+            ui->GuessMe->setFont(stemFont);
+            ui->GuessMe->setText(stem->JP());
+            break;
+        }
+        case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
+        {
+            QFont stemFont = fntSetting.GetCurrentKatakanaFnt();
+            stemFont.setPixelSize(stemFont.pixelSize() + fntSetting.GetStemBoostSize());
+            ui->GuessMe->setFont(stemFont);
+            ui->GuessMe->setText(stem->JP());
+            break;
+        }
     }
 
     //************************ Clearing previous board ************************
     qDeleteAll(guesses);
     guesses.clear();
 
-    //************************ Initialize UI stuff ************************
+    //************************ Initialize Entries board ************************
     int NbrOfEntriesLine = GetMy::GetInstance().AppSettingWidget().GetNumberOfEntryLine();
     int NbrOfEntriesRow = GetMy::GetInstance().AppSettingWidget().GetNumberOfEntryRow();
     int stemSlot = Tools::GetRandomInt(0, (NbrOfEntriesLine*NbrOfEntriesRow)-1);
