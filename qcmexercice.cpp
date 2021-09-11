@@ -56,6 +56,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
         int stemWeightedIndexRandom = Tools::GetRandomInt(0, targetFamily.WeightOfEnabled());
         for (Symbol* symbol : shuffledSymbols)
         {
+            // wrong ... the more you learn the more it will be pickd you dum dum
             stemWeightedIndexRandom -= symbol->LearningState();
             if (stemWeightedIndexRandom <= 0)
             {
@@ -109,7 +110,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     int NbrOfEntriesLine = GetMy::GetInstance().AppSettingWidget().GetNumberOfEntryLine();
     int NbrOfEntriesRow = GetMy::GetInstance().AppSettingWidget().GetNumberOfEntryRow();
     int stemSlot = Tools::GetRandomInt(0, (NbrOfEntriesLine*NbrOfEntriesRow)-1);
-    Symbol* joker = nullptr; // Symbol replaced by stem
+    Symbol* joker = shuffledSymbols[static_cast<std::vector<Symbol>::size_type>(stemSlot)]; // Symbol replaced by stem
     for(int i= 0; i<NbrOfEntriesLine*NbrOfEntriesRow; ++i)
     {
         div_t entryPos = div(i, NbrOfEntriesLine);
@@ -118,10 +119,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
         Symbol* curSym = shuffledSymbols[static_cast<std::vector<Symbol>::size_type>(i)];
 
         if (i == stemSlot)
-        {
             foo->SetGuess(stem, currentQcmType, true);
-            joker = curSym;
-        }
         else
         {
             if (curSym == stem) // avoid double entries
