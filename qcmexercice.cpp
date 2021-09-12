@@ -170,13 +170,31 @@ void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
         case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
         case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
         {
-            ui->ResultLabel->setText(stem->Romanji() + " ; " + stem->JP() + " ; " + QString((correct) ? "☑" : "☒"));
+            if (correct)
+            {
+                ui->ResultLabel->setText(stem->Romanji() + " ; " + stem->JP() + " ; ☑");
+                ui->ResultLabel->setStyleSheet("QLabel { border: none }");
+            }
+            else
+            {
+                ui->ResultLabel->setText(stem->Romanji() + " ; " + stem->JP() + " ; ☒");
+                ui->ResultLabel->setStyleSheet("QLabel { border: 2px solid black }");
+            }
             break;
         }
         case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :
         case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
         {
-            ui->ResultLabel->setText(stem->JP() + " ; " + stem->Romanji() + " ; " + QString((correct) ? "☑" : "☒"));
+            if (correct)
+            {
+                ui->ResultLabel->setText(stem->JP() + " ; " + stem->Romanji() + " ; ☑");
+                ui->ResultLabel->setStyleSheet("QLabel { border: none }");
+            }
+            else
+            {
+                ui->ResultLabel->setText(stem->JP() + " ; " + stem->Romanji() + " ; ☒");
+                ui->ResultLabel->setStyleSheet("QLabel { border: 2px solid black }");
+            }
             break;
         }
     }
