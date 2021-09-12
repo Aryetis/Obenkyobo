@@ -5,6 +5,8 @@
 
 namespace Tools
 {
+    static std::random_device rd_device;
+    static std::mt19937 mt(rd_device());
     static std::default_random_engine rng_engine = std::default_random_engine{};
 
     template<typename Iter, typename RandomGenerator>

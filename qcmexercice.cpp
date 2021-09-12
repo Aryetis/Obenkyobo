@@ -50,26 +50,19 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     std::shuffle(std::begin(shuffledSymbols), std::end(shuffledSymbols), Tools::rng_engine);
 
     //************************ Initialize Stem  ************************
-    stem = nullptr;
-int stemWeightedIndexRandom = Tools::GetRandomInt(0, targetFamily.WeightOfEnabled());
-int targetTotalWeight = targetFamily.WeightOfEnabled();
     if (GetMy::GetInstance().AppSettingWidget().IsWeightedRandomEnabled())
     {
-//        int stemWeightedIndexRandom = Tools::GetRandomInt(0, targetFamily.WeightOfEnabled());
+        std::vector<int> weights;
         for (Symbol* symbol : shuffledSymbols)
-        {
-            stemWeightedIndexRandom -= symbol->LearningState();
-            if (stemWeightedIndexRandom <= 0)
-            {
-                stem = symbol;
-                break;
-            }
-        }
+            weights.push_back(symbol->LearningState());
+
+        std::discrete_distribution<size_t> distr(weights.begin(), weights.end());
+        stem = shuffledSymbols[distr(Tools::mt)];
     }
     else
         stem = *Tools::GetRandom(shuffledSymbols.begin(), shuffledSymbols.end());
 
-    assert(stem != nullptr); // TODO NOW still triggered after picking top right option 20 or so times (with current seed)
+    assert(stem != nullptr);
 
     FntSetting& fntSetting = GetMy::GetInstance().FntSettingWidget();
     switch (qcmType)

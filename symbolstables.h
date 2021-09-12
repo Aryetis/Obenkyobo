@@ -83,7 +83,7 @@ class SymbolsTableFamily
 {
 public :
     SymbolsTableFamily(QString _name, std::vector<SymbolsTableSection> _data)
-        : name(_name), data(_data), nbrOfEnabled(0), weightOfEnabled(0)
+        : name(_name), data(_data), nbrOfEnabled(0)
     {}
 
     void InitializeSerializedVals() // Can't do it in constructor because SettingSerializer isn't set yet.
@@ -91,23 +91,17 @@ public :
         for (SymbolsTableSection& sts : data)
             for (Symbol& s : sts.Data())
                 if (s.RegisterAndInitializeSerializedVals(name+"_"+sts.Name(), this))
-                {
                     ++nbrOfEnabled;
-                    weightOfEnabled += s.LearningState();
-                }
     }
 
     std::vector<SymbolsTableSection>& Data() { return data; } // not const as we need to adjust Symbols's LearningState
     void NbrOfEnabled(int _n) { nbrOfEnabled = _n; }
     int NbrOfEnabled() const { return nbrOfEnabled; }
-    void WeightOfEnabled(int _n) { weightOfEnabled = _n; }
-    int WeightOfEnabled() const { return weightOfEnabled; }
 
 private :
     QString name;
     std::vector<SymbolsTableSection> data;
     int nbrOfEnabled;
-    int weightOfEnabled;
 };
 
 inline void Symbol::Enabled(bool b)
@@ -117,21 +111,14 @@ inline void Symbol::Enabled(bool b)
         enabled = b;
         GetMy::GetInstance().SettingSerializer()->setValue(enabledSerializedAddress, enabled);
         if (enabled)
-        {
             parentedFamily->NbrOfEnabled(parentedFamily->NbrOfEnabled()+1);
-            parentedFamily->WeightOfEnabled(parentedFamily->WeightOfEnabled()+learningState);
-        }
         else
-        {
             parentedFamily->NbrOfEnabled(parentedFamily->NbrOfEnabled()-1);
-            parentedFamily->WeightOfEnabled(parentedFamily->WeightOfEnabled()-learningState);
-        }
     }
 }
 
 inline void Symbol::LearningState(int ls)
 {
-    parentedFamily->WeightOfEnabled( parentedFamily->WeightOfEnabled() + (ls-learningState));
     learningState = ls;
     GetMy::GetInstance().SettingSerializer()->setValue(learningStateSerializedAddress, learningState);
 }
