@@ -162,6 +162,24 @@ void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
 //    KoboPlatformFunctions::doManualRefresh(QRect(QPoint(0,0),
 //        QPoint(GetMy::GetInstance().Descriptor().width, GetMy::GetInstance().Descriptor().height)));
 
+    // Obekyo original feedback gave too much information to my taste :D, let's fix that
+    switch (currentQcmType)
+    {
+        case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
+        case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_Kbd :
+        case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
+        case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
+        {
+            ui->ResultLabel->setText(stem->Romanji() + " ; " + stem->JP() + " ; " + QString((correct) ? "☑" : "☒"));
+            break;
+        }
+        case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :
+        case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
+        {
+            ui->ResultLabel->setText(stem->JP() + " ; " + stem->Romanji() + " ; " + QString((correct) ? "☑" : "☒"));
+            break;
+        }
+    }
 
     // TODO feedback and print previous answer in upper right counter ?
     InitializeExercice(currentQcmType);

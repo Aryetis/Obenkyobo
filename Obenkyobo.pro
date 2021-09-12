@@ -1,6 +1,7 @@
 #-------------------------------------------------
 #
-# TODO : - handle sleep
+# TODO : - still a launcher.sh inside the output folder ?
+#        - handle sleep
 #        - full refresh screen every 1/2/5/10/20 guesses KoboPlatformFunctions::clearScreen
 #        - Wifi switch (for debug or background dl) KoboPlatformFunctions::disable/ enableWiFiConnection
 #        - hard refresh at each stacked widget switch

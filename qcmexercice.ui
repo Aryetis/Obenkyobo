@@ -71,6 +71,20 @@
        </item>
       </layout>
      </item>
+     <item>
+      <layout class="QVBoxLayout" name="ResultLayout">
+       <item>
+        <widget class="QLabel" name="ResultLabel">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
     </layout>
    </item>
    <item>
