@@ -85,6 +85,25 @@
       </layout>
      </item>
      <item>
+      <layout class="QHBoxLayout" name="ResetWeights">
+       <item>
+        <layout class="QVBoxLayout" name="ResetWeightsSubContainer">
+         <item>
+          <layout class="QHBoxLayout" name="ResetWeightsLayout">
+           <item>
+            <widget class="QPushButton" name="ResetWeightsButton">
+             <property name="text">
+              <string>Reset Weights / Learning State</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="WifiSetting">
        <item>
         <layout class="QVBoxLayout" name="WifiSettingSubContainer">

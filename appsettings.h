@@ -33,6 +33,7 @@ private slots:
     void on_nbrOfEntryLinesDropdown_activated(int index);
     void on_RandomnessDropdown_currentIndexChanged(int index);
     void on_WifiCheckBox_clicked(bool checked);
+    void on_ResetWeightsButton_clicked();
 
 private:
     Ui::AppSettings *ui;

@@ -97,6 +97,12 @@ public :
     std::vector<SymbolsTableSection>& Data() { return data; } // not const as we need to adjust Symbols's LearningState
     void NbrOfEnabled(int _n) { nbrOfEnabled = _n; }
     int NbrOfEnabled() const { return nbrOfEnabled; }
+    void ResetWeights()
+    {
+        for (SymbolsTableSection& sts : data)
+            for (Symbol& s : sts.Data())
+                s.LearningState(0);
+    }
 
 private :
     QString name;

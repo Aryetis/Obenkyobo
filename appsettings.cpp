@@ -105,3 +105,9 @@ void AppSettings::on_WifiCheckBox_clicked(bool checked)
             KoboPlatformFunctions::disableWiFiConnection();
     }
 }
+
+void AppSettings::on_ResetWeightsButton_clicked()
+{
+    SymbolsTables::HiraganaSymbolsTableFamily.ResetWeights();
+    SymbolsTables::KatakanaSymbolsTableFamily.ResetWeights();
+}

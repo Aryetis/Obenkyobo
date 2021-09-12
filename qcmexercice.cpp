@@ -151,13 +151,9 @@ void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
         settingsSerializer->setValue("AppStatistics/error", ++appStatisticsError);
         int EntryGuessLearningState = entryGuess->GetSymbol()->LearningState();
         if ( EntryGuessLearningState < Symbol::GetMaxlearningState() )
-        {
             entryGuess->GetSymbol()->LearningState(EntryGuessLearningState+1);
-        }
         if ( stem->LearningState() < Symbol::GetMaxlearningState() )
-        {
             stem->LearningState(stem->LearningState()+1);
-        }
     }
 
     // TODO now why you doing nothing
