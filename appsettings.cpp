@@ -17,10 +17,11 @@ AppSettings::AppSettings(QWidget *parent) :
     wifi = true;
 #endif
 
-    if (wifi)
-        KoboPlatformFunctions::enableWiFiConnection();
-    else
-        KoboPlatformFunctions::disableWiFiConnection();
+// TODO NOW fix wifi
+//    if (wifi)
+//        KoboPlatformFunctions::enableWiFiConnection();
+//    else
+//        KoboPlatformFunctions::disableWiFiConnection();
 
     GetMy::GetInstance().SetAppSettingWidget(this);
 }
@@ -93,17 +94,17 @@ bool AppSettings::IsWeightedRandomEnabled() const
 }
 
 // TODO now fix
-void AppSettings::on_WifiCheckBox_clicked(bool checked)
+void AppSettings::on_WifiCheckBox_clicked(bool /*checked*/)
 {
-    if (checked != wifi)
-    {
-        wifi = checked;
-        settingsSerializer->value("AppSettings/wifi", wifi).toBool();
-        if (wifi)
-            KoboPlatformFunctions::enableWiFiConnection();
-        else
-            KoboPlatformFunctions::disableWiFiConnection();
-    }
+//    if (checked != wifi)
+//    {
+//        wifi = checked;
+//        settingsSerializer->value("AppSettings/wifi", wifi).toBool();
+//        if (wifi)
+//            KoboPlatformFunctions::enableWiFiConnection();
+//        else
+//            KoboPlatformFunctions::disableWiFiConnection();
+//    }
 }
 
 void AppSettings::on_ResetWeightsButton_clicked()
