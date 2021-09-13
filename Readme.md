@@ -42,3 +42,6 @@ Force wifi-on in dev mode cause ... yeah do it
 
 ------------
 Alpha Release link (no wifi setting, no sleep, no forced screen refresh, no Keyboard exercice) : https://hijackedbrain.com/data/Obenkyobo_AIO_AlphaRelease.zip
+
+------------
+TODO : check .pro file + make qcm hint/result thicker and try blinking it maybe 
