@@ -1,6 +1,7 @@
 #include "screensettings.h"
 #include "ui_screensettings.h"
 #include "GetMy.h"
+#include "tools.h"
 
 // Note : the whole kobo family frontlight drivers only take integeter, so we're good setting sliders's step to 1
 ScreenSettings::ScreenSettings(QWidget *parent) :
@@ -54,7 +55,7 @@ bool ScreenSettings::AreSettingsAvailablePopup() const
 {
     if(!settingAvailable)
     {
-        GetMy::GetInstance().DisplayPopup("Sorry, no Screen Settings (luminosity, tint) available for your ereader");
+        Tools::GetInstance().DisplayPopup("Sorry, no Screen Settings (luminosity, tint) available for your ereader");
         return false;
     }
     return true;

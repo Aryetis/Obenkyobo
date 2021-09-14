@@ -2,8 +2,8 @@
 #include "ui_qcmexercice.h"
 #include "qcmentryguess.h"
 #include "fntsetting.h"
-#include "tools.h"
 #include "GetMy.h"
+#include "tools.h"
 #include <algorithm>
 #include "appsettings.h"
 
@@ -47,7 +47,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     std::vector<Symbol*> shuffledSymbols{};
     shuffledSymbols.reserve(entriesPool.size()-1);
     std::remove_copy(entriesPool.begin(), entriesPool.end(), std::back_inserter(shuffledSymbols), stem);
-    std::shuffle(std::begin(shuffledSymbols), std::end(shuffledSymbols), Tools::rng_engine);
+    std::shuffle(std::begin(shuffledSymbols), std::end(shuffledSymbols), Tools::GetInstance().Rng_Engine());
 
     //************************ Initialize Stem  ************************
     if (GetMy::GetInstance().AppSettingWidget().IsWeightedRandomEnabled())
@@ -57,10 +57,10 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
             weights.push_back(symbol->LearningState());
 
         std::discrete_distribution<size_t> distr(weights.begin(), weights.end());
-        stem = shuffledSymbols[distr(Tools::mt)];
+        stem = shuffledSymbols[distr(Tools::GetInstance().MT())];
     }
     else
-        stem = *Tools::GetRandom(shuffledSymbols.begin(), shuffledSymbols.end());
+        stem = *Tools::GetInstance().GetRandom(shuffledSymbols.begin(), shuffledSymbols.end());
 
     assert(stem != nullptr);
 
@@ -103,7 +103,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     //************************ Initialize Entries board ************************
     int NbrOfEntriesLine = GetMy::GetInstance().AppSettingWidget().GetNumberOfEntryLine();
     int NbrOfEntriesRow = GetMy::GetInstance().AppSettingWidget().GetNumberOfEntryRow();
-    int stemSlot = Tools::GetRandomInt(0, (NbrOfEntriesLine*NbrOfEntriesRow)-1);
+    int stemSlot = Tools::GetInstance().GetRandomInt(0, (NbrOfEntriesLine*NbrOfEntriesRow)-1);
     Symbol* joker = shuffledSymbols[static_cast<std::vector<Symbol>::size_type>(stemSlot)]; // Symbol replaced by stem
     for(int i= 0; i<NbrOfEntriesLine*NbrOfEntriesRow; ++i)
     {

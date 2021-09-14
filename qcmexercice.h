@@ -1,8 +1,8 @@
 #ifndef QCMEXERCICE_H
 #define QCMEXERCICE_H
 
-#include <QWidget>
 #include "symbolstables.h"
+#include <QWidget>
 #include <QSettings>
 
 namespace Ui
@@ -11,7 +11,6 @@ namespace Ui
 }
 
 class QcmEntryGuess;
-
 class QcmExercice final : public QWidget
 {
     Q_OBJECT

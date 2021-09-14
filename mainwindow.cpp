@@ -3,6 +3,7 @@
 #include "fntsetting.h"
 #include "qcmexercice.h"
 #include "GetMy.h"
+#include "tools.h"
 #include "symbolsetting.h"
 #include <QKeyEvent>
 
@@ -27,13 +28,12 @@ MainWindow::~MainWindow()
 // TODO handle sleep (irl too, ahahahah ...)
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == POWERBUTTON)
+    if (event->key() == POWERBUTTON || event->key() == SLEEPCOVERBUTTON)
     {
-        GetMy::GetInstance().DisplayPopup("powerbutton pressed");
-    }
-    else if (event->key() == SLEEPCOVERBUTTON)
-    {
-        GetMy::GetInstance().DisplayPopup("sleep cover button triggered");
+        if (Tools::GetInstance().Sleeping())
+            Tools::GetInstance().WakeUp();
+        else
+            Tools::GetInstance().Sleep();
     }
 }
 
@@ -60,7 +60,7 @@ void MainWindow::on_actionHiragana_to_Romanji_QCM_triggered()
         ui->ContentStackedWidget->setCurrentIndex(1);
     }
     else
-        GetMy::GetInstance().DisplayPopup(
+        Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Hiragana, please enable at least " +
                 QString::number(GetMy::GetInstance().AppSettingWidget().GetNumberOfEntry()) +
                 " at : Main->Hiragana->Edit Hiragana Set");
@@ -74,7 +74,7 @@ void MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()
         ui->ContentStackedWidget->setCurrentIndex(1);
     }
     else
-        GetMy::GetInstance().DisplayPopup(
+        Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Hiragana, please enable at least " +
                 QString::number(GetMy::GetInstance().AppSettingWidget().GetNumberOfEntry()) +
                 " at : Main->Hiragana->Edit Hiragana Set");
@@ -103,7 +103,7 @@ void MainWindow::on_actionKatakana_to_Romanji_QCM_triggered()
         ui->ContentStackedWidget->setCurrentIndex(1);
     }
     else
-        GetMy::GetInstance().DisplayPopup(
+        Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Katakana, please enable at least " +
                 QString::number(GetMy::GetInstance().AppSettingWidget().GetNumberOfEntry()) +
                 " at : Main->Hiragana->Edit Hiragana Set");
@@ -117,7 +117,7 @@ void MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()
         ui->ContentStackedWidget->setCurrentIndex(1);
     }
     else
-        GetMy::GetInstance().DisplayPopup(
+        Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Katakana, please enable at least " +
                 QString::number(GetMy::GetInstance().AppSettingWidget().GetNumberOfEntry()) +
                 " at : Main->Hiragana->Edit Hiragana Set");
