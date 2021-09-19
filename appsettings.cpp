@@ -11,6 +11,7 @@ AppSettings::AppSettings(QWidget *parent) :
     settingsSerializer = GetMy::GetInstance().SettingSerializer();
     nbrOfEntryLinesIdx = settingsSerializer->value("AppSettings/entriesPerLineIdx", 2).toInt();
     randomChoiceIdx = settingsSerializer->value("AppSettings/randomChoiceIdx", 1).toInt();
+    hardRefreshFreqIdx = settingsSerializer->value("AppSettings/hardRefreshFreq", 3).toInt();
 #ifdef QT_NO_DEBUG
     wifi = settingsSerializer->value("AppSettings/wifi", 0).toBool();
 #else
@@ -36,6 +37,7 @@ void AppSettings::InitializeUIValues() const
 
     ui->nbrOfEntryLinesDropdown->setCurrentIndex(nbrOfEntryLinesIdx);
     ui->RandomnessDropdown->setCurrentIndex(randomChoiceIdx);
+    ui->HardRefreshDropdown->setCurrentIndex(hardRefreshFreqIdx);
 }
 
 AppSettings::~AppSettings()
@@ -111,4 +113,18 @@ void AppSettings::on_ResetWeightsButton_clicked()
 {
     SymbolsTables::HiraganaSymbolsTableFamily.ResetWeights();
     SymbolsTables::KatakanaSymbolsTableFamily.ResetWeights();
+}
+
+void AppSettings::on_HardRefreshDropdown_currentIndexChanged(int index)
+{
+    hardRefreshFreqIdx = index;
+    settingsSerializer->setValue("AppSettings/hardRefreshFreq", index);
+}
+
+int AppSettings::HardRefreshFreq() const
+{
+    bool parsed;
+    int num = ui->HardRefreshDropdown->currentText().toInt(&parsed);
+
+    return (parsed) ? num : -1;
 }

@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/pictures">
         <file>pictures/obenkyoQrCode.png</file>
+        <file>pictures/lockscreen.jpg</file>
     </qresource>
 </RCC>

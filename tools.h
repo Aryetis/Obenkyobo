@@ -5,6 +5,16 @@
 #include <QString>
 #include <QMessageBox>
 
+#include <QDialog>
+#include <QLabel>
+#include <QPixmap>
+#include <QLayout>
+
+#include <QPushButton>
+#include <QPainter>
+
+#include "lockscreen.h"
+
 class Tools
 {
 public :
@@ -49,12 +59,50 @@ public :
     void Sleeping(bool _b) { sleeping = _b; }
     bool Sleeping() const { return sleeping; }
 
+
+
+//    class LockscreenDialog : public QDialog {
+//    public:
+//      LockscreenDialog(QWidget *parent=0):QDialog(parent) {
+//        QGridLayout *grid = new QGridLayout();
+//        setLayout(grid);
+//        QPushButton *startB = new QPushButton("Start Me", this);
+//        grid->addWidget(startB,0,0,Qt::AlignCenter);
+//        pixmap = QPixmap("mybackground.png");
+//      }
+//    protected:
+//      void resizeEvent(QResizeEvent *re) {
+//        pixmap  = pixmap.scaled(re->size(),Qt::KeepAspectRatioByExpanding);
+//      }
+//      void paintEvent(QPaintEvent *re) {
+//        QPainter painter(this);
+//        painter.drawPixmap(0,0,pixmap);
+//      }
+//    private:
+//      QPixmap pixmap;
+//    };
+
+
     void Sleep()
     {
         if (sleeping)
             return;
 
         Tools::GetInstance().DisplayPopup("Let's go to sleep");
+
+//        QDialog lockscreen;
+//        lockscreen.setWindowState(Qt::WindowFullScreen);
+
+//        lockscreen.setStyleSheet("background: black");
+//        lockscreen.exec();
+
+////        QLabel *lockImage = new QLabel();
+////        lockImage->setPixmap(QPixmap (":/pictures/pictures/lockscreen.jpg"));
+////        lockImage->setScaledContents(true);
+////        lockImage->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
+////        lockscreen.layout()->addWidget(lockImage);
+//        lockscreen.exec();
 
         sleeping = true;
     }

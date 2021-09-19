@@ -6,11 +6,12 @@
 #include "tools.h"
 #include <algorithm>
 #include "appsettings.h"
+#include "mainwindow.h"
 
 QcmExercice::QcmExercice(QWidget *parent) :
     QWidget(parent), ui(new Ui::QcmExercice), scoreCounter(0), errorCounter(0),
     currentQcmType(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM),
-    settingsSerializer(GetMy::GetInstance().SettingSerializer())
+    refreshCounter(0), settingsSerializer(GetMy::GetInstance().SettingSerializer())
 {
     ui->setupUi(this);
     GetMy::GetInstance().SetQcmExerciceWidget(this);
@@ -131,6 +132,14 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     //************************ UI score error Counters ************************
     ui->ScoreCounter->setNum(scoreCounter);
     ui->ErrorsCounter->setNum(errorCounter);
+
+    //************************ Hard Refresh ************************
+    int HardRefreshFreq = GetMy::GetInstance().AppSettingWidget().HardRefreshFreq();
+    if (HardRefreshFreq > 0 && ++refreshCounter >= HardRefreshFreq)
+    {
+        refreshCounter = 0;
+        this->repaint();
+    }
 }
 
 void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
@@ -156,13 +165,8 @@ void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
             stem->LearningState(stem->LearningState()+1);
     }
 
-    // TODO now why you doing nothing
-//    KoboPlatformFunctions::clearScreen(true);
 
-//    KoboPlatformFunctions::doManualRefresh(QRect(QPoint(0,0),
-//        QPoint(GetMy::GetInstance().Descriptor().width, GetMy::GetInstance().Descriptor().height)));
-
-    // Obekyo original feedback gave too much information to my taste :D, let's fix that
+    // print feedback informing of correct / incorrect choice
     switch (currentQcmType)
     {
         case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
@@ -178,7 +182,7 @@ void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
             else
             {
                 ui->ResultLabel->setText(stem->Romanji() + " ; " + stem->JP() + " ; ☒");
-                ui->ResultLabel->setStyleSheet("QLabel { border: 2px solid black }");
+                ui->ResultLabel->setStyleSheet("QLabel { border: 3px solid black }"); // TODO make it blink
             }
             break;
         }
@@ -199,6 +203,5 @@ void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
         }
     }
 
-    // TODO feedback and print previous answer in upper right counter ?
     InitializeExercice(currentQcmType);
 }

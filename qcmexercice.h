@@ -38,6 +38,7 @@ private:
     int scoreCounter, errorCounter;
     QcmExercice::QcmExerciceType currentQcmType;
     Symbol* stem; // Answer to guess
+    int refreshCounter;
 
     QSettings* settingsSerializer;
 };

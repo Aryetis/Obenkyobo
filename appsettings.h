@@ -27,6 +27,7 @@ public:
     void InitializeUIValues() const;
     bool IsWeightedRandomEnabled() const;
     bool IsWifiOn() const { return wifi; }
+    int HardRefreshFreq() const;
 
 private slots:
     void on_ResetStatsButton_clicked();
@@ -34,12 +35,14 @@ private slots:
     void on_RandomnessDropdown_currentIndexChanged(int index);
     void on_WifiCheckBox_clicked(bool checked);
     void on_ResetWeightsButton_clicked();
+    void on_HardRefreshDropdown_currentIndexChanged(int index);
 
 private:
     Ui::AppSettings *ui;
     int nbrOfEntryLinesIdx;
     int randomChoiceIdx;
     bool wifi;
+    int hardRefreshFreqIdx;
 
     QSettings* settingsSerializer;
 };
