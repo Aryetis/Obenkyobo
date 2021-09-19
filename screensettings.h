@@ -18,6 +18,8 @@ public:
     ~ScreenSettings()    override;
 
     bool                 AreSettingsAvailablePopup() const;
+    void                 OnSleep() const;
+    void                 OnWakeUp() const;
 
 private slots:
     void                 on_TintSlider_valueChanged(int value);

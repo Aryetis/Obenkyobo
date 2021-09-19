@@ -30,9 +30,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == POWERBUTTON || event->key() == SLEEPCOVERBUTTON)
     {
-//        if (Tools::GetInstance().Sleeping())
-//            Tools::GetInstance().WakeUp();
-//        else
+        if (Tools::GetInstance().Sleeping())
+            Tools::GetInstance().WakeUp();
+        else
             Tools::GetInstance().Sleep();
     }
 }

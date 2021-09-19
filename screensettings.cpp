@@ -61,6 +61,18 @@ bool ScreenSettings::AreSettingsAvailablePopup() const
     return true;
 }
 
+void ScreenSettings::OnSleep() const
+{
+    if(settingAvailable)
+        KoboPlatformFunctions::setFrontlightLevel(desc.frontlightSettings.naturalLightMin, tint);
+}
+
+void ScreenSettings::OnWakeUp() const
+{
+    if(settingAvailable)
+        KoboPlatformFunctions::setFrontlightLevel(luminosity, tint);
+}
+
 void ScreenSettings::on_LuminositySlider_valueChanged(int value)
 {
     luminosity = value;
