@@ -13,8 +13,6 @@
 #include <QPushButton>
 #include <QPainter>
 
-#include "lockscreen.h"
-
 class Tools
 {
 public :

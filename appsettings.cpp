@@ -11,7 +11,7 @@ AppSettings::AppSettings(QWidget *parent) :
     settingsSerializer = GetMy::GetInstance().SettingSerializer();
     nbrOfEntryLinesIdx = settingsSerializer->value("AppSettings/entriesPerLineIdx", 2).toInt();
     randomChoiceIdx = settingsSerializer->value("AppSettings/randomChoiceIdx", 1).toInt();
-    hardRefreshFreqIdx = settingsSerializer->value("AppSettings/hardRefreshFreq", 3).toInt();
+    hardRefreshFreqIdx = settingsSerializer->value("AppSettings/hardRefreshFreqIdx", 3).toInt();
 #ifdef QT_NO_DEBUG
     wifi = settingsSerializer->value("AppSettings/wifi", 0).toBool();
 #else
@@ -118,7 +118,7 @@ void AppSettings::on_ResetWeightsButton_clicked()
 void AppSettings::on_HardRefreshDropdown_currentIndexChanged(int index)
 {
     hardRefreshFreqIdx = index;
-    settingsSerializer->setValue("AppSettings/hardRefreshFreq", index);
+    settingsSerializer->setValue("AppSettings/hardRefreshFreqIdx", index);
 }
 
 int AppSettings::HardRefreshFreq() const
