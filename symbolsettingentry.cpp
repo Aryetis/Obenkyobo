@@ -6,6 +6,7 @@ SymbolSettingEntry::SymbolSettingEntry(QWidget *parent) :
     ui(new Ui::SymbolSettingEntry)
 {
     ui->setupUi(this);
+    ui->SymbolSettingEntryButton->setStyleSheet("QPushButton:checked { background-color: rgb(100, 100, 100); }");
 }
 
 SymbolSettingEntry::~SymbolSettingEntry()

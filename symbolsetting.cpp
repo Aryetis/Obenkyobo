@@ -4,6 +4,8 @@
 #include "symbolsettingsection.h"
 #include "symbolstables.h"
 
+#define SCROLLBAR_WIDTH_PRC 10
+
 SymbolSetting::SymbolSetting(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SymbolSetting)
@@ -19,6 +21,12 @@ SymbolSetting::SymbolSetting(QWidget *parent) :
 SymbolSetting::~SymbolSetting()
 {
     delete ui;
+}
+
+void SymbolSetting::resizeEvent(QResizeEvent* event)
+{
+   QWidget::resizeEvent(event);
+   setStyleSheet(QString("QScrollBar:vertical { width : %1px }").arg(width()/SCROLLBAR_WIDTH_PRC));
 }
 
 void SymbolSetting::InitializeSymbolSetting(SymbolFamilyEnum _symbolFamily)

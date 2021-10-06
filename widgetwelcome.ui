@@ -12,8 +12,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>580</width>
-    <height>526</height>
+    <width>400</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -137,7 +137,7 @@
           <string notr="true"/>
          </property>
          <property name="pixmap">
-          <pixmap resource="Resources/pictures.qrc">:/pictures/pictures/obenkyoQrCode.png</pixmap>
+          <pixmap resource="Resources/Pictures.qrc">:/pictures/pictures/obenkyoQrCode.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -192,7 +192,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="Resources/pictures.qrc"/>
+  <include location="Resources/Pictures.qrc"/>
  </resources>
  <connections/>
 </ui>

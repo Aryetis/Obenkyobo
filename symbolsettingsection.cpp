@@ -13,6 +13,15 @@ SymbolSettingSection::~SymbolSettingSection()
     delete ui;
 }
 
+void SymbolSettingSection::resizeEvent(QResizeEvent* event)
+{
+   QWidget::resizeEvent(event);
+
+   ui->SymbolSettingSectionCheckbox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
+                                                    .arg(ui->SymbolSettingSectionName->height()));
+}
+
+
 void SymbolSettingSection::InitializeSymbolSettingSection(SymbolsTableSection& symbolTableSection)
 {
     qDeleteAll(symbolSettingsEntries);

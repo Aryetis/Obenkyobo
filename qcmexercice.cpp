@@ -197,7 +197,7 @@ void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
             else
             {
                 ui->ResultLabel->setText(stem->JP() + " ; " + stem->Romanji() + " ; ☒");
-                ui->ResultLabel->setStyleSheet("QLabel { border: 2px solid black }");
+                ui->ResultLabel->setStyleSheet("QLabel { border: 3px solid black }");
             }
             break;
         }
