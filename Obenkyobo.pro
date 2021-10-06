@@ -36,6 +36,7 @@ CONFIG += c++17 \
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    qsymbolpushbutton.cpp \
     symbolsetting.cpp \
     symbolsettingentry.cpp \
     symbolsettingsection.cpp \
@@ -58,6 +59,7 @@ RESOURCES += \
 HEADERS += \
     GetMy.h \
     mainwindow.h \
+    qsymbolpushbutton.h \
     symbolsetting.h \
     symbolsettingentry.h \
     symbolsettingsection.h \

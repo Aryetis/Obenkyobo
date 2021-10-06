@@ -6,7 +6,7 @@ SymbolSettingEntry::SymbolSettingEntry(QWidget *parent) :
     ui(new Ui::SymbolSettingEntry)
 {
     ui->setupUi(this);
-    ui->SymbolSettingEntryButton->setStyleSheet("QPushButton:checked { background-color: rgb(100, 100, 100); }");
+    ui->SymbolSettingEntryButton->setStyleSheet("QPushButton:checked { background-color: rgb(10, 10, 10); color : rgb(255, 255, 255); }");
 }
 
 SymbolSettingEntry::~SymbolSettingEntry()
@@ -19,6 +19,7 @@ void SymbolSettingEntry::InitializeSymbolSettingEntry(Symbol* _symbol)
     symbol = _symbol;
 
     ui->SymbolSettingEntryButton->setText(symbol->JP() + "\n" + symbol->Romanji());
+    ui->SymbolSettingEntryButton->setLearningState(symbol->LearningState());
     ui->SymbolSettingEntryButton->setChecked(symbol->Enabled());
 }
 

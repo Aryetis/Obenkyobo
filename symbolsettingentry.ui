@@ -38,7 +38,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QPushButton" name="SymbolSettingEntryButton">
+      <widget class="QSymbolPushButton" name="SymbolSettingEntryButton">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -58,6 +58,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QSymbolPushButton</class>
+   <extends>QPushButton</extends>
+   <header>qsymbolpushbutton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

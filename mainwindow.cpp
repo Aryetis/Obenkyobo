@@ -87,8 +87,8 @@ void MainWindow::on_actionHiragana_to_Romanji_Kbd_triggered()
 
 void MainWindow::on_actionEdit_Hiragana_Set_triggered()
 {
-        GetMy::GetInstance().SymbolSettingWidget().InitializeSymbolSetting(SymbolSetting::SymbolFamilyEnum::hiragana);
-        ui->ContentStackedWidget->setCurrentIndex(3);
+    GetMy::GetInstance().SymbolSettingWidget().InitializeSymbolSetting(SymbolSetting::SymbolFamilyEnum::hiragana);
+    ui->ContentStackedWidget->setCurrentIndex(3);
 }
 
 
