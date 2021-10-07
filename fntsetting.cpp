@@ -13,13 +13,13 @@
 FntSetting::FntSetting(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FntSetting),
-    settingsSerializer(GetMy::GetInstance().SettingSerializer())
+    settingsSerializer(GetMy::Instance().SettingSerializer())
 {
     ui->setupUi(this);
 
     // Fonts must be ready before switching widget => don't delay the initialization
     RegisterFntsFromResources(); // must be done before anything needing fonts => don't move into InitializeFntSetting
-    GetMy::GetInstance().SetFntSettingWidget(this);
+    GetMy::Instance().SetFntSettingWidget(this);
 }
 
 FntSetting::~FntSetting()

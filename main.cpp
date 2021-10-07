@@ -8,10 +8,10 @@ int main(int argc, char *argv[])
 
     // Needed to save .cfg next to application...
     QSettings serializer = QSettings(QString(QCoreApplication::applicationDirPath() + "/config.cfg"), QSettings::IniFormat);
-    GetMy::GetInstance().SetSettingSerialier(&serializer);
+    GetMy::Instance().SetSettingSerialier(&serializer);
 
     MainWindow w;
-    w.setFixedSize(GetMy::GetInstance().Descriptor().width, GetMy::GetInstance().Descriptor().height);
+    w.setFixedSize(GetMy::Instance().Descriptor().width, GetMy::Instance().Descriptor().height);
     w.show();
 #ifdef QT_NO_DEBUG
     return a.exec();

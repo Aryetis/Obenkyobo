@@ -25,9 +25,9 @@ public :
         parentedFamily = _p;
 
         enabledSerializedAddress = ("Symbols/enabled_"+serializedAddress+"_"+romanji).toUtf8();
-        enabled = GetMy::GetInstance().SettingSerializer()->value(enabledSerializedAddress, true).toBool();
+        enabled = GetMy::Instance().SettingSerializer()->value(enabledSerializedAddress, true).toBool();
         learningStateSerializedAddress = ("Symbols/learningState"+serializedAddress+"_"+romanji).toUtf8();
-        learningState = GetMy::GetInstance().SettingSerializer()->value(learningStateSerializedAddress, 5).toInt();
+        learningState = GetMy::Instance().SettingSerializer()->value(learningStateSerializedAddress, 5).toInt();
         return enabled;
     }
 
@@ -115,7 +115,7 @@ inline void Symbol::Enabled(bool b)
     if (b != enabled)
     {
         enabled = b;
-        GetMy::GetInstance().SettingSerializer()->setValue(enabledSerializedAddress, enabled);
+        GetMy::Instance().SettingSerializer()->setValue(enabledSerializedAddress, enabled);
         if (enabled)
             parentedFamily->NbrOfEnabled(parentedFamily->NbrOfEnabled()+1);
         else
@@ -126,7 +126,7 @@ inline void Symbol::Enabled(bool b)
 inline void Symbol::LearningState(int ls)
 {
     learningState = ls;
-    GetMy::GetInstance().SettingSerializer()->setValue(learningStateSerializedAddress, learningState);
+    GetMy::Instance().SettingSerializer()->setValue(learningStateSerializedAddress, learningState);
 }
 
 

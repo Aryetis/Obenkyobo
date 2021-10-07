@@ -11,7 +11,7 @@ class ScreenSettings;
 class GetMy
 {
 public:
-    static GetMy & GetInstance()
+    static GetMy & Instance()
     {
         static GetMy instance;
         return instance;

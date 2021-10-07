@@ -15,7 +15,7 @@ SymbolSetting::SymbolSetting(QWidget *parent) :
     SymbolsTables::HiraganaSymbolsTableFamily.InitializeSerializedVals();
     SymbolsTables::KatakanaSymbolsTableFamily.InitializeSerializedVals();
 
-    GetMy::GetInstance().SetSymbolSettingWidget(this);
+    GetMy::Instance().SetSymbolSettingWidget(this);
 }
 
 SymbolSetting::~SymbolSetting()

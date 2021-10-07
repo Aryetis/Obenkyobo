@@ -39,6 +39,7 @@ private:
     QcmExercice::QcmExerciceType currentQcmType;
     Symbol* stem; // Answer to guess
     int refreshCounter;
+    QFont curHiraganaNonSized, curKatakanaNonSized, curRomanjiNonSized;
 
     QSettings* settingsSerializer;
 };

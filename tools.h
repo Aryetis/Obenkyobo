@@ -69,7 +69,7 @@ public :
             return;
 
         std::cout << "going to sleep" << std::endl;
-        GetMy::GetInstance().ScreenSettingsWidget().OnSleep();
+        GetMy::Instance().ScreenSettingsWidget().OnSleep();
 
         //-------------------------------------------------------------
 //        QFile stateExtendedFile("/sys/power/state-extended");
@@ -118,7 +118,7 @@ public :
             return;
 
         std::cout << "Waking up" << std::endl;
-        GetMy::GetInstance().ScreenSettingsWidget().OnWakeUp();
+        GetMy::Instance().ScreenSettingsWidget().OnWakeUp();
 
         //-------------------------------------------------------------
 //        QFile file("/sys/power/state-extended");

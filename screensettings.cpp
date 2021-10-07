@@ -7,8 +7,8 @@
 ScreenSettings::ScreenSettings(QWidget *parent) :
     QWidget(parent), ui(new Ui::ScreenSettings),
     luminosity(0), tint(0), settingAvailable(false),
-    desc(GetMy::GetInstance().Descriptor()),
-    settingsSerializer(GetMy::GetInstance().SettingSerializer())
+    desc(GetMy::Instance().Descriptor()),
+    settingsSerializer(GetMy::Instance().SettingSerializer())
 {
     ui->setupUi(this);
 
@@ -43,7 +43,7 @@ ScreenSettings::ScreenSettings(QWidget *parent) :
     if (settingAvailable)
         KoboPlatformFunctions::setFrontlightLevel(luminosity, tint);
 
-    GetMy::GetInstance().SetScreenSettingsWidget(this);
+    GetMy::Instance().SetScreenSettingsWidget(this);
 }
 
 ScreenSettings::~ScreenSettings()

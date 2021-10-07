@@ -8,7 +8,7 @@ AppSettings::AppSettings(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    settingsSerializer = GetMy::GetInstance().SettingSerializer();
+    settingsSerializer = GetMy::Instance().SettingSerializer();
     nbrOfEntryLinesIdx = settingsSerializer->value("AppSettings/entriesPerLineIdx", 2).toInt();
     randomChoiceIdx = settingsSerializer->value("AppSettings/randomChoiceIdx", 1).toInt();
     hardRefreshFreqIdx = settingsSerializer->value("AppSettings/hardRefreshFreqIdx", 3).toInt();
@@ -24,7 +24,7 @@ AppSettings::AppSettings(QWidget *parent) :
 //    else
 //        KoboPlatformFunctions::disableWiFiConnection();
 
-    GetMy::GetInstance().SetAppSettingWidget(this);
+    GetMy::Instance().SetAppSettingWidget(this);
 }
 
 void AppSettings::InitializeUIValues() const
@@ -47,8 +47,8 @@ AppSettings::~AppSettings()
 
 bool AppSettings::IsThereEnough(QcmExercice::QcmExerciceType qcmType) const
 {
-    int minRequiredSymbol = GetMy::GetInstance().AppSettingWidget().GetNumberOfEntryLine() *
-                            GetMy::GetInstance().AppSettingWidget().GetNumberOfEntryRow();
+    int minRequiredSymbol = GetMy::Instance().AppSettingWidget().GetNumberOfEntryLine() *
+                            GetMy::Instance().AppSettingWidget().GetNumberOfEntryRow();
 
     switch (qcmType)
     {

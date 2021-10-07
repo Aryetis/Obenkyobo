@@ -11,10 +11,14 @@
 QcmExercice::QcmExercice(QWidget *parent) :
     QWidget(parent), ui(new Ui::QcmExercice), scoreCounter(0), errorCounter(0),
     currentQcmType(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM),
-    refreshCounter(0), settingsSerializer(GetMy::GetInstance().SettingSerializer())
+    refreshCounter(0), settingsSerializer(GetMy::Instance().SettingSerializer())
 {
     ui->setupUi(this);
-    GetMy::GetInstance().SetQcmExerciceWidget(this);
+
+    ui->ResultLabelGroupBox->setFlat(true);
+    ui->ResultLabelGroupBox->setStyleSheet("border : none; ");
+
+    GetMy::Instance().SetQcmExerciceWidget(this);
 }
 
 QcmExercice::~QcmExercice()
@@ -31,6 +35,14 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
         currentQcmType = qcmType;
         scoreCounter = 0;
         errorCounter = 0;
+
+        int labelRightPointSize = ui->ResultLabelRight->font().pointSize();
+        curHiraganaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentHiraganaFnt());
+        curHiraganaNonSized.setPointSize(labelRightPointSize);
+        curKatakanaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentKatakanaFnt());
+        curKatakanaNonSized.setPointSize(labelRightPointSize);
+        curRomanjiNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentRomanjiFnt());
+        curRomanjiNonSized.setPointSize(labelRightPointSize);
     }
 
     //************************ Initialize Entries Pool ************************
@@ -51,7 +63,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     std::shuffle(std::begin(shuffledSymbols), std::end(shuffledSymbols), Tools::GetInstance().Rng_Engine());
 
     //************************ Initialize Stem  ************************
-    if (GetMy::GetInstance().AppSettingWidget().IsWeightedRandomEnabled())
+    if (GetMy::Instance().AppSettingWidget().IsWeightedRandomEnabled())
     {
         std::vector<int> weights;
         for (Symbol* symbol : shuffledSymbols)
@@ -65,7 +77,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
 
     assert(stem != nullptr);
 
-    FntSetting& fntSetting = GetMy::GetInstance().FntSettingWidget();
+    FntSetting& fntSetting = GetMy::Instance().FntSettingWidget();
     switch (qcmType)
     {
         case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
@@ -102,8 +114,8 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     guesses.clear();
 
     //************************ Initialize Entries board ************************
-    int NbrOfEntriesLine = GetMy::GetInstance().AppSettingWidget().GetNumberOfEntryLine();
-    int NbrOfEntriesRow = GetMy::GetInstance().AppSettingWidget().GetNumberOfEntryRow();
+    int NbrOfEntriesLine = GetMy::Instance().AppSettingWidget().GetNumberOfEntryLine();
+    int NbrOfEntriesRow = GetMy::Instance().AppSettingWidget().GetNumberOfEntryRow();
     int stemSlot = Tools::GetInstance().GetRandomInt(0, (NbrOfEntriesLine*NbrOfEntriesRow)-1);
     Symbol* joker = shuffledSymbols[static_cast<std::vector<Symbol>::size_type>(stemSlot)]; // Symbol replaced by stem
     for(int i= 0; i<NbrOfEntriesLine*NbrOfEntriesRow; ++i)
@@ -134,7 +146,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     ui->ErrorsCounter->setNum(errorCounter);
 
     //************************ Hard Refresh ************************
-    int HardRefreshFreq = GetMy::GetInstance().AppSettingWidget().HardRefreshFreq();
+    int HardRefreshFreq = GetMy::Instance().AppSettingWidget().HardRefreshFreq();
     if (HardRefreshFreq > 0 && ++refreshCounter >= HardRefreshFreq)
     {
         refreshCounter = 0;
@@ -171,37 +183,57 @@ void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
     {
         case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
         case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_Kbd :
+        {
+            ui->ResultLabelLeft->setFont(curRomanjiNonSized);
+            ui->ResultLabelLeft->setText(stem->Romanji());
+            ui->ResultLabelLeft->setStyleSheet("QLabel { border: none }");
+
+            ui->ResultLabelMiddle->setFont(curHiraganaNonSized);
+            ui->ResultLabelMiddle->setText(stem->JP());
+            ui->ResultLabelMiddle->setStyleSheet("QLabel { border: none }");
+            break;
+        }
         case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
         case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
         {
-            if (correct)
-            {
-                ui->ResultLabel->setText(stem->Romanji() + " ; " + stem->JP() + " ; ☑");
-                ui->ResultLabel->setStyleSheet("QLabel { border: none }");
-            }
-            else
-            {
-                ui->ResultLabel->setText(stem->Romanji() + " ; " + stem->JP() + " ; ☒");
-                ui->ResultLabel->setStyleSheet("QLabel { border: 3px solid black }"); // TODO make it blink
-            }
+            ui->ResultLabelLeft->setFont(curRomanjiNonSized);
+            ui->ResultLabelLeft->setText(stem->Romanji());
+            ui->ResultLabelLeft->setStyleSheet("QLabel { border: none }");
+
+            ui->ResultLabelMiddle->setFont(curKatakanaNonSized);
+            ui->ResultLabelMiddle->setText(stem->JP());
+            ui->ResultLabelMiddle->setStyleSheet("QLabel { border: none }");
             break;
         }
         case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :
+        {
+            ui->ResultLabelLeft->setFont(curHiraganaNonSized);
+            ui->ResultLabelLeft->setText(stem->JP());
+            ui->ResultLabelLeft->setStyleSheet("QLabel { border: none }");
+
+            ui->ResultLabelMiddle->setFont(curRomanjiNonSized);
+            ui->ResultLabelMiddle->setText(stem->Romanji());
+            ui->ResultLabelMiddle->setStyleSheet("QLabel { border: none }");
+            break;
+        }
         case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
         {
-            if (correct)
-            {
-                ui->ResultLabel->setText(stem->JP() + " ; " + stem->Romanji() + " ; ☑");
-                ui->ResultLabel->setStyleSheet("QLabel { border: none }");
-            }
-            else
-            {
-                ui->ResultLabel->setText(stem->JP() + " ; " + stem->Romanji() + " ; ☒");
-                ui->ResultLabel->setStyleSheet("QLabel { border: 3px solid black }");
-            }
+            ui->ResultLabelLeft->setFont(curKatakanaNonSized);
+            ui->ResultLabelLeft->setText(stem->JP());
+            ui->ResultLabelLeft->setStyleSheet("QLabel { border: none }");
+
+            ui->ResultLabelMiddle->setFont(curRomanjiNonSized);
+            ui->ResultLabelMiddle->setText(stem->Romanji());
+            ui->ResultLabelMiddle->setStyleSheet("QLabel { border: none }");
             break;
         }
     }
+
+    ui->ResultLabelRight->setText((correct) ? "☑" : "☒");
+    ui->ResultLabelRight->setStyleSheet("QLabel { border: none }");
+    // TODO make it blink upon fail
+    ui->ResultLabelGroupBox->setStyleSheet((correct) ? "QGroupBox { border : none }"
+                                                     : "QGroupBox { border : 3px solid black }");
 
     InitializeExercice(currentQcmType);
 }

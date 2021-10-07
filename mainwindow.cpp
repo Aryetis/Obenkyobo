@@ -54,29 +54,29 @@ void MainWindow::on_actionExit_triggered()
 //===========================================================================
 void MainWindow::on_actionHiragana_to_Romanji_QCM_triggered()
 {
-    if (GetMy::GetInstance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM))
+    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM))
     {
-        GetMy::GetInstance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM, true);
+        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
     }
     else
         Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Hiragana, please enable at least " +
-                QString::number(GetMy::GetInstance().AppSettingWidget().GetNumberOfEntry()) +
+                QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
                 " at : Main->Hiragana->Edit Hiragana Set");
 }
 
 void MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()
 {
-    if (GetMy::GetInstance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM))
+    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM))
     {
-        GetMy::GetInstance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM, true);
+        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
     }
     else
         Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Hiragana, please enable at least " +
-                QString::number(GetMy::GetInstance().AppSettingWidget().GetNumberOfEntry()) +
+                QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
                 " at : Main->Hiragana->Edit Hiragana Set");
 }
 
@@ -87,7 +87,7 @@ void MainWindow::on_actionHiragana_to_Romanji_Kbd_triggered()
 
 void MainWindow::on_actionEdit_Hiragana_Set_triggered()
 {
-    GetMy::GetInstance().SymbolSettingWidget().InitializeSymbolSetting(SymbolSetting::SymbolFamilyEnum::hiragana);
+    GetMy::Instance().SymbolSettingWidget().InitializeSymbolSetting(SymbolSetting::SymbolFamilyEnum::hiragana);
     ui->ContentStackedWidget->setCurrentIndex(3);
 }
 
@@ -97,29 +97,29 @@ void MainWindow::on_actionEdit_Hiragana_Set_triggered()
 
 void MainWindow::on_actionKatakana_to_Romanji_QCM_triggered()
 {
-    if (GetMy::GetInstance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM))
+    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM))
     {
-        GetMy::GetInstance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM, true);
+        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
     }
     else
         Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Katakana, please enable at least " +
-                QString::number(GetMy::GetInstance().AppSettingWidget().GetNumberOfEntry()) +
+                QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
                 " at : Main->Hiragana->Edit Hiragana Set");
 }
 
 void MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()
 {
-    if (GetMy::GetInstance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM))
+    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM))
     {
-        GetMy::GetInstance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM, true);
+        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
     }
     else
         Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Katakana, please enable at least " +
-                QString::number(GetMy::GetInstance().AppSettingWidget().GetNumberOfEntry()) +
+                QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
                 " at : Main->Hiragana->Edit Hiragana Set");
 }
 
@@ -130,7 +130,7 @@ void MainWindow::on_actionKatakana_to_Romanji_Kbd_triggered()
 
 void MainWindow::on_actionEdit_Katakana_Set_triggered()
 {
-    GetMy::GetInstance().SymbolSettingWidget().InitializeSymbolSetting(SymbolSetting::SymbolFamilyEnum::katakana);
+    GetMy::Instance().SymbolSettingWidget().InitializeSymbolSetting(SymbolSetting::SymbolFamilyEnum::katakana);
     ui->ContentStackedWidget->setCurrentIndex(3);
 }
 
@@ -139,7 +139,7 @@ void MainWindow::on_actionEdit_Katakana_Set_triggered()
 //===========================================================================
 void MainWindow::on_actionApplication_Setting_triggered()
 {
-    GetMy::GetInstance(). AppSettingWidget().InitializeUIValues();
+    GetMy::Instance(). AppSettingWidget().InitializeUIValues();
     ui->ContentStackedWidget->setCurrentIndex(4);
 }
 
@@ -150,6 +150,6 @@ void MainWindow::on_actionFonts_Setting_triggered()
 
 void MainWindow::on_actionScreen_Setting_triggered()
 {
-    if (GetMy::GetInstance().ScreenSettingsWidget().AreSettingsAvailablePopup())
+    if (GetMy::Instance().ScreenSettingsWidget().AreSettingsAvailablePopup())
         ui->ContentStackedWidget->setCurrentIndex(6);
 }

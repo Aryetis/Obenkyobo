@@ -72,7 +72,7 @@
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="ResultLayout">
+      <layout class="QVBoxLayout" name="ResultLabelVerticalLayout">
        <property name="leftMargin">
         <number>10</number>
        </property>
@@ -99,7 +99,7 @@
         </spacer>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QHBoxLayout" name="ResultLabelHorizontalLayout">
          <item>
           <spacer name="horizontalSpacer">
            <property name="orientation">
@@ -114,21 +114,61 @@
           </spacer>
          </item>
          <item>
-          <widget class="QLabel" name="ResultLabel">
-           <property name="font">
-            <font>
-             <pointsize>14</pointsize>
-            </font>
-           </property>
-           <property name="text">
+          <widget class="QGroupBox" name="ResultLabelGroupBox">
+           <property name="title">
             <string/>
            </property>
-           <property name="scaledContents">
-            <bool>false</bool>
+           <property name="flat">
+            <bool>true</bool>
            </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QLabel" name="ResultLabelLeft">
+              <property name="font">
+               <font>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="scaledContents">
+               <bool>false</bool>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="ResultLabelSeparator1">
+              <property name="text">
+               <string> ; </string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="ResultLabelMiddle">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="ResultLabelSeparator2">
+              <property name="text">
+               <string> ; </string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="ResultLabelRight">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>

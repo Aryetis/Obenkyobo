@@ -1,12 +1,12 @@
 #-------------------------------------------------
 #
-# TODO : - bug when switching in between hiragana / katakana edit symbol setting page
-#        - display weight of Symbols (at least in the edit set screen, maybe in the qcm too)
+# TODO : - use proper font in qcm feedback
 #        - handle sleep
 #        - Wifi switch (for debug or background dl) KoboPlatformFunctions::disable/ enableWiFiConnection
-#        - hard refresh at each stacked widget switch
 #        - handle battery level
 #        - handle QTPA dependency properly, don't have a copy paste from some version and possible src of other versions, get bin from compiled src
+#        - redirect stack trace to std::cerr
+#
 #
 #-------------------------------------------------
 
