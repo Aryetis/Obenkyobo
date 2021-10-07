@@ -28,6 +28,52 @@ void SymbolSetting::resizeEvent(QResizeEvent* event)
    QWidget::resizeEvent(event);
    setStyleSheet(QString("QScrollBar:vertical { width : %1px }").arg(SCROLLBAR_WIDTH));
 //   setStyleSheet(QString("QScrollBar::handle:vertical { background-color: red; }"));
+
+   setStyleSheet(
+
+               "QScrollBar {                                                    "
+               " border: 2px solid grey;                                              "
+               " background: white;                                                 "
+               " width: 40px;                                                         "
+               " margin: 42px 0 42px 0;                                               "
+               "}                                                                        "
+               "QScrollBar::handle {                                            "
+               " background: black;                                                   "
+               " min-height: 20px;                                                    "
+               "}                                                                        "
+               "QScrollBar::add-line {                                          "
+               " border: 2px solid grey;                                              "
+               " background: white;                                                 "
+               " height: 40px;                                                        "
+               " subcontrol-position: bottom;                                         "
+               " subcontrol-origin: margin;                                           "
+               "}                                                                        "
+               "																	  "
+               "QScrollBar::sub-line {                                          "
+               " border: 2px solid grey;                                              "
+               " background: white;                                                 "
+               " height: 40px;                                                        "
+               " subcontrol-position: top;                                            "
+               " subcontrol-origin: margin;                                           "
+               "}                                                                        "
+               "QScrollBar::up-arrow, QScrollBar::down-arrow, "
+               "QScrollBar:left-arrow, QScrollBar::right-arrow {         "
+               " border: 2px solid grey;                                              "
+               " width: 3px;                                                          "
+               " height: 3px;                                                         "
+               " background: white;                                                   "
+               "}                                                                        "
+               "																	  "
+               "QScrollBar::add-page, QScrollBar::sub-page {           "
+               " background: none;                                                    "
+               "}             "
+
+
+
+
+
+);
+
 }
 
 void SymbolSetting::InitializeSymbolSetting(SymbolFamilyEnum _symbolFamily)

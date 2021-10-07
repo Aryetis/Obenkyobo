@@ -25,7 +25,6 @@ void QcmEntryGuess::SetGuess(Symbol* s, QcmExercice::QcmExerciceType qcmType, bo
         case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
         case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_Kbd :
         {
-        QFont const& tamere = GetMy::Instance().FntSettingWidget().GetCurrentHiraganaFnt();
             ui->EntryGuess->setFont(GetMy::Instance().FntSettingWidget().GetCurrentHiraganaFnt());
             ui->EntryGuess->setText(symbol->JP());
             break;

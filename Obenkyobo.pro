@@ -1,12 +1,10 @@
 #-------------------------------------------------
 #
-# TODO : - use proper font in qcm feedback
-#        - handle sleep
+# TODO : - handle sleep
 #        - Wifi switch (for debug or background dl) KoboPlatformFunctions::disable/ enableWiFiConnection
 #        - handle battery level
 #        - handle QTPA dependency properly, don't have a copy paste from some version and possible src of other versions, get bin from compiled src
 #        - redirect stack trace to std::cerr
-#
 #
 #-------------------------------------------------
 
