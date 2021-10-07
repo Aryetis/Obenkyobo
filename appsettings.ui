@@ -164,7 +164,7 @@
            <item>
             <widget class="QLabel" name="WifiLabel">
              <property name="text">
-              <string>Wifi : </string>
+              <string>Keep Wifi on (TODO) : </string>
              </property>
             </widget>
            </item>
@@ -191,6 +191,26 @@
             <enum>Qt::Horizontal</enum>
            </property>
           </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="GlobalStatsLabelLayout">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="GlobalStatsLabel">
+             <property name="text">
+              <string>Global Statistics : </string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <layout class="QHBoxLayout" name="ScoreLayout">

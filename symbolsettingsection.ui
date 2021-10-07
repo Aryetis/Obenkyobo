@@ -75,6 +75,9 @@
        <property name="text">
         <string>SectionName</string>
        </property>
+       <property name="margin">
+        <number>8</number>
+       </property>
       </widget>
      </item>
      <item>

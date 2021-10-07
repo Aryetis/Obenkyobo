@@ -1,6 +1,7 @@
 #-------------------------------------------------
 #
-# TODO : - display weight of Symbols (at least in the edit set screen, maybe in the qcm too)
+# TODO : - bug when switching in between hiragana / katakana edit symbol setting page
+#        - display weight of Symbols (at least in the edit set screen, maybe in the qcm too)
 #        - handle sleep
 #        - Wifi switch (for debug or background dl) KoboPlatformFunctions::disable/ enableWiFiConnection
 #        - hard refresh at each stacked widget switch

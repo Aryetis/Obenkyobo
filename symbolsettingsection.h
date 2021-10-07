@@ -28,6 +28,8 @@ protected:
 private:
     Ui::SymbolSettingSection *ui;
     QList<SymbolSettingEntry*> symbolSettingsEntries;
+
+    int checkboxAdjustedSize;
 };
 
 #endif // SYMBOLSETTINGSECTION_H

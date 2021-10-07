@@ -24,9 +24,9 @@ public :
     {
         parentedFamily = _p;
 
-        enabledSerializedAddress = "Symbols/enabled_"+serializedAddress+"_"+romanji;
+        enabledSerializedAddress = ("Symbols/enabled_"+serializedAddress+"_"+romanji).toUtf8();
         enabled = GetMy::GetInstance().SettingSerializer()->value(enabledSerializedAddress, true).toBool();
-        learningStateSerializedAddress = "Symbols/learningState"+serializedAddress+"_"+romanji;
+        learningStateSerializedAddress = ("Symbols/learningState"+serializedAddress+"_"+romanji).toUtf8();
         learningState = GetMy::GetInstance().SettingSerializer()->value(learningStateSerializedAddress, 5).toInt();
         return enabled;
     }
@@ -90,7 +90,7 @@ public :
     {
         for (SymbolsTableSection& sts : data)
             for (Symbol& s : sts.Data())
-                if (s.RegisterAndInitializeSerializedVals(name+"_"+sts.Name(), this))
+                if (s.RegisterAndInitializeSerializedVals(name, this))
                     ++nbrOfEnabled;
     }
 
@@ -101,7 +101,7 @@ public :
     {
         for (SymbolsTableSection& sts : data)
             for (Symbol& s : sts.Data())
-                s.LearningState(0);
+                s.LearningState(MAX_LEARNING_STATE_VALUE);
     }
 
 private :

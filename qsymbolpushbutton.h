@@ -15,7 +15,7 @@ public :
     void setLearningState(int learningState);
 
 private :
-    int learningState;
+    int learningState; // inversed weight
 };
 
 #endif // QSYMBOLPUSHBUTTON_H
