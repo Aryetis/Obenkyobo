@@ -52,7 +52,7 @@ void QcmEntryGuess::SetGuess(Symbol* s, QcmExercice::QcmExerciceType qcmType, bo
 void QcmEntryGuess::CorrectFontSize()
 {
     int w = ui->EntryGuess->rect().width();
-    int oldFontSize = ui->EntryGuess->font().pixelSize(); // TODO NOW <=> -1 after switching hiragana font and going back to qcm
+    int oldFontSize = ui->EntryGuess->font().pixelSize();
     int newFontSize = oldFontSize;
     QRect textRect = ui->EntryGuess->fontMetrics().boundingRect(ui->EntryGuess->text());
     while ( textRect.width() >  w ) // rect().h is incorrect, probably cause it get stretched afterwards.

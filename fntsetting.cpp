@@ -116,6 +116,7 @@ void FntSetting::on_HiraganaFntDropdown_activated(int index)
     settingsSerializer->setValue("FntSettings/HiraganaFntIdx", index);
     hiraganaFonts[static_cast<std::vector<QFont>::size_type>(currentHiraganFntIdx)].setFamily(
                 ui->HiraganaFntDropdown->itemText(currentHiraganFntIdx));
+    hiraganaFonts[static_cast<std::vector<QFont>::size_type>(currentHiraganFntIdx)].setPixelSize(currentHiraganaSize);
 }
 
 void FntSetting::on_KatakanaFntDropdown_activated(int index)
@@ -124,6 +125,8 @@ void FntSetting::on_KatakanaFntDropdown_activated(int index)
     settingsSerializer->setValue("FntSettings/KatakanaFntIdx", index);
     katakanaFonts[static_cast<std::vector<QFont>::size_type>(currentKatakanaFntIdx)].setFamily(
                 ui->KatakanaFntDropdown->itemText(currentKatakanaFntIdx));
+    katakanaFonts[static_cast<std::vector<QFont>::size_type>(currentKatakanaFntIdx)].setPixelSize(currentKatakanaSize);
+
 }
 
 void FntSetting::on_RomanjiFntDropdown_activated(int index)
@@ -132,6 +135,7 @@ void FntSetting::on_RomanjiFntDropdown_activated(int index)
     settingsSerializer->setValue("FntSettings/RomanjiFntIdx", index);
     romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentRomanjiFntIdx)].setFamily(
                 ui->RomanjiFntDropdown->itemText(currentRomanjiFntIdx));
+    romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentRomanjiFntIdx)].setPixelSize(currentRomanjiSize);
 }
 
 void FntSetting::on_HiraganaSizeSlider_valueChanged(int size)
