@@ -5,6 +5,7 @@
 #        - handle battery level
 #        - handle QTPA dependency properly, don't have a copy paste from some version and possible src of other versions, get bin from compiled src
 #        - redirect stack trace to std::cerr
+#        - make symbolsettings page scrollbar's button steps bigger
 #
 #-------------------------------------------------
 
