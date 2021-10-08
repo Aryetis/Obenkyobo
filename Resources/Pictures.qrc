@@ -2,5 +2,9 @@
     <qresource prefix="/pictures">
         <file>pictures/obenkyoQrCode.png</file>
         <file>pictures/lockscreen.jpg</file>
+        <file>pictures/upArrow.png</file>
+        <file>pictures/downArrow.png</file>
+        <file>pictures/leftArrow.png</file>
+        <file>pictures/rightArrow.png</file>
     </qresource>
 </RCC>
