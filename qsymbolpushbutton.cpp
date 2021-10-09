@@ -30,7 +30,6 @@ void QSymbolPushButton::paintEvent(QPaintEvent *event)
     painter.drawText(geometry(), Qt::AlignRight | Qt::AlignBottom, QString::number(learningState)+" ");
 
     // Drawing Romanji text (don't use GetCurrentRomanjiFamily font, I'm too lazy to correct their size in frontforge)
-//    painter.drawText(QRect(0, height()/2, width(), height()/2), Qt::AlignCenter, Romanji);
     painter.drawText(geometry(), Qt::AlignCenter | Qt::AlignBottom, Romanji);
 
     // Drawing Jp text

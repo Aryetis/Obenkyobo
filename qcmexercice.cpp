@@ -11,7 +11,8 @@
 QcmExercice::QcmExercice(QWidget *parent) :
     QWidget(parent), ui(new Ui::QcmExercice), scoreCounter(0), errorCounter(0),
     currentQcmType(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM),
-    refreshCounter(0), settingsSerializer(GetMy::Instance().SettingSerializer())
+    refreshCounter(0), curHiraganaNonSized(), curKatakanaNonSized(), curRomanjiNonSized(), stemFont(),
+    settingsSerializer(GetMy::Instance().SettingSerializer())
 {
     ui->setupUi(this);
 
@@ -30,6 +31,7 @@ QcmExercice::~QcmExercice()
 
 void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool newQcmRequested /* = false*/)
 {
+    //************************ Initialize Fonts, reset counters ************************
     if (newQcmRequested)
     {
         currentQcmType = qcmType;
@@ -37,12 +39,32 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
         errorCounter = 0;
 
         int labelRightPointSize = ui->ResultLabelRight->font().pointSize();
-        curHiraganaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentHiraganaFnt()); // TODO use GetCurrent::::family
-        curHiraganaNonSized.setPointSize(labelRightPointSize);
-        curKatakanaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentKatakanaFnt());
-        curKatakanaNonSized.setPointSize(labelRightPointSize);
-        curRomanjiNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentRomanjiFnt());
-        curRomanjiNonSized.setPointSize(labelRightPointSize);
+        curHiraganaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentHiraganaFamily(), labelRightPointSize);
+        curKatakanaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentKatakanaFamily(), labelRightPointSize);
+        curRomanjiNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentRomanjiFamily(), labelRightPointSize);
+
+        FntSetting& fntSetting = GetMy::Instance().FntSettingWidget();
+        switch (qcmType)
+        {
+            case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
+            case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_Kbd :
+            case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
+            case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
+            {
+                stemFont = QFont(fntSetting.GetCurrentRomanjiFamily(), fntSetting.GetCurrentRomanjiSize() + fntSetting.GetStemBoostSize());
+                break;
+            }
+            case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :
+            {
+                stemFont = QFont(fntSetting.GetCurrentHiraganaFamily(), fntSetting.GetCurrentHiraganaSize() + fntSetting.GetStemBoostSize());
+                break;
+            }
+            case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
+            {
+                stemFont = QFont(fntSetting.GetCurrentKatakanaFamily(), fntSetting.GetCurrentKatakanaSize() + fntSetting.GetStemBoostSize());
+                break;
+            }
+        }
     }
 
     //************************ Initialize Entries Pool ************************
@@ -77,7 +99,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
 
     assert(stem != nullptr);
 
-    FntSetting& fntSetting = GetMy::Instance().FntSettingWidget();
+    ui->GuessMe->setFont(stemFont);
     switch (qcmType)
     {
         case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
@@ -85,25 +107,12 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
         case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
         case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
         {
-            QFont stemFont = fntSetting.GetCurrentRomanjiFnt();
-            stemFont.setPixelSize(stemFont.pixelSize() + fntSetting.GetStemBoostSize());
-            ui->GuessMe->setFont(stemFont);
             ui->GuessMe->setText(stem->Romanji());
             break;
         }
         case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :
-        {
-            QFont stemFont = fntSetting.GetCurrentHiraganaFnt();
-            stemFont.setPixelSize(stemFont.pixelSize() + fntSetting.GetStemBoostSize());
-            ui->GuessMe->setFont(stemFont);
-            ui->GuessMe->setText(stem->JP());
-            break;
-        }
         case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
         {
-            QFont stemFont = fntSetting.GetCurrentKatakanaFnt();
-            stemFont.setPixelSize(stemFont.pixelSize() + fntSetting.GetStemBoostSize());
-            ui->GuessMe->setFont(stemFont);
             ui->GuessMe->setText(stem->JP());
             break;
         }
@@ -231,7 +240,7 @@ void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
 
     ui->ResultLabelRight->setText((correct) ? "☑" : "☒");
     ui->ResultLabelRight->setStyleSheet("QLabel { border: none }");
-    // TODO make it blink upon fail
+    // TODO make it blink upon fail ?
     ui->ResultLabelGroupBox->setStyleSheet((correct) ? "QGroupBox { border : none }"
                                                      : "QGroupBox { border : 3px solid black }");
 

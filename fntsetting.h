@@ -26,6 +26,10 @@ public:
     QString GetCurrentKatakanaFamily() { return katakanaFonts[static_cast<std::vector<QFont>::size_type>(currentKatakanaFntIdx)].family(); }
     QString GetCurrentRomanjiFamily() { return romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentRomanjiFntIdx)].family(); }
 
+    int GetCurrentHiraganaSize() { return currentHiraganaSize; }
+    int GetCurrentKatakanaSize() { return currentKatakanaSize; }
+    int GetCurrentRomanjiSize() { return currentRomanjiSize; }
+
     int GetStemBoostSize() const { return stemBoostSize; }
 
 private slots:
