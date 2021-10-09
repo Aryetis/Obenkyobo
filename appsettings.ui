@@ -23,13 +23,6 @@
       <number>20</number>
      </property>
      <item>
-      <widget class="Line" name="line">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
       <layout class="QHBoxLayout" name="nbrOfEntryLinesSettings">
        <property name="topMargin">
         <number>0</number>
@@ -155,107 +148,114 @@
        </item>
       </layout>
      </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="QcmSettingLine">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="WifiSetting">
      <item>
-      <layout class="QHBoxLayout" name="WifiSetting">
+      <layout class="QVBoxLayout" name="WifiSettingSubContainer">
        <item>
-        <layout class="QVBoxLayout" name="WifiSettingSubContainer">
+        <layout class="QHBoxLayout" name="WifiLayout">
          <item>
-          <layout class="QHBoxLayout" name="WifiLayout">
-           <item>
-            <widget class="QLabel" name="WifiLabel">
-             <property name="text">
-              <string>Keep Wifi on (TODO) : </string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="WifiCheckBox">
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QLabel" name="WifiLabel">
+           <property name="text">
+            <string>Keep Wifi on (TODO) : </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="WifiCheckBox">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
       </layout>
      </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="WifiLine">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="StatsSetting">
      <item>
-      <layout class="QHBoxLayout" name="StatsSetting">
+      <layout class="QVBoxLayout" name="StatSettingSubContainer">
        <item>
-        <layout class="QVBoxLayout" name="StatSettingSubContainer">
+        <layout class="QHBoxLayout" name="GlobalStatsLabelLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
          <item>
-          <widget class="Line" name="StatsLine">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="GlobalStatsLabelLayout">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="GlobalStatsLabel">
-             <property name="text">
-              <string>Global Statistics : </string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="ScoreLayout">
-           <item>
-            <widget class="QLabel" name="ScoreCounterLabel">
-             <property name="text">
-              <string>Score : </string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="ScoreCounterValueLabel">
-             <property name="text">
-              <string>0</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="ErrorsLayout">
-           <item>
-            <widget class="QLabel" name="ErrorCounterLabel">
-             <property name="text">
-              <string>Errors : </string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="ErrorsCounterValueLabel">
-             <property name="text">
-              <string>0</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QPushButton" name="ResetStatsButton">
+          <widget class="QLabel" name="GlobalStatsLabel">
            <property name="text">
-            <string>Reset Stats</string>
+            <string>Global Statistics : </string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
         </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="ScoreLayout">
+         <item>
+          <widget class="QLabel" name="ScoreCounterLabel">
+           <property name="text">
+            <string>Score : </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="ScoreCounterValueLabel">
+           <property name="text">
+            <string>0</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="ErrorsLayout">
+         <item>
+          <widget class="QLabel" name="ErrorCounterLabel">
+           <property name="text">
+            <string>Errors : </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="ErrorsCounterValueLabel">
+           <property name="text">
+            <string>0</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QPushButton" name="ResetStatsButton">
+         <property name="text">
+          <string>Reset Stats</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>

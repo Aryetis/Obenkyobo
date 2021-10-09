@@ -37,7 +37,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
         errorCounter = 0;
 
         int labelRightPointSize = ui->ResultLabelRight->font().pointSize();
-        curHiraganaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentHiraganaFnt());
+        curHiraganaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentHiraganaFnt()); // TODO use GetCurrent::::family
         curHiraganaNonSized.setPointSize(labelRightPointSize);
         curKatakanaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentKatakanaFnt());
         curKatakanaNonSized.setPointSize(labelRightPointSize);

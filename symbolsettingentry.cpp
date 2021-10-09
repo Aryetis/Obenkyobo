@@ -1,6 +1,9 @@
 #include "symbolsettingentry.h"
 #include "ui_symbolsettingentry.h"
 
+#include "GetMy.h"
+#include "fntsetting.h"
+
 SymbolSettingEntry::SymbolSettingEntry(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SymbolSettingEntry)
@@ -14,11 +17,13 @@ SymbolSettingEntry::~SymbolSettingEntry()
     delete ui;
 }
 
-void SymbolSettingEntry::InitializeSymbolSettingEntry(Symbol* _symbol)
+void SymbolSettingEntry::InitializeSymbolSettingEntry(Symbol* _symbol, ::SymbolFamilyEnum symbolFamily)
 {
     symbol = _symbol;
 
-    ui->SymbolSettingEntryButton->setText(symbol->JP() + "\n" + symbol->Romanji());
+    ui->SymbolSettingEntryButton->setSymbolFamilyEnum(symbolFamily);
+    ui->SymbolSettingEntryButton->setJpText(symbol->JP());
+    ui->SymbolSettingEntryButton->setRmjText(symbol->Romanji());
     ui->SymbolSettingEntryButton->setLearningState(symbol->LearningState());
     ui->SymbolSettingEntryButton->setChecked(symbol->Enabled());
 }

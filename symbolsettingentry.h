@@ -17,7 +17,7 @@ public:
     explicit SymbolSettingEntry(QWidget *parent = nullptr);
     ~SymbolSettingEntry() override;
 
-    void InitializeSymbolSettingEntry(Symbol* _symbol);
+    void InitializeSymbolSettingEntry(Symbol* _symbol, SymbolFamilyEnum symbolFamily);
     void FakeClick(bool b);
 
 private slots:

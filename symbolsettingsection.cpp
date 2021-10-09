@@ -24,7 +24,7 @@ void SymbolSettingSection::resizeEvent(QResizeEvent* event)
 }
 
 
-void SymbolSettingSection::InitializeSymbolSettingSection(SymbolsTableSection& symbolTableSection)
+void SymbolSettingSection::InitializeSymbolSettingSection(SymbolsTableSection& symbolTableSection, SymbolFamilyEnum symbolFamily)
 {
     qDeleteAll(symbolSettingsEntries);
     symbolSettingsEntries.clear();
@@ -35,7 +35,7 @@ void SymbolSettingSection::InitializeSymbolSettingSection(SymbolsTableSection& s
     for (Symbol& symbol : symbolTableSection.Data())
     {
         SymbolSettingEntry* symbolEntry = new SymbolSettingEntry();
-        symbolEntry->InitializeSymbolSettingEntry(&symbol);
+        symbolEntry->InitializeSymbolSettingEntry(&symbol, symbolFamily);
         symbolSettingsEntries.append(symbolEntry);
 
         if (i==36 || i==38) // leave empty space for (yi || ye), ugly but I don't care

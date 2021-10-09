@@ -15,11 +15,6 @@ class SymbolSetting : public QWidget
     Q_OBJECT
 
 public:
-    enum SymbolFamilyEnum
-    {
-        hiragana,
-        katakana
-    };
     explicit SymbolSetting(QWidget *parent = nullptr);
     ~SymbolSetting() override;
 

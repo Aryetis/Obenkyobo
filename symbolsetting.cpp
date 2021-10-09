@@ -6,6 +6,7 @@
 
 #include <QScrollBar>
 
+
 SymbolSetting::SymbolSetting(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SymbolSetting)
@@ -76,7 +77,7 @@ void SymbolSetting::InitializeSymbolSetting(SymbolFamilyEnum _symbolFamily)
     for (SymbolsTableSection& symbolTableSection : symbolsTableFamilyTarget )
     {
         SymbolSettingSection* symbolSettingSection = new SymbolSettingSection();
-        symbolSettingSection->InitializeSymbolSettingSection(symbolTableSection);
+        symbolSettingSection->InitializeSymbolSettingSection(symbolTableSection, symbolFamily);
         symbolsTableSections.append(symbolSettingSection);
 
         ui->SymbolSettingContainer->addWidget(symbolSettingSection);

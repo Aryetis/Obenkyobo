@@ -10,6 +10,12 @@
 
 #define MAX_LEARNING_STATE_VALUE 5
 
+enum SymbolFamilyEnum
+{
+    hiragana,
+    katakana
+};
+
 //================================== Symbol ==================================
 class SymbolsTableFamily;
 class Symbol
