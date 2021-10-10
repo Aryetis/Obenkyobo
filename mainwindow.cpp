@@ -6,10 +6,9 @@
 #include "tools.h"
 #include "symbolsetting.h"
 #include <QKeyEvent>
-
-//#include "kobofbscreen.h"
-//#include "kobodevicedescriptor.h"
 #include "koboplatformfunctions.h"
+
+#include <QPainter>
 
 #define POWERBUTTON KoboKey::Key_Power
 #define SLEEPCOVERBUTTON KoboKey::Key_SleepCover
@@ -18,6 +17,20 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    QMenuBar *bar = new QMenuBar(ui->menuBar);
+    ui->menuBar->setCornerWidget(bar);
+
+    QAction *timeDisplay = new QAction("20:42", bar); // TODO am, pm display format make it depends on CurrentLocale=en_*** value in /mnt/onboard/.kobo/Kobo/Kobo\ eReader.conf
+    bar->addAction(timeDisplay);
+
+    QAction *actionBatteryIcon = new QAction(QIcon(":/pictures/Battery/battery1.png"), "batteryIcon", bar);
+    bar->addAction(actionBatteryIcon);
+
+    QAction *actionBatteryTxt = new QAction("100%", bar);
+    bar->addAction(actionBatteryTxt);
+
+    bar->setStyleSheet("QMenuBar::item { color: black; background: transparent; }");
 }
 
 MainWindow::~MainWindow()

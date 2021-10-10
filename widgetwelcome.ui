@@ -137,7 +137,7 @@
           <string notr="true"/>
          </property>
          <property name="pixmap">
-          <pixmap resource="Resources/Pictures.qrc">:/pictures/pictures/obenkyoQrCode.png</pixmap>
+          <pixmap resource="Resources/Pictures.qrc">:/pictures/QrCode/obenkyoQrCode.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>

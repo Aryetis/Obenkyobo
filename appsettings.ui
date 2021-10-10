@@ -20,8 +20,23 @@
       <number>0</number>
      </property>
      <property name="bottomMargin">
-      <number>20</number>
+      <number>0</number>
      </property>
+     <item>
+      <widget class="QLabel" name="QcmSettingsLabel">
+       <property name="font">
+        <font>
+         <underline>true</underline>
+        </font>
+       </property>
+       <property name="text">
+        <string>QCM Settings :</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
      <item>
       <layout class="QHBoxLayout" name="nbrOfEntryLinesSettings">
        <property name="topMargin">
@@ -158,26 +173,68 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="WifiSetting">
+    <layout class="QVBoxLayout" name="GlobalSettings">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
      <item>
-      <layout class="QVBoxLayout" name="WifiSettingSubContainer">
+      <widget class="QLabel" name="GlobalSettingsLabel">
+       <property name="font">
+        <font>
+         <underline>true</underline>
+        </font>
+       </property>
+       <property name="text">
+        <string>Global Settings :</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="DateDisplayFormat">
        <item>
-        <layout class="QHBoxLayout" name="WifiLayout">
+        <widget class="QLabel" name="DateDisplayFormatLabel">
+         <property name="text">
+          <string>Date display format :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="DateDisplayFormatDropdown">
          <item>
-          <widget class="QLabel" name="WifiLabel">
-           <property name="text">
-            <string>Keep Wifi on (TODO) : </string>
-           </property>
-          </widget>
+          <property name="text">
+           <string>13:37</string>
+          </property>
          </item>
          <item>
-          <widget class="QCheckBox" name="WifiCheckBox">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
+          <property name="text">
+           <string>1:37 pm</string>
+          </property>
          </item>
-        </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="WifiLayout">
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="WifiLabel">
+         <property name="text">
+          <string>Keep Wifi on (TODO) : </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="WifiCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -194,25 +251,23 @@
     <layout class="QHBoxLayout" name="StatsSetting">
      <item>
       <layout class="QVBoxLayout" name="StatSettingSubContainer">
+       <property name="topMargin">
+        <number>0</number>
+       </property>
        <item>
-        <layout class="QHBoxLayout" name="GlobalStatsLabelLayout">
-         <property name="spacing">
-          <number>0</number>
+        <widget class="QLabel" name="GlobalStatsLabel">
+         <property name="font">
+          <font>
+           <underline>true</underline>
+          </font>
          </property>
-         <property name="topMargin">
-          <number>0</number>
+         <property name="text">
+          <string>Global Statistics :</string>
          </property>
-         <item>
-          <widget class="QLabel" name="GlobalStatsLabel">
-           <property name="text">
-            <string>Global Statistics : </string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="ScoreLayout">

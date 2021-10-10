@@ -1,10 +1,16 @@
 <RCC>
     <qresource prefix="/pictures">
-        <file>pictures/obenkyoQrCode.png</file>
-        <file>pictures/lockscreen.jpg</file>
-        <file>pictures/upArrow.png</file>
-        <file>pictures/downArrow.png</file>
-        <file>pictures/leftArrow.png</file>
-        <file>pictures/rightArrow.png</file>
+        <file>QrCode/obenkyoQrCode.png</file>
+        <file>lockscreen.jpg</file>
+        <file>Arrows/upArrow.png</file>
+        <file>Arrows/downArrow.png</file>
+        <file>Arrows/leftArrow.png</file>
+        <file>Arrows/rightArrow.png</file>
+        <file>Battery/battery1.png</file>
+        <file>Battery/battery2.png</file>
+        <file>Battery/battery3.png</file>
+        <file>Battery/battery4.png</file>
+        <file>Battery/batteryCharging.png</file>
+        <file>Battery/batteryEmpty.png</file>
     </qresource>
 </RCC>
