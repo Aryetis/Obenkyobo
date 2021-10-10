@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMenuBar>
 #include "koboplatformfunctions.h"
 
 namespace Ui
@@ -39,9 +40,22 @@ private slots:
     void on_actionFonts_Setting_triggered();
     void on_actionScreen_Setting_triggered();
 
+    //===========================================================================
+    void refreshTimeAndBattery();
+
 private:
-    Ui::MainWindow *ui;
+    bool IsLocalTimeFormatUS();
     void keyPressEvent(QKeyEvent *event) override;
+
+    Ui::MainWindow *ui;
+
+    QMenuBar statusBar;
+    QAction timeDisplay;
+    QAction actionBatteryIcon;
+    QAction actionBatteryTxt;
+
+    QTimer timer;
+    bool timerSynched;
 };
 
 #endif // MAINWINDOW_H

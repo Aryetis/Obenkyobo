@@ -14,23 +14,32 @@
 #define SLEEPCOVERBUTTON KoboKey::Key_SleepCover
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent), ui(new Ui::MainWindow)
+    QMainWindow(parent), ui(new Ui::MainWindow),
+    statusBar(ui->menuBar), timeDisplay("20:42", &statusBar),
+    actionBatteryIcon(QIcon(":/pictures/Battery/battery1.png"), "batteryIcon", &statusBar),
+    actionBatteryTxt("100%", &statusBar),
+    timer(this), timerSynched(false)
 {
     ui->setupUi(this);
 
-    QMenuBar *bar = new QMenuBar(ui->menuBar);
-    ui->menuBar->setCornerWidget(bar);
+    // Setup statusBar
+    ui->menuBar->setCornerWidget(&statusBar);
+    statusBar.addAction(&timeDisplay);
+    statusBar.addAction(&actionBatteryIcon);
+    statusBar.addAction(&actionBatteryTxt);
+    statusBar.setStyleSheet("QMenuBar::item { color: black; background: transparent; }");
 
-    QAction *timeDisplay = new QAction("20:42", bar); // TODO am, pm display format make it depends on CurrentLocale=en_*** value in /mnt/onboard/.kobo/Kobo/Kobo\ eReader.conf
-    bar->addAction(timeDisplay);
+    // Handle time
+    connect(&timer, &QTimer::timeout, this, &MainWindow::refreshTimeAndBattery);
+    QTime time = QTime::currentTime();
+    QString text = time.toString((IsLocalTimeFormatUS()) ? "hh:mm a" : "hh:mm" );
+    timeDisplay.setText(text);
+    timer.start(60000 - 1000*time.second()); // TODO am pm format
 
-    QAction *actionBatteryIcon = new QAction(QIcon(":/pictures/Battery/battery1.png"), "batteryIcon", bar);
-    bar->addAction(actionBatteryIcon);
-
-    QAction *actionBatteryTxt = new QAction("100%", bar);
-    bar->addAction(actionBatteryTxt);
-
-    bar->setStyleSheet("QMenuBar::item { color: black; background: transparent; }");
+    // Handle Battery
+    // cf : KoboPlatformAdditions
+    // int getBatteryLevel() const;
+    // bool isBatteryCharging() const;
 }
 
 MainWindow::~MainWindow()
@@ -48,6 +57,51 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         else
             Tools::GetInstance().Sleep();
     }
+}
+
+bool MainWindow::IsLocalTimeFormatUS()
+{
+    // TODO handle Settings override
+    QFile inputFile("/mnt/onboard/.kobo/Kobo/Kobo eReader.conf");
+    inputFile.open(QIODevice::ReadOnly);
+    if (!inputFile.isOpen())
+        return true;
+
+    QTextStream stream(&inputFile);
+    for (QString line = stream.readLine(); !line.isNull(); line = stream.readLine())
+    {
+        QStringList nombres = line.split("=", Qt::SkipEmptyParts);
+        if (nombres.size() == 2)
+        {
+            QString prefix = nombres[0];
+            QString value = nombres[1];
+            if (prefix.compare("CurrentLocale") == 0)
+            {
+                if (value.size()>3)
+                {
+                    value = nombres[1].mid(0,3);
+                    return (value.compare("en_") == 0) ? true : false;
+                }
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+void MainWindow::refreshTimeAndBattery()
+{
+    QTime time = QTime::currentTime();
+    QString text = time.toString((IsLocalTimeFormatUS()) ? "hh:mm a" : "hh:mm" );
+
+    if (!timerSynched)
+    {
+        timer.start(60000);
+        timerSynched = true;
+    }
+
+    timeDisplay.setText(text);
 }
 
 

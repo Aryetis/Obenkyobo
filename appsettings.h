@@ -29,7 +29,7 @@ public:
     bool IsWifiOn() const { return wifi; }
     int HardRefreshFreq() const;
 protected:
-    void resizeEvent(QResizeEvent* event);
+    void resizeEvent(QResizeEvent* event) override;
 
 private slots:
     void on_ResetStatsButton_clicked();
