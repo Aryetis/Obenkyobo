@@ -1,9 +1,7 @@
 #-------------------------------------------------
 #
-# TODO : - libkobo.so
-#        - handle sleep
+# TODO : - handle sleep
 #        - Wifi switch (for debug or background dl) KoboPlatformFunctions::disable/ enableWiFiConnection
-#        - handle battery level and date, including am/pm and correct format ;)
 #        - handle QTPA dependency properly, don't have a copy paste from some version and possible src of other versions, get bin from compiled src
 #        - redirect stack trace to std::cerr
 #        - link physical button to scrollbar without having to click scrollbar first
@@ -108,7 +106,8 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /mnt/onboard/.adds/$${TARGET}
 
 ##################### install everything first then only deploy binary/target #####################
+INSTALLS += target everything thumbnail
 #INSTALLS += target everythingButLibs thumbnail
-INSTALLS += target
+#INSTALLS += target
 
 DISTFILES +=

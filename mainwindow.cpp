@@ -93,7 +93,7 @@ void MainWindow::refreshTimeAndBattery()
         if (actionBatteryIcon.iconText() != "lvlCharging" || actionBatteryIcon.iconText() == "init"
                 || actionBatteryIcon.iconText() == "")
         {
-            if (batteryLvl != wasBatteryLvl && isBatteryTextVisible)
+            if (batteryLvl != wasBatteryLvl && isBatteryTextVisible) // TODO NOW if starting not charging and pluging in txt is not updated with ⚡
                 actionBatteryTxt.setText(QString("⚡%1%⚡").arg(batteryLvl));
             if (isBatteryIconVisible)
             {
@@ -109,7 +109,7 @@ void MainWindow::refreshTimeAndBattery()
                                         || actionBatteryIcon.iconText() == "init"
                                         || actionBatteryIcon.iconText() == "")
         {
-            if (batteryLvl != wasBatteryLvl && isBatteryTextVisible) // TODO batteryLvl is the same => not going in
+            if (batteryLvl != wasBatteryLvl && isBatteryTextVisible)
             {
                 actionBatteryTxt.setText(QString("%1%").arg(batteryLvl));
             }
