@@ -46,7 +46,7 @@ sed -i "s/longName/$LongName/g" $3/Output/.adds/nm/$4
 sed -i "s~launcherAddress~/mnt/onboard/.adds/$4/$LauncherName~g" $3/Output/.adds/nm/$4
 
 #Renaming QTPA plugin
-mv $3/Output/.adds/qt-linux-5.15.2-kobo/plugins/platforms/libkobo.so $3/Output/.adds/qt-linux-5.15.2-kobo/plugins/platforms/lib$QtPluginKobo.so
+#mv $3/Output/.adds/qt-linux-5.15.2-kobo/plugins/platforms/libkobo.so $3/Output/.adds/qt-linux-5.15.2-kobo/plugins/platforms/lib$QtPluginKobo.so
 
 #+ zip it up if building release
 if [[ $1 == release ]];
