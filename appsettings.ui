@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="5,0,3,0,4">
    <item>
     <layout class="QVBoxLayout" name="QcmSettings">
      <property name="topMargin">
@@ -38,7 +38,7 @@
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="nbrOfEntryLinesSettings">
+      <layout class="QHBoxLayout" name="nbrOfEntryLinesSettings" stretch="0,0,0">
        <property name="topMargin">
         <number>0</number>
        </property>
@@ -53,7 +53,38 @@
         </widget>
        </item>
        <item>
+        <spacer name="horizontalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QComboBox" name="nbrOfEntryLinesDropdown">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <item>
           <property name="text">
            <string>1x3</string>
@@ -74,7 +105,7 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="HardRefreshSetting">
+      <layout class="QHBoxLayout" name="HardRefreshSetting" stretch="0,0,0">
        <item>
         <widget class="QLabel" name="HardRefreshLabel">
          <property name="text">
@@ -83,7 +114,38 @@
         </widget>
        </item>
        <item>
+        <spacer name="horizontalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QComboBox" name="HardRefreshDropdown">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="currentIndex">
           <number>3</number>
          </property>
@@ -117,7 +179,7 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="RandomnessSetting">
+      <layout class="QHBoxLayout" name="RandomnessSetting" stretch="0,0,0">
        <property name="topMargin">
         <number>0</number>
        </property>
@@ -129,7 +191,35 @@
         </widget>
        </item>
        <item>
+        <spacer name="horizontalSpacer_8">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QComboBox" name="RandomnessDropdown">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QComboBox::AdjustToContents</enum>
+         </property>
          <item>
           <property name="text">
            <string>True Random</string>
@@ -146,20 +236,41 @@
      </item>
      <item>
       <layout class="QHBoxLayout" name="ResetWeights">
+       <property name="topMargin">
+        <number>10</number>
+       </property>
        <item>
-        <layout class="QVBoxLayout" name="ResetWeightsSubContainer">
-         <item>
-          <layout class="QHBoxLayout" name="ResetWeightsLayout">
-           <item>
-            <widget class="QPushButton" name="ResetWeightsButton">
-             <property name="text">
-              <string>Reset Weights / Learning State</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="ResetWeightsButton">
+         <property name="text">
+          <string>Reset Weights / Learning State</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </item>
@@ -193,7 +304,7 @@
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="DateDisplayFormat">
+      <layout class="QHBoxLayout" name="DateDisplayFormat" stretch="0,0,0">
        <item>
         <widget class="QLabel" name="DateDisplayFormatLabel">
          <property name="text">
@@ -202,7 +313,32 @@
         </widget>
        </item>
        <item>
+        <spacer name="horizontalSpacer_9">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QComboBox" name="DateDisplayFormatDropdown">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>0</height>
+          </size>
+         </property>
          <item>
           <property name="text">
            <string>13:37</string>
@@ -218,7 +354,7 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="WifiLayout">
+      <layout class="QHBoxLayout" name="WifiLayout" stretch="1,1">
        <property name="topMargin">
         <number>0</number>
        </property>
@@ -231,6 +367,9 @@
        </item>
        <item>
         <widget class="QCheckBox" name="WifiCheckBox">
+         <property name="layoutDirection">
+          <enum>Qt::RightToLeft</enum>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -248,62 +387,78 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="StatsSetting">
+    <layout class="QVBoxLayout" name="StatsSettings">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
      <item>
-      <layout class="QVBoxLayout" name="StatSettingSubContainer">
-       <property name="topMargin">
-        <number>0</number>
+      <widget class="QLabel" name="GlobalStatsLabel">
+       <property name="font">
+        <font>
+         <underline>true</underline>
+        </font>
        </property>
+       <property name="text">
+        <string>Global Statistics :</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="ScoreLayout">
        <item>
-        <widget class="QLabel" name="GlobalStatsLabel">
-         <property name="font">
-          <font>
-           <underline>true</underline>
-          </font>
-         </property>
+        <widget class="QLabel" name="ScoreCounterLabel">
          <property name="text">
-          <string>Global Statistics :</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
+          <string>Score : </string>
          </property>
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="ScoreLayout">
-         <item>
-          <widget class="QLabel" name="ScoreCounterLabel">
-           <property name="text">
-            <string>Score : </string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="ScoreCounterValueLabel">
-           <property name="text">
-            <string>0</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QLabel" name="ScoreCounterValueLabel">
+         <property name="text">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="ErrorsLayout">
+       <item>
+        <widget class="QLabel" name="ErrorCounterLabel">
+         <property name="text">
+          <string>Errors : </string>
+         </property>
+        </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="ErrorsLayout">
-         <item>
-          <widget class="QLabel" name="ErrorCounterLabel">
-           <property name="text">
-            <string>Errors : </string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="ErrorsCounterValueLabel">
-           <property name="text">
-            <string>0</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QLabel" name="ErrorsCounterValueLabel">
+         <property name="text">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item>
         <widget class="QPushButton" name="ResetStatsButton">
@@ -311,6 +466,19 @@
           <string>Reset Stats</string>
          </property>
         </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </item>

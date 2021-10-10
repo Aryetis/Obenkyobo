@@ -28,6 +28,8 @@ public:
     bool IsWeightedRandomEnabled() const;
     bool IsWifiOn() const { return wifi; }
     int HardRefreshFreq() const;
+protected:
+    void resizeEvent(QResizeEvent* event);
 
 private slots:
     void on_ResetStatsButton_clicked();
@@ -43,6 +45,7 @@ private:
     int randomChoiceIdx;
     bool wifi;
     int hardRefreshFreqIdx;
+    int checkboxAdjustedSize;
 
     QSettings* settingsSerializer;
 };

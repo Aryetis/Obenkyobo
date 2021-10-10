@@ -2,6 +2,8 @@
 #include "ui_appsettings.h"
 #include "GetMy.h"
 
+#include <QAbstractItemView>
+
 AppSettings::AppSettings(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AppSettings)
@@ -24,7 +26,18 @@ AppSettings::AppSettings(QWidget *parent) :
 //    else
 //        KoboPlatformFunctions::disableWiFiConnection();
 
+    checkboxAdjustedSize = ui->WifiLabel->height();
+
     GetMy::Instance().SetAppSettingWidget(this);
+}
+
+
+void AppSettings::resizeEvent(QResizeEvent* event)
+{
+   QWidget::resizeEvent(event);
+
+   ui->WifiCheckBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
+                                                    .arg(checkboxAdjustedSize));
 }
 
 void AppSettings::InitializeUIValues() const
