@@ -1,6 +1,8 @@
 #include "appsettings.h"
 #include "ui_appsettings.h"
 #include "GetMy.h"
+#include "tools.h"
+#include "mainwindow.h"
 
 #include <QAbstractItemView>
 
@@ -14,6 +16,9 @@ AppSettings::AppSettings(QWidget *parent) :
     nbrOfEntryLinesIdx = settingsSerializer->value("AppSettings/entriesPerLineIdx", 2).toInt();
     randomChoiceIdx = settingsSerializer->value("AppSettings/randomChoiceIdx", 1).toInt();
     hardRefreshFreqIdx = settingsSerializer->value("AppSettings/hardRefreshFreqIdx", 3).toInt();
+    batteryFormatIdx = settingsSerializer->value("AppSettings/batteryFormatIdx", 0).toInt();
+    dateFormatIdx = settingsSerializer->value("AppSettings/entriesPerLineIdx", (Tools::IsLocalTimeFormatUS()) ? 1 : 0).toInt();
+
 #ifdef QT_NO_DEBUG
     wifi = settingsSerializer->value("AppSettings/wifi", 0).toBool();
 #else
@@ -26,8 +31,6 @@ AppSettings::AppSettings(QWidget *parent) :
 //    else
 //        KoboPlatformFunctions::disableWiFiConnection();
 
-    checkboxAdjustedSize = ui->WifiLabel->height();
-
     GetMy::Instance().SetAppSettingWidget(this);
 }
 
@@ -37,7 +40,7 @@ void AppSettings::resizeEvent(QResizeEvent* event)
    QWidget::resizeEvent(event);
 
    ui->WifiCheckBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
-                                                    .arg(checkboxAdjustedSize));
+                                                    .arg(ui->WifiLabel->height()));
 }
 
 void AppSettings::InitializeUIValues() const
@@ -51,6 +54,8 @@ void AppSettings::InitializeUIValues() const
     ui->nbrOfEntryLinesDropdown->setCurrentIndex(nbrOfEntryLinesIdx);
     ui->RandomnessDropdown->setCurrentIndex(randomChoiceIdx);
     ui->HardRefreshDropdown->setCurrentIndex(hardRefreshFreqIdx);
+    ui->BatteryIndicatorDropdown->setCurrentIndex(batteryFormatIdx);
+    ui->DateDisplayFormatDropdown->setCurrentIndex(dateFormatIdx);
 }
 
 AppSettings::~AppSettings()
@@ -133,6 +138,21 @@ void AppSettings::on_HardRefreshDropdown_currentIndexChanged(int index)
     hardRefreshFreqIdx = index;
     settingsSerializer->setValue("AppSettings/hardRefreshFreqIdx", index);
 }
+
+void AppSettings::on_BatteryIndicatorDropdown_currentIndexChanged(int index)
+{
+    batteryFormatIdx = index;
+    settingsSerializer->setValue("AppSettings/batteryFormatIdx", index);
+    GetMy::Instance().MainWindowWidget().UpdateStatusBarGeometry();
+}
+
+void AppSettings::on_DateDisplayFormatDropdown_currentIndexChanged(int index)
+{
+    dateFormatIdx = index;
+    settingsSerializer->setValue("AppSettings/entriesPerLineIdx", index);
+    GetMy::Instance().MainWindowWidget().UpdateStatusBarGeometry();
+}
+
 
 int AppSettings::HardRefreshFreq() const
 {

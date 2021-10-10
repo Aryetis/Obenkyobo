@@ -8,6 +8,7 @@ class FntSetting;
 class AppSettings;
 class SymbolSetting;
 class ScreenSettings;
+class MainWindow;
 class GetMy
 {
 public:
@@ -16,6 +17,9 @@ public:
         static GetMy instance;
         return instance;
     }
+
+    void SetMainWindowWidget(MainWindow* mainWindow) { mainWindowInstance = mainWindow;}
+    MainWindow& MainWindowWidget() { return *mainWindowInstance; }
 
     void SetQcmExerciceWidget(QcmExercice* exercice) { qcmExerciceInstance = exercice;}
     QcmExercice& QcmExerciceWidget() { return *qcmExerciceInstance; }
@@ -39,6 +43,7 @@ public:
 
 private :
     GetMy() = default;
+    MainWindow* mainWindowInstance;
     QcmExercice* qcmExerciceInstance;
     FntSetting* fntSettingInstance;
     AppSettings* appSettingsInstance;

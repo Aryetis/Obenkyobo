@@ -26,6 +26,37 @@ public :
     }
 
     //======================================================================
+    static bool IsLocalTimeFormatUS()
+    {
+        QFile inputFile("/mnt/onboard/.kobo/Kobo/Kobo eReader.conf");
+        inputFile.open(QIODevice::ReadOnly);
+        if (!inputFile.isOpen())
+            return true;
+
+        QTextStream stream(&inputFile);
+        for (QString line = stream.readLine(); !line.isNull(); line = stream.readLine())
+        {
+            QStringList nombres = line.split("=", Qt::SkipEmptyParts);
+            if (nombres.size() == 2)
+            {
+                QString prefix = nombres[0];
+                QString value = nombres[1];
+                if (prefix.compare("CurrentLocale") == 0)
+                {
+                    if (value.size()>3)
+                    {
+                        value = nombres[1].mid(0,3);
+                        return (value.compare("en_") == 0) ? true : false;
+                    }
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    //======================================================================
     template<typename Iter, typename RandomGenerator>
     Iter GetRandom(Iter start, Iter end, RandomGenerator& gen)
     {

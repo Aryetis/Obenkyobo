@@ -27,6 +27,8 @@ public:
     void InitializeUIValues() const;
     bool IsWeightedRandomEnabled() const;
     bool IsWifiOn() const { return wifi; }
+    int getBatteryFormatIdx() const { return batteryFormatIdx; }
+    int getDateFormatIdx() const { return dateFormatIdx; } // 0 <=> 13:37, 1 <=> 1:37 pm
     int HardRefreshFreq() const;
 protected:
     void resizeEvent(QResizeEvent* event) override;
@@ -39,13 +41,18 @@ private slots:
     void on_ResetWeightsButton_clicked();
     void on_HardRefreshDropdown_currentIndexChanged(int index);
 
+    void on_BatteryIndicatorDropdown_currentIndexChanged(int index);
+
+    void on_DateDisplayFormatDropdown_currentIndexChanged(int index);
+
 private:
     Ui::AppSettings *ui;
     int nbrOfEntryLinesIdx;
     int randomChoiceIdx;
     bool wifi;
     int hardRefreshFreqIdx;
-    int checkboxAdjustedSize;
+    int batteryFormatIdx;
+    int dateFormatIdx;
 
     QSettings* settingsSerializer;
 };

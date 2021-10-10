@@ -16,7 +16,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow),
     statusBar(ui->menuBar), timeDisplay("20:42", &statusBar),
-    actionBatteryIcon(QIcon(":/pictures/Battery/battery1.png"), "batteryIcon", &statusBar),
+    actionBatteryIcon(QIcon(":/pictures/Battery/battery1.png"), "", &statusBar),
     actionBatteryTxt("100%", &statusBar),
     timer(this), wasBatteryLvl(-1)
 {
@@ -31,9 +31,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Handle time and battery
     connect(&timer, &QTimer::timeout, this, &MainWindow::refreshTimeAndBattery);
-    timer.start(1000);
+    timer.start(1000); // TODO : currently refreshing every second ... wasted I/O ?
     actionBatteryIcon.setIconText("init");
     refreshTimeAndBattery();
+
+    GetMy::Instance().SetMainWindowWidget(this);
 }
 
 MainWindow::~MainWindow()
@@ -53,44 +55,13 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     }
 }
 
-bool MainWindow::IsLocalTimeFormatUS()
-{
-    // TODO handle Settings override
-    QFile inputFile("/mnt/onboard/.kobo/Kobo/Kobo eReader.conf");
-    inputFile.open(QIODevice::ReadOnly);
-    if (!inputFile.isOpen())
-        return true;
-
-    QTextStream stream(&inputFile);
-    for (QString line = stream.readLine(); !line.isNull(); line = stream.readLine())
-    {
-        QStringList nombres = line.split("=", Qt::SkipEmptyParts);
-        if (nombres.size() == 2)
-        {
-            QString prefix = nombres[0];
-            QString value = nombres[1];
-            if (prefix.compare("CurrentLocale") == 0)
-            {
-                if (value.size()>3)
-                {
-                    value = nombres[1].mid(0,3);
-                    return (value.compare("en_") == 0) ? true : false;
-                }
-                return false;
-            }
-        }
-    }
-
-    return true;
-}
-
 void MainWindow::refreshTimeAndBattery()
 {
     bool ugly = false;
 
     // Handle Time
     QTime time = QTime::currentTime();
-    QString text = time.toString((IsLocalTimeFormatUS()) ? "hh:mm a" : "hh:mm" );
+    QString text = time.toString((GetMy::Instance().AppSettingWidget().getDateFormatIdx() == 0) ? "hh:mm" : "hh:mm a" );
     if (text.compare(timeDisplay.text()) != 0)
     {
         timeDisplay.setText(text);
@@ -98,63 +69,97 @@ void MainWindow::refreshTimeAndBattery()
     }
 
     // Handle Battery
+    int batteryFormat = GetMy::Instance().AppSettingWidget().getBatteryFormatIdx();
+    bool isBatteryIconVisible = (batteryFormat == 0 || batteryFormat == 1) ? true : false;
+    bool isBatteryTextVisible = (batteryFormat == 0 || batteryFormat == 2) ? true : false;
+
+    // TODO : forced to put "empty" into actionBatteryIcon and Txt as SetVisible() f** up the geometry and placement... I hate qt so much
+    if (!isBatteryIconVisible && actionBatteryIcon.iconText() != "")
+    {
+        actionBatteryIcon.setIcon(QIcon());
+        actionBatteryIcon.setIconText("");
+        wasBatteryLvl = -1; // forcing update
+    }
+    if (!isBatteryTextVisible && actionBatteryTxt.text() != "")
+    {
+        actionBatteryTxt.setText("");
+        wasBatteryLvl = -1; // forcing update
+    }
+
+
     int batteryLvl = KoboPlatformFunctions::getBatteryLevel();
     if (KoboPlatformFunctions::isBatteryCharging())
     {
-        if (actionBatteryIcon.iconText() != "lvlCharging" || actionBatteryIcon.iconText() == "init")
+        if (actionBatteryIcon.iconText() != "lvlCharging" || actionBatteryIcon.iconText() == "init"
+                || actionBatteryIcon.iconText() == "")
         {
-            actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/batteryCharging.png"));
-            actionBatteryTxt.setText(QString("⚡%1%⚡").arg(batteryLvl));
-            actionBatteryIcon.setIconText("lvlCharging");
+            if (batteryLvl != wasBatteryLvl && isBatteryTextVisible)
+                actionBatteryTxt.setText(QString("⚡%1%⚡").arg(batteryLvl));
+            if (isBatteryIconVisible)
+            {
+                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/batteryCharging.png"));
+                actionBatteryIcon.setIconText("lvlCharging");
+            }
             ugly = true;
         }
     }
     else
     {
         if (wasBatteryLvl != batteryLvl || actionBatteryIcon.iconText() == "lvlCharging"
-                                        || actionBatteryIcon.iconText() == "init")
+                                        || actionBatteryIcon.iconText() == "init"
+                                        || actionBatteryIcon.iconText() == "")
         {
-            actionBatteryTxt.setText(QString("%1%").arg(batteryLvl));
-            wasBatteryLvl = batteryLvl;
+            if (batteryLvl != wasBatteryLvl && isBatteryTextVisible) // TODO batteryLvl is the same => not going in
+            {
+                actionBatteryTxt.setText(QString("%1%").arg(batteryLvl));
+            }
 
-            if (batteryLvl > 80 && actionBatteryIcon.iconText() != "lvl4")
+            if (isBatteryIconVisible)
             {
-                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery4.png"));
-                actionBatteryIcon.setIconText("lvl4");
-            }
-            else if(batteryLvl > 60 && actionBatteryIcon.iconText() != "lvl3")
-            {
-                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery3.png"));
-                actionBatteryIcon.setIconText("lvl3");
-            }
-            else if(batteryLvl > 40 && actionBatteryIcon.iconText() != "lvl2")
-            {
-                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery2.png"));
-                actionBatteryIcon.setIconText("lvl2");
-            }
-            else if(batteryLvl > 20 && actionBatteryIcon.iconText() != "lvl1")
-            {
-                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery1.png"));
-                actionBatteryIcon.setIconText("lvl1");
-            }
-            else if(actionBatteryIcon.iconText() != "lvlEmpty")
-            {
-                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/batteryEmpty.png"));
-                actionBatteryIcon.setIconText("lvlEmpty");
+                if (batteryLvl > 80 && actionBatteryIcon.iconText() != "lvl4")
+                {
+                    actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery4.png"));
+                    actionBatteryIcon.setIconText("lvl4");
+                }
+                else if(batteryLvl > 60 && actionBatteryIcon.iconText() != "lvl3")
+                {
+                    actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery3.png"));
+                    actionBatteryIcon.setIconText("lvl3");
+                }
+                else if(batteryLvl > 40 && actionBatteryIcon.iconText() != "lvl2")
+                {
+                    actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery2.png"));
+                    actionBatteryIcon.setIconText("lvl2");
+                }
+                else if(batteryLvl > 20 && actionBatteryIcon.iconText() != "lvl1")
+                {
+                    actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery1.png"));
+                    actionBatteryIcon.setIconText("lvl1");
+                }
+                else if(actionBatteryIcon.iconText() != "lvlEmpty")
+                {
+                    actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/batteryEmpty.png"));
+                    actionBatteryIcon.setIconText("lvlEmpty");
+                }
             }
 
             ugly = true;
         }
     }
 
+    wasBatteryLvl = batteryLvl;
+
     // Resize StatusBar
-    if ( ugly ) // TODO : find a proper way to resize statusBar upon size modification
-    {
-        statusBar.setVisible(false);
-        statusBar.setVisible(true);
-    }
+    if ( ugly )
+        UpdateStatusBarGeometry();
 }
 
+// TODO : find a proper way to resize statusBar upon size modification
+void MainWindow::UpdateStatusBarGeometry()
+{
+    statusBar.setVisible(false);
+    statusBar.setVisible(true);
+}
 
 //===========================================================================
 void MainWindow::on_actionAbout_triggered()

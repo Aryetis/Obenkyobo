@@ -18,6 +18,8 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
 
+    void UpdateStatusBarGeometry();
+
 private slots:
     //===========================================================================
     void on_actionAbout_triggered();
@@ -44,7 +46,6 @@ private slots:
     void refreshTimeAndBattery();
 
 private:
-    bool IsLocalTimeFormatUS();
     void keyPressEvent(QKeyEvent *event) override;
 
     Ui::MainWindow *ui;
