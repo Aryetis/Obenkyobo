@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     statusBar(ui->menuBar), timeDisplay("20:42", &statusBar),
     actionBatteryIcon(QIcon(":/pictures/Battery/battery1.png"), "batteryIcon", &statusBar),
     actionBatteryTxt("100%", &statusBar),
-    timer(this), timerSynched(false)
+    timer(this), wasBatteryLvl(-1)
 {
     ui->setupUi(this);
 
@@ -29,17 +29,11 @@ MainWindow::MainWindow(QWidget *parent) :
     statusBar.addAction(&actionBatteryTxt);
     statusBar.setStyleSheet("QMenuBar::item { color: black; background: transparent; }");
 
-    // Handle time
+    // Handle time and battery
     connect(&timer, &QTimer::timeout, this, &MainWindow::refreshTimeAndBattery);
-    QTime time = QTime::currentTime();
-    QString text = time.toString((IsLocalTimeFormatUS()) ? "hh:mm a" : "hh:mm" );
-    timeDisplay.setText(text);
-    timer.start(60000 - 1000*time.second()); // TODO am pm format
-
-    // Handle Battery
-    // cf : KoboPlatformAdditions
-    // int getBatteryLevel() const;
-    // bool isBatteryCharging() const;
+    timer.start(1000);
+    actionBatteryIcon.setIconText("init");
+    refreshTimeAndBattery();
 }
 
 MainWindow::~MainWindow()
@@ -92,16 +86,73 @@ bool MainWindow::IsLocalTimeFormatUS()
 
 void MainWindow::refreshTimeAndBattery()
 {
+    bool ugly = false;
+
+    // Handle Time
     QTime time = QTime::currentTime();
     QString text = time.toString((IsLocalTimeFormatUS()) ? "hh:mm a" : "hh:mm" );
-
-    if (!timerSynched)
+    if (text.compare(timeDisplay.text()) != 0)
     {
-        timer.start(60000);
-        timerSynched = true;
+        timeDisplay.setText(text);
+        ugly = true;
     }
 
-    timeDisplay.setText(text);
+    // Handle Battery
+    int batteryLvl = KoboPlatformFunctions::getBatteryLevel();
+    if (KoboPlatformFunctions::isBatteryCharging())
+    {
+        if (actionBatteryIcon.iconText() != "lvlCharging" || actionBatteryIcon.iconText() == "init")
+        {
+            actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/batteryCharging.png"));
+            actionBatteryTxt.setText(QString("⚡%1%⚡").arg(batteryLvl));
+            actionBatteryIcon.setIconText("lvlCharging");
+            ugly = true;
+        }
+    }
+    else
+    {
+        if (wasBatteryLvl != batteryLvl || actionBatteryIcon.iconText() == "lvlCharging"
+                                        || actionBatteryIcon.iconText() == "init")
+        {
+            actionBatteryTxt.setText(QString("%1%").arg(batteryLvl));
+            wasBatteryLvl = batteryLvl;
+
+            if (batteryLvl > 80 && actionBatteryIcon.iconText() != "lvl4")
+            {
+                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery4.png"));
+                actionBatteryIcon.setIconText("lvl4");
+            }
+            else if(batteryLvl > 60 && actionBatteryIcon.iconText() != "lvl3")
+            {
+                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery3.png"));
+                actionBatteryIcon.setIconText("lvl3");
+            }
+            else if(batteryLvl > 40 && actionBatteryIcon.iconText() != "lvl2")
+            {
+                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery2.png"));
+                actionBatteryIcon.setIconText("lvl2");
+            }
+            else if(batteryLvl > 20 && actionBatteryIcon.iconText() != "lvl1")
+            {
+                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery1.png"));
+                actionBatteryIcon.setIconText("lvl1");
+            }
+            else if(actionBatteryIcon.iconText() != "lvlEmpty")
+            {
+                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/batteryEmpty.png"));
+                actionBatteryIcon.setIconText("lvlEmpty");
+            }
+
+            ugly = true;
+        }
+    }
+
+    // Resize StatusBar
+    if ( ugly ) // TODO : find a proper way to resize statusBar upon size modification
+    {
+        statusBar.setVisible(false);
+        statusBar.setVisible(true);
+    }
 }
 
 

@@ -55,7 +55,7 @@ private:
     QAction actionBatteryTxt;
 
     QTimer timer;
-    bool timerSynched;
+    int wasBatteryLvl;
 };
 
 #endif // MAINWINDOW_H
