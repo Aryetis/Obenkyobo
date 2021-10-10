@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="5,0,3,0,4">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="5,0,4,0,4">
    <item>
     <layout class="QVBoxLayout" name="QcmSettings">
      <property name="topMargin">
@@ -48,7 +48,7 @@
        <item>
         <widget class="QLabel" name="nbrOfEntryLinesLabel">
          <property name="text">
-          <string>QCM configuration : </string>
+          <string>QCM configuration :</string>
          </property>
         </widget>
        </item>
@@ -109,7 +109,7 @@
        <item>
         <widget class="QLabel" name="HardRefreshLabel">
          <property name="text">
-          <string>Hard Refresh Frequency : </string>
+          <string>Hard Refresh Frequency :</string>
          </property>
         </widget>
        </item>
@@ -186,7 +186,7 @@
        <item>
         <widget class="QLabel" name="RandomnessLabel">
          <property name="text">
-          <string>Randomness Type : </string>
+          <string>Randomness Type :</string>
          </property>
         </widget>
        </item>
@@ -304,11 +304,75 @@
       </widget>
      </item>
      <item>
+      <layout class="QHBoxLayout" name="BatteryIndicator">
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="BatteryIndicatorLabel">
+         <property name="text">
+          <string>Battery format :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QComboBox" name="BatteryIndicatorDropdown">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>Icon and Text</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Icon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Text</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="DateDisplayFormat" stretch="0,0,0">
        <item>
         <widget class="QLabel" name="DateDisplayFormatLabel">
          <property name="text">
-          <string>Date display format :</string>
+          <string>Date format :</string>
          </property>
         </widget>
        </item>
@@ -361,7 +425,7 @@
        <item>
         <widget class="QLabel" name="WifiLabel">
          <property name="text">
-          <string>Keep Wifi on (TODO) : </string>
+          <string>Keep Wifi on (TODO) :</string>
          </property>
         </widget>
        </item>
@@ -411,7 +475,7 @@
        <item>
         <widget class="QLabel" name="ScoreCounterLabel">
          <property name="text">
-          <string>Score : </string>
+          <string>Score :</string>
          </property>
         </widget>
        </item>
@@ -429,7 +493,7 @@
        <item>
         <widget class="QLabel" name="ErrorCounterLabel">
          <property name="text">
-          <string>Errors : </string>
+          <string>Errors :</string>
          </property>
         </widget>
        </item>
