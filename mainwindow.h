@@ -57,6 +57,8 @@ private:
 
     QTimer timer;
     int wasBatteryLvl;
+    int wasBatteryDisplayFormat;
+    int wasBatteryCharging;
 };
 
 #endif // MAINWINDOW_H

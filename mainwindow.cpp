@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     statusBar(ui->menuBar), timeDisplay("20:42", &statusBar),
     actionBatteryIcon(QIcon(), "", &statusBar),
     actionBatteryTxt("init", &statusBar),
-    timer(this), wasBatteryLvl(-1)
+    timer(this), wasBatteryLvl(-1), wasBatteryDisplayFormat(-1), wasBatteryCharging(-1)
 {
     ui->setupUi(this);
 
@@ -68,89 +68,56 @@ void MainWindow::refreshTimeAndBattery()
     }
 
     // Handle Battery
-    int batteryFormat = GetMy::Instance().AppSettingWidget().getBatteryFormatIdx();
-    bool isBatteryIconVisible = (batteryFormat == 0 || batteryFormat == 1) ? true : false;
-    bool isBatteryTextVisible = (batteryFormat == 0 || batteryFormat == 2) ? true : false;
-
-    // setVisible() f** up the geometry and placement... I hate qt so much => use setIconText("") and setText("") instea
-    if (!isBatteryIconVisible && actionBatteryIcon.iconText() != "")
-    {
-        actionBatteryIcon.setIcon(QIcon());
-        actionBatteryIcon.setIconText("");
-        wasBatteryLvl = -1; // forcing update
-    }
-    if (!isBatteryTextVisible && actionBatteryTxt.text() != "")
-    {
-        actionBatteryTxt.setText("");
-        wasBatteryLvl = -1; // forcing update
-    }
-
-
+    int batteryDisplayFormat = GetMy::Instance().AppSettingWidget().getBatteryFormatIdx();
+    bool isBatteryIconVisible = (batteryDisplayFormat == 0 || batteryDisplayFormat == 1) ? true : false;
+    bool isBatteryTextVisible = (batteryDisplayFormat == 0 || batteryDisplayFormat == 2) ? true : false;
+    bool isBatteryCharging = KoboPlatformFunctions::isBatteryCharging();
     int batteryLvl = KoboPlatformFunctions::getBatteryLevel();
-    if (KoboPlatformFunctions::isBatteryCharging())
+
+    if (isBatteryCharging != wasBatteryCharging || batteryLvl != wasBatteryLvl || batteryDisplayFormat != wasBatteryDisplayFormat)
     {
-        if (actionBatteryIcon.iconText() != "lvlCharging" || actionBatteryIcon.iconText() == "init"
-                || actionBatteryIcon.iconText() == "")
+        if (isBatteryTextVisible)
+            actionBatteryTxt.setText((isBatteryCharging)
+                                     ? QString("⚡%1%⚡").arg(batteryLvl)
+                                     : QString("%1%").arg(batteryLvl));
+
+        if (isBatteryIconVisible)
         {
-            if (batteryLvl != wasBatteryLvl && isBatteryTextVisible) // TODO NOW if starting not charging and pluging in txt is not updated with ⚡
-                actionBatteryTxt.setText(QString("⚡%1%⚡").arg(batteryLvl));
-            if (isBatteryIconVisible)
-            {
+            if (isBatteryCharging)
                 actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/batteryCharging.png"));
-                actionBatteryIcon.setIconText("lvlCharging");
-            }
-            ugly = true;
+            else if (batteryLvl > 80)
+                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery4.png"));
+            else if(batteryLvl > 60)
+                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery3.png"));
+            else if(batteryLvl > 40)
+                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery2.png"));
+            else if(batteryLvl > 20)
+                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery1.png"));
+            else
+                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/batteryEmpty.png"));
         }
+
+        ugly = true;
     }
-    else
+
+    if (batteryDisplayFormat != wasBatteryDisplayFormat)
     {
-        if (wasBatteryLvl != batteryLvl || actionBatteryIcon.iconText() == "lvlCharging"
-                                        || actionBatteryIcon.iconText() == "init"
-                                        || actionBatteryIcon.iconText() == "")
-        {
-            if (batteryLvl != wasBatteryLvl && isBatteryTextVisible)
-            {
-                actionBatteryTxt.setText(QString("%1%").arg(batteryLvl));
-            }
+        if (!isBatteryIconVisible)
+            actionBatteryIcon.setIcon(QIcon());
+        if (!isBatteryTextVisible)
+            actionBatteryTxt.setText("");
 
-            if (isBatteryIconVisible)
-            {
-                if (batteryLvl > 80 && actionBatteryIcon.iconText() != "lvl4")
-                {
-                    actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery4.png"));
-                    actionBatteryIcon.setIconText("lvl4");
-                }
-                else if(batteryLvl > 60 && actionBatteryIcon.iconText() != "lvl3")
-                {
-                    actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery3.png"));
-                    actionBatteryIcon.setIconText("lvl3");
-                }
-                else if(batteryLvl > 40 && actionBatteryIcon.iconText() != "lvl2")
-                {
-                    actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery2.png"));
-                    actionBatteryIcon.setIconText("lvl2");
-                }
-                else if(batteryLvl > 20 && actionBatteryIcon.iconText() != "lvl1")
-                {
-                    actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery1.png"));
-                    actionBatteryIcon.setIconText("lvl1");
-                }
-                else if(actionBatteryIcon.iconText() != "lvlEmpty")
-                {
-                    actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/batteryEmpty.png"));
-                    actionBatteryIcon.setIconText("lvlEmpty");
-                }
-            }
-
-            ugly = true;
-        }
+        ugly = true;
     }
 
-    wasBatteryLvl = batteryLvl;
-
-    // Resize StatusBar
+    // Resize StatusBar (ugly hack)
     if ( ugly )
         UpdateStatusBarGeometry();
+
+    // Updating status
+    wasBatteryDisplayFormat = batteryDisplayFormat;
+    wasBatteryCharging = isBatteryCharging;
+    wasBatteryLvl = batteryLvl;
 }
 
 // TODO : find a proper way to resize statusBar upon size modification
