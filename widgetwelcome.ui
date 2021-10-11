@@ -42,7 +42,7 @@
      <property name="text">
       <string>  This application is designed to help you memorize hiraganas, katakanas and numbers (future update). Click &quot;Main&quot; to start learning.
 
-  The &quot;Edit *** set&quot; submenus will allow you to add/remove syllabe from your QCM and will keep track of your progress by assigning to each a &quot;learning score&quot; from 0 to 5.
+  The &quot;Edit *** set&quot; submenus will allow you to add/remove syllabe from your MCQ and will keep track of your progress by assigning to each a &quot;learning score&quot; from 0 to 5.
 
   This application is very inspired by the android application Obenko, scan the QRCode to learn more about it.</string>
      </property>

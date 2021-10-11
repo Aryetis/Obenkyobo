@@ -30,7 +30,7 @@
         </font>
        </property>
        <property name="text">
-        <string>QCM Settings :</string>
+        <string>MCQ Settings :</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -48,7 +48,7 @@
        <item>
         <widget class="QLabel" name="nbrOfEntryLinesLabel">
          <property name="text">
-          <string>QCM configuration :</string>
+          <string>MCQ configuration :</string>
          </property>
         </widget>
        </item>

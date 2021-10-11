@@ -33,7 +33,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Overall QCM Settings : </string>
+        <string>Overall MCQ Settings : </string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
