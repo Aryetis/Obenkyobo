@@ -16,8 +16,8 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow),
     statusBar(ui->menuBar), timeDisplay("20:42", &statusBar),
-    actionBatteryIcon(QIcon(":/pictures/Battery/battery1.png"), "", &statusBar),
-    actionBatteryTxt("100%", &statusBar),
+    actionBatteryIcon(QIcon(), "", &statusBar),
+    actionBatteryTxt("init", &statusBar),
     timer(this), wasBatteryLvl(-1)
 {
     ui->setupUi(this);
@@ -32,7 +32,6 @@ MainWindow::MainWindow(QWidget *parent) :
     // Handle time and battery
     connect(&timer, &QTimer::timeout, this, &MainWindow::refreshTimeAndBattery);
     timer.start(1000); // TODO : currently refreshing every second ... wasted I/O ?
-    actionBatteryIcon.setIconText("init");
     refreshTimeAndBattery();
 
     GetMy::Instance().SetMainWindowWidget(this);
@@ -73,7 +72,7 @@ void MainWindow::refreshTimeAndBattery()
     bool isBatteryIconVisible = (batteryFormat == 0 || batteryFormat == 1) ? true : false;
     bool isBatteryTextVisible = (batteryFormat == 0 || batteryFormat == 2) ? true : false;
 
-    // TODO : forced to put "empty" into actionBatteryIcon and Txt as SetVisible() f** up the geometry and placement... I hate qt so much
+    // setVisible() f** up the geometry and placement... I hate qt so much => use setIconText("") and setText("") instea
     if (!isBatteryIconVisible && actionBatteryIcon.iconText() != "")
     {
         actionBatteryIcon.setIcon(QIcon());

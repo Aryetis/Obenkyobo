@@ -1,7 +1,8 @@
 export APPNAME=templateAppName
 export ADDSPATH=/mnt/onboard/.adds
 export APPPATH=${ADDSPATH}/${APPNAME}
-QTPLUGINKOBO=libkobo.so
+export QTPATH=${ADDSPATH}/qt-linux-5.15.2-kobo
+export QTPLUGINOBENKYOBO=libkobo.so
 
 LOGFILE=${APPPATH}/log.txt
 
@@ -9,7 +10,8 @@ LOGFILE=${APPPATH}/log.txt
 source ${APPPATH}/exit_nickel.sh
 
 # export QT stuff
-export QT_QPA_PLATFORM=${QTPLUGINKOBO}:touchscreen_rotate=auto:touchscreen_invert_x=auto:touchscreen_invert_y=auto:logicaldpitarget=108
+export LD_LIBRARY_PATH=${QTPATH}/lib:lib:
+export QT_QPA_PLATFORM=${QTPLUGINOBENKYOBO}:touchscreen_rotate=auto:touchscreen_invert_x=auto:touchscreen_invert_y=auto:logicaldpitarget=108
 
 # start APPN
 ${APPPATH}/${APPNAME} > $LOGFILE 2>&1

@@ -10,14 +10,16 @@ RemoteIp="192.168.1.18"
 Author="Aryetis"
 KfMonDbComment="Obenkyo clone-ish"
 LauncherName=$4_launcher.sh
-QtPluginKobo=kobo_Obenkyobo
+#QtPluginKobo=kobo_obenkyobo  #Make it match koboplatformplugin.json key used to compile libkobo.so
+QtPluginKobo=kobo
+
 
 #Launcher and application
 mkdir -p $3/Output/.adds/$4
 cp $3/$4 $3/Output/.adds/$4/$4
 cp $2/OtherFiles/Resources/launcher.sh $3/Output/.adds/$4/$LauncherName
 sed  -i "1s/.*/""export APPNAME=$4""/" $3/Output/.adds/$4/$LauncherName
-sed  -i "4s/.*/""QTPLUGINKOBO=$QtPluginKobo/g" $3/Output/.adds/$4/$LauncherName
+sed  -i "5s/.*/""export QTPLUGINOBENKYOBO=$QtPluginKobo/g" $3/Output/.adds/$4/$LauncherName
 if [[ $1 == debug ]];
 then
     cp $2/OtherFiles/Resources/debugEnv.sh $3/Output/.adds/$4/debugEnv.sh

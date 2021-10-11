@@ -106,8 +106,8 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /mnt/onboard/.adds/$${TARGET}
 
 ##################### install everything first then only deploy binary/target #####################
-INSTALLS += target everything thumbnail
+#INSTALLS += target everything thumbnail
 #INSTALLS += target everythingButLibs thumbnail
-#INSTALLS += target
+INSTALLS += target
 
 DISTFILES +=
