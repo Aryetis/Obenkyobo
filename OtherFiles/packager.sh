@@ -24,7 +24,7 @@ if [[ $1 == debug ]];
 then
     cp $2/OtherFiles/Resources/debugEnv.sh $3/Output/.adds/$4/debugEnv.sh
     sed  -i "1s/.*/""export APPNAME=$4""/" $3/Output/.adds/$4/debugEnv.sh
-    sed  -i "4s/.*/""export QTPLUGINOBENKYOBO=$QtPluginKobo/g" $3/Output/.adds/$4/debugEnv.sh
+    sed  -i "5s/.*/""export QTPLUGINOBENKYOBO=$QtPluginKobo/g" $3/Output/.adds/$4/debugEnv.sh
 fi
 cp $2/OtherFiles/Resources/start_nickel.sh $3/Output/.adds/$4/start_nickel.sh
 cp $2/OtherFiles/Resources/exit_nickel.sh $3/Output/.adds/$4/exit_nickel.sh
