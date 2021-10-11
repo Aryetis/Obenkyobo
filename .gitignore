@@ -1,3 +1,4 @@
 build-ohbenkyobo-Kobo-Debug/
 build-ohbenkyobo-Kobo-Release/
-.pro.user
+*.pro.user
+*.pro.user.*
