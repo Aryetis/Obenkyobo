@@ -19,27 +19,37 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,9">
+  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,3,5">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout" stretch="1">
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0">
-       <item>
-        <widget class="QLabel" name="WelcomeText">
-         <property name="text">
-          <string>Welcome to Obenkyobo ! 
- 
- A japanese language learning application designed to help you memorize hiraganas, katakanas and numbers. 
- This application is very inspired by the android application Obenko, scan the QRCode to learn more.</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
+    <widget class="QLabel" name="WelcomeTitle">
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Welcome to Obenkyobo !</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="WelcomeText">
+     <property name="text">
+      <string>  This application is designed to help you memorize hiraganas, katakanas and numbers (future update). Click &quot;Main&quot; to start learning.
+
+  The &quot;Edit *** set&quot; submenus will allow you to add/remove syllabe from your QCM and will keep track of your progress by assigning to each a &quot;learning score&quot; from 0 to 5.
+
+  This application is very inspired by the android application Obenko, scan the QRCode to learn more about it.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,1,1">
