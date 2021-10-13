@@ -44,4 +44,21 @@ Force wifi-on in dev mode cause ... yeah do it
 Alpha Release link (no wifi setting, no sleep, no forced screen refresh, no Keyboard exercice) : https://hijackedbrain.com/data/Obenkyobo_AIO_AlphaRelease.zip
 
 ------------
-TODO : check .pro file + make qcm hint/result thicker and try blinking it maybe. And make it use the correct fonts instead of the default one
+link to the qt setup discord discussion https://discord.com/channels/793941135419506728/796445063127236648/897503681275129876
+how to fix brotli compilation tldr : switch to the 3.0.0 branch:
+1/ comment previous content from install_libs.sh
+2/ git checkout 3.0.0 in brotly 
+3/ run install_libs.sh script
+
+fix for libfreetype with harfbuzz : 
+export PKG_CONFIG_PATH=""
+export PKG_CONFIG_LIBDIR="${HOME}/x-tools/arm-kobo-linux-gnueabihf/arm-kobo-linux-gnueabihf/sysroot/usr/lib/pkgconfig:${HOME}/x-tools/arm-kobo-linux-gnueabihf/arm-kobo-linux-gnueabihf/sysroot/usr/share/pkgconfig"
+export PKG_CONFIG="pkg-config"
+(will very probably break at some point in the future)
+
+fix for the deploy script : 
+1/ set the correct IP at the end
+2/ set correct QTBINPATH and kobopluginpath
+3/ add :
+cp -t $TMPPATH/lib ${SYSROOT}/usr/lib/libbrotlidec.so.1
+cp -t $TMPPATH/lib ${SYSROOT}/usr/lib/libbrotlicommon.so.1
