@@ -50,10 +50,10 @@ private:
 
     Ui::MainWindow *ui;
 
-    QMenuBar statusBar;
-    QAction timeDisplay;
-    QAction actionBatteryIcon;
-    QAction actionBatteryTxt;
+    QMenuBar* statusBar;
+    QAction* timeDisplay;
+    QAction* actionBatteryIcon;
+    QAction* actionBatteryTxt;
 
     QTimer timer;
     int wasBatteryLvl;

@@ -15,19 +15,20 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow),
-    statusBar(ui->menuBar), timeDisplay("20:42", &statusBar),
-    actionBatteryIcon(QIcon(), "", &statusBar),
-    actionBatteryTxt("init", &statusBar),
     timer(this), wasBatteryLvl(-1), wasBatteryDisplayFormat(-1), wasBatteryCharging(-1)
 {
     ui->setupUi(this);
 
     // Setup statusBar
-    ui->menuBar->setCornerWidget(&statusBar);
-    statusBar.addAction(&timeDisplay);
-    statusBar.addAction(&actionBatteryIcon);
-    statusBar.addAction(&actionBatteryTxt);
-    statusBar.setStyleSheet("QMenuBar::item { color: black; background: transparent; }");
+    statusBar = new QMenuBar(ui->menuBar);
+    ui->menuBar->setCornerWidget(statusBar);
+    timeDisplay = new QAction("64:39", statusBar);
+    statusBar->addAction(timeDisplay);
+    actionBatteryIcon = new QAction(QIcon(), "", statusBar);
+    statusBar->addAction(actionBatteryIcon);
+    actionBatteryTxt = new QAction("init", statusBar);
+    statusBar->addAction(actionBatteryTxt);
+    statusBar->setStyleSheet("QMenuBar::item { color: black; background: transparent; }");
 
     // Handle time and battery
     connect(&timer, &QTimer::timeout, this, &MainWindow::refreshTimeAndBattery);
@@ -39,6 +40,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete timeDisplay;
+    delete actionBatteryIcon;
+    delete actionBatteryTxt;
+    delete statusBar;
     delete ui;
 }
 
@@ -61,9 +66,9 @@ void MainWindow::refreshTimeAndBattery()
     // Handle Time
     QTime time = QTime::currentTime();
     QString text = time.toString((GetMy::Instance().AppSettingWidget().getDateFormatIdx() == 0) ? "hh:mm" : "hh:mm a" );
-    if (text.compare(timeDisplay.text()) != 0)
+    if (text.compare(timeDisplay->text()) != 0)
     {
-        timeDisplay.setText(text);
+        timeDisplay->setText(text);
         ugly = true;
     }
 
@@ -77,24 +82,24 @@ void MainWindow::refreshTimeAndBattery()
     if (isBatteryCharging != wasBatteryCharging || batteryLvl != wasBatteryLvl || batteryDisplayFormat != wasBatteryDisplayFormat)
     {
         if (isBatteryTextVisible)
-            actionBatteryTxt.setText((isBatteryCharging)
+            actionBatteryTxt->setText((isBatteryCharging)
                                      ? QString("⚡%1%⚡").arg(batteryLvl)
                                      : QString("%1%").arg(batteryLvl));
 
         if (isBatteryIconVisible)
         {
             if (isBatteryCharging)
-                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/batteryCharging.png"));
+                actionBatteryIcon->setIcon(QIcon(":/pictures/Battery/batteryCharging.png"));
             else if (batteryLvl > 80)
-                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery4.png"));
+                actionBatteryIcon->setIcon(QIcon(":/pictures/Battery/battery4.png"));
             else if(batteryLvl > 60)
-                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery3.png"));
+                actionBatteryIcon->setIcon(QIcon(":/pictures/Battery/battery3.png"));
             else if(batteryLvl > 40)
-                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery2.png"));
+                actionBatteryIcon->setIcon(QIcon(":/pictures/Battery/battery2.png"));
             else if(batteryLvl > 20)
-                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/battery1.png"));
+                actionBatteryIcon->setIcon(QIcon(":/pictures/Battery/battery1.png"));
             else
-                actionBatteryIcon.setIcon(QIcon(":/pictures/Battery/batteryEmpty.png"));
+                actionBatteryIcon->setIcon(QIcon(":/pictures/Battery/batteryEmpty.png"));
         }
 
         ugly = true;
@@ -103,9 +108,9 @@ void MainWindow::refreshTimeAndBattery()
     if (batteryDisplayFormat != wasBatteryDisplayFormat)
     {
         if (!isBatteryIconVisible)
-            actionBatteryIcon.setIcon(QIcon());
+            actionBatteryIcon->setIcon(QIcon());
         if (!isBatteryTextVisible)
-            actionBatteryTxt.setText("");
+            actionBatteryTxt->setText("");
 
         ugly = true;
     }
@@ -123,8 +128,8 @@ void MainWindow::refreshTimeAndBattery()
 // TODO : find a proper way to resize statusBar upon size modification
 void MainWindow::UpdateStatusBarGeometry()
 {
-    statusBar.setVisible(false);
-    statusBar.setVisible(true);
+    statusBar->setVisible(false);
+    statusBar->setVisible(true);
 }
 
 //===========================================================================

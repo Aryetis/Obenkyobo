@@ -97,6 +97,12 @@ everythingButLibs.path = /mnt/onboard/.adds
 everythingButLibs.files = $$files($${OUT_PWD}/Output/.adds/**)
 everythingButLibs.files -= $$files($${OUT_PWD}/Output/.adds/qt-linux-*)
 
+# "everythingButLibsAndSh" contains ... everything bug qt libs (=>fast deployment)
+everythingButLibsAndSh.path = /mnt/onboard/.adds
+everythingButLibsAndSh.files = $$files($${OUT_PWD}/Output/.adds/**)
+everythingButLibsAndSh.files -= $$files($${OUT_PWD}/Output/.adds/qt-linux-*)
+everythingButLibsAndSh.files -= $$files($${OUT_PWD}/Output/.adds/Obenkyobo/Obenkyobo_launcher.sh)
+
 # just the thumbnail
 thumbnail.path = /mnt/onboard/
 thumbnail.files = $$files($${OUT_PWD}/Output/$${TARGET}.png)
@@ -108,7 +114,8 @@ else: unix:!android: target.path = /mnt/onboard/.adds/$${TARGET}
 ##################### install everything first then only deploy binary/target #####################
 #INSTALLS += target everything thumbnail
 #INSTALLS += target everythingButLibs thumbnail
+INSTALLS += target everythingButLibsAndSh thumbnail
 #INSTALLS += everything thumbnail
-INSTALLS += target
+#INSTALLS += target
 
 DISTFILES +=
