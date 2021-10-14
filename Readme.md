@@ -2,9 +2,10 @@
 
 ## What is it ?
 
-Obenkyobo is an application for kyobo ereader designed to help you memorize Hiraganas and Katakanas.
+Obenkyobo is an application for kyobo ereaders designed to help you memorize Hiraganas and Katakanas. 
 
 Please be aware, this application is still early in its life cycle. For the time being there is no wifi nor sleep support. So to preserve your battery I recommend quiting the application after each session.
+
 
 ## How does it look ?
 <p align="center">
@@ -18,7 +19,7 @@ Please be aware, this application is still early in its life cycle. For the time
   <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/screenSetting.png" width="252" height="320" >
 </p>
 
-## What are its features ? (and its Roadmap)
+## What are its features ? (and Roadmap)
 
 Here's what available currently
 - Hiragana/Katakana to Romanji MCQ
@@ -27,6 +28,7 @@ Here's what available currently
 - weighted random / "learning state" for each Hiragana/Katakana to keep MCQ more entertaining (of course, progress is stored in between each session)
 - Multiple fonts and fonts settings
 - Screen options (Luminosity/Tint) support
+
 
 What's planned / Roadmap (in order of priority):
 (For incoming weeks/months)
@@ -41,12 +43,16 @@ What's planned / Roadmap (in order of priority):
 (Somewhen between the release of Bayonetta 3 and infinity)
 - include "kanji-data-media" dictionary 
 
+Tested on : 
+- libra h2o
+- please report if it works for your model
+
 ## How to install ?
 
 Firstly, this application is designed to be compatible with most (if not all) Kobo devices. Do not try to install it for other ereader, it will not work ! This application is provided "as is". Don't come to me if somehow your device catch fire.
 
 Secondly, you'll need to install a "launcher" beforehand. Common options are : 
-- <a href="https://github.com/pgaskin/NickelMenu">NickelMenu (NM)</a>
+- <a href="https://github.com/pgaskin/NickelMenu">NickelMenu (NM), recommended option</a>
 - <a href="https://github.com/pgaskin/NickelMenu">Kute File Monitor (KfMon)</a>
 
 Once you're done installing at least one of those you can either : 
@@ -108,47 +114,54 @@ cp -t $TMPPATH/lib ${SYSROOT}/usr/lib/libbrotlidec.so.1
 cp -t $TMPPATH/lib ${SYSROOT}/usr/lib/libbrotlicommon.so.1
 ```
 
+----------
+
+Fill the following Obenkyobo.pro variables correctly : 
+```
+INCLUDEPATH += $$PWD/libs/qt5-kobo-platform-plugin/src # should link to the libkobo.so git local repo
+INSTALLS += target everything thumbnail # use only this for full deploy, to save time set it to += target afterwards  
+```
+
 ### Setup QtCreator
 
- 
-Projects->Kobo(Kit)->Build->Add Custom Process Step with : 
+For a better workflow and one click build+deploy+launch from within QtCreator : 
+Projects->Kobo(Kit)->Build->Add Custom Process Step (in both Release and debug) with : 
 Command : %{sourceDir}/OtherFiles/packager.sh.
 Arguments : %{ActiveProject:BuildConfig:Type} %{sourceDir} %{ActiveProject:BuildConfig:Path} %{ActiveProject:Name}
 Working Directory : %{sourceDir}
-(for both Release and debug)
 
 ----------
 
-Projects->Kobo(Kit)->Run->Deployment-> Add Run custom remote command : 
+Projects->Kobo(Kit)->Run->Deployment-> Add Run custom remote command (in both Release and debug) with :  
 /mnt/onboard/.adds/Obenkyobo/debugEnv.sh
-(for both Release and debug)
+
 -----------
 
 Projects->Kobo(Kit)->Run->Environment->(System Environment)->Add create new variable with at least 
-QT_QPA_PLATFORM=kobo
-(for both Release and debug)
+LD_LIBRARY_PATH = /mnt/onboard/.adds/qt-linux-5.15-kde-kobo/lib:lib:
+QT_QPA_PLATFORM = kobo
 
-NEVER ever modify .sh scripts under windows.... Thanks for inserting different line ending character and fucking up the whole script
+-----------
 
-Should create everyfile needed and send them over to the kobo, stop nickel and start the application upon clicking the run button. Ok bye !
+NEVER modify any of the .sh scripts under windows... Windows end of line will mess things up when ran on linux
 
 ### Setup gdb
 
-QtCreator specific setup steps : 
-
-Use cross compiled arm gdb (install with this script : https://github.com/Rain92/kobo-qt-setup-scripts/blob/master/install_gbd.sh )
-
-Or 
-
-Install gdb-multiarch and set it up for arm architecture in QtCreator by : 
-Tools->Options->Debugger->GDB->Additional Startup Commands : -q --nh -ex 'set architecture arm'
+Two solutions : 
+- Use cross compiled arm gdb from <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a>
+- Install gdb-multiarch and set it up for arm architecture in QtCreator by :  Tools->Options->Debugger->GDB->Additional Startup Commands : -q --nh -ex 'set architecture arm'
 
 ### Setup the Ereader
 
-Ereader is rebooting upon Deployment ? Probably because kfmon/nm is scanning for the freshly installed/deployed launcher.sh and reboots the device to update its nickelMenu entry
+Setup a fixed IP address for it and use it in <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a>  deploy_script.sh if you go this route instead of using QtCreator
 
-=> only select INSTALLS += target , when working daily
+Ereader is rebooting upon Deployment ? Probably because kfmon/nm is scanning for the freshly installed/deployed stuff and reboots the device to update its nickelMenu entry. You should probably setup only select INSTALLS += target , when working daily
 
-Force wifi-on in dev mode cause ... yeah do it
+Turn on developer mode on the kobo by searching for a book named `devmodeon`, then force the wifi to stay on during dev session : Plus->Parameters->Technical informations->Developer options->force Wifi ON
 
+Install <a href="https://www.mobileread.com/forums/showthread.php?t=254214">Niluje's kobo stuff</a> package to get various programs running on the kobo such as : 
+- `dropbear` ssh server (connect with root and empty password)
+- `nano`, `gdb`, `strace`
+- `fbgrab picture.png` to take screenshots
+- etc 
 
