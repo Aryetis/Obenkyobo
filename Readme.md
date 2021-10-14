@@ -23,7 +23,7 @@ Please be aware, this application is still early in its life cycle. For the time
 
 Here's what available currently
 - Hiragana/Katakana to Romanji MCQ
-- Romanji -> Hiragana/Katakana MCQ
+- Romanji to Hiragana/Katakana MCQ
 - editable MCQ Hiragana/Katakana entry pool to learn at your own pace 
 - weighted random / "learning state" for each Hiragana/Katakana to keep MCQ more entertaining (of course, progress is stored in between each session)
 - Multiple fonts and fonts settings
@@ -52,7 +52,7 @@ Tested on :
 Firstly, this application is designed to be compatible with most (if not all) Kobo devices. Do not try to install it for other ereader, it will not work ! This application is provided "as is". Don't come to me if somehow your device catch fire.
 
 Secondly, you'll need to install a "launcher" beforehand. Common options are : 
-- <a href="https://github.com/pgaskin/NickelMenu">NickelMenu (NM), recommended option</a>
+- <a href="https://github.com/pgaskin/NickelMenu">NickelMenu (NM)</a>, recommended option
 - <a href="https://github.com/pgaskin/NickelMenu">Kute File Monitor (KfMon)</a>
 
 Once you're done installing at least one of those you can either : 
@@ -101,10 +101,10 @@ For Obenkyobo to work you'll also need to compile and install <a href="https://g
 You'll probably run along some troubles, so to save you some time here's the tldr version from the <a href="https://discord.com/channels/793941135419506728/796445063127236648/897503681275129876">discord discussion</a>
 
 To compile the problematic brotli library, tldr switch to the 3.0.0 branch by :
-1/ comment previous and following libs related content and prevent any git checkout/clean from install_libs.sh
-2/ git checkout 3.0.0 in brotly's folder : 'kobo-qt-setup-scripts/libs/brotli/'
-3/ run install_libs.sh script again
-4/ comment brotli's section, restore git checkout stuff,  rerun install_libs.sh and move on
+1. comment previous and following libs related content and prevent any git checkout/clean from install_libs.sh
+2. git checkout 3.0.0 in brotly's folder : 'kobo-qt-setup-scripts/libs/brotli/'
+3. run install_libs.sh script again
+4. comment brotli's section, restore git checkout stuff,  rerun install_libs.sh and move on
 
 fix for libfreetype with harfbuzz not compiling due to pthreads issues, run the following commands (will very probably break at some point in the future) :
 ```
@@ -114,15 +114,13 @@ export PKG_CONFIG="pkg-config"
 ```
 
 fix for the deploy script : 
-1/ set the correct IP at the end
-2/ set correct QTBINPATH and kobopluginpath
-3/ add :
+1. set the correct IP at the end
+2. set correct QTBINPATH and kobopluginpath
+3. add :
 ```
 cp -t $TMPPATH/lib ${SYSROOT}/usr/lib/libbrotlidec.so.1
 cp -t $TMPPATH/lib ${SYSROOT}/usr/lib/libbrotlicommon.so.1
 ```
-
-----------
 
 Fill the following Obenkyobo.pro variables correctly : 
 ```
@@ -133,23 +131,19 @@ INSTALLS += target everything thumbnail # use only this for full deploy, to save
 ### Setup QtCreator
 
 For a better workflow and one click build+deploy+launch from within QtCreator : 
+```
 Projects->Kobo(Kit)->Build->Add Custom Process Step (in both Release and debug) with : 
 Command : %{sourceDir}/OtherFiles/packager.sh.
 Arguments : %{ActiveProject:BuildConfig:Type} %{sourceDir} %{ActiveProject:BuildConfig:Path} %{ActiveProject:Name}
 Working Directory : %{sourceDir}
 
-----------
-
 Projects->Kobo(Kit)->Run->Deployment-> Add Run custom remote command (in both Release and debug) with :  
 /mnt/onboard/.adds/Obenkyobo/debugEnv.sh
-
------------
 
 Projects->Kobo(Kit)->Run->Environment->(System Environment)->Add create new variable with at least 
 LD_LIBRARY_PATH = /mnt/onboard/.adds/qt-linux-5.15-kde-kobo/lib:lib:
 QT_QPA_PLATFORM = kobo
-
------------
+```
 
 NEVER modify any of the .sh scripts under windows... Windows end of line will mess things up when ran on linux
 
@@ -157,7 +151,7 @@ NEVER modify any of the .sh scripts under windows... Windows end of line will me
 
 Two solutions : 
 - Use cross compiled arm gdb from <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a>
-- Install gdb-multiarch and set it up for arm architecture in QtCreator by :  Tools->Options->Debugger->GDB->Additional Startup Commands : -q --nh -ex 'set architecture arm'
+- Install gdb-multiarch and set it up for arm architecture in QtCreator by :  `Tools->Options->Debugger->GDB->Additional Startup Commands : -q --nh -ex 'set architecture arm'`
 
 ### Setup the Ereader
 
