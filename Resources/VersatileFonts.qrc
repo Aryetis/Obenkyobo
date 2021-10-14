@@ -1,5 +1,13 @@
 <RCC>
     <qresource prefix="/">
         <file>VersatileFonts/DotGothic16-Regular.ttf</file>
+        <file>VersatileFonts/HachiMaruPop-Regular.ttf</file>
+        <file>VersatileFonts/KaiseiHarunoUmi-Regular.ttf</file>
+        <file>VersatileFonts/MPLUSRounded1c-Regular.ttf</file>
+        <file>VersatileFonts/ReggaeOne-Regular.ttf</file>
+        <file>VersatileFonts/Yomogi-Regular.ttf</file>
+        <file>VersatileFonts/YuseiMagic-Regular.ttf</file>
+        <file>VersatileFonts/KosugiMaru-Regular.ttf</file>
+        <file>VersatileFonts/AppliMincho.ttf</file>
     </qresource>
 </RCC>
