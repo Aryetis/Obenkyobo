@@ -162,13 +162,13 @@ SymbolsTableFamily SymbolsTables::HiraganaSymbolsTableFamily
                 Symbol{"dyu/ju", QStringLiteral("ぢゅ")},
                 Symbol{"dyo/jo", QStringLiteral("ぢょ")},
 
-                Symbol{"bya", QStringLiteral("ぎゃ")},
-                Symbol{"byu", QStringLiteral("ぎゅ")},
-                Symbol{"byo", QStringLiteral("ぎょ")},
+                Symbol{"bya", QStringLiteral("びゃ")},
+                Symbol{"byu", QStringLiteral("びゅ")},
+                Symbol{"byo", QStringLiteral("びょ")},
 
-                Symbol{"pya", QStringLiteral("きゅ")},
-                Symbol{"pyu", QStringLiteral("きゅ")},
-                Symbol{"pyo", QStringLiteral("きょ")}
+                Symbol{"pya", QStringLiteral("ぴゅ")},
+                Symbol{"pyu", QStringLiteral("ぴゅ")},
+                Symbol{"pyo", QStringLiteral("ぴょ")}
             },
             3
         )
@@ -211,7 +211,7 @@ SymbolsTableFamily SymbolsTables::KatakanaSymbolsTableFamily
                 Symbol{"te", QStringLiteral("テ")},
                 Symbol{"to", QStringLiteral("ト")},
 
-                Symbol{"na", QStringLiteral("バ")},
+                Symbol{"na", QStringLiteral("ナ")},
                 Symbol{"ni", QStringLiteral("ニ")},
                 Symbol{"nu", QStringLiteral("ヌ")},
                 Symbol{"ne", QStringLiteral("ネ")},
