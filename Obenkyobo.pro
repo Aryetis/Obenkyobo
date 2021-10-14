@@ -114,8 +114,8 @@ else: unix:!android: target.path = /mnt/onboard/.adds/$${TARGET}
 ##################### install everything first then only deploy binary/target #####################
 #INSTALLS += target everything thumbnail
 #INSTALLS += target everythingButLibs thumbnail
-INSTALLS += target everythingButLibsAndSh thumbnail
+#INSTALLS += target everythingButLibsAndSh thumbnail
 #INSTALLS += everything thumbnail
-#INSTALLS += target
+INSTALLS += target
 
 DISTFILES +=
