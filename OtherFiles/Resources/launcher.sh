@@ -11,7 +11,7 @@ source ${APPPATH}/exit_nickel.sh
 
 # export QT stuff
 export LD_LIBRARY_PATH=${QTPATH}/lib:lib:
-export QT_QPA_PLATFORM=${QTPLUGINOBENKYOBO}:touchscreen_rotate=auto:touchscreen_invert_x=auto:touchscreen_invert_y=auto:logicaldpitarget=108
+export QT_QPA_PLATFORM=${QTPLUGINOBENKYOBO}:logicaldpitarget=108
 
 # start APP
 ${APPPATH}/${APPNAME} > $LOGFILE 2>&1
