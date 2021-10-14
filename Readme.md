@@ -59,15 +59,23 @@ Once you're done installing at least one of those you can either :
 - Download the following All-In-One package (containing Obenkyobo + Qt Libraries + NM and KfMon entries) TODOTODOTODOTODOTODOTODO , connect the ereader to your computer and extract the package at its root
 - Donwload the following "no qt" package (containing Obenkyobo + NM and KfMon entries) TODOTODOTODOTODOTODOTODO and install it the same way. Please note that Obenkyobo REQUIRES those Qt Libraries. Only select this one if you know what you're doing and have already Qt Libraries (same version) installed on your device from another program such as <a href="https://github.com/Rain92/UltimateMangaReader/">Ultimate Manga Reader</a>
 
+<img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/NickelMenu.png" width="303" height="184" align="left"/>
+<br/>
+<br/>
+<br/>
 And voilà ! You should now have a NickelMenu entries at the bottom right corner of your ereader "home screen" and a new "book" in your library to open with KfMon
-<p>
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/NickelMenu.png" width="252" height="320" >
-</p>
+<br clear="left"/>
 
 ## Got issues ? 
 
-Is your screen rotated the wrong way ? Are your touch inputs broken ?
-TODOTODOTODOTODOTODOTODO
+Is your screen rotated the wrong way ? Are your touch inputs broken ? This kind of issue can happen on very old/new devices/untested devices. You can force rotations of screen and touch inputs by modifying the `QT_QPA_PLATFORM` variable in `.adds\\Obenkyobo\\Obenkyobo_launcher.sh` on your ereader (depending of your OS you might have to <a href="https://www.google.com/search?client=firefox-b-d&q=enable+hidden+folder+">enable "hidden folder"</a>) :
+```
+touchscreen_rotate=auto|0|90|180|270
+touchscreen_invert_x=auto|0|1
+touchscreen_invert_y=auto|0|1 
+
+eg : export QT_QPA_PLATFORM=kobo:touchscreen_rotate=auto:touchscreen_invert_x=auto:touchscreen_invert_y=auto
+```
 
 If you encounter any issues, please report them by either : 
 - Creating a new Ticket on Github <a href="https://github.com/Aryetis/Obenkyobo/issues">here</a> describing your issue as precisely as possible, include the type of ereader your using  
