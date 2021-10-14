@@ -89,8 +89,8 @@ SymbolsTableFamily SymbolsTables::HiraganaSymbolsTableFamily
                 Symbol{"zo", QStringLiteral("ぞ")},
 
                 Symbol{"da", QStringLiteral("だ")},
-                Symbol{"ji", QStringLiteral("じ")},
-                Symbol{"(d)zu", QStringLiteral("ず")},
+                Symbol{"ji", QStringLiteral("ぢ")},
+                Symbol{"(d)zu", QStringLiteral("づ")},
                 Symbol{"de", QStringLiteral("で")},
                 Symbol{"do", QStringLiteral("ど")},
 
