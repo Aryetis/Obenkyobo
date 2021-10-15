@@ -64,7 +64,7 @@ Once you're done installing at least one of those you can either :
 <br/>
 <br/>
 <br/>
-And voilà ! You should now have a NickelMenu entries at the bottom right corner of your ereader "home screen" and a new "book" in your library to open with KfMon
+And voilà ! You should now have a NickelMenu entries at the bottom right corner of your ereader "home screen" and a new "book" in your library to open with KfMon.
 <br clear="left"/>
 
 ## Issues ? 
