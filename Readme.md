@@ -87,7 +87,7 @@ If you encounter any issues, please report them by either :
 
 Thank you for actually reading a readme file
 
-And big big thanks to <a href="https://github.com/Rain92/">@Rain92/OfficerAction</a> , <a href="https://github.com/NiLuJe">@NiLuJe</a> and @NiMa for putting up with me on Discord helping me to setup my environment and walking me throught some Qt Kobo specific minefields. 
+And big big thanks to <a href="https://github.com/Rain92/">@Rain92/OfficerAction</a> , <a href="https://github.com/NiLuJe">@NiLuJe</a> and <a href="https://github.com/tux-linux">@NiMa</a> for putting up with me on Discord helping me to setup my environment and walking me throught some Qt Kobo specific minefields. 
 
 ## For developpers, dummies, and future me. How to compile it ?
 
