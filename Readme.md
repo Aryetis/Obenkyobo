@@ -29,7 +29,7 @@ Here's what available currently
 - Romanji to Hiragana/Katakana MCQ
 - Editable MCQ Hiragana/Katakana entry pool to learn at your own pace 
 - Weighted random / "learning state" for each Hiragana/Katakana to keep MCQ more entertaining (of course, progress is stored in between each session)
-- Multiple fonts and fonts settings
+- Multiple fonts and font settings
 - Screen options (Luminosity/Tint) support
 
 
@@ -82,7 +82,7 @@ eg : export QT_QPA_PLATFORM=kobo:touchscreen_rotate=auto:touchscreen_invert_x=au
 
 If you encounter any issues, please report them by either : 
 - Creating a new Ticket on Github <a href="https://github.com/Aryetis/Obenkyobo/issues">here</a> describing your issue as precisely as possible, include the type of ereader your using  
-- Respond in Obenkyobo's MobileRead thread <a href="">TODOTODOTODOTODOTODOTODO</a>in the same way.
+- Respond in Obenkyobo's MobileRead thread <a href="https://www.mobileread.com/forums/showthread.php?p=4162746">MobileRead thread</a>in the same way.
 
 
 ## Thanks
