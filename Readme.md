@@ -56,7 +56,7 @@ Firstly, this application is designed to be compatible with most (if not all) Ko
 
 Secondly, you'll need to install a "launcher" beforehand. Common options are : 
 - <a href="https://github.com/pgaskin/NickelMenu">NickelMenu (NM)</a>, recommended option
-- <a href="https://github.com/pgaskin/NickelMenu">Kute File Monitor (KfMon)</a>
+- <a href="https://github.com/NiLuJe/kfmon">Kute File Monitor (KfMon)</a>
 
 Once you're done installing at least one of those you can either : 
 - Download the following All-In-One package (containing Obenkyobo + Qt Libraries + QTQPA libkobo.so + NM and KfMon entries) <a href="https://github.com/Aryetis/Obenkyobo/releases/tag/V0.1">Obenkyobo_AIO_Release_V0.1.zip</a> , connect the ereader to your computer and extract the package at its root
