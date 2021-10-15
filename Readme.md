@@ -4,8 +4,9 @@
 
 Obenkyobo is an application for kyobo ereaders designed to help you memorize Hiraganas and Katakanas. 
 
-Please be aware, this application is still early in its life cycle. For the time being there is no wifi nor sleep support. So to preserve your battery I recommend quiting the application after each session.
-
+```diff
+- Please be aware, this application is still early in its life cycle. For the time being there is no wifi nor sleep support. So to preserve your battery I recommend quiting the application after each session.
+```
 
 ## How does it look ?
 <p align="center">
@@ -86,7 +87,7 @@ If you encounter any issues, please report them by either :
 
 Thank you for actually reading a readme file
 
-And big big thanks to @Rain92/OfficerAction, @NiLuJe and @NiMa for putting up with me on Discord helping me to setup my environment and walking me throught some Qt Kobo specific minefields. 
+And big big thanks to <a href="https://github.com/Rain92/">@Rain92/OfficerAction</a> , <a href="https://github.com/NiLuJe">@NiLuJe</a> and @NiMa for putting up with me on Discord helping me to setup my environment and walking me throught some Qt Kobo specific minefields. 
 
 ## For developpers, dummies, and future me. How to compile it ?
 
@@ -94,9 +95,11 @@ And big big thanks to @Rain92/OfficerAction, @NiLuJe and @NiMa for putting up wi
 
 You can setup a very basic Kobo dev environment by following the <a href="https://github.com/koreader/koxtoolchain">koxtoolchain instructions</a> and work your way from here by cross-compiling qt for ARM and the QTPA kobo platform plugin
 
-Or you can go the "easy" route and use @Rain92 <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> to setup everything "libs, Qt binaries, deployment scripts".
+Or you can go the "easy" route and use @Rain92's <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> to setup everything "libs, Qt binaries, deployment scripts".
 
-For Obenkyobo to work you'll also need to compile and install <a href="https://github.com/Rain92/qt5-kobo-platform-plugin">qt5-kobo-platform-plugin</a> copy the produced libkobo.so on your erear to the [QtBinaries]/plugins/platforms folder.
+Once you've got your arm QtBinaries, copy its folder (with necessaries additional libs) to `OtherFiles/Dependencies`
+
+For Obenkyobo to work you'll also have to compile <a href="https://github.com/Rain92/qt5-kobo-platform-plugin">qt5-kobo-platform-plugin</a> and copy the produced `libkobo.so` to `OtherFiles/Dependencies/[QtBinaries]/plugins/platforms` folder.
 
 You'll probably run along some troubles, so to save you some time here's the tldr version from the <a href="https://discord.com/channels/793941135419506728/796445063127236648/897503681275129876">discord discussion</a>
 
