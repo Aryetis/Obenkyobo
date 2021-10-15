@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QSettings>
-#include "qcmexercice.h"
+#include "Src/qcmexercice.h"
 
 #define ENTRY_PER_ROW 3
 

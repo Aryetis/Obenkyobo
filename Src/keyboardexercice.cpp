@@ -1,4 +1,4 @@
-#include "keyboardexercice.h"
+#include "Src/keyboardexercice.h"
 #include "ui_keyboardexercice.h"
 
 KeyboardExercice::KeyboardExercice(QWidget *parent) :

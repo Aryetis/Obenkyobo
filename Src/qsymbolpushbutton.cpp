@@ -1,7 +1,7 @@
-#include "qsymbolpushbutton.h"
+#include "Src/qsymbolpushbutton.h"
 #include <QPainter>
-#include "symbolstables.h"
-#include "fntsetting.h"
+#include "Src/symbolstables.h"
+#include "Src/fntsetting.h"
 
 QSymbolPushButton::QSymbolPushButton()
     : symbolFamily(), learningState(-1), JP(), Romanji()

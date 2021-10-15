@@ -1,7 +1,7 @@
-#include "screensettings.h"
+#include "Src/screensettings.h"
 #include "ui_screensettings.h"
-#include "GetMy.h"
-#include "tools.h"
+#include "Src/GetMy.h"
+#include "Src/tools.h"
 
 // Note : the whole kobo family frontlight drivers only take integeter, so we're good setting sliders's step to 1
 ScreenSettings::ScreenSettings(QWidget *parent) :

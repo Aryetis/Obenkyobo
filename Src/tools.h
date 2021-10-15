@@ -12,8 +12,8 @@
 #include <QThread>
 #include <QProcess>
 #include <iostream>
-#include "GetMy.h"
-#include "screensettings.h"
+#include "Src/GetMy.h"
+#include "Src/screensettings.h"
 
 
 class Tools

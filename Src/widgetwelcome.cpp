@@ -1,4 +1,4 @@
-#include "widgetwelcome.h"
+#include "Src/widgetwelcome.h"
 #include "ui_widgetwelcome.h"
 
 WidgetWelcome::WidgetWelcome(QWidget *parent) :

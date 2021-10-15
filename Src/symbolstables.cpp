@@ -1,4 +1,4 @@
-#include "symbolstables.h"
+#include "Src/symbolstables.h"
 
 //========================================== HIRAGANA ==========================================
 SymbolsTableFamily SymbolsTables::HiraganaSymbolsTableFamily

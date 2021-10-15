@@ -3,8 +3,8 @@
 
 #include <QWidget>
 #include <QString>
-#include "symbolstables.h"
-#include "qcmexercice.h"
+#include "Src/symbolstables.h"
+#include "Src/qcmexercice.h"
 
 namespace Ui
 {

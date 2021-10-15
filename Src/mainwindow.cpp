@@ -1,10 +1,10 @@
-#include "mainwindow.h"
+#include "Src/mainwindow.h"
 #include "ui_mainwindow.h"
-#include "fntsetting.h"
-#include "qcmexercice.h"
-#include "GetMy.h"
-#include "tools.h"
-#include "symbolsetting.h"
+#include "Src/fntsetting.h"
+#include "Src/qcmexercice.h"
+#include "Src/GetMy.h"
+#include "Src/tools.h"
+#include "Src/symbolsetting.h"
 #include <QKeyEvent>
 #include "koboplatformfunctions.h"
 

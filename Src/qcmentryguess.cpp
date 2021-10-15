@@ -1,7 +1,7 @@
-#include "qcmentryguess.h"
+#include "Src/qcmentryguess.h"
 #include "ui_qcmentryguess.h"
-#include "fntsetting.h"
-#include "GetMy.h"
+#include "Src/fntsetting.h"
+#include "Src/GetMy.h"
 
 QcmEntryGuess::QcmEntryGuess(QWidget *parent) :
     QWidget(parent),

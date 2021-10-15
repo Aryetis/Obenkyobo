@@ -2,7 +2,7 @@
 #define QSYMBOLPUSHBUTTON_H
 
 #include <QPushButton>
-#include "symbolsetting.h"
+#include "Src/symbolsetting.h"
 
 class QSymbolPushButton : public QPushButton
 {

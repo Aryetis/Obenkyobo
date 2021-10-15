@@ -1,7 +1,7 @@
 #ifndef QCMEXERCICE_H
 #define QCMEXERCICE_H
 
-#include "symbolstables.h"
+#include "Src/symbolstables.h"
 #include <QWidget>
 #include <QSettings>
 

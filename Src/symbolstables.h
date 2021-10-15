@@ -6,7 +6,7 @@
 #include <QStringLiteral>
 #include <QString>
 #include <QPalette>
-#include "GetMy.h"
+#include "Src/GetMy.h"
 
 #define MAX_LEARNING_STATE_VALUE 5
 

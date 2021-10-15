@@ -1,8 +1,8 @@
-#include "symbolsetting.h"
+#include "Src/symbolsetting.h"
 #include "ui_symbolsetting.h"
-#include "GetMy.h"
-#include "symbolsettingsection.h"
-#include "symbolstables.h"
+#include "Src/GetMy.h"
+#include "Src/symbolsettingsection.h"
+#include "Src/symbolstables.h"
 
 #include <QScrollBar>
 

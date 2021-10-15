@@ -1,6 +1,6 @@
-#include "mainwindow.h"
+#include "Src/mainwindow.h"
 #include <QApplication>
-#include "GetMy.h"
+#include "Src/GetMy.h"
 
 int main(int argc, char *argv[])
 {

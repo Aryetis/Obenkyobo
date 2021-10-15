@@ -1,8 +1,8 @@
-#include "appsettings.h"
+#include "Src/appsettings.h"
 #include "ui_appsettings.h"
-#include "GetMy.h"
-#include "tools.h"
-#include "mainwindow.h"
+#include "Src/GetMy.h"
+#include "Src/tools.h"
+#include "Src/mainwindow.h"
 
 #include <QAbstractItemView>
 

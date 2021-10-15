@@ -1,4 +1,4 @@
-#include "symbolsettingsection.h"
+#include "Src/symbolsettingsection.h"
 #include "ui_symbolsettingsection.h"
 
 SymbolSettingSection::SymbolSettingSection(QWidget *parent) :

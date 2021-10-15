@@ -2,8 +2,8 @@
 #define SYMBOLSETTINGSECTION_H
 
 #include <QWidget>
-#include "symbolstables.h"
-#include "symbolsettingentry.h"
+#include "Src/symbolstables.h"
+#include "Src/symbolsettingentry.h"
 
 namespace Ui {
 class SymbolSettingSection;

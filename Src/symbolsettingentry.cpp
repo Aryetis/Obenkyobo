@@ -1,4 +1,4 @@
-#include "symbolsettingentry.h"
+#include "Src/symbolsettingentry.h"
 #include "ui_symbolsettingentry.h"
 
 #include "GetMy.h"

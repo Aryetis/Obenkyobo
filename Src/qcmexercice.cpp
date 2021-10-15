@@ -1,12 +1,12 @@
-#include "qcmexercice.h"
+#include "Src/qcmexercice.h"
 #include "ui_qcmexercice.h"
-#include "qcmentryguess.h"
-#include "fntsetting.h"
-#include "GetMy.h"
-#include "tools.h"
+#include "Src/qcmentryguess.h"
+#include "Src/fntsetting.h"
+#include "Src/GetMy.h"
+#include "Src/tools.h"
 #include <algorithm>
-#include "appsettings.h"
-#include "mainwindow.h"
+#include "Src/appsettings.h"
+#include "Src/mainwindow.h"
 
 QcmExercice::QcmExercice(QWidget *parent) :
     QWidget(parent), ui(new Ui::QcmExercice), scoreCounter(0), errorCounter(0),

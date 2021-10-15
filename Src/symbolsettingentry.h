@@ -2,7 +2,7 @@
 #define SYMBOLSETTINGENTRY_H
 
 #include <QWidget>
-#include "symbolstables.h"
+#include "Src/symbolstables.h"
 
 namespace Ui
 {

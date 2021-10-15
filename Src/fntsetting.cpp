@@ -1,7 +1,7 @@
-#include "fntsetting.h"
+#include "Src/fntsetting.h"
 #include "ui_fntsetting.h"
 #include <QFontDatabase>
-#include "GetMy.h"
+#include "Src/GetMy.h"
 #include <QDirIterator>
 #include <QDir>
 

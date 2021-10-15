@@ -2,8 +2,8 @@
 #define SYMBOLSET_H
 
 #include <QWidget>
-#include "symbolstables.h"
-#include "symbolsettingsection.h"
+#include "Src/symbolstables.h"
+#include "Src/symbolsettingsection.h"
 
 namespace Ui
 {
