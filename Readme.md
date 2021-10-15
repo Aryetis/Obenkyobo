@@ -5,7 +5,9 @@
 Obenkyobo is an application for kyobo ereaders designed to help you memorize Hiraganas and Katakanas. 
 
 ```diff
-- Please be aware, this application is still early in its life cycle. For the time being there is no wifi nor sleep support. So to preserve your battery I recommend quiting the application after each session.
+- Please be aware, this application is still early in its life cycle.
+- For the time being there is no wifi nor sleep support.
+- So to preserve your battery I recommend quiting the application after each session.
 ```
 
 ## How does it look ?
