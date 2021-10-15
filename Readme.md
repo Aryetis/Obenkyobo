@@ -27,8 +27,8 @@ Obenkyobo is an application for kyobo ereaders designed to help you memorize Hir
 Here's what available currently
 - Hiragana/Katakana to Romanji MCQ
 - Romanji to Hiragana/Katakana MCQ
-- editable MCQ Hiragana/Katakana entry pool to learn at your own pace 
-- weighted random / "learning state" for each Hiragana/Katakana to keep MCQ more entertaining (of course, progress is stored in between each session)
+- Editable MCQ Hiragana/Katakana entry pool to learn at your own pace 
+- Weighted random / "learning state" for each Hiragana/Katakana to keep MCQ more entertaining (of course, progress is stored in between each session)
 - Multiple fonts and fonts settings
 - Screen options (Luminosity/Tint) support
 
@@ -39,16 +39,16 @@ What's planned / Roadmap (in order of priority):
 - Sleep/WakeUp support
 - Hiragana/Katakana to Romanji Keyboard exercices
 - Overall UI improvement 
-- proper "Obenkyobo cover.png"
+- Proper "Obenkyobo cover.png"
 (Maybe next year)
 - "learn how to count" exercices
 - "guess the particle の, は, が, etc" exercices
 (Somewhen between the release of Bayonetta 3 and infinity)
-- include "kanji-data-media" dictionary 
+- Include "kanji-data-media" dictionary 
 
 Tested on : 
-- libra h2o
-- please report if it works for your model too
+- Libra h2o
+- Please report if it works for your model too
 
 ## How to install ?
 
