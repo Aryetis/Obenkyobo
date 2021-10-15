@@ -102,47 +102,47 @@ public :
         std::cout << "going to sleep" << std::endl;
         GetMy::Instance().ScreenSettingsWidget().OnSleep();
 
-KoboPlatformFunctions::disableWiFiConnection();
+//KoboPlatformFunctions::disableWiFiConnection();
 
-        //-------------------------------------------------------------
-        QFile stateExtendedFile("/sys/power/state-extended");
-        if (!stateExtendedFile.open(QIODevice::WriteOnly | QIODevice::Text))
-            return;
-        else
-        {
-            QTextStream out(&stateExtendedFile);
-            out << "1\n";
-        }
-        stateExtendedFile.close();
+//        //-------------------------------------------------------------
+//        QFile stateExtendedFile("/sys/power/state-extended");
+//        if (!stateExtendedFile.open(QIODevice::WriteOnly | QIODevice::Text))
+//            return;
+//        else
+//        {
+//            QTextStream out(&stateExtendedFile);
+//            out << "1\n";
+//        }
+//        stateExtendedFile.close();
 
-        //-------------------------------------------------------------
-        QThread::sleep(20);
-        QProcess::execute("sync", {});
+//        //-------------------------------------------------------------
+//        QThread::sleep(20);
+//        QProcess::execute("sync", {});
 
-        //-------------------------------------------------------------
-        QFile stateFile("/sys/power/state-extended");
-        if (!stateFile.open(QIODevice::WriteOnly | QIODevice::Text))
-        {
-            QFile stateExtendedFile2("/sys/power/state-extended");
-            if (!stateExtendedFile2.open(QIODevice::WriteOnly | QIODevice::Text))
-                return;
-            else
-            {
-                QTextStream out(&stateExtendedFile2);
-                out << "0\n";
-            }
-            stateExtendedFile2.close();
-        }
-        else
-        {
-            QTextStream out(&stateFile);
-            out << "mem\n";
-        }
-        stateFile.close();
+//        //-------------------------------------------------------------
+//        QFile stateFile("/sys/power/state-extended");
+//        if (!stateFile.open(QIODevice::WriteOnly | QIODevice::Text))
+//        {
+//            QFile stateExtendedFile2("/sys/power/state-extended");
+//            if (!stateExtendedFile2.open(QIODevice::WriteOnly | QIODevice::Text))
+//                return;
+//            else
+//            {
+//                QTextStream out(&stateExtendedFile2);
+//                out << "0\n";
+//            }
+//            stateExtendedFile2.close();
+//        }
+//        else
+//        {
+//            QTextStream out(&stateFile);
+//            out << "mem\n";
+//        }
+//        stateFile.close();
 
-        //-------------------------------------------------------------
-        std::cout << "sleeping" << std::endl;
-        sleeping = true;
+//        //-------------------------------------------------------------
+//        std::cout << "sleeping" << std::endl;
+//        sleeping = true;
     }
 
     void WakeUp()
@@ -150,37 +150,37 @@ KoboPlatformFunctions::disableWiFiConnection();
         if (!sleeping)
             return;
 
-        std::cout << "Waking up" << std::endl;
-        GetMy::Instance().ScreenSettingsWidget().OnWakeUp();
+//        std::cout << "Waking up" << std::endl;
+//        GetMy::Instance().ScreenSettingsWidget().OnWakeUp();
 
-        //-------------------------------------------------------------
-        QFile file("/sys/power/state-extended");
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-            return;
-        else
-        {
-            QTextStream out(&file);
-            out << "2\n";
-        }
-        file.close();
+//        //-------------------------------------------------------------
+//        QFile file("/sys/power/state-extended");
+//        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+//            return;
+//        else
+//        {
+//            QTextStream out(&file);
+//            out << "2\n";
+//        }
+//        file.close();
 
-        //-------------------------------------------------------------
-        QThread::msleep(100);
+//        //-------------------------------------------------------------
+//        QThread::msleep(100);
 
-        //-------------------------------------------------------------
-        file.setFileName("/sys/devices/virtual/input/input1/neocmd");
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-            return;
-        else
-        {
-            QTextStream out(&file);
-            out << "2\n";
-        }
-        file.close();
+//        //-------------------------------------------------------------
+//        file.setFileName("/sys/devices/virtual/input/input1/neocmd");
+//        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+//            return;
+//        else
+//        {
+//            QTextStream out(&file);
+//            out << "2\n";
+//        }
+//        file.close();
 
-        //-------------------------------------------------------------
-        std::cout << "Woken up, that's done" << std::endl;
-        sleeping = false;
+//        //-------------------------------------------------------------
+//        std::cout << "Woken up, that's done" << std::endl;
+//        sleeping = false;
     }
 
 //==========================================================================
