@@ -67,7 +67,7 @@ Once you're done installing at least one of those you can either :
 And voilà ! You should now have a NickelMenu entries at the bottom right corner of your ereader "home screen" and a new "book" in your library to open with KfMon
 <br clear="left"/>
 
-## Got issues ? 
+## issues ? 
 
 Is your screen rotated the wrong way ? Are your touch inputs broken ? This kind of issue can happen on very old/new devices/untested devices. You can force rotations of screen and touch inputs by modifying the `QT_QPA_PLATFORM` variable in `.adds\\Obenkyobo\\Obenkyobo_launcher.sh` on your ereader (depending of your OS you might have to <a href="https://www.google.com/search?client=firefox-b-d&q=enable+hidden+folder+">enable "hidden folder"</a>) :
 ```
@@ -87,7 +87,7 @@ If you encounter any issues, please report them by either :
 
 Thank you for actually reading a readme file
 
-And big big thanks to <a href="https://github.com/Rain92/">@Rain92/OfficerAction</a> , <a href="https://github.com/NiLuJe">@NiLuJe</a> and <a href="https://github.com/tux-linux">@NiMa</a> for putting up with me on Discord helping me to setup my environment and walking me throught some Qt Kobo specific minefields. 
+And big big thanks to <a href="https://github.com/Rain92/">@Rain92/OfficerAction</a> , <a href="https://github.com/NiLuJe">@NiLuJe</a> and <a href="https://github.com/tux-linux">@NiMa</a> for putting up with me on Discord helping me setup my environment and walking me throught some Qt Kobo specific minefields. 
 
 ## For developpers, dummies, and future me. How to compile it ?
 
