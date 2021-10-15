@@ -192,43 +192,43 @@
   <customwidget>
    <class>WidgetWelcome</class>
    <extends>QWidget</extends>
-   <header>widgetwelcome.h</header>
+   <header>Src/widgetwelcome.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>QcmExercice</class>
    <extends>QWidget</extends>
-   <header>qcmexercice.h</header>
+   <header>Src/qcmexercice.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>KeyboardExercice</class>
    <extends>QWidget</extends>
-   <header>keyboardexercice.h</header>
+   <header>Src/keyboardexercice.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>SymbolSetting</class>
    <extends>QWidget</extends>
-   <header>symbolsetting.h</header>
+   <header>Src/symbolsetting.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>AppSettings</class>
    <extends>QWidget</extends>
-   <header>appsettings.h</header>
+   <header>Src/appsettings.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>FntSetting</class>
    <extends>QWidget</extends>
-   <header>fntsetting.h</header>
+   <header>Src/fntsetting.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>ScreenSettings</class>
    <extends>QWidget</extends>
-   <header>screensettings.h</header>
+   <header>Src/screensettings.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

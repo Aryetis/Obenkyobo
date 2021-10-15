@@ -2,7 +2,6 @@
 #
 # TODO : - move code to src folder for better github Readme.md readability
 #        - handle sleep
-#        - Wifi switch (for debug or background dl) KoboPlatformFunctions::disable/ enableWiFiConnection
 #        - handle QTPA dependency properly, don't have a copy paste from some version and possible src of other versions, get bin from compiled src
 #        - redirect stack trace to std::cerr
 #        - link physical button to scrollbar without having to click scrollbar first

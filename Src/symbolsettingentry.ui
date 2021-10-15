@@ -61,7 +61,7 @@
   <customwidget>
    <class>QSymbolPushButton</class>
    <extends>QPushButton</extends>
-   <header>qsymbolpushbutton.h</header>
+   <header>Src/qsymbolpushbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -20,16 +20,13 @@ AppSettings::AppSettings(QWidget *parent) :
     dateFormatIdx = settingsSerializer->value("AppSettings/entriesPerLineIdx", (Tools::IsLocalTimeFormatUS()) ? 1 : 0).toInt();
 
 #ifdef QT_NO_DEBUG
-    wifi = settingsSerializer->value("AppSettings/wifi", 0).toBool();
+    keepWifiOn = settingsSerializer->value("AppSettings/wifi", 0).toBool();
 #else
-    wifi = true;
+    keepWifiOn = true;
 #endif
 
-// TODO NOW fix wifi
-//    if (wifi)
-//        KoboPlatformFunctions::enableWiFiConnection();
-//    else
-//        KoboPlatformFunctions::disableWiFiConnection();
+    if (!keepWifiOn)
+        KoboPlatformFunctions::disableWiFiConnection();
 
     GetMy::Instance().SetAppSettingWidget(this);
 }
@@ -49,7 +46,7 @@ void AppSettings::InitializeUIValues() const
     ui->ScoreCounterValueLabel->setText(QString::number(appStatisticsScore));
     int appStatisticsError = settingsSerializer->value("AppStatistics/error", 0).toInt();
     ui->ErrorsCounterValueLabel->setText(QString::number(appStatisticsError));
-    ui->WifiCheckBox->setChecked(wifi);
+    ui->WifiCheckBox->setChecked(keepWifiOn);
 
     ui->nbrOfEntryLinesDropdown->setCurrentIndex(nbrOfEntryLinesIdx);
     ui->RandomnessDropdown->setCurrentIndex(randomChoiceIdx);

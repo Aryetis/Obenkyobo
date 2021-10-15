@@ -26,7 +26,6 @@ public:
     bool IsThereEnough(QcmExercice::QcmExerciceType qcmType) const;
     void InitializeUIValues() const;
     bool IsWeightedRandomEnabled() const;
-    bool IsWifiOn() const { return wifi; }
     int getBatteryFormatIdx() const { return batteryFormatIdx; }
     int getDateFormatIdx() const { return dateFormatIdx; } // 0 <=> 13:37, 1 <=> 1:37 pm
     int HardRefreshFreq() const;
@@ -49,7 +48,7 @@ private:
     Ui::AppSettings *ui;
     int nbrOfEntryLinesIdx;
     int randomChoiceIdx;
-    bool wifi;
+    bool keepWifiOn;
     int hardRefreshFreqIdx;
     int batteryFormatIdx;
     int dateFormatIdx;
