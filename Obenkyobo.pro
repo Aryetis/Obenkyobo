@@ -28,7 +28,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 #qt5-kobo-platform-plugin stuff
-INCLUDEPATH += $$PWD/libs/qt5-kobo-platform-plugin/src
+INCLUDEPATH += $$PWD/Libs/qt5-kobo-platform-plugin/src
 
 ##########################################
 CONFIG += c++17 \
