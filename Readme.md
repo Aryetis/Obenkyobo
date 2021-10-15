@@ -20,7 +20,7 @@ Obenkyobo is an application for kyobo ereaders designed to help you memorize Hir
   <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/screenSetting.png" width="252" height="320" >
 </p>
 
-## What are its features ? (and Roadmap)
+## Features ? (and Roadmap)
 
 Here's what available currently
 - Hiragana/Katakana to Romanji MCQ
@@ -33,8 +33,8 @@ Here's what available currently
 
 What's planned / Roadmap (in order of priority):
 (For incoming weeks/months)
+- Wifi support 
 - Sleep/WakeUp support
-- Wifi support
 - Hiragana/Katakana to Romanji Keyboard exercices
 - Overall UI improvement 
 - proper "Obenkyobo cover.png"
@@ -46,7 +46,7 @@ What's planned / Roadmap (in order of priority):
 
 Tested on : 
 - libra h2o
-- please report if it works for your model
+- please report if it works for your model too
 
 ## How to install ?
 
