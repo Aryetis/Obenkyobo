@@ -34,20 +34,20 @@ INCLUDEPATH += $$PWD/libs/qt5-kobo-platform-plugin/src
 CONFIG += c++17 \
 
 SOURCES += \
-    main.cpp \
-    mainwindow.cpp \
-    qsymbolpushbutton.cpp \
-    symbolsetting.cpp \
-    symbolsettingentry.cpp \
-    symbolsettingsection.cpp \
-    symbolstables.cpp \
-    widgetwelcome.cpp \
-    qcmexercice.cpp \
-    keyboardexercice.cpp \
-    qcmentryguess.cpp \
-    appsettings.cpp \
-    fntsetting.cpp \
-    screensettings.cpp
+    Src/main.cpp \
+    Src/mainwindow.cpp \
+    Src/qsymbolpushbutton.cpp \
+    Src/symbolsetting.cpp \
+    Src/symbolsettingentry.cpp \
+    Src/symbolsettingsection.cpp \
+    Src/symbolstables.cpp \
+    Src/widgetwelcome.cpp \
+    Src/qcmexercice.cpp \
+    Src/keyboardexercice.cpp \
+    Src/qcmentryguess.cpp \
+    Src/appsettings.cpp \
+    Src/fntsetting.cpp \
+    Src/screensettings.cpp
 
 RESOURCES += \
     Resources/HiraganaFonts.qrc \
@@ -57,37 +57,37 @@ RESOURCES += \
     Resources/Pictures.qrc
 
 HEADERS += \
-    GetMy.h \
-    mainwindow.h \
-    qsymbolpushbutton.h \
-    symbolsetting.h \
-    symbolsettingentry.h \
-    symbolsettingsection.h \
-    widgetwelcome.h \
-    qcmexercice.h \
-    keyboardexercice.h \
-    qcmentryguess.h \
-    appsettings.h \
-    fntsetting.h \
-    screensettings.h \
-    symbolstables.h \
-    tools.h
+    Src/GetMy.h \
+    Src/mainwindow.h \
+    Src/qsymbolpushbutton.h \
+    Src/symbolsetting.h \
+    Src/symbolsettingentry.h \
+    Src/symbolsettingsection.h \
+    Src/widgetwelcome.h \
+    Src/qcmexercice.h \
+    Src/keyboardexercice.h \
+    Src/qcmentryguess.h \
+    Src/appsettings.h \
+    Src/fntsetting.h \
+    Src/screensettings.h \
+    Src/symbolstables.h \
+    Src/tools.h
 
 OTHER_FILES += \
     OtherFiles/*
 
 FORMS += \
-    mainwindow.ui \
-    symbolsetting.ui \
-    symbolsettingentry.ui \
-    symbolsettingsection.ui \
-    widgetwelcome.ui \
-    qcmexercice.ui \
-    keyboardexercice.ui \
-    qcmentryguess.ui \
-    appsettings.ui \
-    fntsetting.ui \
-    screensettings.ui
+    Src/mainwindow.ui \
+    Src/symbolsetting.ui \
+    Src/symbolsettingentry.ui \
+    Src/symbolsettingsection.ui \
+    Src/widgetwelcome.ui \
+    Src/qcmexercice.ui \
+    Src/keyboardexercice.ui \
+    Src/qcmentryguess.ui \
+    Src/appsettings.ui \
+    Src/fntsetting.ui \
+    Src/screensettings.ui
 
 # "everything" contains ... everything including qt libs (=>slow deployment)
 everything.path = /mnt/onboard/.adds

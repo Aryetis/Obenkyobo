@@ -102,6 +102,9 @@ public :
         std::cout << "going to sleep" << std::endl;
         GetMy::Instance().ScreenSettingsWidget().OnSleep();
 
+//KoboPlatformFunctions::disableWiFiConnection();
+
+
         //-------------------------------------------------------------
 //        QFile stateExtendedFile("/sys/power/state-extended");
 //        if (!stateExtendedFile.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -150,6 +153,8 @@ public :
 
         std::cout << "Waking up" << std::endl;
         GetMy::Instance().ScreenSettingsWidget().OnWakeUp();
+
+//KoboPlatformFunctions::enableWiFiConnection();
 
         //-------------------------------------------------------------
 //        QFile file("/sys/power/state-extended");

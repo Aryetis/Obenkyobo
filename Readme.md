@@ -155,7 +155,7 @@ NEVER modify any of the .sh scripts under windows... Windows end of line will me
 ### Setup gdb
 
 Two solutions : 
-- Use cross compiled arm gdb from <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a>
+- Use cross compiled arm gdb from <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a>. You might have to `apt install python2 python2-dev` and tweak the ./install_gdb.sh to add "--with-python" to the ./configure flags
 - Install gdb-multiarch and set it up for arm architecture in QtCreator by :  `Tools->Options->Debugger->GDB->Additional Startup Commands : -q --nh -ex 'set architecture arm'`
 
 ### Setup the Ereader
