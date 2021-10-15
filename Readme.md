@@ -71,7 +71,7 @@ And voilà ! You should now have a NickelMenu entries at the bottom right corner
 
 ## Issues ? 
 
-Is your screen rotated the wrong way ? Are your touch inputs broken ? This kind of issue can happen on very old/new devices/untested devices. You can force rotations of screen and touch inputs by modifying the `QT_QPA_PLATFORM` variable in `.adds\\Obenkyobo\\Obenkyobo_launcher.sh` on your ereader (depending of your OS you might have to <a href="https://www.google.com/search?client=firefox-b-d&q=enable+hidden+folder+">enable "hidden folder"</a>) :
+Is your screen rotated the wrong way ? Are your touch inputs broken ? This kind of issue can happen on very old/new devices/untested devices. You can force rotations of screen and touch inputs by modifying the `QT_QPA_PLATFORM` variable in `.adds/Obenkyobo/Obenkyobo_launcher.sh` on your ereader (depending of your OS you might have to <a href="https://www.google.com/search?client=firefox-b-d&q=enable+hidden+folder+">enable "hidden folder"</a>) :
 ```
 touchscreen_rotate=auto|0|90|180|270
 touchscreen_invert_x=auto|0|1
