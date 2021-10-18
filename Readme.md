@@ -21,6 +21,7 @@ Obenkyobo is an application for kyobo ereaders designed to help you memorize Hir
   <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/fntSettings.png" width="252" height="320" >
   <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/screenSetting.png" width="252" height="320" >
 </p>
+More screenshots : <a href="https://imgur.com/gallery/eSl9Euy">here (imgur gallery)</a>
 
 ## Features ? (and Roadmap)
 
