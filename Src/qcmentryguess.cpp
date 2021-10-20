@@ -48,22 +48,25 @@ void QcmEntryGuess::SetGuess(Symbol* s, QcmExercice::QcmExerciceType qcmType, bo
     correctGuess = b;
 }
 
+// TODO : not working properly with ku
 void QcmEntryGuess::CorrectFontSize()
 {
-    int w = ui->EntryGuess->rect().width();
-    int oldFontSize = ui->EntryGuess->font().pixelSize();
-    int newFontSize = oldFontSize;
-    QRect textRect = ui->EntryGuess->fontMetrics().boundingRect(ui->EntryGuess->text());
-    while ( textRect.width() >  w ) // rect().h is incorrect, probably cause it get stretched afterwards.
-                                    // TODO try to move this whole thing on QResizeEvent or similar ?
-    {
-        newFontSize -= 5;
-        QFont correctedFont = QFont(ui->EntryGuess->font());
-        correctedFont.setPixelSize(newFontSize);
-        ui->EntryGuess->setFont(correctedFont);
+//int foo = ui->EntryGuess->rect().height();
+//int bar = devicePixelRatio();
+//    int h = ui->EntryGuess->rect().height() * devicePixelRatio();
+//    int oldFontSize = ui->EntryGuess->font().pixelSize();
+//    int newFontSize = oldFontSize;
+//    QRect textRect = ui->EntryGuess->fontMetrics().boundingRect(ui->EntryGuess->text());
+//    while ( textRect.height() >  h ) // rect().h is incorrect, probably cause it get stretched afterwards.
+//                                    // TODO try to move this whole thing on QResizeEvent or similar ?
+//    {
+//        newFontSize -= 5;
+//        QFont correctedFont = QFont(ui->EntryGuess->font());
+//        correctedFont.setPixelSize(newFontSize);
+//        ui->EntryGuess->setFont(correctedFont);
 
-        textRect = ui->EntryGuess->fontMetrics().boundingRect(ui->EntryGuess->text());
-    }
+//        textRect = ui->EntryGuess->fontMetrics().boundingRect(ui->EntryGuess->text());
+//    }
 }
 
 void QcmEntryGuess::on_EntryGuess_clicked()

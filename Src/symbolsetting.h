@@ -20,9 +20,6 @@ public:
 
     void InitializeSymbolSetting(SymbolFamilyEnum _symbolFamily);
 
-protected:
-    void resizeEvent(QResizeEvent* event) override;
-
 private:
     Ui::SymbolSetting *ui;
     SymbolFamilyEnum symbolFamily;

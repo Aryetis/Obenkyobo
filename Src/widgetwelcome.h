@@ -14,7 +14,10 @@ class WidgetWelcome : public QWidget
 
 public:
     explicit WidgetWelcome(QWidget *parent = nullptr);
-    ~WidgetWelcome();
+    ~WidgetWelcome() override;
+
+protected:
+    void resizeEvent(QResizeEvent* event) override;
 
 private:
     Ui::WidgetWelcome *ui;
