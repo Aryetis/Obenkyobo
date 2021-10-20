@@ -21,6 +21,7 @@ Obenkyobo is an application for kyobo ereaders designed to help you memorize Hir
   <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/fntSettings.png" width="252" height="320" >
   <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/screenSetting.png" width="252" height="320" >
 </p>
+More screenshots : <a href="https://imgur.com/gallery/eSl9Euy">here (imgur gallery)</a>
 
 ## Features ? (and Roadmap)
 
@@ -48,7 +49,10 @@ What's planned / Roadmap (in order of priority):
 
 Tested on : 
 - Libra h2o
-- Please report if it works for your model too
+- Forma (scaling issue, but functional, will be fixed, in the meantime you can fix the font scaling by adding `export QT_FONT_DPI=[VALUE]` to the beginning of the Obenkyobo_launcher.sh. With [Value] being a numeric value you'll have to determine yourself)
+- Mini (scaling issue, cf Forma)
+- Glo HD (non responsive menu ? need more informations to investigate)
+- More incoming, please report if it works for your model too
 
 ## How to install ?
 
@@ -59,8 +63,8 @@ Secondly, you'll need to install a "launcher" beforehand. Common options are :
 - <a href="https://github.com/NiLuJe/kfmon">Kute File Monitor (KfMon)</a>
 
 Once you're done installing at least one of those you can either : 
-- Download the following All-In-One package (containing Obenkyobo + Qt Libraries + QTQPA libkobo.so + NM and KfMon entries) <a href="https://github.com/Aryetis/Obenkyobo/releases/tag/V0.1">Obenkyobo_AIO_Release_V0.1.zip</a> , connect the ereader to your computer and extract the package at its root
-- Donwload the following "no qt" package (containing Obenkyobo + NM and KfMon entries) <a href="https://github.com/Aryetis/Obenkyobo/releases/tag/V0.1">Obenkyobo_Light_Release_V0.1.zip</a> and install it the same way. Please note that Obenkyobo REQUIRES those Qt Libraries. Only select this one if you know what you're doing and have already Qt Libraries (same version as in the AIO package) and libkobo.so installed on your device from another program such as <a href="https://github.com/Rain92/UltimateMangaReader/">Ultimate Manga Reader</a>
+- Download the following All-In-One package (containing Obenkyobo + Qt Libraries + QTQPA libkobo.so + NM and KfMon entries) <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_AIO_Release_V0.1.zip</a> , connect the ereader to your computer and extract the package at its root. It should work "as is" assuming you're using NickelMenu. If you're using KfMon you'll have to uncomment the associated entry file (`.adds/kfmon/config/Obenkyobo.ini`) by removing one of the `;` located at the start of each line. And you might want to delete the useless NickelMenu entry too `.adds/nm/Obenkyobo`
+- Donwload the following "no qt" package (containing Obenkyobo + NM and KfMon entries) <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_Light_Release_V0.1.zip</a> and install it the same way. Please note that Obenkyobo REQUIRES those Qt Libraries. Only select this one if you know what you're doing and have already Qt Libraries (same version as in the AIO package) and libkobo.so installed on your device from another program such as <a href="https://github.com/Rain92/UltimateMangaReader/">Ultimate Manga Reader</a>
 
 <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/NickelMenu.png" width="303" height="184" align="left"/>
 <br/>
