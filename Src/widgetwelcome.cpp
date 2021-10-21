@@ -8,6 +8,7 @@ WidgetWelcome::WidgetWelcome(QWidget *parent) :
     ui(new Ui::WidgetWelcome)
 {
     ui->setupUi(this);
+    ui->QrCode->setScaledContents(false);
 }
 
 void WidgetWelcome::resizeEvent(QResizeEvent* event)
