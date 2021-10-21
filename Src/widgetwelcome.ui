@@ -148,7 +148,7 @@
         <pixmap resource="../Resources/Pictures.qrc">:/pictures/QrCode/obenkyoQrCode.png</pixmap>
        </property>
        <property name="scaledContents">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
