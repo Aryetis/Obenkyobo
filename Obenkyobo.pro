@@ -9,7 +9,6 @@
 #-------------------------------------------------
 
 QT       += core gui
-
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Obenkyobo
@@ -31,6 +30,8 @@ INCLUDEPATH += $$PWD/Libs/qt5-kobo-platform-plugin/src
 
 ##########################################
 CONFIG += c++17 \
+
+QMAKE_CXXFLAGS_DEBUG += -g -rdynamic # for backtrace debuging
 
 SOURCES += \
     Src/main.cpp \

@@ -5,6 +5,8 @@
 #include <QString>
 #include <QMessageBox>
 
+#include <signal.h>
+#include <execinfo.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <QObject>
@@ -15,7 +17,6 @@
 #include "Src/GetMy.h"
 #include "Src/screensettings.h"
 
-
 class Tools
 {
 public :
@@ -23,6 +24,24 @@ public :
     {
         static Tools instance;
         return instance;
+    }
+
+    //======================================================================
+    static void RegisterHandlers()
+    {
+        std::cerr << "__cplusplus : " << __cplusplus << std::endl;
+        std::cerr << "installing handlers blablabla, Obenkyobo vxxx built xxxx" << std::endl;
+        signal(SIGSEGV, Handler);
+    }
+
+    [[noreturn]] static void Handler(int sig)
+    {
+        void *array[10];
+        int size = backtrace(array, 10);
+
+        fprintf(stderr, "Error: signal %d:\n", sig);
+        backtrace_symbols_fd(array, size, STDERR_FILENO);
+        exit(sig);
     }
 
     //======================================================================

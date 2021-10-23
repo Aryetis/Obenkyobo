@@ -1,9 +1,16 @@
 #include "Src/mainwindow.h"
 #include <QApplication>
 #include "Src/GetMy.h"
+#include "Src/tools.h"
 
 int main(int argc, char *argv[])
 {
+    Tools::RegisterHandlers();
+
+// crashtest for backtrace
+//int *foo = (int*)-1;
+//printf("%d\n", *foo);
+
     QApplication a(argc, argv);
 
     // Needed to save .cfg next to application...
