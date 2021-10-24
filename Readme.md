@@ -49,8 +49,8 @@ What's planned / Roadmap (in order of priority):
 
 Tested on : 
 - Libra h2o
-- Forma (scaling issue, but functional, will be fixed, in the meantime you can fix the font scaling by adding `export QT_FONT_DPI=[VALUE]` to the beginning of the Obenkyobo_launcher.sh. With [Value] being a numeric value you'll have to determine yourself)
-- Mini (scaling issue, cf Forma)
+- Forma (scaling issue, but functional, should be fixed with V0.1.2)
+- Mini (scaling issue, but functional, should be fixed with V0.1.2)
 - Glo HD (non responsive menu ? need more informations to investigate)
 - More incoming, please report if it works for your model too
 
