@@ -56,7 +56,7 @@ Tested on :
 
 ## How to install ?
 
-Firstly, this application is designed to be compatible with most (if not all) Kobo devices. Do not try to install it for other ereader, it will not work ! This application is provided "as is". Don't come to me if somehow your device catch fire.
+Firstly, this application is designed to be compatible with most (if not all) Kobo devices with a revent firmware (4.6+). Do not try to install it for other ereader, it will not work ! This application is provided "as is". Don't come to me if somehow your device catch fire.
 
 Secondly, you'll need to install a "launcher" beforehand. Common options are : 
 - <a href="https://github.com/pgaskin/NickelMenu">NickelMenu (NM)</a>, recommended option
@@ -70,7 +70,7 @@ Once you're done installing at least one of those you can either :
 <br/>
 <br/>
 <br/>
-And voilà ! You should now have a NickelMenu entries at the bottom right corner of your ereader "home screen" and a new "book" in your library to open with KfMon.
+And voilà ! You should now have a NickelMenu entry at the bottom right corner of your ereader "home screen" and a new "book" in your library to open with KfMon.
 <br clear="left"/>
 
 ## Issues ? 
