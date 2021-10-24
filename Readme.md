@@ -56,7 +56,7 @@ Tested on :
 
 ## How to install ?
 
-Firstly, this application is designed to be compatible with most (if not all) Kobo devices with a recent firmware (4.6+). Do not try to install it for other ereader, it will not work ! This application is provided "as is". Don't come to me if somehow your device catch fire.
+Firstly, this application is designed to be compatible with most (if not all) Kobo devices with a recent firmware (probably 4.6+). Do not try to install it for other ereader, it will not work ! This application is provided "as is". Don't come to me if somehow your device catch fire.
 
 Secondly, you'll need to install a "launcher" beforehand. Common options are : 
 - <a href="https://github.com/pgaskin/NickelMenu">NickelMenu (NM)</a>, recommended option
