@@ -166,7 +166,7 @@ SymbolsTableFamily SymbolsTables::HiraganaSymbolsTableFamily
                 Symbol{"byu", QStringLiteral("びゅ")},
                 Symbol{"byo", QStringLiteral("びょ")},
 
-                Symbol{"pya", QStringLiteral("ぴゅ")},
+                Symbol{"pya", QStringLiteral("ぴゃ")},
                 Symbol{"pyu", QStringLiteral("ぴゅ")},
                 Symbol{"pyo", QStringLiteral("ぴょ")}
             },
