@@ -7,11 +7,15 @@
 
 int main(int argc, char *argv[])
 {
-    std::cout <<"Obenkyobo build: "<<__DATE__<<"@"<<__TIME__<<", cpp: "<<__cplusplus<<", Qt: "<<QT_VERSION<< std::endl;
-    std::cout <<"Started at: " << QDateTime::currentDateTime().toString("dd-MM-yyyy HH:mm:ss").toStdString() << std::endl;
     Tools::GetInstance().RegisterHandlers();
 
+    std::cout <<"Obenkyobo build: "<<__DATE__<<"@"<<__TIME__<<", cpp: "<<__cplusplus<<", Qt: "<<QT_VERSION<< std::endl;
+    std::cout <<"Started at: " << QDateTime::currentDateTime().toString("dd-MM-yyyy HH:mm:ss").toStdString() << std::endl;
+    Tools::GetInstance().ParseKoboEreaderConf();
+
     QApplication a(argc, argv);
+    std::cout << "Kobo model: (" << GetMy::Instance().Descriptor().modelName.toStdString() << ","
+              << GetMy::Instance().Descriptor().modelNumber << "), firmware: " << Tools::GetInstance().GetFirmwareStr() << std::endl;
 
     // Needed to save .cfg next to application...
     QSettings serializer = QSettings(QString(QCoreApplication::applicationDirPath() + "/config.cfg"), QSettings::IniFormat);

@@ -46,34 +46,52 @@ public :
     }
 
     //======================================================================
-    static bool IsLocalTimeFormatUS()
+    static void ParseKoboEreaderConf()
     {
         QFile inputFile("/mnt/onboard/.kobo/Kobo/Kobo eReader.conf");
         inputFile.open(QIODevice::ReadOnly);
         if (!inputFile.isOpen())
-            return true;
+        {
+            std::cerr << "ERROR: Couldn't open Kobo eReader.conf" << std::endl;
+            return;
+        }
 
         QTextStream stream(&inputFile);
         for (QString line = stream.readLine(); !line.isNull(); line = stream.readLine())
         {
-            QStringList nombres = line.split("=", Qt::SkipEmptyParts);
-            if (nombres.size() == 2)
+            QStringList parsed = line.split("=", Qt::SkipEmptyParts);
+            if (parsed.size() == 2)
             {
-                QString prefix = nombres[0];
-                QString value = nombres[1];
+                QString prefix = parsed[0];
+                QString value = parsed[1];
                 if (prefix.compare("CurrentLocale") == 0)
                 {
                     if (value.size()>3)
                     {
-                        value = nombres[1].mid(0,3);
-                        return (value.compare("en_") == 0) ? true : false;
+                        value = parsed[1].mid(0,3);
+                        Tools::GetInstance().isLocalTimeFormatUS = (value.compare("en_") == 0) ? true : false;
                     }
-                    return false;
+                    else
+                        Tools::GetInstance().isLocalTimeFormatUS = false;
+                }
+                else if(prefix.compare("EarliestChangeLog") == 0)
+                {
+                    Tools::GetInstance().firmwareStr = parsed[1].toStdString();
                 }
             }
         }
+    }
 
-        return true;
+
+    //======================================================================
+    bool IsLocalTimeFormatUS() const
+    {
+        return isLocalTimeFormatUS;
+    }
+
+    const std::string GetFirmwareStr() const
+    {
+        return firmwareStr;
     }
 
     //======================================================================
@@ -210,6 +228,8 @@ private :
         mt = std::mt19937(rd_device());
         rng_engine = std::default_random_engine{};
         sleeping = false;
+        isLocalTimeFormatUS = false;
+        firmwareStr = "";
     }
 
     std::random_device rd_device;
@@ -220,6 +240,8 @@ private :
                                                  {SIGFPE, "SIGFPE"}, {SIGABRT, "SIGABRT"}, {SIGBUS, "SIGBUS"}, {SIGUSR1, "SIGUSR1"},
                                                  {SIGUSR2, "SIGUSR2"}, {SIGSYS, "SIGSYS"}};
     bool sleeping;
+    bool isLocalTimeFormatUS;
+    std::string firmwareStr;
 };
 
 #endif // TOOLS_H
