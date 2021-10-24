@@ -2,6 +2,7 @@
 #include "ui_qcmentryguess.h"
 #include "Src/fntsetting.h"
 #include "Src/GetMy.h"
+#include "Src/tools.h"
 
 QcmEntryGuess::QcmEntryGuess(QWidget *parent) :
     QWidget(parent),
@@ -14,7 +15,6 @@ QcmEntryGuess::~QcmEntryGuess()
 {
     delete ui;
 }
-
 
 void QcmEntryGuess::SetGuess(Symbol* s, QcmExercice::QcmExerciceType qcmType, bool b)
 {
@@ -48,28 +48,40 @@ void QcmEntryGuess::SetGuess(Symbol* s, QcmExercice::QcmExerciceType qcmType, bo
     correctGuess = b;
 }
 
-// TODO NOW : CORRECT THIS WITH EXTREME FONT SIZE
+void QcmEntryGuess::resizeEvent(QResizeEvent* event)
+{
+    QWidget::resizeEvent(event);
+
+    CorrectFontSize();
+}
+
+
 void QcmEntryGuess::CorrectFontSize()
 {
-//int foo = ui->EntryGuess->rect().height();
-//int bar = devicePixelRatio();
-//    int h = ui->EntryGuess->rect().height() * devicePixelRatio();
-//    int oldFontSize = ui->EntryGuess->font().pixelSize();
-//    int newFontSize = oldFontSize;
-//    QRect textRect = ui->EntryGuess->fontMetrics().boundingRect(ui->EntryGuess->text());
-//    while ( textRect.height() >  h ) // rect().h is incorrect, probably cause it get stretched afterwards.
-//                                    // TODO try to move this whole thing on QResizeEvent or similar ?
-//    {
-//        newFontSize -= 5;
-//        QFont correctedFont = QFont(ui->EntryGuess->font());
-//        correctedFont.setPixelSize(newFontSize);
-//        ui->EntryGuess->setFont(correctedFont);
+    int newFontSize = ui->EntryGuess->font().pixelSize();
+    QRect textRect = ui->EntryGuess->fontMetrics().boundingRect(ui->EntryGuess->text());
+    bool corrected = textRect.height() >  height() || textRect.width() > width();
+    while ( textRect.height() >  height() || textRect.width() > width() )
+    {
+        newFontSize -= 10;
+        QFont correctedFont = QFont(ui->EntryGuess->font());
+        correctedFont.setPixelSize(newFontSize);
+        ui->EntryGuess->setFont(correctedFont);
 
-//        textRect = ui->EntryGuess->fontMetrics().boundingRect(ui->EntryGuess->text());
-//    }
+        textRect = ui->EntryGuess->fontMetrics().boundingRect(ui->EntryGuess->text());
+    }
+    if (corrected && !fntWarnDisplayed)
+    {
+        Tools::GetInstance().DisplayPopup(
+                    "MCQ Entries font is too big, please consider changing their size (Settings->Fonts). \n"
+                    "Resizing them to " + QString::number(newFontSize) + " for now.");
+        fntWarnDisplayed = true;
+    }
 }
 
 void QcmEntryGuess::on_EntryGuess_clicked()
 {
     GetMy::Instance().QcmExerciceWidget().OnGuessClicked(correctGuess, this);
 }
+
+bool QcmEntryGuess::fntWarnDisplayed = false;

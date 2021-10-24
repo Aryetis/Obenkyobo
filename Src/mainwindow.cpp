@@ -81,6 +81,7 @@ void MainWindow::refreshTimeAndBattery()
     bool isBatteryCharging = KoboPlatformFunctions::isBatteryCharging();
     int batteryLvl = KoboPlatformFunctions::getBatteryLevel();
 
+    // TODO : refactor this using MainWindow::ToolButtonStyle --"
     if (isBatteryCharging != wasBatteryCharging || batteryLvl != wasBatteryLvl || batteryDisplayFormat != wasBatteryDisplayFormat)
     {
         if (isBatteryTextVisible)

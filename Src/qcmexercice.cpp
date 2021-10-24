@@ -39,6 +39,8 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
         scoreCounter = 0;
         errorCounter = 0;
 
+        QcmEntryGuess::SetFontSizeWarningDisplayedState(false);
+
         int labelRightPointSize = ui->ResultLabelRight->font().pointSize();
         curHiraganaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentHiraganaFamily(), labelRightPointSize);
         curKatakanaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentKatakanaFamily(), labelRightPointSize);
@@ -147,9 +149,6 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
 
         ui->EntriesGridLayout->addWidget(foo, entryPos.rem, entryPos.quot);
     }
-
-    for (QcmEntryGuess* entry : guesses)
-        entry->CorrectFontSize();
 
     //************************ UI score error Counters ************************
     ui->ScoreCounter->setNum(scoreCounter);

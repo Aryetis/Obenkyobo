@@ -124,7 +124,8 @@ public :
     {
         QMessageBox popup;
         popup.setText(message);
-        popup.setStyleSheet("QMessageBox { border: 3px solid black }");
+        popup.setStyleSheet("QLabel{min-width: 300px;}"
+                            "QMessageBox { border: 3px solid black }");
         popup.exec();
     }
 

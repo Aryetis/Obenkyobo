@@ -21,8 +21,14 @@ public:
 
     void SetGuess(Symbol* s, QcmExercice::QcmExerciceType qcmType, bool);
     void CorrectFontSize();
+    void CorrectFontSizeBis();
 
     Symbol* GetSymbol() const { return symbol; }
+
+    static void SetFontSizeWarningDisplayedState(bool fsw) { fntWarnDisplayed = fsw; }
+
+protected:
+    void resizeEvent(QResizeEvent* event) override;
 
 private slots:
     void on_EntryGuess_clicked();
@@ -31,6 +37,8 @@ private:
     Symbol* symbol;
     Ui::QcmEntryGuess *ui;
     bool correctGuess;
+
+    static bool fntWarnDisplayed;
 };
 
 #endif // QCMENTRYGUESS_H
