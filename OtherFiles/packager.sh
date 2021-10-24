@@ -11,7 +11,6 @@ Author="Aryetis"
 KfMonDbComment="Obenkyo clone-ish"
 Version="0.1.2"
 LauncherName=$4_launcher.sh
-#QtPluginKobo=kobo_obenkyobo  #Make it match koboplatformplugin.json key used to compile libkobo.so
 QtPluginKobo=kobo
 
 

@@ -29,18 +29,19 @@ public :
     //======================================================================
     static void RegisterHandlers()
     {
-        std::cerr << "__cplusplus : " << __cplusplus << std::endl;
-        std::cerr << "installing handlers blablabla, Obenkyobo vxxx built xxxx" << std::endl;
-        signal(SIGSEGV, Handler);
+        for(const auto& sig : Tools::GetInstance().handledErrors)
+            signal(sig.first, Handler);
     }
 
     [[noreturn]] static void Handler(int sig)
     {
-        void *array[10];
-        int size = backtrace(array, 10);
+        void *array[32];
+        int size = backtrace(array, 32);
 
-        fprintf(stderr, "Error: signal %d:\n", sig);
+        std::cerr << "==========================================================" << std::endl;
+        std::cerr << "ERROR: signal " << Tools::GetInstance().handledErrors[sig] << ":" << std::endl;
         backtrace_symbols_fd(array, size, STDERR_FILENO);
+        std::cerr << "==========================================================" << std::endl;
         exit(sig);
     }
 
@@ -215,6 +216,9 @@ private :
     std::mt19937 mt;
     std::default_random_engine rng_engine;
 
+    std::map<int, std::string> handledErrors = { {SIGINT, "SIGINT"}, {SIGALRM, "SIGALRM"}, {SIGSEGV, "SIGSEGV"}, {SIGILL, "SIGILL"},
+                                                 {SIGFPE, "SIGFPE"}, {SIGABRT, "SIGABRT"}, {SIGBUS, "SIGBUS"}, {SIGUSR1, "SIGUSR1"},
+                                                 {SIGUSR2, "SIGUSR2"}, {SIGSYS, "SIGSYS"}};
     bool sleeping;
 };
 

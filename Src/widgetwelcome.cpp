@@ -1,7 +1,7 @@
 #include "Src/widgetwelcome.h"
 #include "ui_widgetwelcome.h"
 
-#include <QPicture>
+#include <iostream>
 
 WidgetWelcome::WidgetWelcome(QWidget *parent) :
     QWidget(parent),

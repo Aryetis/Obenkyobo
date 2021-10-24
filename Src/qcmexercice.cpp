@@ -7,6 +7,7 @@
 #include <algorithm>
 #include "Src/appsettings.h"
 #include "Src/mainwindow.h"
+#include <QString>
 
 QcmExercice::QcmExercice(QWidget *parent) :
     QWidget(parent), ui(new Ui::QcmExercice), scoreCounter(0), errorCounter(0),
@@ -165,6 +166,9 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
 
 void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
 {
+#ifdef QT_DEBUG
+    std::cout << "LOG : QcmExercice::OnGuessClicked()" << std::endl;
+#endif
     if ( correct )
     {
         ++scoreCounter;

@@ -17,7 +17,7 @@ AppSettings::AppSettings(QWidget *parent) :
     randomChoiceIdx = settingsSerializer->value("AppSettings/randomChoiceIdx", 1).toInt();
     hardRefreshFreqIdx = settingsSerializer->value("AppSettings/hardRefreshFreqIdx", 3).toInt();
     batteryFormatIdx = settingsSerializer->value("AppSettings/batteryFormatIdx", 0).toInt();
-    dateFormatIdx = settingsSerializer->value("AppSettings/entriesPerLineIdx", (Tools::IsLocalTimeFormatUS()) ? 1 : 0).toInt();
+    dateFormatIdx = settingsSerializer->value("AppSettings/entriesPerLineIdx", (Tools::GetInstance().IsLocalTimeFormatUS()) ? 1 : 0).toInt();
 
 #ifdef QT_NO_DEBUG
     keepWifiOn = settingsSerializer->value("AppSettings/wifi", 0).toBool();

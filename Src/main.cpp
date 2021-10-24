@@ -1,15 +1,15 @@
 #include "Src/mainwindow.h"
 #include <QApplication>
+#include <QMessageLogger>
+#include <QDateTime>
 #include "Src/GetMy.h"
 #include "Src/tools.h"
 
 int main(int argc, char *argv[])
 {
-    Tools::RegisterHandlers();
-
-// crashtest for backtrace
-//int *foo = (int*)-1;
-//printf("%d\n", *foo);
+    std::cout <<"Obenkyobo build : "<<__DATE__<<"@"<<__TIME__<<", cpp : "<<__cplusplus<<", Qt : "<<QT_VERSION<< std::endl;
+    std::cout <<"Started at : " << QDateTime::currentDateTime().toString("dd-MM-yyyy HH:mm:ss").toStdString() << std::endl;
+    Tools::GetInstance().RegisterHandlers();
 
     QApplication a(argc, argv);
 

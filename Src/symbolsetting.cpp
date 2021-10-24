@@ -6,7 +6,6 @@
 
 #include <QScrollBar>
 
-
 SymbolSetting::SymbolSetting(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SymbolSetting)
