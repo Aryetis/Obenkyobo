@@ -48,7 +48,7 @@ void QcmEntryGuess::SetGuess(Symbol* s, QcmExercice::QcmExerciceType qcmType, bo
     correctGuess = b;
 }
 
-// TODO : not working properly with ku
+// TODO NOW : CORRECT THIS WITH EXTREME FONT SIZE
 void QcmEntryGuess::CorrectFontSize()
 {
 //int foo = ui->EntryGuess->rect().height();

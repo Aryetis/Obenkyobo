@@ -30,9 +30,7 @@ void SymbolSettingEntry::InitializeSymbolSettingEntry(Symbol* _symbol, ::SymbolF
 
 void SymbolSettingEntry::on_SymbolSettingEntryButton_clicked(bool checked)
 {
-#ifdef QT_DEBUG
     std::cout << "LOG : SymbolSettingEntry::on_SymbolSettingEntryButton_clicked()" << std::endl;
-#endif
     symbol->Enabled(checked);
 }
 

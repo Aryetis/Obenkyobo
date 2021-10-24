@@ -166,9 +166,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
 
 void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
 {
-#ifdef QT_DEBUG
     std::cout << "LOG : QcmExercice::OnGuessClicked()" << std::endl;
-#endif
     if ( correct )
     {
         ++scoreCounter;

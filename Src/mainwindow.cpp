@@ -17,9 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow),
     timer(this), wasBatteryLvl(-1), wasBatteryDisplayFormat(-1), wasBatteryCharging(-1)
 {
-#ifdef QT_DEBUG
-    std::cout << "LOG : MainWindow::MainWindow()::Start" << std::endl;
-#endif
+    std::cout << "LOG: MainWindow::MainWindow()::Start" << std::endl;
     ui->setupUi(this);
 
     // Setup statusBar
@@ -39,9 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     refreshTimeAndBattery();
 
     GetMy::Instance().SetMainWindowWidget(this);
-#ifdef QT_DEBUG
-    std::cout << "LOG : MainWindow::MainWindow()::End" << std::endl;
-#endif
+    std::cout << "LOG: MainWindow::MainWindow()::End" << std::endl;
 }
 
 MainWindow::~MainWindow()
@@ -141,17 +137,13 @@ void MainWindow::UpdateStatusBarGeometry()
 //===========================================================================
 void MainWindow::on_actionAbout_triggered()
 {
-#ifdef QT_DEBUG
-    std::cout << "LOG : MainWindow::on_actionAbout_triggered()" << std::endl;
-#endif
+    std::cout << "LOG: MainWindow::on_actionAbout_triggered()" << std::endl;
     ui->ContentStackedWidget->setCurrentIndex(0);
 }
 
 void MainWindow::on_actionExit_triggered()
 {
-#ifdef QT_DEBUG
-    std::cout << "LOG : MainWindow::on_actionExit_triggered()" << std::endl;
-#endif
+    std::cout << "LOG: MainWindow::on_actionExit_triggered()" << std::endl;
     QApplication::quit();
 }
 
@@ -160,9 +152,7 @@ void MainWindow::on_actionExit_triggered()
 //===========================================================================
 void MainWindow::on_actionHiragana_to_Romanji_QCM_triggered()
 {
-#ifdef QT_DEBUG
-    std::cout << "LOG : MainWindow::on_actionHiragana_to_Romanji_QCM_triggered()" << std::endl;
-#endif
+    std::cout << "LOG: MainWindow::on_actionHiragana_to_Romanji_QCM_triggered()" << std::endl;
     if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM))
     {
         GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM, true);
@@ -177,9 +167,7 @@ void MainWindow::on_actionHiragana_to_Romanji_QCM_triggered()
 
 void MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()
 {
-#ifdef QT_DEBUG
-    std::cout << "LOG : MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()" << std::endl;
-#endif
+    std::cout << "LOG: MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()" << std::endl;
     if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM))
     {
         GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM, true);
@@ -194,17 +182,13 @@ void MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()
 
 void MainWindow::on_actionHiragana_to_Romanji_Kbd_triggered()
 {
-#ifdef QT_DEBUG
-    std::cout << "LOG : MainWindow::on_actionHiragana_to_Romanji_Kbd_triggered()" << std::endl;
-#endif
+    std::cout << "LOG: MainWindow::on_actionHiragana_to_Romanji_Kbd_triggered()" << std::endl;
     ui->ContentStackedWidget->setCurrentIndex(2);
 }
 
 void MainWindow::on_actionEdit_Hiragana_Set_triggered()
 {
-#ifdef QT_DEBUG
-    std::cout << "LOG : MainWindow::on_actionEdit_Hiragana_Set_triggered()" << std::endl;
-#endif
+    std::cout << "LOG: MainWindow::on_actionEdit_Hiragana_Set_triggered()" << std::endl;
     GetMy::Instance().SymbolSettingWidget().InitializeSymbolSetting(SymbolFamilyEnum::hiragana);
     ui->ContentStackedWidget->setCurrentIndex(3);
 }
@@ -215,9 +199,7 @@ void MainWindow::on_actionEdit_Hiragana_Set_triggered()
 
 void MainWindow::on_actionKatakana_to_Romanji_QCM_triggered()
 {
-#ifdef QT_DEBUG
-    std::cout << "LOG : MainWindow::on_actionKatakana_to_Romanji_QCM_triggered()" << std::endl;
-#endif
+    std::cout << "LOG: MainWindow::on_actionKatakana_to_Romanji_QCM_triggered()" << std::endl;
     if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM))
     {
         GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM, true);
@@ -232,9 +214,7 @@ void MainWindow::on_actionKatakana_to_Romanji_QCM_triggered()
 
 void MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()
 {
-#ifdef QT_DEBUG
-    std::cout << "LOG : MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()" << std::endl;
-#endif
+    std::cout << "LOG: MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()" << std::endl;
     if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM))
     {
         GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM, true);
@@ -249,17 +229,13 @@ void MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()
 
 void MainWindow::on_actionKatakana_to_Romanji_Kbd_triggered()
 {
-#ifdef QT_DEBUG
-    std::cout << "LOG : MainWindow::on_actionKatakana_to_Romanji_Kbd_triggered()" << std::endl;
-#endif
+    std::cout << "LOG: MainWindow::on_actionKatakana_to_Romanji_Kbd_triggered()" << std::endl;
     ui->ContentStackedWidget->setCurrentIndex(2);
 }
 
 void MainWindow::on_actionEdit_Katakana_Set_triggered()
 {
-#ifdef QT_DEBUG
-    std::cout << "LOG : MainWindow::on_actionEdit_Katakana_Set_triggered()" << std::endl;
-#endif
+    std::cout << "LOG: MainWindow::on_actionEdit_Katakana_Set_triggered()" << std::endl;
     GetMy::Instance().SymbolSettingWidget().InitializeSymbolSetting(SymbolFamilyEnum::katakana);
     ui->ContentStackedWidget->setCurrentIndex(3);
 }
@@ -269,26 +245,20 @@ void MainWindow::on_actionEdit_Katakana_Set_triggered()
 //===========================================================================
 void MainWindow::on_actionApplication_Setting_triggered()
 {
-#ifdef QT_DEBUG
-    std::cout << "LOG : MainWindow::on_actionApplication_Setting_triggered()" << std::endl;
-#endif
+    std::cout << "LOG: MainWindow::on_actionApplication_Setting_triggered()" << std::endl;
     GetMy::Instance(). AppSettingWidget().InitializeUIValues();
     ui->ContentStackedWidget->setCurrentIndex(4);
 }
 
 void MainWindow::on_actionFonts_Setting_triggered()
 {
-#ifdef QT_DEBUG
-    std::cout << "LOG : MainWindow::on_actionFonts_Setting_triggered()" << std::endl;
-#endif
+    std::cout << "LOG: MainWindow::on_actionFonts_Setting_triggered()" << std::endl;
     ui->ContentStackedWidget->setCurrentIndex(5);
 }
 
 void MainWindow::on_actionScreen_Setting_triggered()
 {
-#ifdef QT_DEBUG
-    std::cout << "LOG : MainWindow::on_actionScreen_Setting_triggered()" << std::endl;
-#endif
+    std::cout << "LOG: MainWindow::on_actionScreen_Setting_triggered()" << std::endl;
     if (GetMy::Instance().ScreenSettingsWidget().AreSettingsAvailablePopup())
         ui->ContentStackedWidget->setCurrentIndex(6);
 }
