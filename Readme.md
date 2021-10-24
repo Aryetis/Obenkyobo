@@ -86,7 +86,7 @@ eg : export QT_QPA_PLATFORM=kobo:touchscreen_rotate=auto:touchscreen_invert_x=au
 
 If you encounter any issues, please report them by either : 
 - Creating a new Ticket on Github <a href="https://github.com/Aryetis/Obenkyobo/issues">here</a> describing your issue as precisely as possible, include the type of ereader your using and the log.txt at `/.adds/Obenkyobo/log.txt` (it erases itself at each launch, so don't restart Obenkyobo right after a crash)
-- Respond in Obenkyobo's MobileRead thread <a href="https://www.mobileread.com/forums/showthread.php?p=4162746">MobileRead thread</a>in the same way.
+- Respond in Obenkyobo's MobileRead thread <a href="https://www.mobileread.com/forums/showthread.php?p=4162746">MobileRead thread</a> in the same way.
 
 
 ## Thanks
