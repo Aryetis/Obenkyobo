@@ -1,5 +1,8 @@
 #-------------------------------------------------
-#
+# TARGET for 0.1.3 : - fix appsettings ui issues
+#                    - fix Glo hd
+#                    - fix wifi
+#                    - random fonts for qcm
 # TODO : - move code to src folder for better github Readme.md readability
 #        - handle sleep
 #        - handle QTPA dependency properly, don't have a copy paste from some version and possible src of other versions, get bin from compiled src
