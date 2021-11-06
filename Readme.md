@@ -49,14 +49,14 @@ What's planned / Roadmap (in order of priority):
 
 Tested on : 
 - Libra h2o
-- Forma (scaling issue, but functional, will be fixed, in the meantime you can fix the font scaling by adding `export QT_FONT_DPI=[VALUE]` to the beginning of the Obenkyobo_launcher.sh. With [Value] being a numeric value you'll have to determine yourself)
-- Mini (scaling issue, cf Forma)
+- Forma (scaling issue, but functional, should be fixed with V0.1.2)
+- Mini (scaling issue, but functional, should be fixed with V0.1.2)
 - Glo HD (non responsive menu ? need more informations to investigate)
 - More incoming, please report if it works for your model too
 
 ## How to install ?
 
-Firstly, this application is designed to be compatible with most (if not all) Kobo devices. Do not try to install it for other ereader, it will not work ! This application is provided "as is". Don't come to me if somehow your device catch fire.
+Firstly, this application is designed to be compatible with most (if not all) Kobo devices with a recent firmware (probably 4.6+). Do not try to install it for other ereader, it will not work ! This application is provided "as is". Don't come to me if somehow your device catch fire.
 
 Secondly, you'll need to install a "launcher" beforehand. Common options are : 
 - <a href="https://github.com/pgaskin/NickelMenu">NickelMenu (NM)</a>, recommended option
@@ -70,7 +70,7 @@ Once you're done installing at least one of those you can either :
 <br/>
 <br/>
 <br/>
-And voilà ! You should now have a NickelMenu entries at the bottom right corner of your ereader "home screen" and a new "book" in your library to open with KfMon.
+And voilà ! You should now have a NickelMenu entry at the bottom right corner of your ereader "home screen" and a new "book" in your library to open with KfMon.
 <br clear="left"/>
 
 ## Issues ? 
