@@ -197,7 +197,6 @@ void MainWindow::on_actionEdit_Hiragana_Set_triggered()
 
 
 //===========================================================================
-
 void MainWindow::on_actionKatakana_to_Romanji_QCM_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionKatakana_to_Romanji_QCM_triggered()" << std::endl;
@@ -263,3 +262,25 @@ void MainWindow::on_actionScreen_Setting_triggered()
     if (GetMy::Instance().ScreenSettingsWidget().AreSettingsAvailablePopup())
         ui->ContentStackedWidget->setCurrentIndex(6);
 }
+
+
+
+//===========================================================================
+void MainWindow::on_actionKana_To_Romanji_MCQ_triggered()
+{
+
+}
+
+void MainWindow::on_actionRomanji_to_Kanas_MCQ_triggered()
+{
+
+}
+
+void MainWindow::on_actionLearn_Edit_Set_triggered()
+{
+    std::cout << "LOG: MainWindow::on_actionLearn_Edit_Set_triggered()" << std::endl;
+    ui->ContentStackedWidget->setCurrentIndex(7);
+}
+
+
+//===========================================================================

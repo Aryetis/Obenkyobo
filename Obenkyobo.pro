@@ -44,6 +44,9 @@ SOURCES += \
     Src/symbolsettingentry.cpp \
     Src/symbolsettingsection.cpp \
     Src/symbolstables.cpp \
+    Src/vocabularycfglistentry.cpp \
+    Src/vocabularyentrydisplay.cpp \
+    Src/vocabularylearneditset.cpp \
     Src/widgetwelcome.cpp \
     Src/qcmexercice.cpp \
     Src/keyboardexercice.cpp \
@@ -66,6 +69,9 @@ HEADERS += \
     Src/symbolsetting.h \
     Src/symbolsettingentry.h \
     Src/symbolsettingsection.h \
+    Src/vocabularycfglistentry.h \
+    Src/vocabularyentrydisplay.h \
+    Src/vocabularylearneditset.h \
     Src/widgetwelcome.h \
     Src/qcmexercice.h \
     Src/keyboardexercice.h \
@@ -84,6 +90,9 @@ FORMS += \
     Src/symbolsetting.ui \
     Src/symbolsettingentry.ui \
     Src/symbolsettingsection.ui \
+    Src/vocabularycfglistentry.ui \
+    Src/vocabularyentrydisplay.ui \
+    Src/vocabularylearneditset.ui \
     Src/widgetwelcome.ui \
     Src/qcmexercice.ui \
     Src/keyboardexercice.ui \

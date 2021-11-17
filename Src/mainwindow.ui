@@ -55,7 +55,7 @@
       <item>
        <widget class="QStackedWidget" name="ContentStackedWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>7</number>
         </property>
         <widget class="WidgetWelcome" name="WelcomePage"/>
         <widget class="QcmExercice" name="ExerciceQcmPage"/>
@@ -64,6 +64,7 @@
         <widget class="AppSettings" name="AppSettingsPage"/>
         <widget class="FntSetting" name="FontSettingPage"/>
         <widget class="ScreenSettings" name="ScreenSettingsPage"/>
+        <widget class="VocabularyLearnEditSet" name="VocabularyEditSetPage"/>
        </widget>
       </item>
      </layout>
@@ -107,9 +108,17 @@
      <addaction name="actionHiragana_to_Romanji_Kbd"/>
      <addaction name="actionEdit_Hiragana_Set"/>
     </widget>
+    <widget class="QMenu" name="menuVocabulary">
+     <property name="title">
+      <string>Vocabulary</string>
+     </property>
+     <addaction name="actionKana_To_Romanji_MCQ"/>
+     <addaction name="actionRomanji_to_Kanas_MCQ"/>
+     <addaction name="actionLearn_Edit_Set"/>
+    </widget>
     <addaction name="menuHiragana"/>
     <addaction name="menuKatakana"/>
-    <addaction name="actionAbout"/>
+    <addaction name="menuVocabulary"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -130,11 +139,6 @@
    </property>
    <property name="font">
     <font/>
-   </property>
-  </action>
-  <action name="actionAbout">
-   <property name="text">
-    <string>About</string>
    </property>
   </action>
   <action name="actionRomanji_to_Hiragana_QCM">
@@ -192,6 +196,21 @@
     <string>Screen</string>
    </property>
   </action>
+  <action name="actionKana_To_Romanji_MCQ">
+   <property name="text">
+    <string>Kana To Romanji (MCQ)</string>
+   </property>
+  </action>
+  <action name="actionRomanji_to_Kanas_MCQ">
+   <property name="text">
+    <string>Romanji to Kana (MCQ)</string>
+   </property>
+  </action>
+  <action name="actionLearn_Edit_Set">
+   <property name="text">
+    <string>Learn / Edit words Set</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -235,6 +254,12 @@
    <class>ScreenSettings</class>
    <extends>QWidget</extends>
    <header>Src/screensettings.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VocabularyLearnEditSet</class>
+   <extends>QWidget</extends>
+   <header>Src/vocabularylearneditset.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

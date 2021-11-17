@@ -43,6 +43,11 @@ private slots:
     void on_actionScreen_Setting_triggered();
 
     //===========================================================================
+    void on_actionKana_To_Romanji_MCQ_triggered();
+    void on_actionRomanji_to_Kanas_MCQ_triggered();
+    void on_actionLearn_Edit_Set_triggered();
+
+    //===========================================================================
     void refreshTimeAndBattery();
 
 private:

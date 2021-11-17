@@ -13,7 +13,8 @@
 enum SymbolFamilyEnum
 {
     hiragana,
-    katakana
+    katakana,
+    kanji
 };
 
 //================================== Symbol ==================================
@@ -142,6 +143,7 @@ namespace SymbolsTables
 {
     extern SymbolsTableFamily HiraganaSymbolsTableFamily;
     extern SymbolsTableFamily KatakanaSymbolsTableFamily;
+    extern SymbolsTableFamily VocabTableFamily; // TODO MG
 }
 
 #endif // SYMBOLSTABLES_H
