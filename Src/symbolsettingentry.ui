@@ -13,7 +13,7 @@
   <property name="minimumSize">
    <size>
     <width>1</width>
-    <height>60</height>
+    <height>140</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -44,6 +44,11 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
        </property>
        <property name="text">
         <string/>

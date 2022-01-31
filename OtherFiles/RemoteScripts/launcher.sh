@@ -11,7 +11,7 @@ source ${APPPATH}/exit_nickel.sh
 
 # export QT stuff
 export LD_LIBRARY_PATH=${QTPATH}/lib:lib:
-export QT_QPA_PLATFORM=${QTPLUGINOBENKYOBO}:logicaldpitarget=108
+export QT_QPA_PLATFORM=${QTPLUGINOBENKYOBO}:logicaldpitarget=300
 
 # start APP
 ${APPPATH}/${APPNAME} > $LOGFILE 2>&1

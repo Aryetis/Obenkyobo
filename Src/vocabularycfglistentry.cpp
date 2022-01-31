@@ -13,7 +13,6 @@ VocabularyCfgListEntry::VocabularyCfgListEntry(QFileInfo fi, QWidget *parent)
 {
     ui->setupUi(this);
 
-    VocabularyCfgListEntry();
     ui->TitleButton->setText(fi.fileName());
 }
 

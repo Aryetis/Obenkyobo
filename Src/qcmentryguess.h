@@ -16,6 +16,7 @@ class QcmEntryGuess : public QWidget
     Q_OBJECT
 
 public:
+    QcmEntryGuess() = delete;
     explicit QcmEntryGuess(QWidget *parent = nullptr);
     ~QcmEntryGuess() override;
 

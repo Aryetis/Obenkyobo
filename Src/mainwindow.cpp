@@ -7,6 +7,7 @@
 #include "Src/symbolsetting.h"
 #include <QKeyEvent>
 #include "koboplatformfunctions.h"
+#include "qsymbolpushbutton.h"
 
 #include <QPainter>
 
@@ -38,6 +39,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     GetMy::Instance().SetMainWindowWidget(this);
     std::cout << "LOG: MainWindow::MainWindow()::End" << std::endl;
+
+    ui->menuBar->setStyleSheet("QMenuBar {spacing : 15px}");
 }
 
 MainWindow::~MainWindow()
@@ -190,6 +193,7 @@ void MainWindow::on_actionHiragana_to_Romanji_Kbd_triggered()
 void MainWindow::on_actionEdit_Hiragana_Set_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionEdit_Hiragana_Set_triggered()" << std::endl;
+    QSymbolPushButton::RefreshJpFixedSizedFnt();
     GetMy::Instance().SymbolSettingWidget().InitializeSymbolSetting(SymbolFamilyEnum::hiragana);
     ui->ContentStackedWidget->setCurrentIndex(3);
 }
@@ -236,6 +240,7 @@ void MainWindow::on_actionKatakana_to_Romanji_Kbd_triggered()
 void MainWindow::on_actionEdit_Katakana_Set_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionEdit_Katakana_Set_triggered()" << std::endl;
+    QSymbolPushButton::RefreshJpFixedSizedFnt();
     GetMy::Instance().SymbolSettingWidget().InitializeSymbolSetting(SymbolFamilyEnum::katakana);
     ui->ContentStackedWidget->setCurrentIndex(3);
 }

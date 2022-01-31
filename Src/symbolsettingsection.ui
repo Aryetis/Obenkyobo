@@ -69,14 +69,17 @@
       <widget class="QLabel" name="SymbolSettingSectionName">
        <property name="font">
         <font>
+         <family>DejaVu Sans</family>
          <pointsize>12</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
         </font>
        </property>
        <property name="text">
-        <string>SectionName</string>
+        <string>gojūon</string>
        </property>
        <property name="margin">
-        <number>8</number>
+        <number>16</number>
        </property>
       </widget>
      </item>
@@ -120,6 +123,9 @@
         <font>
          <pointsize>9</pointsize>
         </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
        </property>
        <property name="text">
         <string/>

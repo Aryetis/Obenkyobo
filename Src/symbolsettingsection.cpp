@@ -3,24 +3,17 @@
 
 SymbolSettingSection::SymbolSettingSection(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::SymbolSettingSection),
-    checkboxAdjustedSize(-1)
+    ui(new Ui::SymbolSettingSection)
 {
     ui->setupUi(this);
-    checkboxAdjustedSize = ui->SymbolSettingSectionName->height();
+
+    ui->SymbolSettingSectionCheckbox->setStyleSheet(
+                "QCheckBox::indicator { width: 80px; height: 80px;}");
 }
 
 SymbolSettingSection::~SymbolSettingSection()
 {
     delete ui;
-}
-
-void SymbolSettingSection::resizeEvent(QResizeEvent* event)
-{
-   QWidget::resizeEvent(event);
-
-   ui->SymbolSettingSectionCheckbox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
-                                                    .arg(checkboxAdjustedSize));
 }
 
 

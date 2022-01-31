@@ -9,6 +9,8 @@
 #        - redirect stack trace to std::cerr
 #        - link physical button to scrollbar without having to click scrollbar first
 #
+# available fonts : /usr/local/Trolltech/QtEmbedded-4.6.2-arm/lib/fonts (stock)
+#     throught qt : qt-linux-5.15-kde-kobo/lib/fonts
 #-------------------------------------------------
 
 QT       += core gui

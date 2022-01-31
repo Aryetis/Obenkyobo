@@ -133,7 +133,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     for(int i= 0; i<NbrOfEntriesLine*NbrOfEntriesRow; ++i)
     {
         div_t entryPos = div(i, NbrOfEntriesLine);
-        QcmEntryGuess* foo = new QcmEntryGuess();
+        QcmEntryGuess* foo = new QcmEntryGuess(this);
         guesses.append(foo);
         Symbol* curSym = shuffledSymbols[static_cast<std::vector<Symbol>::size_type>(i)];
 

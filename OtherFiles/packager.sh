@@ -13,7 +13,6 @@ Version="0.1.2"
 LauncherName=$4_launcher.sh
 QtPluginKobo=kobo
 
-
 #Launcher and application
 mkdir -p $3/Output/.adds/$4
 cp $3/$4 $3/Output/.adds/$4/$4
@@ -29,6 +28,10 @@ fi
 cp $2/OtherFiles/RemoteScripts/start_nickel.sh $3/Output/.adds/$4/start_nickel.sh
 cp $2/OtherFiles/RemoteScripts/exit_nickel.sh $3/Output/.adds/$4/exit_nickel.sh
 cp $2/OtherFiles/RemoteScripts/pic.png $3/Output/$4.png
+
+#Vocab files
+mkdir -p $3/Output/.adds/$4/vocab
+cp $2/OtherFiles/vocab/* $3/Output/.adds/$4/vocab/ -r
 
 #Dependencies
 cp $2/OtherFiles/Dependencies/* $3/Output/.adds/ -r

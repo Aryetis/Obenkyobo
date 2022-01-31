@@ -85,6 +85,9 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="currentIndex">
+          <number>2</number>
+         </property>
          <item>
           <property name="text">
            <string>1x3</string>

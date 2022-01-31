@@ -55,7 +55,7 @@
       <item>
        <widget class="QStackedWidget" name="ContentStackedWidget">
         <property name="currentIndex">
-         <number>7</number>
+         <number>0</number>
         </property>
         <widget class="WidgetWelcome" name="WelcomePage"/>
         <widget class="QcmExercice" name="ExerciceQcmPage"/>
@@ -82,6 +82,9 @@
      <width>400</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
    </property>
    <property name="defaultUp">
     <bool>false</bool>
@@ -119,6 +122,7 @@
     <addaction name="menuHiragana"/>
     <addaction name="menuKatakana"/>
     <addaction name="menuVocabulary"/>
+    <addaction name="actionAbout"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -209,6 +213,11 @@
   <action name="actionLearn_Edit_Set">
    <property name="text">
     <string>Learn / Edit words Set</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
    </property>
   </action>
  </widget>

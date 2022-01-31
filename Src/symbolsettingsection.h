@@ -22,14 +22,9 @@ public:
 private slots:
     void on_SymbolSettingSectionCheckbox_clicked(bool checked);
 
-protected:
-    void resizeEvent(QResizeEvent* event) override;
-
 private:
     Ui::SymbolSettingSection *ui;
     QList<SymbolSettingEntry*> symbolSettingsEntries;
-
-    int checkboxAdjustedSize;
 };
 
 #endif // SYMBOLSETTINGSECTION_H
