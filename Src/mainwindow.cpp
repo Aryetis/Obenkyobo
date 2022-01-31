@@ -22,7 +22,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     // Setup statusBar
-    statusBar = new QMenuBar(ui->menuBar);
+    statusBar = new QMenuBar(parent);
+    statusBar->setObjectName("statusBar");
     ui->menuBar->setCornerWidget(statusBar);
     timeDisplay = new QAction("64:39", statusBar);
     statusBar->addAction(timeDisplay);
@@ -30,17 +31,20 @@ MainWindow::MainWindow(QWidget *parent) :
     statusBar->addAction(actionBatteryIcon);
     actionBatteryTxt = new QAction("init", statusBar);
     statusBar->addAction(actionBatteryTxt);
-    statusBar->setStyleSheet("QMenuBar::item { color: black; background: transparent; }");
+    ui->menuBar->setStyleSheet
+    (
+        "QMenuBar { spacing : 20px; }"
+        "QMenuBar::item { padding-top : 15px; padding-bottom : 5px; color: black; }"
+        "QMenuBar::item:pressed#statusBar { background: transparent; }"
+    );
 
     // Handle time and battery
     connect(&timer, &QTimer::timeout, this, &MainWindow::refreshTimeAndBattery);
-    timer.start(1000); // TODO : currently refreshing every second ... wasted I/O ?
+    timer.start(1000);
     refreshTimeAndBattery();
 
     GetMy::Instance().SetMainWindowWidget(this);
     std::cout << "LOG: MainWindow::MainWindow()::End" << std::endl;
-
-    ui->menuBar->setStyleSheet("QMenuBar {spacing : 15px}");
 }
 
 MainWindow::~MainWindow()
@@ -89,8 +93,8 @@ void MainWindow::refreshTimeAndBattery()
     {
         if (isBatteryTextVisible)
             actionBatteryTxt->setText((isBatteryCharging)
-                                     ? QString("⚡%1%⚡").arg(batteryLvl)
-                                     : QString("%1%").arg(batteryLvl));
+                                     ? QString("⚡%1%⚡ ").arg(batteryLvl)
+                                     : QString("%1% ").arg(batteryLvl)); // defeated for now, adding an extra space for margin... I hate stylesheet
 
         if (isBatteryIconVisible)
         {

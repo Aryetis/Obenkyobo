@@ -3,7 +3,9 @@
 #                    - fix Glo hd
 #                    - fix wifi
 #                    - random fonts for qcm
-# TODO : - move code to src folder for better github Readme.md readability
+# TODO : - tweak all the Romanji fonts so they can display stuff like gojūon and ⚡
+#        - tweak MenuBar spacing and marging
+#        - fix the alignment of WelcomePage and everything in the settings page...
 #        - handle sleep
 #        - handle QTPA dependency properly, don't have a copy paste from some version and possible src of other versions, get bin from compiled src
 #        - redirect stack trace to std::cerr

@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
 
     a.setStyleSheet
     (
+        /////////////// Scrollbar stuff
         "QScrollBar                                                                                                 "
         "{ border: 2px solid grey; background: white; width: 100px; margin: 100px 0 100px 0; }                      "
         "QScrollBar::handle                                                                                         "
