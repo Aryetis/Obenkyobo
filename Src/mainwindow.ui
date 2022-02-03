@@ -94,6 +94,18 @@
      <string>Main</string>
     </property>
     <widget class="QMenu" name="menuKatakana">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="title">
       <string>Katakana</string>
      </property>
@@ -103,6 +115,18 @@
      <addaction name="actionEdit_Katakana_Set"/>
     </widget>
     <widget class="QMenu" name="menuHiragana">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="title">
       <string>Hiragana</string>
      </property>
@@ -112,6 +136,18 @@
      <addaction name="actionEdit_Hiragana_Set"/>
     </widget>
     <widget class="QMenu" name="menuVocabulary">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="title">
       <string>Vocabulary</string>
      </property>
