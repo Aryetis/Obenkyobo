@@ -8,7 +8,9 @@ SymbolSettingSection::SymbolSettingSection(QWidget *parent) :
     ui->setupUi(this);
 
     ui->SymbolSettingSectionCheckbox->setStyleSheet(
-                "QCheckBox::indicator { width: 80px; height: 80px;}");
+                QString("QCheckBox::indicator { width: %1px; height: %1px;}").arg
+                    (GetMy::Instance().Descriptor().width/12)
+    );
 }
 
 SymbolSettingSection::~SymbolSettingSection()

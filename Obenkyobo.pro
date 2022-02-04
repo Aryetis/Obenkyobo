@@ -4,6 +4,7 @@
 #                    - fix wifi
 #                    - random fonts for qcm
 # TODO : - tweak all the Romanji fonts so they can display stuff like gojūon and ⚡
+#        - tweak EditPage not displaying correctly on glo
 #        - tweak MenuBar spacing and marging
 #        - fix the alignment of WelcomePage and everything in the settings page...
 #        - handle sleep
