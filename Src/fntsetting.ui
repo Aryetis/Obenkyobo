@@ -113,7 +113,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="HiraganaFntDropdown"/>
+        <widget class="QComboBox" name="HiraganaFntDropdown">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -135,6 +142,12 @@
        </item>
        <item>
         <widget class="QSlider" name="HiraganaSizeSlider">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimum">
           <number>20</number>
          </property>
@@ -193,7 +206,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="KatakanaFntDropdown"/>
+        <widget class="QComboBox" name="KatakanaFntDropdown">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -276,7 +296,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="RomanjiFntDropdown"/>
+        <widget class="QComboBox" name="RomanjiFntDropdown">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -301,6 +328,12 @@
        </item>
        <item>
         <widget class="QSlider" name="RomanjiSizeSlider">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimum">
           <number>20</number>
          </property>

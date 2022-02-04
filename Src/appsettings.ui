@@ -38,7 +38,7 @@
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="nbrOfEntryLinesSettings" stretch="0,0,0">
+      <layout class="QHBoxLayout" name="nbrOfEntryLinesSettings" stretch="1,1">
        <property name="topMargin">
         <number>0</number>
        </property>
@@ -47,35 +47,28 @@
        </property>
        <item>
         <widget class="QLabel" name="nbrOfEntryLinesLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>MCQ configuration :</string>
          </property>
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer_6">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
         <widget class="QComboBox" name="nbrOfEntryLinesDropdown">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>200</width>
+           <width>0</width>
            <height>0</height>
           </size>
          </property>
@@ -108,38 +101,31 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="HardRefreshSetting" stretch="0,0,0">
+      <layout class="QHBoxLayout" name="HardRefreshSetting" stretch="1,1">
        <item>
         <widget class="QLabel" name="HardRefreshLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Hard Refresh Frequency :</string>
          </property>
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer_7">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
         <widget class="QComboBox" name="HardRefreshDropdown">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>200</width>
+           <width>0</width>
            <height>0</height>
           </size>
          </property>
@@ -182,7 +168,7 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="RandomnessSetting" stretch="0,0,0">
+      <layout class="QHBoxLayout" name="RandomnessSetting" stretch="1,1">
        <property name="topMargin">
         <number>0</number>
        </property>
@@ -194,29 +180,16 @@
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer_8">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
         <widget class="QComboBox" name="RandomnessDropdown">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>200</width>
+           <width>0</width>
            <height>0</height>
           </size>
          </property>
@@ -257,6 +230,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="ResetWeightsButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Reset Weights / Learning State</string>
          </property>
@@ -307,7 +286,7 @@
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="BatteryIndicator">
+      <layout class="QHBoxLayout" name="BatteryIndicator" stretch="1,1">
        <property name="topMargin">
         <number>0</number>
        </property>
@@ -319,29 +298,16 @@
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
         <widget class="QComboBox" name="BatteryIndicatorDropdown">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>200</width>
+           <width>0</width>
            <height>0</height>
           </size>
          </property>
@@ -371,7 +337,7 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="DateDisplayFormat" stretch="0,0,0">
+      <layout class="QHBoxLayout" name="DateDisplayFormat" stretch="1,1">
        <item>
         <widget class="QLabel" name="DateDisplayFormatLabel">
          <property name="text">
@@ -380,29 +346,16 @@
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer_9">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
         <widget class="QComboBox" name="DateDisplayFormatDropdown">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>200</width>
+           <width>0</width>
            <height>0</height>
           </size>
          </property>
@@ -434,6 +387,12 @@
        </item>
        <item>
         <widget class="QCheckBox" name="WifiCheckBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="layoutDirection">
           <enum>Qt::RightToLeft</enum>
          </property>
@@ -529,6 +488,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="ResetStatsButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Reset Stats</string>
          </property>

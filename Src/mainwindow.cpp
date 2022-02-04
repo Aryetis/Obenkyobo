@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
         "QMenuBar::item { padding-top : 15px; padding-bottom : 5px; color: black; }"
         "QMenuBar::item#statusBar { background : transparent; }"
 
-        "QMenu::item { padding : 10px }" // padding, spacing, margin fucks up the right-arrow because ... reasons
+//        "QMenu::item { padding : 10px }" // padding, spacing, margin fucks up the right-arrow because ... reasons
 //        "QMenu::item { height : 100px; padding : 0px } " // won't work without padding because ... reasons
 //        "QMenu::right-arrow { height: 10px; width : 10px }" // nothing seems to work except url:
 
@@ -109,13 +109,13 @@ void MainWindow::refreshTimeAndBattery()
         {
             if (isBatteryCharging)
                 actionBatteryIcon->setIcon(QIcon(":/pictures/Battery/batteryCharging.png"));
-            else if (batteryLvl > 80)
+            else if (batteryLvl > 77.5)
                 actionBatteryIcon->setIcon(QIcon(":/pictures/Battery/battery4.png"));
-            else if(batteryLvl > 60)
+            else if(batteryLvl > 55)
                 actionBatteryIcon->setIcon(QIcon(":/pictures/Battery/battery3.png"));
-            else if(batteryLvl > 40)
+            else if(batteryLvl > 32.5)
                 actionBatteryIcon->setIcon(QIcon(":/pictures/Battery/battery2.png"));
-            else if(batteryLvl > 20)
+            else if(batteryLvl > 10)
                 actionBatteryIcon->setIcon(QIcon(":/pictures/Battery/battery1.png"));
             else
                 actionBatteryIcon->setIcon(QIcon(":/pictures/Battery/batteryEmpty.png"));
