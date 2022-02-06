@@ -19,6 +19,7 @@ public:
     ~MainWindow() override;
 
     void UpdateStatusBarGeometry();
+    void SwitchStackedWidgetIndex(int i);
 
 private slots:
     //===========================================================================

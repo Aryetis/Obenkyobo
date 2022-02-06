@@ -4,8 +4,6 @@
 #include "Src/symbolsettingsection.h"
 #include "Src/symbolstables.h"
 
-#include <QScrollBar>
-
 SymbolSetting::SymbolSetting(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SymbolSetting)
@@ -41,4 +39,6 @@ void SymbolSetting::InitializeSymbolSetting(SymbolFamilyEnum _symbolFamily)
 
         ui->SymbolSettingContainer->addWidget(symbolSettingSection);
     }
+
+    ui->scrollArea->setFocus(); // force focus on scrollbar so it handles physical buttons
 }

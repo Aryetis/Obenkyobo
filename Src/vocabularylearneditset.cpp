@@ -1,5 +1,7 @@
 #include "vocabularylearneditset.h"
 #include "ui_vocabularylearneditset.h"
+#include "Src/GetMy.h"
+#include "Src/vocabularydisplay.h"
 
 #include <QDir>
 
@@ -16,6 +18,8 @@ VocabularyLearnEditSet::VocabularyLearnEditSet(QWidget *parent) :
 
         ui->VocabularyCfgListContentVLayout->addWidget(foo);
     }
+
+    GetMy::Instance().SetVocabularyLearnEditSetWidget(this);
 }
 
 VocabularyLearnEditSet::~VocabularyLearnEditSet()
@@ -24,4 +28,9 @@ VocabularyLearnEditSet::~VocabularyLearnEditSet()
         delete qs;
 
     delete ui;
+}
+
+void VocabularyLearnEditSet::InitializeVocabularyLearnEditSet()
+{
+    ui->VocabularyCfgList->setFocus(); // force focus on scrollbar so it handles physical buttons
 }

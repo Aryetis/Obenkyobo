@@ -7,7 +7,7 @@
 
 QSymbolPushButton::QSymbolPushButton(QWidget* /*widget*/)
     : learningState(-1), JP(), Romanji()
-{ }
+{}
 
 void QSymbolPushButton::setLearningState(int _learningState)
 {

@@ -188,7 +188,7 @@ void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
     }
 
 
-    // print feedback informing of correct / incorrect choice
+    // print feedback informing of correct / incorrect choice // TODO use the correct font for the jp part
     switch (currentQcmType)
     {
         case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
@@ -243,7 +243,7 @@ void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
     ui->ResultLabelRight->setStyleSheet("QLabel { border: none }");
     // TODO make it blink upon fail ?
     ui->ResultLabelGroupBox->setStyleSheet((correct) ? "QGroupBox { border : none }"
-                                                     : "QGroupBox { border : 3px solid black }");
+                                                     : "QGroupBox { border : 5px solid black }");
 
     InitializeExercice(currentQcmType);
 }

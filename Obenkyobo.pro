@@ -4,16 +4,11 @@
 #                    - fix wifi
 #                    - random fonts for qcm
 # TODO : - tweak all the Romanji fonts so they can display stuff like gojūon and ⚡
-#        - tweak EditPage not displaying correctly on glo
-#        - tweak MenuBar spacing and marging
-#        - fix the alignment of WelcomePage and everything in the settings page...
+#        - change size of circles edit button to make it width relative, make he height of each edit entry relative to height
+#        - tweak MenuBar spacing and marging (probably not happening because of kobo quirk)
 #        - handle sleep
 #        - handle QTPA dependency properly, don't have a copy paste from some version and possible src of other versions, get bin from compiled src
 #        - redirect stack trace to std::cerr
-#        - link physical button to scrollbar without having to click scrollbar first
-#
-# available fonts : /usr/local/Trolltech/QtEmbedded-4.6.2-arm/lib/fonts (stock)
-#     throught qt : qt-linux-5.15-kde-kobo/lib/fonts
 #-------------------------------------------------
 
 QT       += core gui
@@ -50,7 +45,7 @@ SOURCES += \
     Src/symbolsettingsection.cpp \
     Src/symbolstables.cpp \
     Src/vocabularycfglistentry.cpp \
-    Src/vocabularyentrydisplay.cpp \
+    Src/vocabularydisplay.cpp \
     Src/vocabularylearneditset.cpp \
     Src/widgetwelcome.cpp \
     Src/qcmexercice.cpp \
@@ -75,7 +70,7 @@ HEADERS += \
     Src/symbolsettingentry.h \
     Src/symbolsettingsection.h \
     Src/vocabularycfglistentry.h \
-    Src/vocabularyentrydisplay.h \
+    Src/vocabularydisplay.h \
     Src/vocabularylearneditset.h \
     Src/widgetwelcome.h \
     Src/qcmexercice.h \
@@ -96,7 +91,7 @@ FORMS += \
     Src/symbolsettingentry.ui \
     Src/symbolsettingsection.ui \
     Src/vocabularycfglistentry.ui \
-    Src/vocabularyentrydisplay.ui \
+    Src/vocabularydisplay.ui \
     Src/vocabularylearneditset.ui \
     Src/widgetwelcome.ui \
     Src/qcmexercice.ui \

@@ -17,6 +17,12 @@
 #include "Src/GetMy.h"
 #include "Src/screensettings.h"
 
+
+
+#include <QLayout>
+#include <QSizePolicy>
+
+
 class Tools
 {
 public :
@@ -124,8 +130,7 @@ public :
     {
         QMessageBox popup;
         popup.setText(message);
-        popup.setStyleSheet("QLabel{min-width: 300px;}"
-                            "QMessageBox { border: 3px solid black }");
+        popup.setStyleSheet("QMessageBox { border: 5px solid black }");
         popup.exec();
     }
 

@@ -65,6 +65,7 @@
         <widget class="FntSetting" name="FontSettingPage"/>
         <widget class="ScreenSettings" name="ScreenSettingsPage"/>
         <widget class="VocabularyLearnEditSet" name="VocabularyEditSetPage"/>
+        <widget class="VocabularyDisplay" name="VocabularyDisplayPage"/>
        </widget>
       </item>
      </layout>
@@ -305,6 +306,12 @@
    <class>VocabularyLearnEditSet</class>
    <extends>QWidget</extends>
    <header>Src/vocabularylearneditset.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VocabularyDisplay</class>
+   <extends>QWidget</extends>
+   <header>Src/vocabularydisplay.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

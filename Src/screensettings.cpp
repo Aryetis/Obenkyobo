@@ -25,7 +25,11 @@ ScreenSettings::ScreenSettings(QWidget *parent) :
         settingAvailable = true;
     }
     else
-        ui->LuminosityContainer->setEnabled(false);
+    {
+        ui->LuminosityLabel->setVisible(false);
+        ui->LuminosityValue->setVisible(false);
+        ui->LuminositySlider->setVisible(false);
+    }
 
     if (desc.frontlightSettings.hasNaturalLight)
     {
@@ -38,7 +42,11 @@ ScreenSettings::ScreenSettings(QWidget *parent) :
         settingAvailable = true;
     }
     else
-        ui->TintContainer->setEnabled(false);
+    {
+        ui->TintLabel->setVisible(false);
+        ui->TintValue->setVisible(false);
+        ui->TintSlider->setVisible(false);
+    }
 
     if (settingAvailable)
         KoboPlatformFunctions::setFrontlightLevel(luminosity, tint);
@@ -55,7 +63,7 @@ bool ScreenSettings::AreSettingsAvailablePopup() const
 {
     if(!settingAvailable)
     {
-        Tools::GetInstance().DisplayPopup("Sorry, no Screen Settings (luminosity, tint) available for your ereader");
+        Tools::GetInstance().DisplayPopup("Sorry,\nno Screen Settings (luminosity, tint) available for your ereader");
         return false;
     }
     return true;

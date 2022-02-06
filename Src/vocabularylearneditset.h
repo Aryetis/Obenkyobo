@@ -7,7 +7,7 @@
 
 namespace Ui
 {
-class VocabularyLearnEditSet;
+    class VocabularyLearnEditSet;
 }
 
 class VocabularyLearnEditSet : public QWidget
@@ -16,7 +16,9 @@ class VocabularyLearnEditSet : public QWidget
 
 public:
     explicit VocabularyLearnEditSet(QWidget *parent = nullptr);
-    ~VocabularyLearnEditSet();
+    ~VocabularyLearnEditSet() override;
+
+    void InitializeVocabularyLearnEditSet();
 
 private:
     Ui::VocabularyLearnEditSet *ui;

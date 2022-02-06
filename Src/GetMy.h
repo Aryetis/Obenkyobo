@@ -9,6 +9,8 @@ class AppSettings;
 class SymbolSetting;
 class ScreenSettings;
 class MainWindow;
+class VocabularyLearnEditSet;
+class VocabularyDisplay;
 class GetMy
 {
 public:
@@ -36,6 +38,12 @@ public:
     void SetScreenSettingsWidget(ScreenSettings* screenSettings) { screenSettingsInstance = screenSettings; }
     ScreenSettings& ScreenSettingsWidget() { return *screenSettingsInstance; }
 
+    void SetVocabularyLearnEditSetWidget(VocabularyLearnEditSet* vocab) { vocabularyLearnEditSetInstance = vocab;}
+    VocabularyLearnEditSet* VocabularyLearnEditSetWidget() { return vocabularyLearnEditSetInstance; }
+
+    void SetVocabularyDisplayWidget(VocabularyDisplay* vocab) { vocabularyDisplayInstance = vocab;}
+    VocabularyDisplay* VocabularyDisplayWidget() { return vocabularyDisplayInstance; }
+
     void SetSettingSerialier(QSettings* settingSerializer) { settingSerializerInstance = settingSerializer;}
     QSettings* SettingSerializer() { return settingSerializerInstance; }
 
@@ -43,12 +51,14 @@ public:
 
 private :
     GetMy() = default;
-    MainWindow* mainWindowInstance;
-    QcmExercice* qcmExerciceInstance;
-    FntSetting* fntSettingInstance;
-    AppSettings* appSettingsInstance;
-    ScreenSettings* screenSettingsInstance;
-    SymbolSetting* symbolSettingInstance;
+    MainWindow*                     mainWindowInstance;
+    QcmExercice*                    qcmExerciceInstance;
+    FntSetting*                     fntSettingInstance;
+    AppSettings*                    appSettingsInstance;
+    ScreenSettings*                 screenSettingsInstance;
+    SymbolSetting*                  symbolSettingInstance;
+    VocabularyLearnEditSet*         vocabularyLearnEditSetInstance;
+    VocabularyDisplay*              vocabularyDisplayInstance;
 
     KoboDeviceDescriptor desc =  KoboPlatformFunctions::getKoboDeviceDescriptor();
 

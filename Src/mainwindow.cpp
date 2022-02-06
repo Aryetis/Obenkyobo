@@ -34,17 +34,16 @@ MainWindow::MainWindow(QWidget *parent) :
     statusBar->addAction(actionBatteryIcon);
     actionBatteryTxt = new QAction("init", statusBar);
     statusBar->addAction(actionBatteryTxt);
+    float onePercentHeightPx = GetMy::Instance().Descriptor().height/100.0f; // 12.64
     ui->menuBar->setStyleSheet
     (
-        "QMenuBar { spacing : 20px; }"
-        "QMenuBar::item { padding-top : 15px; padding-bottom : 5px; color: black; }"
-        "QMenuBar::item#statusBar { background : transparent; }"
+        QString(
+            "QMenuBar { spacing : %1px; }"
+            "QMenuBar::item { padding-top : %2px; padding-bottom : %3px; color: black; }"
+            "QMenuBar::item#statusBar { background : transparent; }"
 
-//        "QMenu::item { padding : 10px }" // padding, spacing, margin fucks up the right-arrow because ... reasons
-//        "QMenu::item { height : 100px; padding : 0px } " // won't work without padding because ... reasons
-//        "QMenu::right-arrow { height: 10px; width : 10px }" // nothing seems to work except url:
-
-        "QMenu::separator { height : 2px ; background : darkgray }"
+            "QMenu::separator { height : 2px ; background : darkgray }"
+                ).arg(onePercentHeightPx*2).arg(onePercentHeightPx).arg(onePercentHeightPx/2)
     );
 
     // Handle time and battery
@@ -151,6 +150,12 @@ void MainWindow::UpdateStatusBarGeometry()
     statusBar->setVisible(true);
 }
 
+void MainWindow::SwitchStackedWidgetIndex(int i)
+{
+    std::cout << "LOG: MainWindow::SwitchStackedWidgetIndex(" << i << ")" << std::endl;
+    ui->ContentStackedWidget->setCurrentIndex(i);
+}
+
 //===========================================================================
 void MainWindow::on_actionAbout_triggered()
 {
@@ -177,9 +182,9 @@ void MainWindow::on_actionHiragana_to_Romanji_QCM_triggered()
     }
     else
         Tools::GetInstance().DisplayPopup(
-                "Not enough enabled Hiragana, please enable at least " +
+                "Not enough enabled Hiragana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
-                " at : Main->Hiragana->Edit Hiragana Set");
+                " at :\nMain->Hiragana->Edit Hiragana Set");
 }
 
 void MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()
@@ -192,9 +197,9 @@ void MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()
     }
     else
         Tools::GetInstance().DisplayPopup(
-                "Not enough enabled Hiragana, please enable at least " +
+                "Not enough enabled Hiragana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
-                " at : Main->Hiragana->Edit Hiragana Set");
+                " at :\nMain->Hiragana->Edit Hiragana Set");
 }
 
 void MainWindow::on_actionHiragana_to_Romanji_Kbd_triggered()
@@ -224,9 +229,9 @@ void MainWindow::on_actionKatakana_to_Romanji_QCM_triggered()
     }
     else
         Tools::GetInstance().DisplayPopup(
-                "Not enough enabled Katakana, please enable at least " +
+                "Not enough enabled Katakana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
-                " at : Main->Hiragana->Edit Hiragana Set");
+                " at :\nMain->Hiragana->Edit Hiragana Set");
 }
 
 void MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()
@@ -239,9 +244,9 @@ void MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()
     }
     else
         Tools::GetInstance().DisplayPopup(
-                "Not enough enabled Katakana, please enable at least " +
+                "Not enough enabled Katakana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
-                " at : Main->Hiragana->Edit Hiragana Set");
+                " at :\nMain->Hiragana->Edit Hiragana Set");
 }
 
 void MainWindow::on_actionKatakana_to_Romanji_Kbd_triggered()
@@ -297,6 +302,7 @@ void MainWindow::on_actionRomanji_to_Kanas_MCQ_triggered()
 void MainWindow::on_actionLearn_Edit_Set_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionLearn_Edit_Set_triggered()" << std::endl;
+    GetMy::Instance().VocabularyLearnEditSetWidget()->InitializeVocabularyLearnEditSet();
     ui->ContentStackedWidget->setCurrentIndex(7);
 }
 

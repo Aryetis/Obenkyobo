@@ -73,7 +73,7 @@ void QcmEntryGuess::CorrectFontSize()
     if (corrected && !fntWarnDisplayed)
     {
         Tools::GetInstance().DisplayPopup(
-                    "MCQ Entries font is too big, please consider changing their size (Settings->Fonts). \n"
+                    "MCQ Entries font is too big,\nplease consider changing their size\n(Settings->Fonts). \n"
                     "Resizing them to " + QString::number(newFontSize) + " for now.");
         fntWarnDisplayed = true;
     }
