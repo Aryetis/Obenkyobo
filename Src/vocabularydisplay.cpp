@@ -13,6 +13,10 @@ VocabularyDisplay::VocabularyDisplay(QWidget *parent) :
 
 void VocabularyDisplay::InitializeGrid(VocabularyCfgListEntry* vocab)
 {
+    /************************ Cleaning previous stuff ************************/
+    qDeleteAll(gridEntries);
+    gridEntries.clear();
+
     /************************ Parsing Vocab File ************************/
     QFile vocabFile(vocab->VocabFileInfo().filePath());
     if (vocabFile.open(QIODevice::ReadOnly))
@@ -22,41 +26,32 @@ void VocabularyDisplay::InitializeGrid(VocabularyCfgListEntry* vocab)
         {
             QString line = in.readLine();
             if (line.count() <= 0 || line[0] == '#') // skip empty lines and comments
-            continue;
-
-            // TODO fuck this
-            QRegExp rx("\[fontType=(?'fontType'[a-zA-Z]+)]\[jp=(?'jp'[^\]]+)]\[kanji=(?'kanji'[^\]]+)]\[trad=(?'trad'[^\]]+)]\[learningScore=(?'LS'[0-9])]");
-            QStringList resList = rx.capturedTexts();
-            if (resList.count()%4 !=0) // malformed
                 continue;
 
-            tempVocab* vocabStructEntry = new tempVocab();
-            int i =0;
-            while (i*2 < resList.count())
+            //[fontType=hiragana][jp=sanity][kanji=kan][trad=check][learningScore=5]
+            QRegExp rx("\\[fontType=([a-zA-Z]+)\\]\\[jp=([^\\]]+)\\]\\[kanji=([^\\]]+)\\]\\[trad=([^\\]]+)\\]\\[learningScore=([0-5])\\]");
+            rx.indexIn(line);
+            QStringList parsedFields = rx.capturedTexts(); // first one is matched line, not fields
+
+            if ( parsedFields.count() == 6 )
             {
-                if (resList[i] == "fontType")
-                {
-                    if (resList[i+1] == "hiragana")
-                        vocabStructEntry->fontType = SymbolFamilyEnum::hiragana;
-                    else if (resList[i+1] == "katakana")
-                        vocabStructEntry->fontType = SymbolFamilyEnum::katakana;
-                    else if (resList[i+1] == "kanji")
-                        vocabStructEntry->fontType = SymbolFamilyEnum::kanji;
-                }
-                else if (resList[i] == "jp")
-                    vocabStructEntry->jp = resList[i+1];
-                else if (resList[i] == "trad")
-                    vocabStructEntry->trad = resList[i+1];
-                else if (resList[i] == "learningScore")
-                    vocabStructEntry->learningScore = resList[i+1].toInt();
+                SymbolFamilyEnum fontType_;
+                QString jp_ = parsedFields[2];;
+                QString kana_  = parsedFields[3];;
+                QString trad_  = parsedFields[4];;
+                int learningScore_ = parsedFields[5].toInt();;
 
-                i+=2;
+                if (parsedFields[1] == "hiragana")
+                    fontType_ = SymbolFamilyEnum::hiragana;
+                else if (parsedFields[1] == "katakana")
+                    fontType_ = SymbolFamilyEnum::katakana;
+                else if (parsedFields[1] == "kanji")
+                    fontType_ = SymbolFamilyEnum::kanji;
+                else
+                    continue;
+
+                gridEntries.push_back(new tempVocab(fontType_, jp_, kana_, trad_, learningScore_));
             }
-
-            if (vocabStructEntry->IsSane())
-                gridEntries.push_back(vocabStructEntry);
-            else
-                delete vocabStructEntry;
         }
         vocabFile.close();
     }
@@ -70,15 +65,15 @@ void VocabularyDisplay::InitializeGrid(VocabularyCfgListEntry* vocab)
     {
         QLabel labels[]
         {
-            QLabel(gridEntry->jp.value()),
+            QLabel(gridEntry->jp),
             QLabel(),
-            QLabel(gridEntry->trad.value()),
+            QLabel(gridEntry->trad),
             QLabel(),
         };
 
         for (int i=0; i<4; ++i)
         {
-            ui->vocabGrid->addWidget(&labels[i], curGridLine, i);
+            ui->vocabGrid->addWidget(&labels[i], curGridLine, i); // TODO not working ?
         }
 
         ++curGridLine;

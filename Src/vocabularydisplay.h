@@ -14,13 +14,16 @@ namespace Ui
 
 struct tempVocab // TODO add to some "vocab entry set" => refactor qcm
 {
-    std::optional<SymbolFamilyEnum> fontType;
-    std::optional<QString> jp;
-    std::optional<QString> trad;
-    std::optional<int> learningScore;
+    SymbolFamilyEnum fontType;
+    QString jp;
+    QString kana;
+    QString trad;
+    int learningScore;
 
-    bool IsSane()
-    { return fontType.has_value() && jp.has_value() && trad.has_value() && learningScore.has_value(); }
+    tempVocab() = delete;
+    tempVocab(SymbolFamilyEnum sfe, QString j, QString k, QString t, int ls)
+        : fontType(sfe), jp(j), kana(k), trad(t), learningScore(ls)
+    {}
 };
 
 class VocabularyDisplay : public QWidget
