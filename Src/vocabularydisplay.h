@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QList>
+#include <QLabel>
 #include <optional>
 #include "vocabularycfglistentry.h"
 #include "symbolstables.h"
@@ -19,10 +20,11 @@ struct tempVocab // TODO add to some "vocab entry set" => refactor qcm
     QString kana;
     QString trad;
     int learningScore;
+    QLabel* labels[4];
 
     tempVocab() = delete;
     tempVocab(SymbolFamilyEnum sfe, QString j, QString k, QString t, int ls)
-        : fontType(sfe), jp(j), kana(k), trad(t), learningScore(ls)
+        : fontType(sfe), jp(j), kana(k), trad(t), learningScore(ls), labels()
     {}
 };
 
@@ -41,6 +43,8 @@ private slots:
 private:
     Ui::VocabularyDisplay *ui;
     QList<tempVocab*> gridEntries;
+    QFont curHiraganaNonSized;
+    QFont curKatakanaNonSized;
 };
 
 #endif // VOCABULARYDISPLAY_H

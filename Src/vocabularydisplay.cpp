@@ -1,13 +1,17 @@
 #include "vocabularydisplay.h"
 #include "ui_vocabularydisplay.h"
+#include "Src/fntsetting.h"
 
 #include <QTextStream>
-#include <QLabel>
 
 VocabularyDisplay::VocabularyDisplay(QWidget *parent) :
     QWidget(parent), ui(new Ui::VocabularyDisplay)
 {
     ui->setupUi(this);
+
+    curHiraganaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentHiraganaFamily());
+    curKatakanaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentKatakanaFamily());
+
     GetMy::Instance().SetVocabularyDisplayWidget(this);
 }
 
@@ -45,8 +49,6 @@ void VocabularyDisplay::InitializeGrid(VocabularyCfgListEntry* vocab)
                     fontType_ = SymbolFamilyEnum::hiragana;
                 else if (parsedFields[1] == "katakana")
                     fontType_ = SymbolFamilyEnum::katakana;
-                else if (parsedFields[1] == "kanji")
-                    fontType_ = SymbolFamilyEnum::kanji;
                 else
                     continue;
 
@@ -61,19 +63,22 @@ void VocabularyDisplay::InitializeGrid(VocabularyCfgListEntry* vocab)
 
     // Rest of the grid
     int curGridLine=0;
-    for (tempVocab const*const gridEntry : gridEntries)
+
+    for (tempVocab * gridEntry : gridEntries)
     {
-        QLabel labels[]
-        {
-            QLabel(gridEntry->jp),
-            QLabel(),
-            QLabel(gridEntry->trad),
-            QLabel(),
-        };
+        gridEntry->labels[0] = new QLabel(gridEntry->jp); // TODO data is garbage, check parsing with unicode or whatever
+        gridEntry->labels[0]->setFont
+        ((gridEntry->fontType == SymbolFamilyEnum::hiragana)
+                ? curHiraganaNonSized
+                : curKatakanaNonSized
+        );
+        gridEntry->labels[1] = new QLabel();
+        gridEntry->labels[2] = new QLabel(gridEntry->trad);
+        gridEntry->labels[3] = new QLabel();
 
         for (int i=0; i<4; ++i)
         {
-            ui->vocabGrid->addWidget(&labels[i], curGridLine, i); // TODO not working ?
+            ui->vocabGrid->addWidget((gridEntry->labels[i]), curGridLine, i);
         }
 
         ++curGridLine;
