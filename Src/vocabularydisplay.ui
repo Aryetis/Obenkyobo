@@ -18,21 +18,21 @@
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>0</number>
+    <number>20</number>
    </property>
    <property name="topMargin">
     <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>20</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
     <layout class="QGridLayout" name="vocabGrid">
-     <property name="horizontalSpacing">
-      <number>5</number>
+     <property name="spacing">
+      <number>6</number>
      </property>
     </layout>
    </item>
@@ -45,10 +45,10 @@
       <enum>QLayout::SetMinimumSize</enum>
      </property>
      <property name="leftMargin">
-      <number>20</number>
+      <number>0</number>
      </property>
      <property name="rightMargin">
-      <number>20</number>
+      <number>0</number>
      </property>
      <property name="bottomMargin">
       <number>0</number>

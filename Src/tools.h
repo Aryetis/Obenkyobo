@@ -17,16 +17,10 @@
 #include "Src/GetMy.h"
 #include "Src/screensettings.h"
 
-
-
-#include <QLayout>
-#include <QSizePolicy>
-
-
 class Tools
 {
 public :
-    static Tools & GetInstance()
+    static Tools & GetInstance() // register to GetMy:: ... might as well embrace the jank completly
     {
         static Tools instance;
         return instance;
