@@ -36,6 +36,7 @@ public:
     ~VocabularyDisplay();
 
     void InitializeGrid(VocabularyCfgListEntry* vocab);
+    void CleanGrid();
 
 private slots:
     void on_randomizeButton_clicked();

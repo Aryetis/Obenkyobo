@@ -24,10 +24,10 @@ VocabularyDisplay::~VocabularyDisplay()
     delete ui;
 }
 
-
 void VocabularyDisplay::InitializeGrid(VocabularyCfgListEntry* vocab)
 {
     /************************ Cleaning previous stuff ************************/
+    CleanGrid();
     qDeleteAll(gridEntries);
     gridEntries.clear();
 
@@ -72,14 +72,18 @@ void VocabularyDisplay::InitializeGrid(VocabularyCfgListEntry* vocab)
 
 }
 
-void VocabularyDisplay::PopulateGrid(bool random)
+void VocabularyDisplay::CleanGrid()
 {
-    /*************** Cleaning previous stuff, adding first Row ***************/
     for (tempVocab * gridEntry : gridEntries)
         for (QLabel* label : gridEntry->labels)
             if (label != nullptr)
                 delete label;
+}
 
+void VocabularyDisplay::PopulateGrid(bool random)
+{
+    /*************** Cleaning previous stuff, adding first Row ***************/
+    CleanGrid();
     // TODO first row button stuff (should probably be done in QtDesigner
 
     /*************************** Rest of the grid ***************************/
