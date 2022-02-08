@@ -3,7 +3,7 @@
 #include "Src/fntsetting.h"
 #include "Src/tools.h"
 
-#include <random>
+#include <algorithm>
 #include <QTextStream>
 
 VocabularyDisplay::VocabularyDisplay(QWidget *parent) :
@@ -78,19 +78,23 @@ void VocabularyDisplay::PopulateGrid(bool random)
     for (tempVocab * gridEntry : gridEntries)
         for (QLabel* label : gridEntry->labels)
             if (label != nullptr)
-                ui->vocabGrid->removeWidget(label);
-
-    if (random)
-        std::shuffle( gridEntries.first(), gridEntries.last(), Tools::GetInstance().MT());
+                delete label;
 
     // TODO first row button stuff (should probably be done in QtDesigner
 
-    /************************ Cleaning previous stuff ************************/
-    // Rest of the grid
+    /*************************** Rest of the grid ***************************/
     int curGridLine=0;
+    std::list<int> idxs(gridEntries.count());
+    std::iota(idxs.begin(), idxs.end(), 0);
+    std::vector<std::list<int>::iterator> idxsIt(idxs.size()); // because std::shuffle is STUPID
+    std::iota(idxsIt.begin(), idxsIt.end(), idxs.begin());
+    if (random)
+        std::shuffle(idxsIt.begin(), idxsIt.end(), Tools::GetInstance().MT());
 
-    for (tempVocab * gridEntry : gridEntries)
+    for (auto& gridIdxIt : idxsIt)
     {
+        tempVocab* gridEntry = gridEntries[*gridIdxIt];
+
         gridEntry->labels[0] = new QLabel(gridEntry->kanas);
         gridEntry->labels[0]->setFont
         ((gridEntry->fontType == SymbolFamilyEnum::hiragana) // TODO need to make its size similar to romanji one ?
@@ -110,5 +114,5 @@ void VocabularyDisplay::PopulateGrid(bool random)
 
 void VocabularyDisplay::on_randomizeButton_clicked()
 {
-    PopulateGrid(true); // TODO kaboom button, fix TempVocab
+    PopulateGrid(true);
 }

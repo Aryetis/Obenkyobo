@@ -12,7 +12,6 @@ namespace Ui
     class VocabularyDisplay;
 }
 
-// TODO : must meet the requirements of ValueSwappable and LegacyRandomAccessIterator for std::shuffle
 struct tempVocab // TODO add to some "vocab entry set" => refactor qcm
 {
     SymbolFamilyEnum fontType;
@@ -22,7 +21,7 @@ struct tempVocab // TODO add to some "vocab entry set" => refactor qcm
     int learningScore;
     QLabel* labels[4] = {nullptr};
 
-//    tempVocab() = delete;
+    tempVocab() = delete;
     tempVocab(SymbolFamilyEnum sfe, QString kanas_, QString kanji_, QString t, int ls)
         : fontType(sfe), kanas(kanas_), kanji(kanji_), trad(t), learningScore(ls)
     { }
