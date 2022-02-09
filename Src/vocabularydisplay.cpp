@@ -80,25 +80,19 @@ void VocabularyDisplay::CleanGrid()
                 delete label;
 }
 
-void VocabularyDisplay::PopulateGrid(bool random)
+void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0*/)
 {
     /*************** Cleaning previous stuff, adding first Row ***************/
     CleanGrid();
     // TODO first row button stuff (should probably be done in QtDesigner
 
     /*************************** Rest of the grid ***************************/
-    int curGridLine=0;
-    std::list<int> idxs(gridEntries.count());
-    std::iota(idxs.begin(), idxs.end(), 0);
-    std::vector<std::list<int>::iterator> idxsIt(idxs.size()); // because std::shuffle is STUPID
-    std::iota(idxsIt.begin(), idxsIt.end(), idxs.begin());
     if (random)
-        std::shuffle(idxsIt.begin(), idxsIt.end(), Tools::GetInstance().MT());
+        std::shuffle(gridEntries.begin(), gridEntries.end(), Tools::GetInstance().MT());
 
-    for (auto& gridIdxIt : idxsIt)
+    int curGridLine=0;
+    for (tempVocab* gridEntry : gridEntries)
     {
-        tempVocab* gridEntry = gridEntries[*gridIdxIt];
-
         gridEntry->labels[0] = new QLabel(gridEntry->kanas);
         gridEntry->labels[0]->setFont
         ((gridEntry->fontType == SymbolFamilyEnum::hiragana) // TODO need to make its size similar to romanji one ?

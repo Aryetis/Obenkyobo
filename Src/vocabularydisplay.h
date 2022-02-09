@@ -42,7 +42,7 @@ private slots:
     void on_randomizeButton_clicked();
 
 private:
-    void PopulateGrid(bool random = false);
+    void PopulateGrid(bool random = false, int turnPage = 0);
 
     Ui::VocabularyDisplay *ui;
     QList<tempVocab*> gridEntries;

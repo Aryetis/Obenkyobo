@@ -57,6 +57,7 @@ SOURCES += \
 
 RESOURCES += \
     Resources/HiraganaFonts.qrc \
+    Resources/KanjiFonts.qrc \
     Resources/KatakanaFonts.qrc \
     Resources/RomanjiFonts.qrc \
     Resources/VersatileFonts.qrc \
