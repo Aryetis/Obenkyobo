@@ -50,7 +50,5 @@ void SymbolSetting::InitializeSymbolSetting(SymbolFamilyEnum _symbolFamily)
 void SymbolSetting::OnScroll(int /*value*/)
 {
     if (GetMy::Instance().AppSettingWidget().GetKanaHardRefresh())
-    {
-        ui->scrollArea->repaint(); // TODO : not doing much on kobo glo .... need to check about refresh pattern
-    }
+        repaint();
 }

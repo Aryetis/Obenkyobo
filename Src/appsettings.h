@@ -25,12 +25,15 @@ public:
     int GetNumberOfEntry() const { return (nbrOfEntryLinesIdx+1) * ENTRY_PER_ROW; }
     int GetNumberOfRowPerVocabPage() const;
     bool IsThereEnough(QcmExercice::QcmExerciceType qcmType) const;
-    void InitializeUIValues() const;
     bool IsWeightedRandomEnabled() const;
     int GetBatteryFormatIdx() const { return batteryFormatIdx; }
     int GetDateFormatIdx() const { return dateFormatIdx; } // 0 <=> 13:37, 1 <=> 1:37 pm
     int GetNbrOfRowPerVocabPage() const;
     bool GetKanaHardRefresh() const { return kanaHardRefresh; }
+
+private:
+    void ParseConfigFile();
+    void InitializeUIValues() const;
 
 private slots:
     void on_ResetStatsButton_clicked();
@@ -39,13 +42,9 @@ private slots:
     void on_WifiCheckBox_clicked(bool checked);
     void on_ResetWeightsButton_clicked();
     void on_HardRefreshDropdown_currentIndexChanged(int index);
-
     void on_BatteryIndicatorDropdown_currentIndexChanged(int index);
-
     void on_DateDisplayFormatDropdown_currentIndexChanged(int index);
-
     void on_RowPerPageComboBox_currentIndexChanged(int index);
-
     void on_KanaHardRefreshCheckBox_clicked(bool checked);
 
 private:

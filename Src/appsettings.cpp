@@ -17,6 +17,22 @@ AppSettings::AppSettings(QWidget *parent) :
     ui->KanaHardRefreshCheckBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
                                                      .arg((int)(GetMy::Instance().Descriptor().width*0.08f)));
 
+    ParseConfigFile();
+    InitializeUIValues();
+
+#ifdef QT_NO_DEBUG
+    keepWifiOn = settingsSerializer->value("AppSettings/wifi", 0).toBool();
+#else
+    keepWifiOn = true;
+#endif
+    if (!keepWifiOn)
+        KoboPlatformFunctions::disableWiFiConnection();
+
+    GetMy::Instance().SetAppSettingWidget(this);
+}
+
+void AppSettings::ParseConfigFile()
+{
     settingsSerializer = GetMy::Instance().SettingSerializer();
     nbrOfEntryLinesIdx = settingsSerializer->value("AppSettings/entriesPerLineIdx", 2).toInt();
     randomChoiceIdx = settingsSerializer->value("AppSettings/randomChoiceIdx", 1).toInt();
@@ -25,17 +41,6 @@ AppSettings::AppSettings(QWidget *parent) :
     dateFormatIdx = settingsSerializer->value("AppSettings/dateFormatIdx", (Tools::GetInstance().IsLocalTimeFormatUS()) ? 1 : 0).toInt();
     nbrOfRowPerVocabIdx = settingsSerializer->value("AppSettings/rowPerVocabPage", 1).toInt();
     kanaHardRefresh = settingsSerializer->value("AppSettings/kanaHardRefresh", false).toBool();
-
-#ifdef QT_NO_DEBUG
-    keepWifiOn = settingsSerializer->value("AppSettings/wifi", 0).toBool();
-#else
-    keepWifiOn = true;
-#endif
-
-    if (!keepWifiOn)
-        KoboPlatformFunctions::disableWiFiConnection();
-
-    GetMy::Instance().SetAppSettingWidget(this);
 }
 
 void AppSettings::InitializeUIValues() const
@@ -166,7 +171,7 @@ void AppSettings::on_KanaHardRefreshCheckBox_clicked(bool checked)
 int AppSettings::GetNbrOfRowPerVocabPage() const
 {
     bool parsed;
-    int num = ui->HardRefreshDropdown->currentText().toInt(&parsed);
+    int num = ui->RowPerPageComboBox->currentText().toInt(&parsed);
 
     return (parsed) ? num : -1;
 }
