@@ -29,8 +29,6 @@ public:
     int getBatteryFormatIdx() const { return batteryFormatIdx; }
     int getDateFormatIdx() const { return dateFormatIdx; } // 0 <=> 13:37, 1 <=> 1:37 pm
     int HardRefreshFreq() const;
-protected:
-    void resizeEvent(QResizeEvent* event) override;
 
 private slots:
     void on_ResetStatsButton_clicked();

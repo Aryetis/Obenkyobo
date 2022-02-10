@@ -12,6 +12,11 @@ AppSettings::AppSettings(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->WifiCheckBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
+                                                     .arg((int)(GetMy::Instance().Descriptor().width*0.08f)));
+    ui->KanaHardRefreshCheckBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
+                                                     .arg((int)(GetMy::Instance().Descriptor().width*0.08f)));
+
     settingsSerializer = GetMy::Instance().SettingSerializer();
     nbrOfEntryLinesIdx = settingsSerializer->value("AppSettings/entriesPerLineIdx", 2).toInt();
     randomChoiceIdx = settingsSerializer->value("AppSettings/randomChoiceIdx", 1).toInt();
@@ -29,17 +34,6 @@ AppSettings::AppSettings(QWidget *parent) :
         KoboPlatformFunctions::disableWiFiConnection();
 
     GetMy::Instance().SetAppSettingWidget(this);
-}
-
-
-void AppSettings::resizeEvent(QResizeEvent* event)
-{
-   QWidget::resizeEvent(event);
-
-   ui->WifiCheckBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
-                                                    .arg((int)(GetMy::Instance().Descriptor().width*0.08f)));
-   ui->KanaHardRefreshCheckBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
-                                                    .arg((int)(GetMy::Instance().Descriptor().width*0.08f)));
 }
 
 void AppSettings::InitializeUIValues() const

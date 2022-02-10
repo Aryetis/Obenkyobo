@@ -189,7 +189,7 @@
   </action>
   <action name="actionHiragana_to_Romanji_Kbd">
    <property name="text">
-    <string>Hiragana to Romanji (Kbd)</string>
+    <string>Hiragana to Romanji (Kbd) TODO</string>
    </property>
   </action>
   <action name="actionKatakana_to_Romanji_QCM">
@@ -204,7 +204,7 @@
   </action>
   <action name="actionKatakana_to_Romanji_Kbd">
    <property name="text">
-    <string>Katakana to Romanji (Kbd)</string>
+    <string>Katakana to Romanji (Kbd) TODO</string>
    </property>
   </action>
   <action name="actionHiragana_to_Romanji_QCM">
@@ -239,12 +239,12 @@
   </action>
   <action name="actionKana_To_Romanji_MCQ">
    <property name="text">
-    <string>Kana To Romanji (MCQ)</string>
+    <string>Kana To Romanji (MCQ) TODO</string>
    </property>
   </action>
   <action name="actionRomanji_to_Kanas_MCQ">
    <property name="text">
-    <string>Romanji to Kana (MCQ)</string>
+    <string>Romanji to Kana (MCQ) TODO</string>
    </property>
   </action>
   <action name="actionLearn_Edit_Set">

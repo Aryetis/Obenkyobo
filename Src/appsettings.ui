@@ -541,7 +541,7 @@
        <item>
         <widget class="QLabel" name="WifiLabel">
          <property name="text">
-          <string>Keep Wifi on at startup :</string>
+          <string>Keep Wifi on at startup : (TODO)</string>
          </property>
         </widget>
        </item>
