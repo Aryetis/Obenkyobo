@@ -37,7 +37,9 @@ void AppSettings::resizeEvent(QResizeEvent* event)
    QWidget::resizeEvent(event);
 
    ui->WifiCheckBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
-                                                    .arg(ui->WifiLabel->height()));
+                                                    .arg((int)(GetMy::Instance().Descriptor().width*0.08f)));
+   ui->KanaHardRefreshCheckBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
+                                                    .arg((int)(GetMy::Instance().Descriptor().width*0.08f)));
 }
 
 void AppSettings::InitializeUIValues() const

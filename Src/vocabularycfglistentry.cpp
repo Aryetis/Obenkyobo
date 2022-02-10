@@ -19,7 +19,13 @@ VocabularyCfgListEntry::VocabularyCfgListEntry(QFileInfo fi, QWidget *parent)
 {
     ui->setupUi(this);
 
-    ui->TitleButton->setText(vocabFileInfo.completeBaseName());
+    QString title = vocabFileInfo.completeBaseName();
+    if (title.size() > 20)
+    {
+        title.truncate(20);
+        title.append("...");
+    }
+    ui->TitleButton->setText(title);
     // another dirty hack because koboQT... for some reasons I can't use TitleButton.height to set checkbox's one
     ui->checkBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
                                  .arg(GetMy::Instance().Descriptor().height/20) );
