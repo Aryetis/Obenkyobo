@@ -2,6 +2,7 @@
 #include "ui_vocabularydisplay.h"
 #include "Src/fntsetting.h"
 #include "Src/tools.h"
+#include "Src/appsettings.h"
 
 #include <algorithm>
 #include <QTextStream>
@@ -30,6 +31,8 @@ void VocabularyDisplay::InitializeGrid(VocabularyCfgListEntry* vocab)
     CleanGrid();
     qDeleteAll(gridEntries);
     gridEntries.clear();
+    curPage = 0;
+    maxPage = 0;
 
     /************************ Parsing Vocab File ************************/
     QFile vocabFile(vocab->VocabFileInfo().filePath());
@@ -67,6 +70,8 @@ void VocabularyDisplay::InitializeGrid(VocabularyCfgListEntry* vocab)
         vocabFile.close();
     }
 
+    maxPage = std::ceil(gridEntries.count() / GetMy::Instance().AppSettingWidget().GetNbrOfRowPerVocabPage());
+
     /************************ Popuplating VocabGrid ************************/
     PopulateGrid();
 
@@ -74,10 +79,13 @@ void VocabularyDisplay::InitializeGrid(VocabularyCfgListEntry* vocab)
 
 void VocabularyDisplay::CleanGrid()
 {
-    for (tempVocab * gridEntry : gridEntries)
-        for (QLabel* label : gridEntry->labels)
-            if (label != nullptr)
-                delete label;
+    for (int i=0; i<ui->vocabGrid->rowCount(); ++i)
+        for (int j=0; j<ui->vocabGrid->columnCount();++j)
+        {
+            QLayoutItem* item = ui->vocabGrid->itemAtPosition(i, j);
+            if (item != nullptr)
+                delete item->widget();
+        }
 }
 
 void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0*/)
@@ -88,11 +96,22 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
 
     /*************************** Rest of the grid ***************************/
     if (random)
+    {
         std::shuffle(gridEntries.begin(), gridEntries.end(), Tools::GetInstance().MT());
+        curPage = 0;
+    }
 
     int curGridLine=0;
-    for (tempVocab* gridEntry : gridEntries)
+    int nbrOfRow = GetMy::Instance().AppSettingWidget().GetNbrOfRowPerVocabPage();
+    if (curPage+turnPage >= 0 && curPage+turnPage < maxPage)
+        curPage += turnPage;
+    ui->previousPageButton->setCheckable(curPage != 0);
+    ui->nextPageButton->setCheckable(curPage != maxPage);
+
+    for (int i = nbrOfRow*curPage; i < gridEntries.count() && i < nbrOfRow*(curPage+1); ++i)
     {
+        tempVocab* gridEntry = gridEntries[i];
+
         gridEntry->labels[0] = new QLabel(gridEntry->kanas);
         gridEntry->labels[0]->setFont
         ((gridEntry->fontType == SymbolFamilyEnum::hiragana) // TODO need to make its size similar to romanji one ?
@@ -113,4 +132,14 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
 void VocabularyDisplay::on_randomizeButton_clicked()
 {
     PopulateGrid(true);
+}
+
+void VocabularyDisplay::on_nextPageButton_clicked()
+{
+    PopulateGrid(false, 1);
+}
+
+void VocabularyDisplay::on_previousPageButton_clicked()
+{
+    PopulateGrid(false, -1);
 }

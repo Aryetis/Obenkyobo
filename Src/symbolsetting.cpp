@@ -3,6 +3,8 @@
 #include "Src/GetMy.h"
 #include "Src/symbolsettingsection.h"
 #include "Src/symbolstables.h"
+#include "Src/appsettings.h"
+#include <QScrollBar>
 
 SymbolSetting::SymbolSetting(QWidget *parent) :
     QWidget(parent),
@@ -12,6 +14,8 @@ SymbolSetting::SymbolSetting(QWidget *parent) :
 
     SymbolsTables::HiraganaSymbolsTableFamily.InitializeSerializedVals();
     SymbolsTables::KatakanaSymbolsTableFamily.InitializeSerializedVals();
+
+    connect( ui->scrollArea->verticalScrollBar(), &QScrollBar::valueChanged, this, &SymbolSetting::OnScroll);
 
     GetMy::Instance().SetSymbolSettingWidget(this);
 }
@@ -41,4 +45,12 @@ void SymbolSetting::InitializeSymbolSetting(SymbolFamilyEnum _symbolFamily)
     }
 
     ui->scrollArea->setFocus(); // force focus on scrollbar so it handles physical buttons
+}
+
+void SymbolSetting::OnScroll(int /*value*/)
+{
+    if (GetMy::Instance().AppSettingWidget().GetKanaHardRefresh())
+    {
+        ui->scrollArea->repaint(); // TODO : not doing much on kobo glo .... need to check about refresh pattern
+    }
 }

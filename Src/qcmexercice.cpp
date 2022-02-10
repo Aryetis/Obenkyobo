@@ -155,7 +155,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     ui->ErrorsCounter->setNum(errorCounter);
 
     //************************ Hard Refresh ************************
-    int HardRefreshFreq = GetMy::Instance().AppSettingWidget().HardRefreshFreq();
+    int HardRefreshFreq = GetMy::Instance().AppSettingWidget().GetNbrOfRowPerVocabPage();
     if (HardRefreshFreq > 0 && ++refreshCounter >= HardRefreshFreq)
     {
         refreshCounter = 0;

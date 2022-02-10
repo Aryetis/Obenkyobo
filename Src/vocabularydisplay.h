@@ -40,6 +40,8 @@ public:
 
 private slots:
     void on_randomizeButton_clicked();
+    void on_nextPageButton_clicked();
+    void on_previousPageButton_clicked();
 
 private:
     void PopulateGrid(bool random = false, int turnPage = 0);
@@ -48,6 +50,9 @@ private:
     QList<tempVocab*> gridEntries;
     QFont curHiraganaNonSized;
     QFont curKatakanaNonSized;
+
+    int curPage;
+    int maxPage;
 };
 
 #endif // VOCABULARYDISPLAY_H

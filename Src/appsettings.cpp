@@ -23,6 +23,8 @@ AppSettings::AppSettings(QWidget *parent) :
     hardRefreshFreqIdx = settingsSerializer->value("AppSettings/hardRefreshFreqIdx", 3).toInt();
     batteryFormatIdx = settingsSerializer->value("AppSettings/batteryFormatIdx", 0).toInt();
     dateFormatIdx = settingsSerializer->value("AppSettings/dateFormatIdx", (Tools::GetInstance().IsLocalTimeFormatUS()) ? 1 : 0).toInt();
+    nbrOfRowPerVocabIdx = settingsSerializer->value("AppSettings/rowPerVocabPage", 1).toInt();
+    kanaHardRefresh = settingsSerializer->value("AppSettings/kanaHardRefresh", false).toBool();
 
 #ifdef QT_NO_DEBUG
     keepWifiOn = settingsSerializer->value("AppSettings/wifi", 0).toBool();
@@ -49,6 +51,9 @@ void AppSettings::InitializeUIValues() const
     ui->HardRefreshDropdown->setCurrentIndex(hardRefreshFreqIdx);
     ui->BatteryIndicatorDropdown->setCurrentIndex(batteryFormatIdx);
     ui->DateDisplayFormatDropdown->setCurrentIndex(dateFormatIdx);
+
+    ui->RowPerPageComboBox->setCurrentIndex(nbrOfRowPerVocabIdx);
+    ui->KanaHardRefreshCheckBox->setChecked(kanaHardRefresh);
 }
 
 AppSettings::~AppSettings()
@@ -146,11 +151,30 @@ void AppSettings::on_DateDisplayFormatDropdown_currentIndexChanged(int index)
     GetMy::Instance().MainWindowWidget().UpdateStatusBarGeometry();
 }
 
+void AppSettings::on_RowPerPageComboBox_currentIndexChanged(int index)
+{
+    nbrOfRowPerVocabIdx = index;
+    settingsSerializer->setValue("AppSettings/rowPerVocabPage", index);
+}
 
-int AppSettings::HardRefreshFreq() const
+void AppSettings::on_KanaHardRefreshCheckBox_clicked(bool checked)
+{
+    kanaHardRefresh = checked;
+    settingsSerializer->setValue("AppSettings/kanaHardRefresh", checked);
+}
+
+int AppSettings::GetNbrOfRowPerVocabPage() const
 {
     bool parsed;
     int num = ui->HardRefreshDropdown->currentText().toInt(&parsed);
+
+    return (parsed) ? num : -1;
+}
+
+int AppSettings::GetNumberOfRowPerVocabPage() const
+{
+    bool parsed;
+    int num = ui->RowPerPageComboBox->currentText().toInt(&parsed);
 
     return (parsed) ? num : -1;
 }

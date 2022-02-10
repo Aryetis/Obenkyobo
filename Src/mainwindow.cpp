@@ -82,7 +82,7 @@ void MainWindow::refreshTimeAndBattery()
 
     // Handle Time
     QTime time = QTime::currentTime();
-    QString text = time.toString((GetMy::Instance().AppSettingWidget().getDateFormatIdx() == 0) ? "hh:mm" : "hh:mm a" );
+    QString text = time.toString((GetMy::Instance().AppSettingWidget().GetDateFormatIdx() == 0) ? "hh:mm" : "hh:mm a" );
     if (text.compare(timeDisplay->text()) != 0)
     {
         timeDisplay->setText(text);
@@ -90,7 +90,7 @@ void MainWindow::refreshTimeAndBattery()
     }
 
     // Handle Battery
-    int batteryDisplayFormat = GetMy::Instance().AppSettingWidget().getBatteryFormatIdx();
+    int batteryDisplayFormat = GetMy::Instance().AppSettingWidget().GetBatteryFormatIdx();
     bool isBatteryIconVisible = (batteryDisplayFormat == 0 || batteryDisplayFormat == 1) ? true : false;
     bool isBatteryTextVisible = (batteryDisplayFormat == 0 || batteryDisplayFormat == 2) ? true : false;
     bool isBatteryCharging = KoboPlatformFunctions::isBatteryCharging();

@@ -24,6 +24,8 @@ private:
     Ui::SymbolSetting *ui;
     SymbolFamilyEnum symbolFamily;
 
+    void OnScroll(int value);
+
     QList<SymbolSettingSection*> symbolsTableSections;
 };
 

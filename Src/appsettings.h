@@ -23,12 +23,14 @@ public:
     int GetNumberOfEntryLine() const { return nbrOfEntryLinesIdx+1; }
     int GetNumberOfEntryRow() const { return ENTRY_PER_ROW; }
     int GetNumberOfEntry() const { return (nbrOfEntryLinesIdx+1) * ENTRY_PER_ROW; }
+    int GetNumberOfRowPerVocabPage() const;
     bool IsThereEnough(QcmExercice::QcmExerciceType qcmType) const;
     void InitializeUIValues() const;
     bool IsWeightedRandomEnabled() const;
-    int getBatteryFormatIdx() const { return batteryFormatIdx; }
-    int getDateFormatIdx() const { return dateFormatIdx; } // 0 <=> 13:37, 1 <=> 1:37 pm
-    int HardRefreshFreq() const;
+    int GetBatteryFormatIdx() const { return batteryFormatIdx; }
+    int GetDateFormatIdx() const { return dateFormatIdx; } // 0 <=> 13:37, 1 <=> 1:37 pm
+    int GetNbrOfRowPerVocabPage() const;
+    bool GetKanaHardRefresh() const { return kanaHardRefresh; }
 
 private slots:
     void on_ResetStatsButton_clicked();
@@ -42,6 +44,10 @@ private slots:
 
     void on_DateDisplayFormatDropdown_currentIndexChanged(int index);
 
+    void on_RowPerPageComboBox_currentIndexChanged(int index);
+
+    void on_KanaHardRefreshCheckBox_clicked(bool checked);
+
 private:
     Ui::AppSettings *ui;
     int nbrOfEntryLinesIdx;
@@ -50,6 +56,8 @@ private:
     int hardRefreshFreqIdx;
     int batteryFormatIdx;
     int dateFormatIdx;
+    int nbrOfRowPerVocabIdx;
+    bool kanaHardRefresh;
 
     QSettings* settingsSerializer;
 };
