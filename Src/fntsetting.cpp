@@ -50,7 +50,7 @@ void FntSetting::RegisterFntsFromResources()
         RegisterRomanjiFont(fntAddress);
     }
 
-    it.reset(new QDirIterator(":/VersatileFonts", {".ttf"}, QDir::Files)); // TODO sanity check, why can't i see my kanji fonts
+    it.reset (new QDirIterator(":/KanjiFonts",  {"*.otf"}, QDir::Files));
     while (it->hasNext())
         RegisterKanjiFont(it->next());
 

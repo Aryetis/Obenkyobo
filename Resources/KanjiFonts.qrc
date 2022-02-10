@@ -2,6 +2,5 @@
     <qresource prefix="/">
         <file>KanjiFonts/NotoSansJP-Regular.otf</file>
         <file>KanjiFonts/NotoSerifJP-Regular.otf</file>
-        <file>KanjiFonts/PJ_Hiragana.ttf</file>
     </qresource>
 </RCC>

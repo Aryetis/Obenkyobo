@@ -43,6 +43,7 @@ void VocabularyDisplay::InitializeGrid(VocabularyCfgListEntry* vocab)
     if (vocabFile.open(QIODevice::ReadOnly))
     {
         QTextStream in(&vocabFile);
+        in.setCodec("UTF-8");
         while (!in.atEnd())
         {
             QString line = in.readLine();
@@ -96,7 +97,6 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
 {
     /*************** Cleaning previous stuff, adding first Row ***************/
     CleanGrid();
-    // TODO first row button stuff (should probably be done in QtDesigner
 
     /*************************** Rest of the grid ***************************/
     if (random)
@@ -121,13 +121,15 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
     {
         tempVocab* gridEntry = gridEntries[i];
 
+        // TODO align romanji font to kanas and kanji one ?
         gridEntry->labels[0] = new QLabel(gridEntry->kanas);
         gridEntry->labels[0]->setFont
-        ((gridEntry->fontType == SymbolFamilyEnum::hiragana) // TODO need to make its size similar to romanji one ?
+        ((gridEntry->fontType == SymbolFamilyEnum::hiragana)
                 ? curHiraganaNonSized
                 : curKatakanaNonSized
         );
-        gridEntry->labels[1] = new QLabel(gridEntry->kanji); // TODO need a proper kanji font or test the default one (with/without jp dict installed)
+        gridEntry->labels[1] = new QLabel(gridEntry->kanji);
+        gridEntry->labels[1]->setFont(GetMy::Instance().FntSettingWidget().GetCurrentKanjiFnt());
         gridEntry->labels[2] = new QLabel(gridEntry->trad);
         gridEntry->labels[3] = new QLabel(QString::number(gridEntry->learningScore));
         gridEntry->labels[3]->setAlignment(Qt::AlignRight);
