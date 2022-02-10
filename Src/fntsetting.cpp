@@ -50,19 +50,27 @@ void FntSetting::RegisterFntsFromResources()
         RegisterRomanjiFont(fntAddress);
     }
 
+    it.reset(new QDirIterator(":/VersatileFonts", {".ttf"}, QDir::Files)); // TODO sanity check, why can't i see my kanji fonts
+    while (it->hasNext())
+        RegisterKanjiFont(it->next());
+
     for (QFont fnt : hiraganaFonts)
         ui->HiraganaFntDropdown->addItem(fnt.family());
     for (QFont fnt : katakanaFonts)
         ui->KatakanaFntDropdown->addItem(fnt.family());
     for (QFont fnt : romanjiFonts)
         ui->RomanjiFntDropdown->addItem(fnt.family());
+    for (QFont fnt : kanjiFonts)
+        ui->KanjiFntDropdown->addItem(fnt.family());
 
     currentHiraganFntIdx = settingsSerializer->value("FntSettings/HiraganaFntIdx", 0).toInt();
     currentKatakanaFntIdx = settingsSerializer->value("FntSettings/KatakanaFntIdx", 0).toInt();
     currentRomanjiFntIdx = settingsSerializer->value("FntSettings/RomanjiFntIdx", 0).toInt();
+    currentKanjiFontIdx = settingsSerializer->value("FntSettings/KanjiFntIdx", 0).toInt();
     ui->HiraganaFntDropdown->setCurrentIndex(currentHiraganFntIdx);
     ui->KatakanaFntDropdown->setCurrentIndex(currentKatakanaFntIdx);
     ui->RomanjiFntDropdown->setCurrentIndex(currentRomanjiFntIdx);
+    ui->KanjiFntDropdown->setCurrentIndex(currentKanjiFontIdx);
 
     currentHiraganaSize =  settingsSerializer->value("FntSettings/HiraganaFntSize", DEFAULT_HIRAGANA_FNT_SIZE).toInt();
     currentKatakanaSize =  settingsSerializer->value("FntSettings/KatakanaFntSize", DEFAULT_KATAKANA_FNT_SIZE).toInt();
@@ -93,6 +101,11 @@ void FntSetting::RegisterRomanjiFont(QString fntAddress)
     romanjiFonts.emplace_back(GetFont(fntAddress, fntTypeEnum::romanji));
 }
 
+void FntSetting::RegisterKanjiFont(QString fntAddress)
+{
+    kanjiFonts.emplace_back(GetFont(fntAddress, fntTypeEnum::kanji));
+}
+
 QFont FntSetting::GetFont(QString fntAddress, fntTypeEnum type)
 {
     int id = QFontDatabase::addApplicationFont(fntAddress);
@@ -105,6 +118,8 @@ QFont FntSetting::GetFont(QString fntAddress, fntTypeEnum type)
             return QFont(name, DEFAULT_KATAKANA_FNT_SIZE);
         case fntTypeEnum::romanji :
             return QFont(name, DEFAULT_ROMANJI_FNT_SIZE);
+        case fntTypeEnum::kanji :
+            return QFont(name);
     }
 
     assert(false);
@@ -167,4 +182,12 @@ void FntSetting::on_BoostStemSlider_valueChanged(int size)
     stemBoostSize = size;
     ui->BoostStemValueLabel->setText(QString::number(size));
     settingsSerializer->setValue("FntSettings/stemBoostSize", size);
+}
+
+void FntSetting::on_KanjiFntDropdown_currentIndexChanged(int index)
+{
+    currentKanjiFontIdx = index;
+    settingsSerializer->setValue("FntSettings/KanjiFntIdx", index);
+    romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentKanjiFontIdx)].setFamily(
+                ui->RomanjiFntDropdown->itemText(currentKanjiFontIdx));
 }

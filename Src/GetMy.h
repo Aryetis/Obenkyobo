@@ -48,6 +48,11 @@ public:
     QSettings* SettingSerializer() { return settingSerializerInstance; }
 
     const KoboDeviceDescriptor& Descriptor() { return desc; }
+    void ClearScreen() const
+    {
+        KoboPlatformFunctions::setFullScreenRefreshMode(WaveForm::WaveForm_GC16); // overkill
+        KoboPlatformFunctions::clearScreen(true);
+    }
 
 private :
     GetMy() = default;

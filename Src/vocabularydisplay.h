@@ -42,6 +42,10 @@ private slots:
     void on_randomizeButton_clicked();
     void on_nextPageButton_clicked();
     void on_previousPageButton_clicked();
+    void on_KanasHidePushButton_clicked();
+    void on_KanjiHidePushButton_clicked();
+    void on_TraductionHidePushButton_clicked();
+    void on_LSHidePushButton_clicked();
 
 private:
     void PopulateGrid(bool random = false, int turnPage = 0);
@@ -53,6 +57,11 @@ private:
 
     int curPage;
     int maxPage;
+    bool kanasShow;
+    bool kanjiShow;
+    bool traductionShow;
+    bool lsShow;
+
 };
 
 #endif // VOCABULARYDISPLAY_H

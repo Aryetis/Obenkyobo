@@ -50,5 +50,9 @@ void SymbolSetting::InitializeSymbolSetting(SymbolFamilyEnum _symbolFamily)
 void SymbolSetting::OnScroll(int /*value*/)
 {
     if (GetMy::Instance().AppSettingWidget().GetKanaHardRefresh())
-        repaint();
+    {
+        // TODO fix it ???
+//        GetMy::Instance().ClearScreen();
+//        repaint();
+    }
 }

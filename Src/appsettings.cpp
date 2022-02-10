@@ -166,6 +166,9 @@ void AppSettings::on_KanaHardRefreshCheckBox_clicked(bool checked)
 {
     kanaHardRefresh = checked;
     settingsSerializer->setValue("AppSettings/kanaHardRefresh", checked);
+
+    // TODO fix it ??? sanity check
+    GetMy::Instance().ClearScreen();
 }
 
 int AppSettings::GetNbrOfRowPerVocabPage() const

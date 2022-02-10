@@ -33,6 +33,10 @@ void VocabularyDisplay::InitializeGrid(VocabularyCfgListEntry* vocab)
     gridEntries.clear();
     curPage = 0;
     maxPage = 0;
+    kanasShow = true;
+    kanjiShow = true;
+    traductionShow = true;
+    lsShow = true;
 
     /************************ Parsing Vocab File ************************/
     QFile vocabFile(vocab->VocabFileInfo().filePath());
@@ -108,6 +112,11 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
     ui->previousPageButton->setCheckable(curPage != 0);
     ui->nextPageButton->setCheckable(curPage != maxPage);
 
+    ui->vocabGrid->setColumnStretch(0, 40);
+    ui->vocabGrid->setColumnStretch(1, 15);
+    ui->vocabGrid->setColumnStretch(2, 40);
+    ui->vocabGrid->setColumnStretch(3, 5);
+
     for (int i = nbrOfRow*curPage; i < gridEntries.count() && i < nbrOfRow*(curPage+1); ++i)
     {
         tempVocab* gridEntry = gridEntries[i];
@@ -121,9 +130,10 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
         gridEntry->labels[1] = new QLabel(gridEntry->kanji); // TODO need a proper kanji font or test the default one (with/without jp dict installed)
         gridEntry->labels[2] = new QLabel(gridEntry->trad);
         gridEntry->labels[3] = new QLabel(QString::number(gridEntry->learningScore));
+        gridEntry->labels[3]->setAlignment(Qt::AlignRight);
 
         for (int i=0; i<4; ++i)
-            ui->vocabGrid->addWidget((gridEntry->labels[i]), curGridLine, i);
+            ui->vocabGrid->addWidget((gridEntry->labels[i]), curGridLine, i, Qt::AlignLeft );
 
         ++curGridLine;
     }
@@ -142,4 +152,68 @@ void VocabularyDisplay::on_nextPageButton_clicked()
 void VocabularyDisplay::on_previousPageButton_clicked()
 {
     PopulateGrid(false, -1);
+}
+
+void VocabularyDisplay::on_KanasHidePushButton_clicked()
+{
+    kanasShow = !kanasShow;
+    for (int i=0; i<ui->vocabGrid->rowCount(); ++i)
+    {
+        QLayoutItem* item = ui->vocabGrid->itemAtPosition(i, 0);
+        if (item != nullptr)
+        {
+            if (kanasShow)
+                item->widget()->show();
+            else
+                item->widget()->hide();
+        }
+    }
+}
+
+void VocabularyDisplay::on_KanjiHidePushButton_clicked()
+{
+    kanjiShow = !kanjiShow;
+    for (int i=0; i<ui->vocabGrid->rowCount(); ++i)
+    {
+        QLayoutItem* item = ui->vocabGrid->itemAtPosition(i, 1);
+        if (item != nullptr)
+        {
+            if (kanjiShow)
+                item->widget()->show();
+            else
+                item->widget()->hide();
+        }
+    }
+}
+
+void VocabularyDisplay::on_TraductionHidePushButton_clicked()
+{
+    traductionShow = !traductionShow;
+    for (int i=0; i<ui->vocabGrid->rowCount(); ++i)
+    {
+        QLayoutItem* item = ui->vocabGrid->itemAtPosition(i, 2);
+        if (item != nullptr)
+        {
+            if (traductionShow)
+                item->widget()->show();
+            else
+                item->widget()->hide();
+        }
+    }
+}
+
+void VocabularyDisplay::on_LSHidePushButton_clicked()
+{
+    lsShow = !lsShow;
+    for (int i=0; i<ui->vocabGrid->rowCount(); ++i)
+    {
+        QLayoutItem* item = ui->vocabGrid->itemAtPosition(i, 3);
+        if (item != nullptr)
+        {
+            if (lsShow)
+                item->widget()->show();
+            else
+                item->widget()->hide();
+        }
+    }
 }

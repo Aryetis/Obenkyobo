@@ -21,10 +21,12 @@ public:
     QFont const& GetCurrentHiraganaFnt() { return hiraganaFonts[static_cast<std::vector<QFont>::size_type>(currentHiraganFntIdx)]; }
     QFont const& GetCurrentKatakanaFnt() { return katakanaFonts[static_cast<std::vector<QFont>::size_type>(currentKatakanaFntIdx)]; }
     QFont const& GetCurrentRomanjiFnt() { return romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentRomanjiFntIdx)]; }
+    QFont const& GetCurrentKanjiFnt() { return kanjiFonts[static_cast<std::vector<QFont>::size_type>(currentKanjiFontIdx)]; }
 
     QString GetCurrentHiraganaFamily() { return hiraganaFonts[static_cast<std::vector<QFont>::size_type>(currentHiraganFntIdx)].family(); }
     QString GetCurrentKatakanaFamily() { return katakanaFonts[static_cast<std::vector<QFont>::size_type>(currentKatakanaFntIdx)].family(); }
     QString GetCurrentRomanjiFamily() { return romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentRomanjiFntIdx)].family(); }
+    QString GetCurrentKanjiFamily() { return kanjiFonts[static_cast<std::vector<QFont>::size_type>(currentKanjiFontIdx)].family(); }
 
     int GetCurrentHiraganaSize() { return currentHiraganaSize; }
     int GetCurrentKatakanaSize() { return currentKatakanaSize; }
@@ -43,12 +45,15 @@ private slots:
 
     void on_BoostStemSlider_valueChanged(int size);
 
+    void on_KanjiFntDropdown_currentIndexChanged(int index);
+
 private:
     enum fntTypeEnum
     {
         hiragana,
         katakana,
-        romanji
+        romanji,
+        kanji
     };
     Ui::FntSetting *ui;
 
@@ -57,15 +62,18 @@ private:
     void RegisterHiraganaFont(QString fntAddress);
     void RegisterKatakanaFont(QString fntAddress);
     void RegisterRomanjiFont(QString fntAddress);
+    void RegisterKanjiFont(QString fntAddress);
 
     QFont GetFont(QString fntAddress, fntTypeEnum type);
 
     std::vector<QFont> hiraganaFonts{};
     std::vector<QFont> katakanaFonts{};
     std::vector<QFont> romanjiFonts{};
+    std::vector<QFont> kanjiFonts{};
     int currentHiraganFntIdx;
     int currentKatakanaFntIdx;
     int currentRomanjiFntIdx;
+    int currentKanjiFontIdx;
     int currentHiraganaSize;
     int currentKatakanaSize;
     int currentRomanjiSize;
