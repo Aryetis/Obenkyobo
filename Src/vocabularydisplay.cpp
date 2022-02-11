@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <QTextStream>
+#include <QSizePolicy>
 
 VocabularyDisplay::VocabularyDisplay(QWidget *parent) :
     QWidget(parent), ui(new Ui::VocabularyDisplay)
@@ -134,8 +135,11 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
         gridEntry->labels[2] = new QLabel(gridEntry->trad);
         gridEntry->labels[3] = new QLabel(QString::number(gridEntry->learningScore));
 
-        for (int i=0; i<4; ++i)
-            ui->vocabGrid->addWidget((gridEntry->labels[i]), curGridLine, i, Qt::AlignLeft );
+        for (int j=0; j<4; ++j)
+        {
+            ui->vocabGrid->addWidget((gridEntry->labels[j]), curGridLine, j, Qt::AlignLeft );
+            ui->vocabGrid->itemAtPosition(i,j)->widget()->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
+        }
 
         ++curGridLine;
     }
