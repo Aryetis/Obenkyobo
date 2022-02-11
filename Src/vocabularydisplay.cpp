@@ -15,6 +15,11 @@ VocabularyDisplay::VocabularyDisplay(QWidget *parent) :
     curHiraganaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentHiraganaFamily());
     curKatakanaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentKatakanaFamily());
 
+    ui->vocabGrid->setColumnStretch(0, 40);
+    ui->vocabGrid->setColumnStretch(1, 15);
+    ui->vocabGrid->setColumnStretch(2, 40);
+    ui->vocabGrid->setColumnStretch(3, 5);
+
     GetMy::Instance().SetVocabularyDisplayWidget(this);
 }
 
@@ -95,16 +100,17 @@ void VocabularyDisplay::CleanGrid()
 
 void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0*/)
 {
-    /*************** Cleaning previous stuff, adding first Row ***************/
+    // Cleaning previous stuff
     CleanGrid();
 
-    /*************************** Rest of the grid ***************************/
+    // Randomize
     if (random)
     {
         std::shuffle(gridEntries.begin(), gridEntries.end(), Tools::GetInstance().MT());
         curPage = 0;
     }
 
+    // Pages stuff
     int curGridLine=0;
     int nbrOfRow = GetMy::Instance().AppSettingWidget().GetNbrOfRowPerVocabPage();
     if (curPage+turnPage >= 0 && curPage+turnPage < maxPage)
@@ -112,16 +118,12 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
     ui->previousPageButton->setCheckable(curPage != 0);
     ui->nextPageButton->setCheckable(curPage != maxPage);
 
-    ui->vocabGrid->setColumnStretch(0, 40);
-    ui->vocabGrid->setColumnStretch(1, 15);
-    ui->vocabGrid->setColumnStretch(2, 40);
-    ui->vocabGrid->setColumnStretch(3, 5);
-
+    // Populating the grid
     for (int i = nbrOfRow*curPage; i < gridEntries.count() && i < nbrOfRow*(curPage+1); ++i)
     {
         tempVocab* gridEntry = gridEntries[i];
 
-        // TODO align romanji font to kanas and kanji one ?
+        // TODO : align romanji font to kanas and kanji one ?
         gridEntry->labels[0] = new QLabel(gridEntry->kanas);
         gridEntry->labels[0]->setFont
         ((gridEntry->fontType == SymbolFamilyEnum::hiragana)
@@ -139,6 +141,12 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
 
         ++curGridLine;
     }
+
+    // Apply show status to columns
+    HideColumn(0, kanasShow);
+    HideColumn(1, kanjiShow);
+    HideColumn(2, traductionShow);
+    HideColumn(3, lsShow);
 }
 
 void VocabularyDisplay::on_randomizeButton_clicked()
@@ -159,44 +167,35 @@ void VocabularyDisplay::on_previousPageButton_clicked()
 void VocabularyDisplay::on_KanasHidePushButton_clicked()
 {
     kanasShow = !kanasShow;
-    for (int i=0; i<ui->vocabGrid->rowCount(); ++i)
-    {
-        QLayoutItem* item = ui->vocabGrid->itemAtPosition(i, 0);
-        if (item != nullptr)
-        {
-            if (kanasShow)
-                item->widget()->show();
-            else
-                item->widget()->hide();
-        }
-    }
+    HideColumn(0, kanasShow);
 }
 
 void VocabularyDisplay::on_KanjiHidePushButton_clicked()
 {
     kanjiShow = !kanjiShow;
-    for (int i=0; i<ui->vocabGrid->rowCount(); ++i)
-    {
-        QLayoutItem* item = ui->vocabGrid->itemAtPosition(i, 1);
-        if (item != nullptr)
-        {
-            if (kanjiShow)
-                item->widget()->show();
-            else
-                item->widget()->hide();
-        }
-    }
+    HideColumn(1, kanjiShow);
 }
 
 void VocabularyDisplay::on_TraductionHidePushButton_clicked()
 {
     traductionShow = !traductionShow;
+    HideColumn(2, traductionShow);
+}
+
+void VocabularyDisplay::on_LSHidePushButton_clicked()
+{
+    lsShow = !lsShow;
+    HideColumn(3, lsShow);
+}
+
+void VocabularyDisplay::HideColumn(int col, bool b)
+{
     for (int i=0; i<ui->vocabGrid->rowCount(); ++i)
     {
-        QLayoutItem* item = ui->vocabGrid->itemAtPosition(i, 2);
+        QLayoutItem* item = ui->vocabGrid->itemAtPosition(i, col);
         if (item != nullptr)
         {
-            if (traductionShow)
+            if (b)
                 item->widget()->show();
             else
                 item->widget()->hide();
@@ -204,18 +203,5 @@ void VocabularyDisplay::on_TraductionHidePushButton_clicked()
     }
 }
 
-void VocabularyDisplay::on_LSHidePushButton_clicked()
-{
-    lsShow = !lsShow;
-    for (int i=0; i<ui->vocabGrid->rowCount(); ++i)
-    {
-        QLayoutItem* item = ui->vocabGrid->itemAtPosition(i, 3);
-        if (item != nullptr)
-        {
-            if (lsShow)
-                item->widget()->show();
-            else
-                item->widget()->hide();
-        }
-    }
-}
+
+

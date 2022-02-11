@@ -49,6 +49,7 @@ private slots:
 
 private:
     void PopulateGrid(bool random = false, int turnPage = 0);
+    void HideColumn(int col, bool b);
 
     Ui::VocabularyDisplay *ui;
     QList<tempVocab*> gridEntries;
