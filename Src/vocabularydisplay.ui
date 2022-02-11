@@ -35,12 +35,12 @@
       <number>0</number>
      </property>
      <property name="sizeConstraint">
-      <enum>QLayout::SetDefaultConstraint</enum>
+      <enum>QLayout::SetFixedSize</enum>
      </property>
      <item>
       <widget class="QPushButton" name="KanasHidePushButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -53,7 +53,7 @@
      <item>
       <widget class="QPushButton" name="KanjiHidePushButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -66,7 +66,7 @@
      <item>
       <widget class="QPushButton" name="TraductionHidePushButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -79,7 +79,7 @@
      <item>
       <widget class="QPushButton" name="LSHidePushButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>

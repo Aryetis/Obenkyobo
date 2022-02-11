@@ -133,7 +133,6 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
         gridEntry->labels[1]->setFont(GetMy::Instance().FntSettingWidget().GetCurrentKanjiFnt());
         gridEntry->labels[2] = new QLabel(gridEntry->trad);
         gridEntry->labels[3] = new QLabel(QString::number(gridEntry->learningScore));
-        gridEntry->labels[3]->setAlignment(Qt::AlignRight);
 
         for (int i=0; i<4; ++i)
             ui->vocabGrid->addWidget((gridEntry->labels[i]), curGridLine, i, Qt::AlignLeft );
@@ -166,24 +165,28 @@ void VocabularyDisplay::on_previousPageButton_clicked()
 void VocabularyDisplay::on_KanasHidePushButton_clicked()
 {
     kanasShow = !kanasShow;
+    ui->KanasHidePushButton->setCheckable(kanasShow);
     HideColumn(0, kanasShow);
 }
 
 void VocabularyDisplay::on_KanjiHidePushButton_clicked()
 {
     kanjiShow = !kanjiShow;
+    ui->KanjiHidePushButton->setCheckable(kanjiShow);
     HideColumn(1, kanjiShow);
 }
 
 void VocabularyDisplay::on_TraductionHidePushButton_clicked()
 {
     traductionShow = !traductionShow;
+    ui->TraductionHidePushButton->setCheckable(traductionShow);
     HideColumn(2, traductionShow);
 }
 
 void VocabularyDisplay::on_LSHidePushButton_clicked()
 {
     lsShow = !lsShow;
+    ui->LSHidePushButton->setCheckable(lsShow);
     HideColumn(3, lsShow);
 }
 
