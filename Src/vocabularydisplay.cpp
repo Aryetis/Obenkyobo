@@ -80,11 +80,12 @@ void VocabularyDisplay::InitializeGrid(VocabularyCfgListEntry* vocab)
         vocabFile.close();
     }
 
-    maxPage = std::ceil(gridEntries.count() / GetMy::Instance().AppSettingWidget().GetNbrOfRowPerVocabPage());
+int tonpere = gridEntries.count();
+int tamere = GetMy::Instance().AppSettingWidget().GetNbrOfRowPerVocabPage();
+    maxPage = std::ceil(static_cast<float>(gridEntries.count()) / GetMy::Instance().AppSettingWidget().GetNbrOfRowPerVocabPage());
 
     /************************ Popuplating VocabGrid ************************/
     PopulateGrid();
-
 }
 
 void VocabularyDisplay::CleanGrid()
