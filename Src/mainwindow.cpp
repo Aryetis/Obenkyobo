@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
             "QMenuBar::item#statusBar { background : transparent; }"
 
             "QMenu::separator { height : 2px ; background : darkgray }"
-                ).arg(onePercentHeightPx*2).arg(onePercentHeightPx).arg(onePercentHeightPx/2)
+                ).arg(onePercentHeightPx*2).arg(onePercentHeightPx*2).arg(onePercentHeightPx)
     );
 
     // Handle time and battery
