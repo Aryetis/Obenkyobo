@@ -94,11 +94,11 @@ void MainWindow::DisplayFirstTimeKanasEditPagePopup()
 {
     if ( GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->value("AppSettings/firstTimeKanasEditPage", true).toBool() )
     {
-        Tools::GetInstance().DisplayPopup("Here you can add/remove kanas to the related MCQ's guesses\n"
-                                          "The background color and circle gyzmo indicate their status\n"
-                                          "The number at the bottom right corner indicate its Learning Score (LS)\n"
-                                          "It ranges from 0 to 5 and reflets your progress\n"
-                                          "You can use the checkboxes to quickly toggle kanas from associated section"
+        Tools::GetInstance().DisplayPopup("Here you can add/remove kanas to the related MCQ's guesses.\n"
+                                          "The background color and circle gyzmo indicate their status.\n"
+                                          "The number at the bottom right corner indicate its Learning Score (LS).\n"
+                                          "It ranges from 0 to 5 and reflets your progress.\n"
+                                          "You can use the checkboxes to quickly toggle kanas from associated section."
                                          );
         GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeKanasEditPage", false);
     }
