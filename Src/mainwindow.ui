@@ -15,7 +15,8 @@
   </property>
   <property name="font">
    <font>
-    <family>Japan</family>
+    <family>Helvetica</family>
+    <pointsize>12</pointsize>
    </font>
   </property>
   <property name="windowTitle">
@@ -30,6 +31,12 @@
   <widget class="QWidget" name="centralWidget">
    <property name="enabled">
     <bool>true</bool>
+   </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>12</pointsize>
+    </font>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <property name="spacing">
@@ -81,8 +88,14 @@
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>12</pointsize>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true"/>
@@ -179,82 +192,175 @@
     <string>Exit</string>
    </property>
    <property name="font">
-    <font/>
+    <font>
+     <family>Helvetica</family>
+     <pointsize>12</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionRomanji_to_Hiragana_QCM">
    <property name="text">
     <string>Romanji to Hiragana (MCQ)</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionHiragana_to_Romanji_Kbd">
    <property name="text">
     <string>Hiragana to Romanji (Kbd) TODO</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>12</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionKatakana_to_Romanji_QCM">
    <property name="text">
     <string>Katakana to Romanji (MCQ)</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionRomanji_to_Katakana_QCM">
    <property name="text">
     <string>Romanji to Katakana (MCQ)</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>12</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionKatakana_to_Romanji_Kbd">
    <property name="text">
     <string>Katakana to Romanji (Kbd) TODO</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionHiragana_to_Romanji_QCM">
    <property name="text">
     <string>Hiragana to Romanji (MCQ)</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>12</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionApplication_Setting">
    <property name="text">
     <string>Application</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionEdit_Hiragana_Set">
    <property name="text">
     <string>Edit Hiragana Set</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>12</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionEdit_Katakana_Set">
    <property name="text">
     <string>Edit Katakana Set</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionFonts_Setting">
    <property name="text">
     <string>Fonts</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>12</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionScreen_Setting">
    <property name="text">
     <string>Screen</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionKana_To_Romanji_MCQ">
    <property name="text">
     <string>Kana To Romanji (MCQ) TODO</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>12</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionRomanji_to_Kanas_MCQ">
    <property name="text">
     <string>Romanji to Kana (MCQ) TODO</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionLearn_Edit_Set">
    <property name="text">
     <string>Learn / Edit words Set</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionAbout">
    <property name="text">
     <string>About</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>12</pointsize>
+    </font>
    </property>
   </action>
  </widget>

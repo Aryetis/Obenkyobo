@@ -4,8 +4,6 @@
 #                    - fix wifi
 #                    - random fonts for qcm
 # TODO : - check where the hell are appSettings page margins ? and vocab page ? and welcomePage ?
-#        - instead of top-bot margin, make fnt bigger in QMenuBar ?
-#        - remove "placerholder page" and simply mark QAction as "TODO"
 #        - "popup style" tutorial for vocabPage + "reset popup" button in options
 #        - fix refresh/clean screen issue (and use proper one afterward in QcmExercice)
 #        - change size of circles edit button to make it width relative, make he height of each edit entry relative to height

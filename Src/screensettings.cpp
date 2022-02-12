@@ -7,6 +7,7 @@
 ScreenSettings::ScreenSettings(QWidget *parent) :
     QWidget(parent), ui(new Ui::ScreenSettings),
     luminosity(0), tint(0), settingAvailable(false),
+    lightToggleStatus(true),
     desc(GetMy::Instance().Descriptor()),
     settingsSerializer(GetMy::Instance().SettingSerializer())
 {
@@ -79,6 +80,12 @@ void ScreenSettings::OnWakeUp() const
 {
     if(settingAvailable)
         KoboPlatformFunctions::setFrontlightLevel(luminosity, tint);
+}
+
+void ScreenSettings::ToggleLight()
+{
+    lightToggleStatus = !lightToggleStatus;
+    KoboPlatformFunctions::setFrontlightLevel((lightToggleStatus) ? luminosity : 0, tint);
 }
 
 void ScreenSettings::on_LuminositySlider_valueChanged(int value)

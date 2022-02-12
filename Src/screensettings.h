@@ -14,12 +14,13 @@ class ScreenSettings : public QWidget
     Q_OBJECT
 
 public:
-    explicit             ScreenSettings(QWidget *parent = nullptr);
-    ~ScreenSettings()    override;
+    explicit            ScreenSettings(QWidget *parent = nullptr);
+    ~ScreenSettings()   override;
 
-    bool                 AreSettingsAvailablePopup() const;
-    void                 OnSleep() const;
-    void                 OnWakeUp() const;
+    bool                AreSettingsAvailablePopup() const;
+    void                OnSleep() const;
+    void                OnWakeUp() const;
+    void                ToggleLight();
 
 private slots:
     void                 on_TintSlider_valueChanged(int value);
@@ -30,6 +31,7 @@ private:
     int                  luminosity;
     int                  tint;
     bool                 settingAvailable;
+    bool                 lightToggleStatus;
     const KoboDeviceDescriptor& desc;
 
     QSettings* settingsSerializer;

@@ -14,9 +14,6 @@
 #include <QIcon>
 #include <QStyle>
 
-#define POWERBUTTON KoboKey::Key_Power
-#define SLEEPCOVERBUTTON KoboKey::Key_SleepCover
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow),
     timer(this), wasBatteryLvl(-1), wasBatteryDisplayFormat(-1), wasBatteryCharging(-1)
@@ -67,13 +64,16 @@ MainWindow::~MainWindow()
 // TODO handle sleep (irl too, ahahahah ...)
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == POWERBUTTON || event->key() == SLEEPCOVERBUTTON)
+    if (event->key() == KoboKey::Key_Power || event->key() == KoboKey::Key_SleepCover)
     {
         if (Tools::GetInstance().Sleeping())
             Tools::GetInstance().WakeUp();
         else
             Tools::GetInstance().Sleep();
     }
+    else
+    if (event->key() == KoboKey::Key_Light)
+        GetMy::Instance().ScreenSettingsWidget().ToggleLight();
 }
 
 void MainWindow::refreshTimeAndBattery()
@@ -204,8 +204,8 @@ void MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()
 
 void MainWindow::on_actionHiragana_to_Romanji_Kbd_triggered()
 {
-    std::cout << "LOG: MainWindow::on_actionHiragana_to_Romanji_Kbd_triggered()" << std::endl;
-    ui->ContentStackedWidget->setCurrentIndex(2);
+//    std::cout << "LOG: MainWindow::on_actionHiragana_to_Romanji_Kbd_triggered()" << std::endl;
+//    ui->ContentStackedWidget->setCurrentIndex(2);
 }
 
 void MainWindow::on_actionEdit_Hiragana_Set_triggered()
@@ -251,8 +251,8 @@ void MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()
 
 void MainWindow::on_actionKatakana_to_Romanji_Kbd_triggered()
 {
-    std::cout << "LOG: MainWindow::on_actionKatakana_to_Romanji_Kbd_triggered()" << std::endl;
-    ui->ContentStackedWidget->setCurrentIndex(2);
+//    std::cout << "LOG: MainWindow::on_actionKatakana_to_Romanji_Kbd_triggered()" << std::endl;
+//    ui->ContentStackedWidget->setCurrentIndex(2);
 }
 
 void MainWindow::on_actionEdit_Katakana_Set_triggered()
