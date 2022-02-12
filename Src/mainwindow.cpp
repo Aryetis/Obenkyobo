@@ -128,7 +128,7 @@ void MainWindow::refreshTimeAndBattery()
         if (!isBatteryIconVisible)
             actionBatteryIcon->setIcon(QIcon());
         if (!isBatteryTextVisible)
-            actionBatteryTxt->setText("");
+            actionBatteryTxt->setText(" "); // ugly hack to get a right-margin because QMenuBar qss is acting weird on my kobos.
 
         ugly = true;
     }

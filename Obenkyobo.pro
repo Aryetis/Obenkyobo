@@ -4,7 +4,9 @@
 #                    - fix wifi
 #                    - random fonts for qcm
 # TODO : - check where the hell are appSettings page margins ?
-#        - LS alignment, do not hide "xx%" battery text but replace with " " so it makes a marging when working on "icon only" mode
+#        - LS alignment
+#        - remove "placerholder page" and simply mark QAction as "TODO"
+#        - "popup style" tutorial for vocabPage + "reset popup" button in options
 #        - fix refresh/clean screen issue (and use proper one afterward in QcmExercice)
 #        - change size of circles edit button to make it width relative, make he height of each edit entry relative to height
 #        - tweak MenuBar spacing and marging (probably not happening because of kobo quirk)

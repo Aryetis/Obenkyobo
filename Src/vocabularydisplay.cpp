@@ -133,13 +133,13 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
         gridEntry->labels[1] = new QLabel(gridEntry->kanji);
         gridEntry->labels[1]->setFont({GetMy::Instance().FntSettingWidget().GetCurrentKanjiFamily(), fntSize});
         gridEntry->labels[2] = new QLabel(gridEntry->trad);
-        gridEntry->labels[2]->setFont({gridEntry->labels[2]->font().family(), fntSize}); // TODO use roboto
+        gridEntry->labels[2]->setFont({gridEntry->labels[2]->font().family(), fntSize});
         gridEntry->labels[3] = new QLabel(QString::number(gridEntry->learningScore));
-        gridEntry->labels[3]->setFont({gridEntry->labels[3]->font().family(), fntSize}); // TODO use roboto
+        gridEntry->labels[3]->setFont({gridEntry->labels[3]->font().family(), fntSize});
 
         for (int j=0; j<4; ++j)
         {
-            ui->vocabGrid->addWidget((gridEntry->labels[j]), curGridLine, j, Qt::AlignLeft );
+            ui->vocabGrid->addWidget((gridEntry->labels[j]), curGridLine, j, (j==3) ? Qt::AlignCenter : Qt::AlignLeft);
             gridEntry->labels[j]->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
         }
 
