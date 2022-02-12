@@ -3,8 +3,7 @@
 #                    - fix Glo hd
 #                    - fix wifi
 #                    - random fonts for qcm
-# TODO : - make popup screen BIGGER
-#        - check where the hell are appSettings page margins ? and vocab page ? and welcomePage ?
+# TODO : - check where the hell are appSettings page margins ? and vocab page ? and welcomePage ?
 #        - fix refresh/clean screen issue (and use proper one afterward in QcmExercice)
 #        - change size of circles edit button to make it width relative, make he height of each edit entry relative to height
 #        - tweak MenuBar spacing and marging (probably not happening because of kobo quirk)
