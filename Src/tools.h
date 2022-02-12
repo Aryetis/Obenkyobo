@@ -14,6 +14,7 @@
 #include <QThread>
 #include <QProcess>
 #include <iostream>
+#include <QGridLayout>
 #include "Src/GetMy.h"
 #include "Src/screensettings.h"
 
@@ -123,8 +124,14 @@ public :
     void DisplayPopup(QString message)
     {
         QMessageBox popup;
+
+        QSpacerItem* horizontalSpacer = new QSpacerItem(GetMy::Instance().Descriptor().width, 0
+                            , QSizePolicy::Minimum, QSizePolicy::Expanding); // ugly expension hack
         popup.setText(message);
         popup.setStyleSheet("QMessageBox { border: 5px solid black }");
+        QGridLayout* layout = (QGridLayout*)popup.layout();
+        layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+
         popup.exec();
     }
 

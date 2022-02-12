@@ -205,7 +205,7 @@ int AppSettings::GetVocabFntSize() const
 
 void AppSettings::on_resetPopup_clicked()
 {
-    settingsSerializer->setValue("AppSettings/firstTimeMainWindowPage", true); // That would be overkill ... or would it
+    settingsSerializer->setValue("AppSettings/firstTimeMainWindowPage", true);
     settingsSerializer->setValue("AppSettings/firstTimeVocabListPage", true);
     settingsSerializer->setValue("AppSettings/firstTimeVocabDisplayPage", true);
     settingsSerializer->setValue("AppSettings/firstTimeKanasEditPage", true);

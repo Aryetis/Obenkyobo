@@ -51,14 +51,7 @@ MainWindow::MainWindow(QWidget *parent) :
     GetMy::Instance().SetMainWindowWidget(this);
     std::cout << "LOG: MainWindow::MainWindow()::End" << std::endl;
 
-    if ( GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->value("AppSettings/firstTimeMainWindowPage", true).toBool() )
-    {
-        Tools::GetInstance().DisplayPopup("This software is still in development, everything marked as TODO is not implemented yet.\n"
-                                          "Each popup will be used only once and sparingly to introduce some mechanisms.\n"
-                                          "If you wish to see any popup again later on, please go to Settings->Application->Reset Help Popup\n\n"
-                                          "Thanks for reading, enjoy.");
-        GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeMainWindowPage", false);
-    }
+    DisplayFirstTimeMainWindowPagePopup();
 }
 
 MainWindow::~MainWindow()
@@ -83,6 +76,32 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     else
     if (event->key() == KoboKey::Key_Light)
         GetMy::Instance().ScreenSettingsWidget().ToggleLight();
+}
+
+void MainWindow::DisplayFirstTimeMainWindowPagePopup()
+{
+    if ( GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->value("AppSettings/firstTimeMainWindowPage", true).toBool() )
+    {
+        Tools::GetInstance().DisplayPopup("This software is still in development, everything marked as TODO is not implemented yet.\n"
+                                          "Each popup will be used only once and sparingly to introduce some mechanisms.\n"
+                                          "If you wish to see any popup again later on, please go to Settings->Application->Reset Help Popup\n\n"
+                                          "Thanks for reading, enjoy.");
+        GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeMainWindowPage", false);
+    }
+}
+
+void MainWindow::DisplayFirstTimeKanasEditPagePopup()
+{
+    if ( GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->value("AppSettings/firstTimeKanasEditPage", true).toBool() )
+    {
+        Tools::GetInstance().DisplayPopup("Here you can add/remove kanas to the related MCQ's guesses\n"
+                                          "The background color and circle gyzmo indicate their status\n"
+                                          "The number at the bottom right corner indicate its Learning Score (LS)\n"
+                                          "It ranges from 0 to 5 and reflets your progress\n"
+                                          "You can use the checkboxes to quickly toggle kanas from associated section"
+                                         );
+        GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeKanasEditPage", false);
+    }
 }
 
 void MainWindow::refreshTimeAndBattery()
@@ -170,6 +189,7 @@ void MainWindow::on_actionAbout_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionAbout_triggered()" << std::endl;
     ui->ContentStackedWidget->setCurrentIndex(0);
+    DisplayFirstTimeMainWindowPagePopup();
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -223,17 +243,7 @@ void MainWindow::on_actionEdit_Hiragana_Set_triggered()
     QSymbolPushButton::RefreshJpFixedSizedFnt();
     GetMy::Instance().SymbolSettingWidget().InitializeSymbolSetting(SymbolFamilyEnum::hiragana);
     ui->ContentStackedWidget->setCurrentIndex(3);
-
-    if ( GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->value("AppSettings/firstTimeKanasEditPage", true).toBool() )
-    {
-        Tools::GetInstance().DisplayPopup("Here you can add/remove kanas to the related MCQ's guesses\n"
-                                          "The background color and circle gyzmo indicate their status\n"
-                                          "The number at the bottom right corner indicate its Learning Score (LS)\n"
-                                          "It ranges from 0 to 5 and reflets your progress\n"
-                                          "You can use the checkboxes to quickly toggle kanas from associated section"
-                                         );
-        GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeKanasEditPage", false);
-    }
+    DisplayFirstTimeKanasEditPagePopup();
 }
 
 
@@ -281,17 +291,7 @@ void MainWindow::on_actionEdit_Katakana_Set_triggered()
     QSymbolPushButton::RefreshJpFixedSizedFnt();
     GetMy::Instance().SymbolSettingWidget().InitializeSymbolSetting(SymbolFamilyEnum::katakana);
     ui->ContentStackedWidget->setCurrentIndex(3);
-
-    if ( GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->value("AppSettings/firstTimeKanasEditPage", true).toBool() )
-    {
-        Tools::GetInstance().DisplayPopup("Here you can add/remove kanas to the related MCQ's guesses\n"
-                                          "The background color and circle gyzmo indicate their status\n"
-                                          "The number at the bottom right corner indicate its Learning Score (LS)\n"
-                                          "It ranges from 0 to 5 and reflets your progress\n"
-                                          "You can use the checkboxes to quickly toggle kanas from associated section"
-                                         );
-        GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeKanasEditPage", false);
-    }
+    DisplayFirstTimeKanasEditPagePopup();
 }
 
 

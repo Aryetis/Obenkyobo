@@ -53,6 +53,8 @@ private slots:
 
 private:
     void keyPressEvent(QKeyEvent *event) override;
+    void DisplayFirstTimeMainWindowPagePopup();
+    void DisplayFirstTimeKanasEditPagePopup();
 
     Ui::MainWindow *ui;
 
