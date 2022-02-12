@@ -13,13 +13,13 @@ VocabularyDisplay::VocabularyDisplay(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    curHiraganaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentHiraganaFamily());
-    curKatakanaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentKatakanaFamily());
+//    curHiraganaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentHiraganaFamily());
+//    curKatakanaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentKatakanaFamily());
 
-    ui->vocabGrid->setColumnStretch(0, 40);
-    ui->vocabGrid->setColumnStretch(1, 15);
-    ui->vocabGrid->setColumnStretch(2, 40);
-    ui->vocabGrid->setColumnStretch(3, 5);
+    ui->vocabGrid->setColumnStretch(0, 34);
+    ui->vocabGrid->setColumnStretch(1, 24);
+    ui->vocabGrid->setColumnStretch(2, 34);
+    ui->vocabGrid->setColumnStretch(3, 8);
 
     GetMy::Instance().SetVocabularyDisplayWidget(this);
 }
@@ -113,6 +113,7 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
     // Pages stuff
     int curGridLine=0;
     int nbrOfRow = GetMy::Instance().AppSettingWidget().GetNbrOfRowPerVocabPage();
+    int fntSize = GetMy::Instance().AppSettingWidget().GetVocabFntSize();
     if (curPage+turnPage >= 0 && curPage+turnPage < maxPage)
         curPage += turnPage;
     ui->previousPageButton->setCheckable(curPage != 0);
@@ -123,22 +124,23 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
     {
         tempVocab* gridEntry = gridEntries[i];
 
-        // TODO : align romanji font to kanas and kanji one ?
         gridEntry->labels[0] = new QLabel(gridEntry->kanas);
         gridEntry->labels[0]->setFont
-        ((gridEntry->fontType == SymbolFamilyEnum::hiragana)
-                ? curHiraganaNonSized
-                : curKatakanaNonSized
+        ({(gridEntry->fontType == SymbolFamilyEnum::hiragana)
+                ? GetMy::Instance().FntSettingWidget().GetCurrentHiraganaFamily()
+                : GetMy::Instance().FntSettingWidget().GetCurrentKatakanaFamily(), fntSize}
         );
         gridEntry->labels[1] = new QLabel(gridEntry->kanji);
-        gridEntry->labels[1]->setFont(GetMy::Instance().FntSettingWidget().GetCurrentKanjiFnt());
+        gridEntry->labels[1]->setFont({GetMy::Instance().FntSettingWidget().GetCurrentKanjiFamily(), fntSize});
         gridEntry->labels[2] = new QLabel(gridEntry->trad);
+        gridEntry->labels[2]->setFont({gridEntry->labels[2]->font().family(), fntSize}); // TODO use roboto
         gridEntry->labels[3] = new QLabel(QString::number(gridEntry->learningScore));
+        gridEntry->labels[3]->setFont({gridEntry->labels[3]->font().family(), fntSize}); // TODO use roboto
 
         for (int j=0; j<4; ++j)
         {
             ui->vocabGrid->addWidget((gridEntry->labels[j]), curGridLine, j, Qt::AlignLeft );
-            ui->vocabGrid->itemAtPosition(i,j)->widget()->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
+            gridEntry->labels[j]->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
         }
 
         ++curGridLine;

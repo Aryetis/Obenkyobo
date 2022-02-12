@@ -30,6 +30,7 @@ public:
     int GetDateFormatIdx() const { return dateFormatIdx; } // 0 <=> 13:37, 1 <=> 1:37 pm
     int GetNbrOfRowPerVocabPage() const;
     bool GetKanaHardRefresh() const { return kanaHardRefresh; }
+    int GetVocabFntSize() const;
 
 private:
     void ParseConfigFile();
@@ -46,6 +47,7 @@ private slots:
     void on_DateDisplayFormatDropdown_currentIndexChanged(int index);
     void on_RowPerPageComboBox_currentIndexChanged(int index);
     void on_KanaHardRefreshCheckBox_clicked(bool checked);
+    void on_comboBox_currentIndexChanged(int index);
 
 private:
     Ui::AppSettings *ui;
@@ -57,6 +59,7 @@ private:
     int dateFormatIdx;
     int nbrOfRowPerVocabIdx;
     bool kanaHardRefresh;
+    int vocabFntSizeIdx;
 
     QSettings* settingsSerializer;
 };

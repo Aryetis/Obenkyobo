@@ -13,9 +13,9 @@ AppSettings::AppSettings(QWidget *parent) :
     ui->setupUi(this);
 
     ui->WifiCheckBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
-                                                     .arg((int)(GetMy::Instance().Descriptor().width*0.08f)));
+                                                     .arg((int)(GetMy::Instance().Descriptor().width*0.075f)));
     ui->KanaHardRefreshCheckBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
-                                                     .arg((int)(GetMy::Instance().Descriptor().width*0.08f)));
+                                                     .arg((int)(GetMy::Instance().Descriptor().width*0.075f)));
 
     ParseConfigFile();
     InitializeUIValues();
@@ -41,6 +41,7 @@ void AppSettings::ParseConfigFile()
     dateFormatIdx = settingsSerializer->value("AppSettings/dateFormatIdx", (Tools::GetInstance().IsLocalTimeFormatUS()) ? 1 : 0).toInt();
     nbrOfRowPerVocabIdx = settingsSerializer->value("AppSettings/rowPerVocabPage", 1).toInt();
     kanaHardRefresh = settingsSerializer->value("AppSettings/kanaHardRefresh", false).toBool();
+    vocabFntSizeIdx = settingsSerializer->value("AppSettings/vocabFntSizeIdx", 4).toInt();
 }
 
 void AppSettings::InitializeUIValues() const
@@ -59,6 +60,7 @@ void AppSettings::InitializeUIValues() const
 
     ui->RowPerPageComboBox->setCurrentIndex(nbrOfRowPerVocabIdx);
     ui->KanaHardRefreshCheckBox->setChecked(kanaHardRefresh);
+    ui->VocabFntSizeCombox->setCurrentIndex(vocabFntSizeIdx);
 }
 
 AppSettings::~AppSettings()
@@ -171,6 +173,12 @@ void AppSettings::on_KanaHardRefreshCheckBox_clicked(bool checked)
     GetMy::Instance().ClearScreen();
 }
 
+void AppSettings::on_comboBox_currentIndexChanged(int index)
+{
+    vocabFntSizeIdx = index;
+    settingsSerializer->setValue("AppSettings/vocabFntSizeIdx", index);
+}
+
 int AppSettings::GetNbrOfRowPerVocabPage() const
 {
     bool parsed;
@@ -183,6 +191,14 @@ int AppSettings::GetNumberOfRowPerVocabPage() const
 {
     bool parsed;
     int num = ui->RowPerPageComboBox->currentText().toInt(&parsed);
+
+    return (parsed) ? num : -1;
+}
+
+int AppSettings::GetVocabFntSize() const
+{
+    bool parsed;
+    int num = ui->VocabFntSizeCombox->currentText().toInt(&parsed);
 
     return (parsed) ? num : -1;
 }
