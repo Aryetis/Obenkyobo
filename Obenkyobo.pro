@@ -5,7 +5,6 @@
 #                    - random fonts for qcm
 # TODO : - tweak all the Romanji fonts so they can display stuff like gojūon and ⚡
 #        - check where the hell are appSettings page margins ?
-#        - fix qpushbutton top and bot vertical size not fixed (they expend depending of number of row)
 #        - fix refresh/clean screen issue (and use proper one afterward in QcmExercice)
 #        - change size of circles edit button to make it width relative, make he height of each edit entry relative to height
 #        - tweak MenuBar spacing and marging (probably not happening because of kobo quirk)
