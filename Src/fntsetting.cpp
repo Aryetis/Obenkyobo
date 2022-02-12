@@ -63,6 +63,11 @@ void FntSetting::RegisterFntsFromResources()
     for (QFont fnt : kanjiFonts)
         ui->KanjiFntDropdown->addItem(fnt.family());
 
+//    Works just fine but I can't stand Roboto Mono... Plus it's way larger => bad for small screens
+//    QFont globalFont("Roboto Mono");
+//    globalFont.setStyleHint(QFont::Monospace);
+//    QApplication::setFont(globalFont);
+
     currentHiraganFntIdx = settingsSerializer->value("FntSettings/HiraganaFntIdx", 0).toInt();
     currentKatakanaFntIdx = settingsSerializer->value("FntSettings/KatakanaFntIdx", 0).toInt();
     currentRomanjiFntIdx = settingsSerializer->value("FntSettings/RomanjiFntIdx", 0).toInt();
