@@ -32,6 +32,8 @@ public:
     bool GetKanaHardRefresh() const { return kanaHardRefresh; }
     int GetVocabFntSize() const;
 
+    QSettings* GetSettingsSerializer() const { return settingsSerializer; }
+
 private:
     void ParseConfigFile();
     void InitializeUIValues() const;
@@ -48,6 +50,7 @@ private slots:
     void on_RowPerPageComboBox_currentIndexChanged(int index);
     void on_KanaHardRefreshCheckBox_clicked(bool checked);
     void on_comboBox_currentIndexChanged(int index);
+    void on_resetPopup_clicked();
 
 private:
     Ui::AppSettings *ui;

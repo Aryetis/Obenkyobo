@@ -65,6 +65,8 @@ private:
     int wasBatteryLvl;
     int wasBatteryDisplayFormat;
     int wasBatteryCharging;
+
+    bool firstTimeMainWindow;
 };
 
 #endif // MAINWINDOW_H
