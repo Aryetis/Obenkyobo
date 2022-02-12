@@ -7,19 +7,21 @@
 #include <algorithm>
 #include <QTextStream>
 #include <QSizePolicy>
+#include <QKeyEvent>
+#include <QShortcut>
 
 VocabularyDisplay::VocabularyDisplay(QWidget *parent) :
     QWidget(parent), ui(new Ui::VocabularyDisplay)
 {
     ui->setupUi(this);
 
-//    curHiraganaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentHiraganaFamily());
-//    curKatakanaNonSized = QFont(GetMy::Instance().FntSettingWidget().GetCurrentKatakanaFamily());
-
     ui->vocabGrid->setColumnStretch(0, 34);
     ui->vocabGrid->setColumnStretch(1, 24);
     ui->vocabGrid->setColumnStretch(2, 34);
     ui->vocabGrid->setColumnStretch(3, 8);
+
+    ui->previousPageButton->setShortcut(KoboKey::Key_PagePackward);
+    ui->nextPageButton->setShortcut(KoboKey::Key_PageForward);
 
     GetMy::Instance().SetVocabularyDisplayWidget(this);
 }

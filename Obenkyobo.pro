@@ -4,6 +4,7 @@
 #                    - fix wifi
 #                    - random fonts for qcm
 # TODO : - check where the hell are appSettings page margins ? and vocab page ? and welcomePage ?
+#        - instead of top-bot margin, make fnt bigger in QMenuBar ?
 #        - remove "placerholder page" and simply mark QAction as "TODO"
 #        - "popup style" tutorial for vocabPage + "reset popup" button in options
 #        - fix refresh/clean screen issue (and use proper one afterward in QcmExercice)
@@ -114,7 +115,7 @@ everythingButLibs.path = /mnt/onboard/.adds
 everythingButLibs.files = $$files($${OUT_PWD}/Output/.adds/**)
 everythingButLibs.files -= $$files($${OUT_PWD}/Output/.adds/qt-linux-*)
 
-# "everythingButLibsAndSh" contains ... everything bug qt libs (=>fast deployment)
+# "everythingButLibsAndSh" contains ... everything bug qt libs and .sh launcher script (=>fast deployment)
 everythingButLibsAndSh.path = /mnt/onboard/.adds
 everythingButLibsAndSh.files = $$files($${OUT_PWD}/Output/.adds/**)
 everythingButLibsAndSh.files -= $$files($${OUT_PWD}/Output/.adds/qt-linux-*)

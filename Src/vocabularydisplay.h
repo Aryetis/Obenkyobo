@@ -53,8 +53,6 @@ private:
 
     Ui::VocabularyDisplay *ui;
     QList<tempVocab*> gridEntries;
-//    QFont curHiraganaNonSized;
-//    QFont curKatakanaNonSized;
 
     int curPage;
     int maxPage;
