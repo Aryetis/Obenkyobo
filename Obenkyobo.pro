@@ -3,8 +3,7 @@
 #                    - fix Glo hd
 #                    - fix wifi
 #                    - random fonts for qcm
-# TODO : - check where the hell are appSettings page margins ?
-#        - LS alignment
+# TODO : - check where the hell are appSettings page margins ? and vocab page ? and welcomePage ?
 #        - remove "placerholder page" and simply mark QAction as "TODO"
 #        - "popup style" tutorial for vocabPage + "reset popup" button in options
 #        - fix refresh/clean screen issue (and use proper one afterward in QcmExercice)
