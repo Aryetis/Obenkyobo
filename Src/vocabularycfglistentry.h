@@ -23,8 +23,11 @@ public:
     QFileInfo const& VocabFileInfo() { return vocabFileInfo; }
     QSettings const& VocabSetting() { return vocabSetting; }
 
+    void FakeClick(bool checked);
+
 private slots:
     void on_TitleButton_clicked();
+    void on_checkBox_clicked(bool checked);
 
 private:
     Ui::VocabularyCfgListEntry *ui;

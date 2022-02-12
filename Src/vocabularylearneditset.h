@@ -20,9 +20,14 @@ public:
 
     void InitializeVocabularyLearnEditSet();
 
+private slots:
+    void on_SelectAllButton_clicked();
+
 private:
     Ui::VocabularyLearnEditSet *ui;
     std::vector<VocabularyCfgListEntry*> vocabCfgs;
+
+    bool selectAllStatus;
 };
 
 #endif // VOCABULARYLEARNEDITSET_H

@@ -41,3 +41,13 @@ void VocabularyCfgListEntry::on_TitleButton_clicked()
     GetMy::Instance().VocabularyDisplayWidget()->InitializeGrid(this);
     GetMy::Instance().MainWindowWidget().SwitchStackedWidgetIndex(8);
 }
+
+void VocabularyCfgListEntry::on_checkBox_clicked(bool /*checked*/)
+{
+    // TODO
+}
+
+void VocabularyCfgListEntry::FakeClick(bool checked)
+{
+    ui->checkBox->setChecked(checked);
+}

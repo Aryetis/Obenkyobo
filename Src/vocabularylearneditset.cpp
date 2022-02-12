@@ -6,7 +6,7 @@
 #include <QDir>
 
 VocabularyLearnEditSet::VocabularyLearnEditSet(QWidget *parent) :
-    QWidget(parent), ui(new Ui::VocabularyLearnEditSet)
+    QWidget(parent), ui(new Ui::VocabularyLearnEditSet), selectAllStatus(false)
 {
     ui->setupUi(this);
 
@@ -24,8 +24,8 @@ VocabularyLearnEditSet::VocabularyLearnEditSet(QWidget *parent) :
 
 VocabularyLearnEditSet::~VocabularyLearnEditSet()
 {
-    for(VocabularyCfgListEntry* qs : vocabCfgs)
-        delete qs;
+    for(VocabularyCfgListEntry* vc : vocabCfgs)
+        delete vc;
 
     delete ui;
 }
@@ -33,4 +33,12 @@ VocabularyLearnEditSet::~VocabularyLearnEditSet()
 void VocabularyLearnEditSet::InitializeVocabularyLearnEditSet()
 {
     ui->VocabularyCfgList->setFocus(); // force focus on scrollbar so it handles physical buttons
+}
+
+void VocabularyLearnEditSet::on_SelectAllButton_clicked()
+{
+    selectAllStatus = !selectAllStatus;
+
+    for (VocabularyCfgListEntry* vc : vocabCfgs)
+        vc->FakeClick(selectAllStatus);
 }
