@@ -12,5 +12,5 @@ source ${APPPATH}/exit_nickel.sh
 # export QT stuff
 export LD_LIBRARY_PATH=${QTPATH}/lib:lib:
 echo export LD_LIBRARY_PATH=${QTPATH}/lib:lib:
-export QT_QPA_PLATFORM=${QTPLUGINOBENKYOBO}:
-echo export QT_QPA_PLATFORM=${QTPLUGINOBENKYOBO}:
+export QT_QPA_PLATFORM=${QTPLUGINOBENKYOBO}:debug
+echo export QT_QPA_PLATFORM=${QTPLUGINOBENKYOBO}:debug

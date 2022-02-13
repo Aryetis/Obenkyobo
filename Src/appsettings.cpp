@@ -40,7 +40,8 @@ void AppSettings::ParseConfigFile()
     batteryFormatIdx = settingsSerializer->value("AppSettings/batteryFormatIdx", 0).toInt();
     dateFormatIdx = settingsSerializer->value("AppSettings/dateFormatIdx", (Tools::GetInstance().IsLocalTimeFormatUS()) ? 1 : 0).toInt();
     nbrOfRowPerVocabIdx = settingsSerializer->value("AppSettings/rowPerVocabPage", 1).toInt();
-    kanaHardRefresh = settingsSerializer->value("AppSettings/kanaHardRefresh", false).toBool();
+    QList<KoboDevice> badScreenList { KoboDevice::KoboTouchAB, KoboDevice::KoboTouchC, KoboDevice::KoboGlo, KoboDevice::KoboMini, KoboDevice::KoboTouch2, KoboDevice::KoboAura, KoboDevice::KoboAuraHD }; // Wild guess ... meh
+    kanaHardRefresh = settingsSerializer->value("AppSettings/kanaHardRefresh", badScreenList.contains(GetMy::Instance().Descriptor().device)).toBool();
     vocabFntSizeIdx = settingsSerializer->value("AppSettings/vocabFntSizeIdx", 4).toInt();
 }
 
@@ -168,9 +169,6 @@ void AppSettings::on_KanaHardRefreshCheckBox_clicked(bool checked)
 {
     kanaHardRefresh = checked;
     settingsSerializer->setValue("AppSettings/kanaHardRefresh", checked);
-
-    // TODO fix it ??? sanity check
-    GetMy::Instance().ClearScreen();
 }
 
 void AppSettings::on_comboBox_currentIndexChanged(int index)

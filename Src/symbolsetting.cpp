@@ -6,6 +6,7 @@
 #include "Src/appsettings.h"
 #include <QScrollBar>
 
+
 SymbolSetting::SymbolSetting(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SymbolSetting)
@@ -49,10 +50,5 @@ void SymbolSetting::InitializeSymbolSetting(SymbolFamilyEnum _symbolFamily)
 
 void SymbolSetting::OnScroll(int /*value*/)
 {
-    if (GetMy::Instance().AppSettingWidget().GetKanaHardRefresh())
-    {
-        // TODO fix it ???
-//        GetMy::Instance().ClearScreen();
-//        repaint();
-    }
+// TODO refresh screen properly
 }

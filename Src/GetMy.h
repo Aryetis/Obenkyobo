@@ -50,7 +50,7 @@ public:
     const KoboDeviceDescriptor& Descriptor() { return desc; }
     void ClearScreen() const
     {
-        KoboPlatformFunctions::setFullScreenRefreshMode(WaveForm::WaveForm_GC16); // overkill
+        KoboPlatformFunctions::setFullScreenRefreshMode(WaveForm::WaveForm_REAGLD); // overkill
         KoboPlatformFunctions::clearScreen(true);
     }
 
