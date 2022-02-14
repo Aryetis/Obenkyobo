@@ -125,8 +125,8 @@ public :
     {
         QMessageBox popup;
 
-        QSpacerItem* horizontalSpacer = new QSpacerItem(GetMy::Instance().Descriptor().width, 0
-                            , QSizePolicy::Minimum, QSizePolicy::Expanding); // ugly expension hack
+        QSpacerItem* horizontalSpacer = new QSpacerItem(GetMy::Instance().Descriptor().width, 10
+                            , QSizePolicy::Fixed, QSizePolicy::Fixed); // ugly expension hack, not working anymore becauuuuuse ?
         popup.setText(message);
         popup.setStyleSheet("QMessageBox { border: 5px solid black }");
         QGridLayout* layout = (QGridLayout*)popup.layout();
@@ -147,8 +147,10 @@ public :
         std::cout << "going to sleep" << std::endl;
         GetMy::Instance().ScreenSettingsWidget().OnSleep();
 
-KoboPlatformFunctions::disableWiFiConnection();
+        sleeping = true;
 
+
+//        KoboPlatformFunctions::disableWiFiConnection();
 //        //-------------------------------------------------------------
 //        QFile stateExtendedFile("/sys/power/state-extended");
 //        if (!stateExtendedFile.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -198,8 +200,10 @@ KoboPlatformFunctions::disableWiFiConnection();
         std::cout << "Waking up" << std::endl;
         GetMy::Instance().ScreenSettingsWidget().OnWakeUp();
 
-KoboPlatformFunctions::enableWiFiConnection();
+        sleeping = false;
 
+
+//        KoboPlatformFunctions::enableWiFiConnection();
 //        //-------------------------------------------------------------
 //        QFile file("/sys/power/state-extended");
 //        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))

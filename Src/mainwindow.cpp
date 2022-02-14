@@ -83,6 +83,8 @@ void MainWindow::DisplayFirstTimeMainWindowPagePopup()
     if ( GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->value("AppSettings/firstTimeMainWindowPage", true).toBool() )
     {
         Tools::GetInstance().DisplayPopup("This software is still in development, everything marked as TODO is not implemented yet.\n"
+                                          "Wifi and sleep functions aren't supported for now\n"
+                                          "Therefore it is recommended that you turn OFF wifi before launching Obenkyobo to save battery life.\n"
                                           "Each popup will be used only once and sparingly to introduce some mechanisms.\n"
                                           "If you wish to see any popup again later on, please go to Settings->Application->Reset Help Popup\n\n"
                                           "Thanks for reading, enjoy.");

@@ -92,7 +92,10 @@
     </layout>
    </item>
    <item>
-    <layout class="QGridLayout" name="vocabGrid">
+    <layout class="QGridLayout" name="vocabGrid" rowminimumheight="0">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
      <property name="spacing">
       <number>6</number>
      </property>
