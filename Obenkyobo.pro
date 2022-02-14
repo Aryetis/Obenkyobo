@@ -4,6 +4,7 @@
 #                    - fix wifi
 #                    - random fonts for qcm
 # TODO : - check IsLocalUS function correctly
+#        - set maxHeight for vocabListEntry
 #        - check where the hell are appSettings page margins ? and vocab page ? and welcomePage ?
 #        - hard refresh stuff on vocab list slide, kanas edit slide page, on vocab prev/next page
 #        - ui slider qss in settings
