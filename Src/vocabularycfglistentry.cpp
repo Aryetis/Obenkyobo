@@ -31,6 +31,7 @@ VocabularyCfgListEntry::VocabularyCfgListEntry(QFileInfo fi, QWidget *parent)
     // another dirty hack because koboQT... for some reasons I can't use TitleButton.height to set checkbox's one
     ui->checkBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
                                  .arg(GetMy::Instance().Descriptor().height/20) );
+    setMaximumHeight(GetMy::Instance().Descriptor().height/20);
 }
 
 VocabularyCfgListEntry::~VocabularyCfgListEntry()
