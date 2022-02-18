@@ -73,10 +73,23 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         else
             Tools::GetInstance().Sleep();
     }
-    else
-    if (event->key() == KoboKey::Key_Light)
+    else if (event->key() == KoboKey::Key_Light)
         GetMy::Instance().ScreenSettingsWidget().ToggleLight();
 }
+
+// TODO : releaseEvent is spammed ?!?
+//void MainWindow::keyReleaseEvent(QKeyEvent *event)
+//{
+//    QTime::currentTime().msec();
+
+//    if (event->key() == KoboKey::Key_SleepCover)
+//    {
+//        if (Tools::GetInstance().Sleeping())
+//            Tools::GetInstance().WakeUp();
+//        else
+//            Tools::GetInstance().Sleep();
+//    }
+//}
 
 void MainWindow::DisplayFirstTimeMainWindowPagePopup()
 {
