@@ -35,6 +35,10 @@ cp $2/OtherFiles/vocab/* $3/Output/.adds/$4/vocab/ -r
 
 #Dependencies
 cp $2/OtherFiles/Dependencies/* $3/Output/.adds/ -r
+if [[ $1 == debug ]];
+then
+    cp ~/Workspace/Kobo/qt5-kobo-platform-plugin/libkobo.so.debug $3/Output/.adds/qt-linux-5.15-kde-kobo/plugins/platforms/libkobo.so
+fi
 
 #kfmon
 mkdir -p $3/Output/.adds/kfmon/config
