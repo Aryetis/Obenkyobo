@@ -66,30 +66,24 @@ MainWindow::~MainWindow()
 // TODO handle sleep (irl too, ahahahah ...)
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == KoboKey::Key_Power || event->key() == KoboKey::Key_SleepCover)
+    if (event->key() == KoboKey::Key_Power)
     {
         if (Tools::GetInstance().Sleeping())
             Tools::GetInstance().WakeUp();
         else
             Tools::GetInstance().Sleep();
     }
+    else if (event->key() == KoboKey::Key_SleepCover && !Tools::GetInstance().Sleeping())
+        Tools::GetInstance().Sleep();
     else if (event->key() == KoboKey::Key_Light)
         GetMy::Instance().ScreenSettingsWidget().ToggleLight();
 }
 
-// TODO : releaseEvent is spammed ?!?
-//void MainWindow::keyReleaseEvent(QKeyEvent *event)
-//{
-//    QTime::currentTime().msec();
-
-//    if (event->key() == KoboKey::Key_SleepCover)
-//    {
-//        if (Tools::GetInstance().Sleeping())
-//            Tools::GetInstance().WakeUp();
-//        else
-//            Tools::GetInstance().Sleep();
-//    }
-//}
+void MainWindow::keyReleaseEvent(QKeyEvent *event) // requires qpa fix https://github.com/Rain92/qt5-kobo-platform-plugin/pull/5
+{
+    if (event->key() == KoboKey::Key_SleepCover && Tools::GetInstance().Sleeping())
+        Tools::GetInstance().WakeUp();
+}
 
 void MainWindow::DisplayFirstTimeMainWindowPagePopup()
 {
