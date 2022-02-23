@@ -56,8 +56,12 @@ void AppSettings::InitializeUIValues() const
     ui->nbrOfEntryLinesDropdown->setCurrentIndex(nbrOfEntryLinesIdx);
     ui->RandomnessDropdown->setCurrentIndex(randomChoiceIdx);
     ui->HardRefreshDropdown->setCurrentIndex(hardRefreshFreqIdx);
+    ui->BatteryIndicatorDropdown->blockSignals(true); // preventing UpdateStatusBarGeometry() cause we don't know MainWidget status
     ui->BatteryIndicatorDropdown->setCurrentIndex(batteryFormatIdx);
+    ui->BatteryIndicatorDropdown->blockSignals(false);
+    ui->DateDisplayFormatDropdown->blockSignals(true); // preventing UpdateStatusBarGeometry() cause we don't know MainWidget status
     ui->DateDisplayFormatDropdown->setCurrentIndex(dateFormatIdx);
+    ui->DateDisplayFormatDropdown->blockSignals(false);
 
     ui->RowPerPageComboBox->setCurrentIndex(nbrOfRowPerVocabIdx);
     ui->KanaHardRefreshCheckBox->setChecked(kanaHardRefresh);

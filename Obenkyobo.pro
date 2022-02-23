@@ -3,11 +3,9 @@
 #                    - fix Glo hd
 #                    - fix wifi
 #                    - random fonts for qcm
-# TODO : - check IsLocalUS function correctly
-#        - put button in vocabGrid to hide/show individual cell
+# TODO : - put button in vocabGrid to hide/show individual cell
 #        - set maxHeight for vocabListEntry
 #        - popup isn't expanding anymore ?
-#        - sleepcover doesn't wake up the device because ?
 #        - check where the hell are appSettings page margins ? and vocab page ? and welcomePage ?
 #        - hard refresh stuff on vocab list slide, kanas edit slide page, on vocab prev/next page
 #        - ui slider qss in settings

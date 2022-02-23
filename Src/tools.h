@@ -67,10 +67,10 @@ public :
                 QString value = parsed[1];
                 if (prefix.compare("CurrentLocale") == 0)
                 {
-                    if (value.size()>3)
+                    if (value.size()>=2)
                     {
-                        value = parsed[1].mid(0,3);
-                        Tools::GetInstance().isLocalTimeFormatUS = (value.compare("en_") == 0) ? true : false;
+                        value = parsed[1].mid(0,2);
+                        Tools::GetInstance().isLocalTimeFormatUS = (value.compare("en") == 0) ? true : false;
                     }
                     else
                         Tools::GetInstance().isLocalTimeFormatUS = false;
