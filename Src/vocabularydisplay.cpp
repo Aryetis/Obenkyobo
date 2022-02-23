@@ -72,10 +72,10 @@ void VocabularyDisplay::InitializeGrid(VocabularyCfgListEntry* vocab)
                     fontType_ = SymbolFamilyEnum::katakana;
                 else
                     continue;
-                QString kanas_ = parsedFields[2];;
-                QString kanji_ = parsedFields[3];;
-                QString trad_ = parsedFields[4];;
-                int learningScore_ = parsedFields[5].toInt();;
+                QString kanas_ = parsedFields[2];
+                QString kanji_ = parsedFields[3];
+                QString trad_ = parsedFields[4];
+                int learningScore_ = parsedFields[5].toInt();
 
                 gridEntries.push_back(new tempVocab(fontType_, kanas_, kanji_, trad_, learningScore_));
             }

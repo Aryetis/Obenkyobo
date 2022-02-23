@@ -1,14 +1,12 @@
 #-------------------------------------------------
-# TARGET for 0.1.3 : - fix appsettings ui issues
-#                    - fix Glo hd
-#                    - fix wifi
-#                    - random fonts for qcm
 # TODO : - put button in vocabGrid to hide/show individual cell
 #        - popup isn't expanding anymore ?
 #        - check where the hell are appSettings page margins ? and vocab page ? and welcomePage ?
 #        - hard refresh stuff on vocab list slide, kanas edit slide page, on vocab prev/next page => requires fbink rebuild for libkobo.so
-#        - tweak MenuBar spacing and marging (probably not happening because of kobo quirk)
-#        - handle sleep
+#-------------------------------------------------
+# TODO later : - tweak MenuBar spacing and marging (probably not happening because of kobo quirk)
+#              - handle sleep
+#              - fix wifi
 #-------------------------------------------------
 
 QT       += core gui

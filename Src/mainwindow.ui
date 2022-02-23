@@ -120,6 +120,12 @@
        <height>0</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <family>Helvetica</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="title">
       <string>Katakana</string>
      </property>
@@ -141,6 +147,12 @@
        <height>0</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <family>Helvetica</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="title">
       <string>Hiragana</string>
      </property>
@@ -161,6 +173,12 @@
        <width>0</width>
        <height>0</height>
       </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Helvetica</family>
+       <pointsize>12</pointsize>
+      </font>
      </property>
      <property name="title">
       <string>Vocabulary</string>
