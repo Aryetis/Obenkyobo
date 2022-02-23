@@ -21,6 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
     std::cout << "LOG: MainWindow::MainWindow()::Start" << std::endl;
     ui->setupUi(this);
 
+    // Dithering generate artifcats on certain screens, not worth it
+    KoboPlatformFunctions::enableDithering(false, false);
+
     // Setup statusBar
     statusBar = new QMenuBar(parent);
     statusBar->setObjectName("statusBar");
@@ -61,6 +64,17 @@ MainWindow::~MainWindow()
     delete actionBatteryTxt;
     delete statusBar;
     delete ui;
+}
+
+void MainWindow::AggressiveClearScreen() const // requires adding DRAW=1 to fbink build parameter of koboplatformplugin
+{
+    if (GetMy::Instance().AppSettingWidget().GetKanaHardRefresh())
+    {
+        KoboPlatformFunctions::setFullScreenRefreshMode(WaveForm::WaveForm_GC16);
+        KoboPlatformFunctions::clearScreen(true);
+        ui->menuBar->repaint();
+        ui->centralWidget->repaint();
+    }
 }
 
 // TODO handle sleep (irl too, ahahahah ...)
@@ -193,17 +207,6 @@ void MainWindow::SwitchStackedWidgetIndex(int i)
     std::cout << "LOG: MainWindow::SwitchStackedWidgetIndex(" << i << ")" << std::endl;
     ui->ContentStackedWidget->setCurrentIndex(i);
     AggressiveClearScreen();
-}
-
-void MainWindow::AggressiveClearScreen() const // requires adding DRAW=1 to fbink build parameter of koboplatformplugin
-{
-    if (GetMy::Instance().AppSettingWidget().GetKanaHardRefresh())
-    {
-        KoboPlatformFunctions::setFullScreenRefreshMode(WaveForm::WaveForm_GC16);
-        KoboPlatformFunctions::clearScreen(true);
-        ui->menuBar->repaint();
-        ui->centralWidget->repaint();
-    }
 }
 
 //===========================================================================
