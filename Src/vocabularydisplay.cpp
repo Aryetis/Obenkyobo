@@ -145,8 +145,8 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
             gridEntry->labels[j]->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
             gridEntry->labels[j]->setCheckable(true);
             gridEntry->labels[j]->setStyleSheet((j != 3)
-                ? "QPushButton{ Text-align:left; border : none; } QPushButton:checked{ color: rgba(0,0,0,0); border : none; }"
-                : "QPushButton{ border : none; } QPushButton:checked{ color: rgba(0,0,0,0); border : none; }");
+                ? "QPushButton{ Text-align:left; border : none; } QPushButton:checked{ color: rgba(0,0,0,0); border : none; } QPushButton:focus { outline : none; }"
+                : "QPushButton{ border : none; } QPushButton:checked{ color: rgba(0,0,0,0); border : none; } QPushButton:focus { outline : none; }");
         }
 
         ++curGridLine;
