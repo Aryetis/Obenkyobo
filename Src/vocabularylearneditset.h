@@ -26,6 +26,8 @@ private slots:
 private:
     Ui::VocabularyLearnEditSet *ui;
     std::vector<VocabularyCfgListEntry*> vocabCfgs;
+    void OnSliderReleased() const;
+    void OnValueChanged(int /*value*/) const;
 
     bool selectAllStatus;
 };

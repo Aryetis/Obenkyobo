@@ -90,7 +90,7 @@ void MainWindow::DisplayFirstTimeMainWindowPagePopup()
     if ( GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->value("AppSettings/firstTimeMainWindowPage", true).toBool() )
     {
         Tools::GetInstance().DisplayPopup("This software is still in development, everything marked as TODO is not implemented yet.\n"
-                                          "Wifi and sleep functions aren't supported for now\n"
+                                          "Wifi and sleep functions aren't supported for now.\n"
                                           "Therefore it is recommended that you turn OFF wifi before launching Obenkyobo to save battery life.\n"
                                           "Each popup will be used only once and sparingly to introduce some mechanisms.\n"
                                           "If you wish to see any popup again later on, please go to Settings->Application->Reset Help Popup\n\n"
@@ -192,6 +192,18 @@ void MainWindow::SwitchStackedWidgetIndex(int i)
 {
     std::cout << "LOG: MainWindow::SwitchStackedWidgetIndex(" << i << ")" << std::endl;
     ui->ContentStackedWidget->setCurrentIndex(i);
+    AggressiveClearScreen();
+}
+
+void MainWindow::AggressiveClearScreen() const // requires adding DRAW=1 to fbink build parameter of koboplatformplugin
+{
+    if (GetMy::Instance().AppSettingWidget().GetKanaHardRefresh())
+    {
+        KoboPlatformFunctions::setFullScreenRefreshMode(WaveForm::WaveForm_GC16);
+        KoboPlatformFunctions::clearScreen(true);
+        ui->menuBar->repaint();
+        ui->centralWidget->repaint();
+    }
 }
 
 //===========================================================================
@@ -200,6 +212,7 @@ void MainWindow::on_actionAbout_triggered()
     std::cout << "LOG: MainWindow::on_actionAbout_triggered()" << std::endl;
     ui->ContentStackedWidget->setCurrentIndex(0);
     DisplayFirstTimeMainWindowPagePopup();
+    AggressiveClearScreen();
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -218,6 +231,7 @@ void MainWindow::on_actionHiragana_to_Romanji_QCM_triggered()
     {
         GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
+        AggressiveClearScreen();
     }
     else
         Tools::GetInstance().DisplayPopup(
@@ -234,6 +248,7 @@ void MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()
     {
         GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
+        AggressiveClearScreen();
     }
     else
         Tools::GetInstance().DisplayPopup(
@@ -247,6 +262,7 @@ void MainWindow::on_actionHiragana_to_Romanji_Kbd_triggered()
 {
 //    std::cout << "LOG: MainWindow::on_actionHiragana_to_Romanji_Kbd_triggered()" << std::endl;
 //    ui->ContentStackedWidget->setCurrentIndex(2);
+//    AggressiveClearScreen();
 }
 
 void MainWindow::on_actionEdit_Hiragana_Set_triggered()
@@ -256,6 +272,7 @@ void MainWindow::on_actionEdit_Hiragana_Set_triggered()
     GetMy::Instance().SymbolSettingWidget().InitializeSymbolSetting(SymbolFamilyEnum::hiragana);
     ui->ContentStackedWidget->setCurrentIndex(3);
     DisplayFirstTimeKanasEditPagePopup();
+    AggressiveClearScreen();
 }
 
 
@@ -268,6 +285,7 @@ void MainWindow::on_actionKatakana_to_Romanji_QCM_triggered()
     {
         GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
+        AggressiveClearScreen();
     }
     else
         Tools::GetInstance().DisplayPopup(
@@ -284,6 +302,7 @@ void MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()
     {
         GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
+        AggressiveClearScreen();
     }
     else
         Tools::GetInstance().DisplayPopup(
@@ -297,6 +316,7 @@ void MainWindow::on_actionKatakana_to_Romanji_Kbd_triggered()
 {
 //    std::cout << "LOG: MainWindow::on_actionKatakana_to_Romanji_Kbd_triggered()" << std::endl;
 //    ui->ContentStackedWidget->setCurrentIndex(2);
+//    AggressiveClearScreen();
 }
 
 void MainWindow::on_actionEdit_Katakana_Set_triggered()
@@ -306,6 +326,7 @@ void MainWindow::on_actionEdit_Katakana_Set_triggered()
     GetMy::Instance().SymbolSettingWidget().InitializeSymbolSetting(SymbolFamilyEnum::katakana);
     ui->ContentStackedWidget->setCurrentIndex(3);
     DisplayFirstTimeKanasEditPagePopup();
+    AggressiveClearScreen();
 }
 
 
@@ -315,19 +336,24 @@ void MainWindow::on_actionApplication_Setting_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionApplication_Setting_triggered()" << std::endl;
     ui->ContentStackedWidget->setCurrentIndex(4);
+    AggressiveClearScreen();
 }
 
 void MainWindow::on_actionFonts_Setting_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionFonts_Setting_triggered()" << std::endl;
     ui->ContentStackedWidget->setCurrentIndex(5);
+    AggressiveClearScreen();
 }
 
 void MainWindow::on_actionScreen_Setting_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionScreen_Setting_triggered()" << std::endl;
     if (GetMy::Instance().ScreenSettingsWidget().AreSettingsAvailablePopup())
+    {
         ui->ContentStackedWidget->setCurrentIndex(6);
+        AggressiveClearScreen();
+    }
 }
 
 
@@ -348,6 +374,7 @@ void MainWindow::on_actionLearn_Edit_Set_triggered()
     std::cout << "LOG: MainWindow::on_actionLearn_Edit_Set_triggered()" << std::endl;
     GetMy::Instance().VocabularyLearnEditSetWidget()->InitializeVocabularyLearnEditSet();
     ui->ContentStackedWidget->setCurrentIndex(7);
+    AggressiveClearScreen();
 
     if ( GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->value("AppSettings/firstTimeVocabListPage", true).toBool() )
     {

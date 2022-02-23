@@ -1,8 +1,9 @@
 #-------------------------------------------------
-# TODO : - popup isn't expanding anymore ?
-#        - hard refresh stuff on vocab list slide, kanas edit slide page, on vocab prev/next page => requires fbink rebuild for libkobo.so
+# TODO : - use libkobo_Obenkyobo.so instead of libkobo.so in order to not break other apps
+#        - update Readme.md
 #-------------------------------------------------
-# TODO later : - tweak MenuBar spacing and marging (probably not happening because of kobo quirk)
+# TODO later : - less janky popup messages height
+#              - tweak MenuBar spacing and marging (probably not happening because of kobo quirk)
 #              - handle sleep
 #              - fix wifi
 #-------------------------------------------------

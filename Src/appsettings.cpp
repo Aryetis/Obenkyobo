@@ -173,6 +173,7 @@ void AppSettings::on_KanaHardRefreshCheckBox_clicked(bool checked)
 {
     kanaHardRefresh = checked;
     settingsSerializer->setValue("AppSettings/kanaHardRefresh", checked);
+//    GetMy::Instance().MainWindowWidget().AggressiveClearScreen();
 }
 
 void AppSettings::on_comboBox_currentIndexChanged(int index)

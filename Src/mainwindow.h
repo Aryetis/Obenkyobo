@@ -20,6 +20,7 @@ public:
 
     void UpdateStatusBarGeometry();
     void SwitchStackedWidgetIndex(int i);
+    void AggressiveClearScreen() const;
 
 private slots:
     //===========================================================================

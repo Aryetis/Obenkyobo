@@ -3,6 +3,7 @@
 #include "Src/fntsetting.h"
 #include "Src/tools.h"
 #include "Src/appsettings.h"
+#include "Src/mainwindow.h"
 
 #include <algorithm>
 #include <QTextStream>
@@ -162,16 +163,19 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
 void VocabularyDisplay::on_randomizeButton_clicked()
 {
     PopulateGrid(true);
+    GetMy::Instance().MainWindowWidget().AggressiveClearScreen();
 }
 
 void VocabularyDisplay::on_nextPageButton_clicked()
 {
     PopulateGrid(false, 1);
+    GetMy::Instance().MainWindowWidget().AggressiveClearScreen();
 }
 
 void VocabularyDisplay::on_previousPageButton_clicked()
 {
     PopulateGrid(false, -1);
+    GetMy::Instance().MainWindowWidget().AggressiveClearScreen();
 }
 
 void VocabularyDisplay::on_KanasHidePushButton_clicked()

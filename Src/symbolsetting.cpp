@@ -5,6 +5,7 @@
 #include "Src/symbolstables.h"
 #include "Src/appsettings.h"
 #include <QScrollBar>
+#include "Src/mainwindow.h"
 
 
 SymbolSetting::SymbolSetting(QWidget *parent) :
@@ -16,7 +17,8 @@ SymbolSetting::SymbolSetting(QWidget *parent) :
     SymbolsTables::HiraganaSymbolsTableFamily.InitializeSerializedVals();
     SymbolsTables::KatakanaSymbolsTableFamily.InitializeSerializedVals();
 
-    connect( ui->scrollArea->verticalScrollBar(), &QScrollBar::valueChanged, this, &SymbolSetting::OnScroll);
+    connect( ui->scrollArea->verticalScrollBar(), &QScrollBar::sliderReleased, this, &SymbolSetting::OnSliderReleased);
+    connect( ui->scrollArea->verticalScrollBar(), &QScrollBar::valueChanged, this, &SymbolSetting::OnValueChanged);
 
     GetMy::Instance().SetSymbolSettingWidget(this);
 }
@@ -48,7 +50,13 @@ void SymbolSetting::InitializeSymbolSetting(SymbolFamilyEnum _symbolFamily)
     ui->scrollArea->setFocus(); // force focus on scrollbar so it handles physical buttons
 }
 
-void SymbolSetting::OnScroll(int /*value*/)
+void SymbolSetting::OnSliderReleased() const
 {
-// TODO refresh screen properly
+    GetMy::Instance().MainWindowWidget().AggressiveClearScreen();
+}
+
+void SymbolSetting::OnValueChanged(int /*value*/) const
+{
+    if (!ui->scrollArea->verticalScrollBar()->isSliderDown())
+        GetMy::Instance().MainWindowWidget().AggressiveClearScreen();
 }
