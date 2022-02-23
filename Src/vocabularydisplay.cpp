@@ -147,7 +147,6 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
             gridEntry->labels[j]->setStyleSheet((j != 3)
                 ? "QPushButton{ Text-align:left; border : none; } QPushButton:checked{ color: rgba(0,0,0,0); border : none; }"
                 : "QPushButton{ border : none; } QPushButton:checked{ color: rgba(0,0,0,0); border : none; }");
-//            connect(gridEntry->labels[j], &QPushButton::released, this, &VocabularyDisplay::ToggleGridButton);
         }
 
         ++curGridLine;
@@ -159,11 +158,6 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
     HideColumn(2, traductionShow);
     HideColumn(3, lsShow);
 }
-
-//void VocabularyDisplay::ToggleGridButton()
-//{
-//    QPushButton* buttonTriggered = qobject_cast<QPushButton*>(sender());
-//}
 
 void VocabularyDisplay::on_randomizeButton_clicked()
 {
@@ -215,10 +209,11 @@ void VocabularyDisplay::HideColumn(int col, bool b)
         QLayoutItem* item = ui->vocabGrid->itemAtPosition(i, col);
         if (item != nullptr)
         {
+            QPushButton* butt = static_cast<QPushButton*>(item->widget());
             if (b)
-                item->widget()->show();
+                butt->setChecked(false); // "visible"
             else
-                item->widget()->hide();
+                butt->setChecked(true); // "invisible"
         }
     }
 }
