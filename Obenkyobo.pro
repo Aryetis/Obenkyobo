@@ -4,12 +4,10 @@
 #                    - fix wifi
 #                    - random fonts for qcm
 # TODO : - put button in vocabGrid to hide/show individual cell
-#        - set maxHeight for vocabListEntry
 #        - popup isn't expanding anymore ?
 #        - check where the hell are appSettings page margins ? and vocab page ? and welcomePage ?
 #        - hard refresh stuff on vocab list slide, kanas edit slide page, on vocab prev/next page
 #        - ui slider qss in settings
-#        - change size of circles edit button to make it width relative, make he height of each edit entry relative to height
 #        - tweak MenuBar spacing and marging (probably not happening because of kobo quirk)
 #        - handle sleep
 #        - handle QTPA dependency properly, don't have a copy paste from some version and possible src of other versions, get bin from compiled src

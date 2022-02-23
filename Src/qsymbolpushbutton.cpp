@@ -1,4 +1,4 @@
-#include "Src/qsymbolpushbutton.h"
+﻿#include "Src/qsymbolpushbutton.h"
 #include <QPainter>
 #include "Src/symbolstables.h"
 #include "Src/fntsetting.h"
@@ -41,10 +41,12 @@ void QSymbolPushButton::paintEvent(QPaintEvent *event)
     painter.drawText(QRect(0, 0, width(), height()/2), Qt::AlignCenter, JP);
 
     // Drawing Enabled Status
-    int outerSize = height()/10;
+    int screenWidth = GetMy::Instance().Descriptor().width;
+    int outerSize = screenWidth/80;
     int doubleOuterSize = outerSize*2;
-    int innerSize = outerSize * 0.75f;
-    painter.setPen(QPen((isChecked()) ? Qt::white : Qt::black, 2));
+    int outerThickness = screenWidth/500;
+    int innerSize = outerSize - outerThickness*2.5f;
+    painter.setPen(QPen((isChecked()) ? Qt::white : Qt::black, outerThickness));
     painter.drawEllipse(QPointF(width() - doubleOuterSize, doubleOuterSize), outerSize, outerSize);
     if (isChecked())
     {
