@@ -64,7 +64,7 @@ bool ScreenSettings::AreSettingsAvailablePopup() const
 {
     if(!settingAvailable)
     {
-        Tools::GetInstance().DisplayPopup("Sorry,\nno Screen Settings (luminosity, tint) available for your ereader");
+        Tools::GetInstance().DisplayPopup("Sorry,\nno Screen Settings (luminosity, tint) available for your ereader", 0.2f);
         return false;
     }
     return true;

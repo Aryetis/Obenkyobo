@@ -121,16 +121,12 @@ public :
     std::default_random_engine& Rng_Engine() { return rng_engine; }
 
     //======================================================================
-    void DisplayPopup(QString message)
+    void DisplayPopup(QString message, float height)
     {
-        QMessageBox popup;
-
-        QSpacerItem* horizontalSpacer = new QSpacerItem(GetMy::Instance().Descriptor().width, 10
-                            , QSizePolicy::Fixed, QSizePolicy::Fixed); // ugly expension hack, not working anymore becauuuuuse ?
+        BigMessageBox popup;
+        popup.setHeight(height);
         popup.setText(message);
-        popup.setStyleSheet("QMessageBox { border: 5px solid black }");
-        QGridLayout* layout = (QGridLayout*)popup.layout();
-        layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+        popup.setStyleSheet("QMessageBox { border: 5px solid black ;}");
 
         popup.exec();
     }
@@ -236,6 +232,22 @@ public :
 
 //==========================================================================
 private :
+    class BigMessageBox : public QMessageBox // I hate everything about this ...
+    {
+        public :
+            void setHeight(float h) { height = h; }
+
+        private :
+            void resizeEvent(QResizeEvent *Event)
+            {
+                QMessageBox::resizeEvent(Event);
+                this->setFixedWidth(GetMy::Instance().Descriptor().width*0.9f);
+                this->setFixedHeight(GetMy::Instance().Descriptor().height*height);
+            }
+
+            float height = 0.9f;
+    };
+
     Tools()
     {
         mt = std::mt19937(rd_device());

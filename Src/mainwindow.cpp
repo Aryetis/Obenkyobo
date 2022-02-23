@@ -94,7 +94,8 @@ void MainWindow::DisplayFirstTimeMainWindowPagePopup()
                                           "Therefore it is recommended that you turn OFF wifi before launching Obenkyobo to save battery life.\n"
                                           "Each popup will be used only once and sparingly to introduce some mechanisms.\n"
                                           "If you wish to see any popup again later on, please go to Settings->Application->Reset Help Popup\n\n"
-                                          "Thanks for reading, enjoy.");
+                                          "Thanks for reading, enjoy."
+                                          , 0.75f);
         GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeMainWindowPage", false);
     }
 }
@@ -108,7 +109,7 @@ void MainWindow::DisplayFirstTimeKanasEditPagePopup()
                                           "The number at the bottom right corner indicate its Learning Score (LS).\n"
                                           "It ranges from 0 to 5 and reflets your progress.\n"
                                           "You can use the checkboxes to quickly toggle kanas from associated section."
-                                         );
+                                         , 0.5f);
         GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeKanasEditPage", false);
     }
 }
@@ -222,7 +223,8 @@ void MainWindow::on_actionHiragana_to_Romanji_QCM_triggered()
         Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Hiragana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
-                " at :\nMain->Hiragana->Edit Hiragana Set");
+                " at :\nMain->Hiragana->Edit Hiragana Set"
+                , 0.3f);
 }
 
 void MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()
@@ -237,7 +239,8 @@ void MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()
         Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Hiragana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
-                " at :\nMain->Hiragana->Edit Hiragana Set");
+                " at :\nMain->Hiragana->Edit Hiragana Set"
+                , 0.3f);
 }
 
 void MainWindow::on_actionHiragana_to_Romanji_Kbd_triggered()
@@ -270,7 +273,8 @@ void MainWindow::on_actionKatakana_to_Romanji_QCM_triggered()
         Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Katakana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
-                " at :\nMain->Hiragana->Edit Hiragana Set");
+                " at :\nMain->Hiragana->Edit Hiragana Set"
+                , 0.3f);
 }
 
 void MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()
@@ -285,7 +289,8 @@ void MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()
         Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Katakana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
-                " at :\nMain->Hiragana->Edit Hiragana Set");
+                " at :\nMain->Hiragana->Edit Hiragana Set"
+                , 0.3f);
 }
 
 void MainWindow::on_actionKatakana_to_Romanji_Kbd_triggered()
@@ -349,7 +354,7 @@ void MainWindow::on_actionLearn_Edit_Set_triggered()
         Tools::GetInstance().DisplayPopup("Here is displayed every \"vocab sheet\" you have, check Obenkyobo's github page for more information about them.\n"
                                           "Click on any one to learn/display its content.\n"
                                           "Ignore the LS and checkbox for now, those are related unimplemented features for now."
-                                          );
+                                          , 0.4f);
         GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeVocabListPage", false);
     }
 }

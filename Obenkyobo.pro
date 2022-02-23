@@ -1,6 +1,5 @@
 #-------------------------------------------------
 # TODO : - popup isn't expanding anymore ?
-#        - check where the hell are appSettings page margins ? and vocab page ? and welcomePage ?
 #        - hard refresh stuff on vocab list slide, kanas edit slide page, on vocab prev/next page => requires fbink rebuild for libkobo.so
 #-------------------------------------------------
 # TODO later : - tweak MenuBar spacing and marging (probably not happening because of kobo quirk)
