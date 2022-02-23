@@ -126,23 +126,25 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
     {
         tempVocab* gridEntry = gridEntries[i];
 
-        gridEntry->labels[0] = new QLabel(gridEntry->kanas);
+        gridEntry->labels[0] = new QPushButton(gridEntry->kanas);
         gridEntry->labels[0]->setFont
         ({(gridEntry->fontType == SymbolFamilyEnum::hiragana)
                 ? GetMy::Instance().FntSettingWidget().GetCurrentHiraganaFamily()
                 : GetMy::Instance().FntSettingWidget().GetCurrentKatakanaFamily(), fntSize}
         );
-        gridEntry->labels[1] = new QLabel(gridEntry->kanji);
+        gridEntry->labels[1] = new QPushButton(gridEntry->kanji);
         gridEntry->labels[1]->setFont({GetMy::Instance().FntSettingWidget().GetCurrentKanjiFamily(), fntSize});
-        gridEntry->labels[2] = new QLabel(gridEntry->trad);
+        gridEntry->labels[2] = new QPushButton(gridEntry->trad);
         gridEntry->labels[2]->setFont({gridEntry->labels[2]->font().family(), fntSize});
-        gridEntry->labels[3] = new QLabel(QString::number(gridEntry->learningScore));
+        gridEntry->labels[3] = new QPushButton(QString::number(gridEntry->learningScore));
         gridEntry->labels[3]->setFont({gridEntry->labels[3]->font().family(), fntSize});
 
         for (int j=0; j<4; ++j)
         {
-            ui->vocabGrid->addWidget((gridEntry->labels[j]), curGridLine, j, (j==3) ? Qt::AlignCenter : Qt::AlignLeft);
+            ui->vocabGrid->addWidget((gridEntry->labels[j]), curGridLine, j);
             gridEntry->labels[j]->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
+            if (j != 3)
+                gridEntry->labels[j]->setStyleSheet("Text-align:left");
         }
 
         ++curGridLine;

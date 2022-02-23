@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QList>
-#include <QLabel>
+#include <QPushButton>
 #include "vocabularycfglistentry.h"
 #include "symbolstables.h"
 
@@ -19,7 +19,7 @@ struct tempVocab // TODO add to some "vocab entry set" => refactor qcm
     QString kanji;
     QString trad;
     int learningScore;
-    QLabel* labels[4] = {nullptr};
+    QPushButton* labels[4] = {nullptr};
 
     tempVocab() = delete;
     tempVocab(SymbolFamilyEnum sfe, QString kanas_, QString kanji_, QString t, int ls)
