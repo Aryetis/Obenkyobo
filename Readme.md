@@ -31,7 +31,7 @@ More screenshots : <a href="https://imgur.com/gallery/PWeMgeI">here (imgur galle
 Here's what available currently
 - Hiragana/Katakana to Romanji MCQ
 - Romanji to Hiragana/Katakana MCQ
-- Vocabulary sheet system (create your owns)
+- Vocabulary sheet system (create your owns sheets, hide columns, hide cells, randomize content, etc)
 - Editable MCQ Hiragana/Katakana entry pool to learn at your own pace 
 - Weighted random / "learning state" for each Hiragana/Katakana to keep MCQ more entertaining (of course, progress is stored in between each session)
 - Multiple fonts and font settings
@@ -53,8 +53,8 @@ What's planned / Roadmap (in order of priority):
 
 Tested on : 
 - Libra h2o
-- Forma (scaling issue, but functional, should be fixed with V0.1.2)
-- Mini (scaling issue, but functional, should be fixed with V0.1.2)
+- Forma (scaling issue, should be fixed now)
+- Mini (scaling issue, should be fixed now)
 - Glo HD (not working due to qpa issue, cf <a href="https://github.com/Rain92/qt5-kobo-platform-plugin/issues/4">this github issue</a>)
 - More incoming, please report if it works for your model too
 
