@@ -4,7 +4,6 @@
 # TODO later : - less janky popup messages height
 #              - tweak MenuBar spacing and marging (probably not happening because of kobo quirk)
 #              - handle sleep
-#              - fix wifi
 #-------------------------------------------------
 
 QT       += core gui

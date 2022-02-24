@@ -338,6 +338,7 @@ void MainWindow::on_actionEdit_Katakana_Set_triggered()
 void MainWindow::on_actionApplication_Setting_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionApplication_Setting_triggered()" << std::endl;
+    GetMy::Instance().AppSettingWidget().UpdateScoreCounters();
     ui->ContentStackedWidget->setCurrentIndex(4);
     AggressiveClearScreen();
 }

@@ -20,14 +20,6 @@ AppSettings::AppSettings(QWidget *parent) :
     ParseConfigFile();
     InitializeUIValues();
 
-#ifdef QT_NO_DEBUG
-    keepWifiOn = settingsSerializer->value("AppSettings/wifi", 0).toBool();
-#else
-    keepWifiOn = true;
-#endif
-    if (!keepWifiOn)
-        KoboPlatformFunctions::disableWiFiConnection();
-
     GetMy::Instance().SetAppSettingWidget(this);
 }
 
@@ -43,15 +35,20 @@ void AppSettings::ParseConfigFile()
     QList<KoboDevice> badScreenList { KoboDevice::KoboTouchAB, KoboDevice::KoboTouchC, KoboDevice::KoboGlo, KoboDevice::KoboMini, KoboDevice::KoboTouch2, KoboDevice::KoboAura, KoboDevice::KoboAuraHD }; // Wild guess ... meh
     kanaHardRefresh = settingsSerializer->value("AppSettings/kanaHardRefresh", badScreenList.contains(GetMy::Instance().Descriptor().device)).toBool();
     vocabFntSizeIdx = settingsSerializer->value("AppSettings/vocabFntSizeIdx", 4).toInt();
+
+#ifdef QT_NO_DEBUG
+    turnWifiOffStartup = settingsSerializer->value("AppSettings/wifiOffStartup", true).toBool();
+#else
+    turnWifiOffStartup = false;
+#endif
+    if (turnWifiOffStartup)
+        KoboPlatformFunctions::disableWiFiConnection();
 }
 
 void AppSettings::InitializeUIValues() const
 {
-    int appStatisticsScore = settingsSerializer->value("AppStatistics/score", 0).toInt();
-    ui->ScoreCounterValueLabel->setText(QString::number(appStatisticsScore));
-    int appStatisticsError = settingsSerializer->value("AppStatistics/error", 0).toInt();
-    ui->ErrorsCounterValueLabel->setText(QString::number(appStatisticsError));
-    ui->WifiCheckBox->setChecked(keepWifiOn);
+    UpdateScoreCounters();
+    ui->WifiCheckBox->setChecked(turnWifiOffStartup);
 
     ui->nbrOfEntryLinesDropdown->setCurrentIndex(nbrOfEntryLinesIdx);
     ui->RandomnessDropdown->setCurrentIndex(randomChoiceIdx);
@@ -66,6 +63,14 @@ void AppSettings::InitializeUIValues() const
     ui->RowPerPageComboBox->setCurrentIndex(nbrOfRowPerVocabIdx);
     ui->KanaHardRefreshCheckBox->setChecked(kanaHardRefresh);
     ui->VocabFntSizeCombox->setCurrentIndex(vocabFntSizeIdx);
+}
+
+void AppSettings::UpdateScoreCounters() const
+{
+    int appStatisticsScore = settingsSerializer->value("AppStatistics/score", 0).toInt();
+    ui->ScoreCounterValueLabel->setText(QString::number(appStatisticsScore));
+    int appStatisticsError = settingsSerializer->value("AppStatistics/error", 0).toInt();
+    ui->ErrorsCounterValueLabel->setText(QString::number(appStatisticsError));
 }
 
 AppSettings::~AppSettings()
@@ -123,18 +128,9 @@ bool AppSettings::IsWeightedRandomEnabled() const
     return randomChoiceIdx == 1;
 }
 
-// TODO now fix
-void AppSettings::on_WifiCheckBox_clicked(bool /*checked*/)
+void AppSettings::on_WifiCheckBox_clicked(bool checked)
 {
-//    if (checked != wifi)
-//    {
-//        wifi = checked;
-//        settingsSerializer->value("AppSettings/wifi", wifi).toBool();
-//        if (wifi)
-//            KoboPlatformFunctions::enableWiFiConnection();
-//        else
-//            KoboPlatformFunctions::disableWiFiConnection();
-//    }
+    settingsSerializer->setValue("AppSettings/wifiOffStartup", checked);
 }
 
 void AppSettings::on_ResetWeightsButton_clicked()

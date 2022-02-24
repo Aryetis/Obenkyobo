@@ -31,6 +31,7 @@ public:
     int GetNbrOfRowPerVocabPage() const;
     bool GetKanaHardRefresh() const { return kanaHardRefresh; }
     int GetVocabFntSize() const;
+    void UpdateScoreCounters() const;
 
     QSettings* GetSettingsSerializer() const { return settingsSerializer; }
 
@@ -56,7 +57,7 @@ private:
     Ui::AppSettings *ui;
     int nbrOfEntryLinesIdx;
     int randomChoiceIdx;
-    bool keepWifiOn;
+    bool turnWifiOffStartup;
     int hardRefreshFreqIdx;
     int batteryFormatIdx;
     int dateFormatIdx;
