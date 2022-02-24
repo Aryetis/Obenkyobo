@@ -77,6 +77,18 @@ Once you're done installing at least one of those you can either :
 And voilà ! You should now have a NickelMenu entry at the bottom right corner of your ereader "home screen" and a new "book" in your library to open with KfMon.
 <br clear="left"/>
 
+## How to create my vocabulary sheets ?
+
+Each file in `Obenkyobo/vocab` is a Vocabulary sheet.
+To make your own, create a file and follow the same template as the default ones.
+
+Each line should follow this format : [fontType=hiragana][jp=いぬ][trad=chien][learningScore=5]
+You can insert commentary line by having it start with a `#`.
+Possible values for fontType : hiragana/katakana/kanji, it will determine what fonts is used in Obenkyobo to display this entry.
+LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo.
+
+If your file is misinterpreted in Obenkyobo, please make sure your text editor (notepad++, sublimeText, etc) is saving the file as UTF-8.
+
 ## Issues ? 
 
 Is your screen rotated the wrong way ? Are your touch inputs broken ? This kind of issue can happen on very old/new devices/untested devices. You can force rotations of screen and touch inputs by modifying the `QT_QPA_PLATFORM` variable in `.adds/Obenkyobo/Obenkyobo_launcher.sh` on your ereader (depending of your OS you might have to <a href="https://www.google.com/search?client=firefox-b-d&q=enable+hidden+folder+">enable "hidden folder"</a>) :
