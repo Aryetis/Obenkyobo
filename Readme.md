@@ -153,7 +153,7 @@ Projects->Kobo(Kit)->Run->Deployment-> Add Run custom remote command (in both Re
 
 Projects->Kobo(Kit)->Run->Environment->(System Environment)->Add create new variable with at least 
 LD_LIBRARY_PATH = /mnt/onboard/.adds/qt-linux-5.15-kde-kobo/lib:lib:
-QT_QPA_PLATFORM = kobo
+QT_QPA_PLATFORM = kobo_obenkyobo (keep an eye on https://github.com/Rain92/qt5-kobo-platform-plugin to switch back to official qpa plugin once issues are resolved over here)
 ```
 
 NEVER modify any of the .sh scripts under windows... Windows end of line will mess things up when ran on linux
