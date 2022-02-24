@@ -13,6 +13,10 @@ Version="0.2.0"
 LauncherName=$4_launcher.sh
 QtPluginKobo=kobo_obenkyobo
 
+echo ===============================================================
+echo packager.sh $1\;$2\;$3\;$4
+echo ===============================================================
+
 #Launcher and application
 mkdir -p $3/Output/.adds/$4
 cp $3/$4 $3/Output/.adds/$4/$4
