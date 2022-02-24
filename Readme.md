@@ -109,7 +109,7 @@ You can setup a very basic Kobo dev environment by following either
 
 Once you've got your arm QtBinaries, copy its folder (with necessaries additional libs) to `OtherFiles/Dependencies`
 
-For Obenkyobo to work you'll also have to compile <a href="https://github.com/Rain92/qt5-kobo-platform-plugin">qt5-kobo-platform-plugin</a> and have its folder next to Obenkyobo's folder. That way the packager.sh script will be able to grab the libkobo.so or libkobo.so.debug (you'll have to rename it) if you wish to build in debug mode.
+For Obenkyobo to work you'll also have to compile <a href="https://github.com/Aryetis/qt5-kobo-platform-plugin">qt5-kobo-platform-plugin</a> (for now use my fork of it as it includes a correct fbink build and a fix for sleepcover button) and have its folder next to Obenkyobo's folder. That way the packager.sh script will be able to grab the libkobo.so or libkobo.so.debug (you'll have to rename it) if you wish to build in debug mode.
 
 You'll probably run along some troubles, so to save you some time here's the tldr version from the <a href="https://discord.com/channels/793941135419506728/796445063127236648/897503681275129876">discord discussion</a>
 
