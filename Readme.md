@@ -6,20 +6,23 @@ Obenkyobo is an application for kyobo ereaders designed to help you memorize Hir
 
 ```diff
 - Please be aware, this application is still early in its life cycle.
-- For the time being there is no wifi nor sleep support.
-- So to preserve your battery I recommend quiting the application after each session.
+- Turning off your device will not put it to sleep, it will only turn off the light.
 ```
 
 ## How does it look ?
 <p align="center">
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/welcome.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/qcmHiragana1.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/qcmHiragana2.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/qcmKatakana.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/editSymbols1.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/appSettings.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/fntSettings.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/screenSetting.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/about.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/hiragana.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/hiragana2.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/katakana.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/katakanaEdit.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/hiraganaEdit.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/vocabList.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/vocabGrid.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/vocabGrid2.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/appsettings.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/fontSettings.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/screenSettings.png" width="252" height="320" >
 </p>
 More screenshots : <a href="https://imgur.com/gallery/eSl9Euy">here (imgur gallery)</a>
 
@@ -28,16 +31,17 @@ More screenshots : <a href="https://imgur.com/gallery/eSl9Euy">here (imgur galle
 Here's what available currently
 - Hiragana/Katakana to Romanji MCQ
 - Romanji to Hiragana/Katakana MCQ
+- Vocabulary sheet system (create your owns)
 - Editable MCQ Hiragana/Katakana entry pool to learn at your own pace 
 - Weighted random / "learning state" for each Hiragana/Katakana to keep MCQ more entertaining (of course, progress is stored in between each session)
 - Multiple fonts and font settings
 - Screen options (Luminosity/Tint) support
-
+- Physical buttons support
+- Wifi support 
 
 What's planned / Roadmap (in order of priority):
 (For incoming weeks/months)
-- Wifi support 
-- Sleep/WakeUp support
+- Proper Sleep/WakeUp support (for now it only turns off the light)
 - Hiragana/Katakana to Romanji Keyboard exercices
 - Overall UI improvement 
 - Proper "Obenkyobo cover.png"
@@ -51,7 +55,7 @@ Tested on :
 - Libra h2o
 - Forma (scaling issue, but functional, should be fixed with V0.1.2)
 - Mini (scaling issue, but functional, should be fixed with V0.1.2)
-- Glo HD (non responsive menu ? need more informations to investigate)
+- Glo HD (not working due to qpa issue, cf <a href="https://github.com/Rain92/qt5-kobo-platform-plugin/issues/4">this github issue</a>)
 - More incoming, please report if it works for your model too
 
 ## How to install ?
@@ -63,8 +67,8 @@ Secondly, you'll need to install a "launcher" beforehand. Common options are :
 - <a href="https://github.com/NiLuJe/kfmon">Kute File Monitor (KfMon)</a>
 
 Once you're done installing at least one of those you can either : 
-- Download the following All-In-One package (containing Obenkyobo + Qt Libraries + QTQPA libkobo.so + NM and KfMon entries) <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_AIO_Release_V0.1.zip</a> , connect the ereader to your computer and extract the package at its root. It should work "as is" assuming you're using NickelMenu. If you're using KfMon you'll have to uncomment the associated entry file (`.adds/kfmon/config/Obenkyobo.ini`) by removing one of the `;` located at the start of each line. And you might want to delete the useless NickelMenu entry too `.adds/nm/Obenkyobo`
-- Donwload the following "no qt" package (containing Obenkyobo + NM and KfMon entries) <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_Light_Release_V0.1.zip</a> and install it the same way. Please note that Obenkyobo REQUIRES those Qt Libraries. Only select this one if you know what you're doing and have already Qt Libraries (same version as in the AIO package) and libkobo.so installed on your device from another program such as <a href="https://github.com/Rain92/UltimateMangaReader/">Ultimate Manga Reader</a>
+- Download the following All-In-One package (containing Obenkyobo + Qt Libraries + QTQPA libkobo.so + NM and KfMon entries) <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_AIO_Release_Vx.y.zip</a> , connect the ereader to your computer and extract the package at its root. It should work "as is" assuming you're using NickelMenu. If you're using KfMon you'll have to uncomment the associated entry file (`.adds/kfmon/config/Obenkyobo.ini`) by removing one of the `;` located at the start of each line. And you might want to delete the useless NickelMenu entry too `.adds/nm/Obenkyobo`
+- Donwload the following "no qt" package (containing Obenkyobo + NM and KfMon entries) <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_Light_Release_Vx.y.zip</a> and install it the same way. Please note that Obenkyobo REQUIRES those Qt Libraries. Only select this one if you know what you're doing and have already Qt Libraries (same version as in the AIO package) and libkobo.so installed on your device from another program such as <a href="https://github.com/Rain92/UltimateMangaReader/">Ultimate Manga Reader</a>
 
 <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/NickelMenu.png" width="303" height="184" align="left"/>
 <br/>
