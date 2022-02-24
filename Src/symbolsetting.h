@@ -20,6 +20,9 @@ public:
 
     void InitializeSymbolSetting(SymbolFamilyEnum _symbolFamily);
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *ev) override;
+
 private:
     Ui::SymbolSetting *ui;
     SymbolFamilyEnum symbolFamily;

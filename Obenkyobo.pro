@@ -1,6 +1,5 @@
 #-------------------------------------------------
-# TODO : - move aggressive refresh for kana edit page, it's done too early atm
-#        - update Readme.md
+# TODO : - update Readme.md
 #-------------------------------------------------
 # TODO later : - less janky popup messages height
 #              - tweak MenuBar spacing and marging (probably not happening because of kobo quirk)

@@ -20,6 +20,9 @@ public:
 
     void InitializeVocabularyLearnEditSet();
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *ev) override;
+
 private slots:
     void on_SelectAllButton_clicked();
 

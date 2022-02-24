@@ -7,7 +7,6 @@
 #include "GetMy.h"
 #include "tools.h"
 
-// TODO popup explaining that you can click every sheet to inspect it, explaining the LS, the checkbox, etc
 
 VocabularyCfgListEntry::VocabularyCfgListEntry(QWidget *parent) :
     QWidget(parent), ui(new Ui::VocabularyCfgListEntry)

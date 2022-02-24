@@ -20,6 +20,8 @@ SymbolSetting::SymbolSetting(QWidget *parent) :
     connect( ui->scrollArea->verticalScrollBar(), &QScrollBar::sliderReleased, this, &SymbolSetting::OnSliderReleased);
     connect( ui->scrollArea->verticalScrollBar(), &QScrollBar::valueChanged, this, &SymbolSetting::OnValueChanged);
 
+    ui->scrollArea->verticalScrollBar()->installEventFilter(this);
+
     GetMy::Instance().SetSymbolSettingWidget(this);
 }
 
@@ -48,6 +50,14 @@ void SymbolSetting::InitializeSymbolSetting(SymbolFamilyEnum _symbolFamily)
     }
 
     ui->scrollArea->setFocus(); // force focus on scrollbar so it handles physical buttons
+}
+
+bool SymbolSetting::eventFilter(QObject *obj, QEvent *event)
+{
+    if (obj == ui->scrollArea->verticalScrollBar() && event->type() == QEvent::Type::Show)
+        GetMy::Instance().MainWindowWidget().AggressiveClearScreen();
+
+    return false;
 }
 
 void SymbolSetting::OnSliderReleased() const

@@ -7,6 +7,7 @@
 #include <QDir>
 #include <QScrollBar>
 
+
 VocabularyLearnEditSet::VocabularyLearnEditSet(QWidget *parent) :
     QWidget(parent), ui(new Ui::VocabularyLearnEditSet), selectAllStatus(false)
 {
@@ -24,6 +25,8 @@ VocabularyLearnEditSet::VocabularyLearnEditSet(QWidget *parent) :
     connect( ui->VocabularyCfgList->verticalScrollBar(), &QScrollBar::sliderReleased, this, &VocabularyLearnEditSet::OnSliderReleased);
     connect( ui->VocabularyCfgList->verticalScrollBar(), &QScrollBar::valueChanged, this, &VocabularyLearnEditSet::OnValueChanged);
 
+    ui->VocabularyCfgList->verticalScrollBar()->installEventFilter(this);
+
     GetMy::Instance().SetVocabularyLearnEditSetWidget(this);
 }
 
@@ -33,6 +36,14 @@ VocabularyLearnEditSet::~VocabularyLearnEditSet()
         delete vc;
 
     delete ui;
+}
+
+bool VocabularyLearnEditSet::eventFilter(QObject *obj, QEvent *event)
+{
+    if (obj == ui->VocabularyCfgList->verticalScrollBar() && event->type() == QEvent::Type::Show)
+        GetMy::Instance().MainWindowWidget().AggressiveClearScreen();
+
+    return false;
 }
 
 void VocabularyLearnEditSet::InitializeVocabularyLearnEditSet()
