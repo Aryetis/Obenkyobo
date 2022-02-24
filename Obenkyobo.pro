@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# TODO : - use libkobo_Obenkyobo.so instead of libkobo.so in order to not break other apps
+# TODO : - move aggressive refresh for kana edit page, it's done too early atm
 #        - update Readme.md
 #-------------------------------------------------
 # TODO later : - less janky popup messages height
