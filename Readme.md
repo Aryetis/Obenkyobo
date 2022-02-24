@@ -67,8 +67,8 @@ Secondly, you'll need to install a "launcher" beforehand. Common options are :
 - <a href="https://github.com/NiLuJe/kfmon">Kute File Monitor (KfMon)</a>
 
 Once you're done installing at least one of those you can either : 
-- Download the following All-In-One package (containing Obenkyobo + Qt Libraries + QTQPA libkobo.so + NM and KfMon entries) <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_AIO_Release_Vx.y.zip</a> , connect the ereader to your computer and extract the package at its root. It should work "as is" assuming you're using NickelMenu. If you're using KfMon you'll have to uncomment the associated entry file (`.adds/kfmon/config/Obenkyobo.ini`) by removing one of the `;` located at the start of each line. And you might want to delete the useless NickelMenu entry too `.adds/nm/Obenkyobo`
-- Donwload the following "no qt" package (containing Obenkyobo + NM and KfMon entries) <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_Light_Release_Vx.y.zip</a> and install it the same way. Please note that Obenkyobo REQUIRES those Qt Libraries. Only select this one if you know what you're doing and have already Qt Libraries (same version as in the AIO package) and libkobo.so installed on your device from another program such as <a href="https://github.com/Rain92/UltimateMangaReader/">Ultimate Manga Reader</a>
+- Download the following All-In-One package (containing Obenkyobo + Qt Libraries + QTQPA libkobo.so + NM and KfMon entries) <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_AIO_Release_V0.2.0.zip</a> , connect the ereader to your computer and extract the package at its root. It should work "as is" assuming you're using NickelMenu. If you're using KfMon you'll have to uncomment the associated entry file (`.adds/kfmon/config/Obenkyobo.ini`) by removing one of the `;` located at the start of each line. And you might want to delete the useless NickelMenu entry too `.adds/nm/Obenkyobo`
+- Donwload the following "no qt" package (containing Obenkyobo + NM and KfMon entries) <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_Light_Release_V0.2.0.zip</a> and install it the same way. Please note that Obenkyobo REQUIRES those Qt Libraries. Only select this one if you know what you're doing and have already Qt Libraries (same version as in the AIO package) and libkobo.so installed on your device from another program such as <a href="https://github.com/Rain92/UltimateMangaReader/">Ultimate Manga Reader</a>
 
 <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/NickelMenu.png" width="303" height="184" align="left"/>
 <br/>
@@ -76,6 +76,18 @@ Once you're done installing at least one of those you can either :
 <br/>
 And voilà ! You should now have a NickelMenu entry at the bottom right corner of your ereader "home screen" and a new "book" in your library to open with KfMon.
 <br clear="left"/>
+
+## How to create my vocabulary sheets ?
+
+Each file in `Obenkyobo/vocab` is a Vocabulary sheet.<br/>
+To make your own, create a file and follow the same template as the default ones.
+
+Each line should follow this format : `[fontType=hiragana][jp=いぬ][kanji=犬][trad=chien][learningScore=5]`<br/>
+You can insert commentary line by having it start with a `#`.<br/>
+Possible values for fontType : hiragana/katakana/kanji, it will determine what fonts is used in Obenkyobo to display this entry.<br/>
+LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo.
+
+If your file is misinterpreted in Obenkyobo, please make sure your text editor (notepad++, sublimeText, etc) is saving the file in UTF-8 format.
 
 ## Issues ? 
 
@@ -109,7 +121,7 @@ You can setup a very basic Kobo dev environment by following either
 
 Once you've got your arm QtBinaries, copy its folder (with necessaries additional libs) to `OtherFiles/Dependencies`
 
-For Obenkyobo to work you'll also have to compile <a href="https://github.com/Rain92/qt5-kobo-platform-plugin">qt5-kobo-platform-plugin</a> and have its folder next to Obenkyobo's folder. That way the packager.sh script will be able to grab the libkobo.so or libkobo.so.debug (you'll have to rename it) if you wish to build in debug mode.
+For Obenkyobo to work you'll also have to compile <a href="https://github.com/Aryetis/qt5-kobo-platform-plugin">qt5-kobo-platform-plugin</a> (for now use my fork of it as it includes a correct fbink build and a fix for sleepcover button) and have its folder next to Obenkyobo's folder. That way the packager.sh script will be able to grab the libkobo.so or libkobo.so.debug (you'll have to rename it) if you wish to build in debug mode.
 
 You'll probably run along some troubles, so to save you some time here's the tldr version from the <a href="https://discord.com/channels/793941135419506728/796445063127236648/897503681275129876">discord discussion</a>
 
