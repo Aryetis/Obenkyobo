@@ -82,7 +82,7 @@ And voilà ! You should now have a NickelMenu entry at the bottom right corner o
 Each file in `Obenkyobo/vocab` is a Vocabulary sheet.<br/>
 To make your own, create a file and follow the same template as the default ones.
 
-Each line should follow this format : `[fontType=hiragana][jp=いぬ][trad=chien][learningScore=5]`<br/>
+Each line should follow this format : `[fontType=hiragana][jp=いぬ][kanji=犬][trad=chien][learningScore=5]`<br/>
 You can insert commentary line by having it start with a `#`.<br/>
 Possible values for fontType : hiragana/katakana/kanji, it will determine what fonts is used in Obenkyobo to display this entry.<br/>
 LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo.
