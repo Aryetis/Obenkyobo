@@ -32,6 +32,7 @@ public:
     bool GetKanaHardRefresh() const { return kanaHardRefresh; }
     int GetVocabFntSize() const;
     void UpdateScoreCounters() const;
+    bool GetWifiStatus() const { return wifiStatus; }
 
     QSettings* GetSettingsSerializer() const { return settingsSerializer; }
 
@@ -57,7 +58,7 @@ private:
     Ui::AppSettings *ui;
     int nbrOfEntryLinesIdx;
     int randomChoiceIdx;
-    bool turnWifiOffStartup;
+    bool wifiStatus;
     int hardRefreshFreqIdx;
     int batteryFormatIdx;
     int dateFormatIdx;

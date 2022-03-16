@@ -4,6 +4,7 @@
 # TODO later : - less janky popup messages height
 #              - tweak MenuBar spacing and marging (probably not happening because of kobo quirk)
 #              - handle sleep
+#              - clicking next/previous page AND not actually changing page (because not enough/first/last page) should NOT reapply hide status as we're not really changing page
 #-------------------------------------------------
 
 QT       += core gui
@@ -122,9 +123,9 @@ else: unix:!android: target.path = /mnt/onboard/.adds/$${TARGET}
 
 ##################### install everything first then only deploy binary/target #####################
 #INSTALLS += target everything thumbnail
-INSTALLS += target everythingButLibs thumbnail
+#INSTALLS += target everythingButLibs thumbnail
 #INSTALLS += target everythingButLibsAndSh thumbnail
 #INSTALLS += everything thumbnail
-#INSTALLS += target
+INSTALLS += target
 
 DISTFILES +=

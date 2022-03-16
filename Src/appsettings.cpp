@@ -36,19 +36,21 @@ void AppSettings::ParseConfigFile()
     kanaHardRefresh = settingsSerializer->value("AppSettings/kanaHardRefresh", badScreenList.contains(GetMy::Instance().Descriptor().device)).toBool();
     vocabFntSizeIdx = settingsSerializer->value("AppSettings/vocabFntSizeIdx", 4).toInt();
 
-#ifdef QT_NO_DEBUG
-    turnWifiOffStartup = settingsSerializer->value("AppSettings/wifiOffStartup", true).toBool();
+#ifdef QT_NO_DEBUG // App doesn't like loosing contact with QtCreator debugger btw
+    wifiStatus = settingsSerializer->value("AppSettings/wifi", false).toBool();
 #else
-    turnWifiOffStartup = false;
+    wifiStatus = true;
 #endif
-    if (turnWifiOffStartup)
+    if (wifiStatus)
+        KoboPlatformFunctions::enableWiFiConnection();
+    else
         KoboPlatformFunctions::disableWiFiConnection();
 }
 
 void AppSettings::InitializeUIValues() const
 {
     UpdateScoreCounters();
-    ui->WifiCheckBox->setChecked(turnWifiOffStartup);
+    ui->WifiCheckBox->setChecked(wifiStatus);
 
     ui->nbrOfEntryLinesDropdown->setCurrentIndex(nbrOfEntryLinesIdx);
     ui->RandomnessDropdown->setCurrentIndex(randomChoiceIdx);
@@ -130,7 +132,19 @@ bool AppSettings::IsWeightedRandomEnabled() const
 
 void AppSettings::on_WifiCheckBox_clicked(bool checked)
 {
-    settingsSerializer->setValue("AppSettings/wifiOffStartup", checked);
+    wifiStatus = checked;
+    settingsSerializer->setValue("AppSettings/wifiOffStartup", wifiStatus);
+
+    QString originalText = ui->WifiLabel->text();
+    ui->WifiLabel->setText(QString(originalText).append(" (Working...)"));
+
+    wifiStatus = settingsSerializer->value("AppSettings/wifi", false).toBool();
+    if (wifiStatus)
+        KoboPlatformFunctions::enableWiFiConnection();
+    else
+        KoboPlatformFunctions::disableWiFiConnection();
+
+    ui->WifiLabel->setText(originalText);
 }
 
 void AppSettings::on_ResetWeightsButton_clicked()
@@ -169,7 +183,6 @@ void AppSettings::on_KanaHardRefreshCheckBox_clicked(bool checked)
 {
     kanaHardRefresh = checked;
     settingsSerializer->setValue("AppSettings/kanaHardRefresh", checked);
-//    GetMy::Instance().MainWindowWidget().AggressiveClearScreen();
 }
 
 void AppSettings::on_comboBox_currentIndexChanged(int index)

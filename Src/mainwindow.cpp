@@ -128,6 +128,27 @@ void MainWindow::DisplayFirstTimeKanasEditPagePopup()
     }
 }
 
+void MainWindow::OnSleep() const
+{
+    if (Tools::GetInstance().Sleeping())
+        return;
+
+    disconnect(&timer, nullptr, nullptr, nullptr);
+    timeDisplay->setText("ZZzz..");
+
+    UpdateStatusBarGeometry();
+}
+
+void MainWindow::OnWakeUp() const
+{
+    if (!Tools::GetInstance().Sleeping())
+        return;
+
+    connect(&timer, &QTimer::timeout, this, &MainWindow::refreshTimeAndBattery);
+
+    UpdateStatusBarGeometry();
+}
+
 void MainWindow::refreshTimeAndBattery()
 {
     bool ugly = false;
@@ -196,7 +217,7 @@ void MainWindow::refreshTimeAndBattery()
 }
 
 // TODO : find a proper way to resize statusBar upon size modification
-void MainWindow::UpdateStatusBarGeometry()
+void MainWindow::UpdateStatusBarGeometry() const
 {
     statusBar->setVisible(false);
     statusBar->setVisible(true);

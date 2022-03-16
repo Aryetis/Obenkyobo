@@ -587,7 +587,7 @@
        <item>
         <widget class="QLabel" name="WifiLabel">
          <property name="text">
-          <string>Turn off wifi at startup :</string>
+          <string>Wifi Status :</string>
          </property>
         </widget>
        </item>

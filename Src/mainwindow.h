@@ -18,9 +18,11 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
 
-    void UpdateStatusBarGeometry();
+    void UpdateStatusBarGeometry() const;
     void SwitchStackedWidgetIndex(int i);
     void AggressiveClearScreen() const;
+    void OnSleep() const;
+    void OnWakeUp() const;
 
 private slots:
     //===========================================================================

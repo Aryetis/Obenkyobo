@@ -72,12 +72,18 @@ bool ScreenSettings::AreSettingsAvailablePopup() const
 
 void ScreenSettings::OnSleep() const
 {
+    if (Tools::GetInstance().Sleeping())
+        return;
+
     if(settingAvailable)
         KoboPlatformFunctions::setFrontlightLevel(desc.frontlightSettings.naturalLightMin, tint);
 }
 
 void ScreenSettings::OnWakeUp() const
 {
+    if (!Tools::GetInstance().Sleeping())
+        return;
+
     if(settingAvailable)
         KoboPlatformFunctions::setFrontlightLevel(luminosity, tint);
 }
