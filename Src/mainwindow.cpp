@@ -134,17 +134,23 @@ void MainWindow::OnSleep() const
         return;
 
     disconnect(&timer, nullptr, nullptr, nullptr);
-    timeDisplay->setText("ZZzz..");
+    actionBatteryIcon->setIcon(QIcon());
+    actionBatteryTxt->setText("");
+    timeDisplay->setText("ZZZzzzz... ");
 
     UpdateStatusBarGeometry();
 }
 
-void MainWindow::OnWakeUp() const
+void MainWindow::OnWakeUp()
 {
     if (!Tools::GetInstance().Sleeping())
         return;
 
     connect(&timer, &QTimer::timeout, this, &MainWindow::refreshTimeAndBattery);
+    // reinitializing icons format
+    wasBatteryLvl = -1;
+    wasBatteryDisplayFormat = -1;
+    wasBatteryCharging = -1;
 
     UpdateStatusBarGeometry();
 }

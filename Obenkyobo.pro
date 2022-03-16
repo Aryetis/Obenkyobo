@@ -4,7 +4,6 @@
 # TODO later : - less janky popup messages height
 #              - tweak MenuBar spacing and marging (probably not happening because of kobo quirk)
 #              - handle sleep
-#              - clicking next/previous page AND not actually changing page (because not enough/first/last page) should NOT reapply hide status as we're not really changing page
 #-------------------------------------------------
 
 QT       += core gui

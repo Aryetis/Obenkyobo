@@ -103,6 +103,13 @@ void VocabularyDisplay::CleanGrid()
 
 void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0*/)
 {
+    // Checking if we have actual stuff to do
+    if (curPage+turnPage >= 0 && curPage+turnPage < maxPage)
+        curPage += turnPage;
+    else if (!random)
+        // No need to repopuplate and thus refresh the hide status if we're not really changing page or randomizing
+        return;
+
     // Cleaning previous stuff
     CleanGrid();
 
@@ -117,8 +124,6 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
     int curGridLine=0;
     int nbrOfRow = GetMy::Instance().AppSettingWidget().GetNbrOfRowPerVocabPage();
     int fntSize = GetMy::Instance().AppSettingWidget().GetVocabFntSize();
-    if (curPage+turnPage >= 0 && curPage+turnPage < maxPage)
-        curPage += turnPage;
     ui->previousPageButton->setCheckable(curPage != 0);
     ui->nextPageButton->setCheckable(curPage != maxPage);
 

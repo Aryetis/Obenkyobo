@@ -142,62 +142,66 @@ public :
         if (sleeping)
             return;
 
-        std::cout << "going to sleep" << std::endl;
+        std::cout << "LOG: going to sleep" << std::endl;
         GetMy::Instance().ScreenSettingsWidget().OnSleep();
         GetMy::Instance().MainWindowWidget().OnSleep();
+//        qApp->processEvents();
 
-        std::cout << "disableWiFiConnection()" << std::endl;
-        KoboPlatformFunctions::disableWiFiConnection();
-        //-------------------------------------------------------------
-        std::cout << "stateExtendedFile << 1" << std::endl;
-        QFile stateExtendedFile("/sys/power/state-extended");
-        if (!stateExtendedFile.open(QIODevice::WriteOnly | QIODevice::Text))
-        {
-            std::cout << "ERROR: Couldn't open /sys/power/state-extended (1st stage)" << std::endl;
-            return;
-        }
-        else
-        {
-            QTextStream out(&stateExtendedFile);
-            out << "1\n";
-        }
-        stateExtendedFile.close();
+//        std::cout << "LOG: disabling WiFi" << std::endl;
+//        KoboPlatformFunctions::disableWiFiConnection();
+//        QThread::sleep(6);
 
-        //-------------------------------------------------------------
-        std::cout << "sync" << std::endl;
-        QThread::sleep(2);
-        QProcess::execute("sync", {});
+//        //-------------------------------------------------------------
+//        std::cout << "LOG: /sys/power/stateExtendedFile << 1 (1st stage)" << std::endl;
+//        QFile stateExtendedFile("/sys/power/state-extended");
+//        if (!stateExtendedFile.open(QIODevice::WriteOnly | QIODevice::Text))
+//        {
+//            std::cout << "ERROR: Couldn't open /sys/power/state-extended (1st stage)" << std::endl;
+//            return;
+//        }
+//        else
+//        {
+//            QTextStream out(&stateExtendedFile);
+//            out << "1\n";
+//        }
+//        stateExtendedFile.close();
 
-        //-------------------------------------------------------------
-        std::cout << "0 || mem stuff... something really weird here" << std::endl;
-        QFile stateFile("/sys/power/state");
-        if (!stateFile.open(QIODevice::WriteOnly | QIODevice::Text))
-        {
-            std::cout << "ERROR: Couldn't open /sys/power/state" << std::endl;
+//        //-------------------------------------------------------------
+//        std::cout << "LOG: sync" << std::endl;
+//        QThread::sleep(2);
+//        QProcess::execute("sync", {});
 
-            QFile stateExtendedFile2("/sys/power/state-extended");
-            if (!stateExtendedFile2.open(QIODevice::WriteOnly | QIODevice::Text))
-            {
-                std::cout << "ERROR: Couldn't open /sys/power/state-extended (2nd stage)" << std::endl;
-                return;
-            }
-            else
-            {
-                QTextStream out(&stateExtendedFile2);
-                out << "0\n";
-            }
-            stateExtendedFile2.close();
-        }
-        else
-        {
-            QTextStream out(&stateFile);
-            out << "mem\n";
-        }
-        stateFile.close();
+//        //-------------------------------------------------------------
+//        QFile stateFile("/sys/power/state");
+//        if (!stateFile.open(QIODevice::WriteOnly | QIODevice::Text))
+//        {
+//            std::cout << "ERROR: Couldn't open /sys/power/state" << std::endl;
 
-        //-------------------------------------------------------------
+//            QFile stateExtendedFile2("/sys/power/state-extended");
+//            if (!stateExtendedFile2.open(QIODevice::WriteOnly | QIODevice::Text))
+//            {
+//                std::cout << "ERROR: Couldn't open /sys/power/state-extended (2nd stage)" << std::endl;
+//                return;
+//            }
+//            else
+//            {
+//                std::cout << "LOG: /sys/power/state-extended << 0 (2nd stage)" << std::endl;
+//                QTextStream out(&stateExtendedFile2);
+//                out << "0\n";
+//            }
+//            stateExtendedFile2.close();
+//        }
+//        else
+//        {
+//            std::cout << "LOG: /sys/power/state << mem (2nd stage)" << std::endl;
+//            QTextStream out(&stateFile);
+//            out << "mem\n";
+//        }
+//        stateFile.close();
 
-        std::cout << "sleeping" << std::endl;
+//        //-------------------------------------------------------------
+
+//        std::cout << "sleeping" << std::endl;
         sleeping = true;
     }
 
@@ -211,43 +215,43 @@ public :
         GetMy::Instance().MainWindowWidget().OnWakeUp();
 
 
-        if (GetMy::Instance().AppSettingWidget().GetWifiStatus())
-            KoboPlatformFunctions::enableWiFiConnection();
+//        if (GetMy::Instance().AppSettingWidget().GetWifiStatus())
+//            KoboPlatformFunctions::enableWiFiConnection();
 
-        //-------------------------------------------------------------
-        QFile file("/sys/power/state-extended");
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-        {
-            std::cout << "ERROR: Couldn't open /sys/power/state-extended" << std::endl;
-            return;
-        }
-        else
-        {
-            QTextStream out(&file);
-            out << "2\n";
-        }
-        file.close();
+//        //-------------------------------------------------------------
+//        QFile file("/sys/power/state-extended");
+//        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+//        {
+//            std::cout << "ERROR: Couldn't open /sys/power/state-extended" << std::endl;
+//            return;
+//        }
+//        else
+//        {
+//            QTextStream out(&file);
+//            out << "2\n";
+//        }
+//        file.close();
 
-        //-------------------------------------------------------------
-        QThread::msleep(100);
+//        //-------------------------------------------------------------
+//        QThread::msleep(100);
 
-        //-------------------------------------------------------------
-        file.setFileName("/sys/devices/virtual/input/input1/neocmd");
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-        {
-            std::cout << "ERROR: Couldn't open /sys/devices/virtual/input/input1/neocmd" << std::endl;
-            return;
-        }
-        else
-        {
-            QTextStream out(&file);
-            out << "2\n";
-        }
-        file.close();
+//        //-------------------------------------------------------------
+//        file.setFileName("/sys/devices/virtual/input/input1/neocmd");
+//        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+//        {
+//            std::cout << "ERROR: Couldn't open /sys/devices/virtual/input/input1/neocmd" << std::endl;
+//            return;
+//        }
+//        else
+//        {
+//            QTextStream out(&file);
+//            out << "2\n";
+//        }
+//        file.close();
 
-        //-------------------------------------------------------------
+//        //-------------------------------------------------------------
 
-        std::cout << "Woken up, that's done" << std::endl;
+//        std::cout << "Woken up, that's done" << std::endl;
         sleeping = false;
     }
 

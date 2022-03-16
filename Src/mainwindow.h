@@ -22,7 +22,7 @@ public:
     void SwitchStackedWidgetIndex(int i);
     void AggressiveClearScreen() const;
     void OnSleep() const;
-    void OnWakeUp() const;
+    void OnWakeUp();
 
 private slots:
     //===========================================================================
