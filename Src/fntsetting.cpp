@@ -5,9 +5,9 @@
 #include <QDirIterator>
 #include <QDir>
 
-#define DEFAULT_ANSWER_RMJ_KANA_FNT_SIZE 60
-#define DEFAULT_ANSWER_KANA_RMJ_SIZE 60
-#define DEFAULT_STEM_FNT_SIZE 30
+#define DEFAULT_ANSWER_RMJ_KANA_FNT_SIZE 25
+#define DEFAULT_ANSWER_KANA_RMJ_SIZE 50
+#define DEFAULT_STEM_FNT_SIZE 70
 
 FntSetting::FntSetting(QWidget *parent) :
     QWidget(parent),
