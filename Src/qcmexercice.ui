@@ -204,54 +204,58 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="GameHorizontalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
      <item>
-      <layout class="QVBoxLayout" name="GameVerticalLayout">
-       <item>
-        <layout class="QHBoxLayout" name="GuessMeLayout">
-         <item>
-          <widget class="QLabel" name="GuessMe">
-           <property name="font">
-            <font>
-             <family>Sans Serif</family>
-             <pointsize>25</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>azerty</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QGridLayout" name="EntriesGridLayout" rowstretch="0" columnstretch="0">
-         <property name="sizeConstraint">
-          <enum>QLayout::SetDefaultConstraint</enum>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <property name="horizontalSpacing">
-          <number>0</number>
-         </property>
-         <property name="verticalSpacing">
-          <number>6</number>
-         </property>
-        </layout>
-       </item>
+      <widget class="QLabel" name="GuessMe">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>Sans Serif</family>
+         <pointsize>25</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>azerty</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="EntriesGridLayout" rowstretch="0" columnstretch="0">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetDefaultConstraint</enum>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <property name="horizontalSpacing">
+        <number>0</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>5</number>
+       </property>
       </layout>
      </item>
     </layout>
