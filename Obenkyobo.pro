@@ -1,9 +1,6 @@
 #-------------------------------------------------
 # TODO : - update Readme.md
-#        - Add directory support for vocab pages
-#        - change .cfg -> .oben or whatever for sheet files
-#        - proper home button for Vocabs
-#        - find a way to store insert remove endSpacerItem instead of this dumb dumb deleteAt(0)
+#        - proper home button visual for Vocabs
 #-------------------------------------------------
 # TODO later : - less janky popup messages height
 #              - tweak MenuBar spacing and marging (probably not happening because of kobo quirk)

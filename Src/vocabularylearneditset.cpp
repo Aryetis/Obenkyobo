@@ -15,6 +15,8 @@ VocabularyLearnEditSet::VocabularyLearnEditSet(QWidget *parent) :
     currentVocabDirString = GetMy::Instance().SettingSerializer()->value("vocab/currentDirectory", QString(QCoreApplication::applicationDirPath() + "/vocab/")).toString();
     currentDir = QDir(currentVocabDirString);
 
+    ui->VocabularyCfgListContentVLayout->addStretch();
+
     GetMy::Instance().SetVocabularyLearnEditSetWidget(this);
 }
 
@@ -38,9 +40,6 @@ void VocabularyLearnEditSet::Populate()
     // ************* Clearing *************
     qDeleteAll(vocabCfgs);
     vocabCfgs.clear();
-    QLayoutItem* endSpacerItem = ui->VocabularyCfgListContentVLayout->itemAt(0); // should be only one SpacerItem... For some reasons if I store and insert/remove it, it doesn't work... I hate everything
-    if (endSpacerItem != nullptr && static_cast<QSpacerItem*>(endSpacerItem) != nullptr)
-        ui->VocabularyCfgListContentVLayout->removeItem(endSpacerItem);
 
     // ************* curDirLabelText and top dir *************
     QString curDirLabelText = currentVocabDirString;
@@ -48,12 +47,13 @@ void VocabularyLearnEditSet::Populate()
         curDirLabelText = "[...]" + curDirLabelText.right(15);
     ui->curDirLabel->setText("Current Dir : "+curDirLabelText);
 
-    QDir upDir = currentDir;
-    if (upDir.cdUp())
+    // ************* *.cfg *************
+    foreach(const QFileInfo& fileInfo, currentDir.entryInfoList(QStringList() << "*.oben", QDir::Files))
     {
-        VocabularyCfgListEntry* foo = new VocabularyCfgListEntry(QFileInfo(upDir, upDir.path()), true);
-        vocabCfgs.push_back(foo);
-        ui->VocabularyCfgListContentVLayout->addWidget(foo);
+        VocabularyCfgListEntry* bar = new VocabularyCfgListEntry(fileInfo);
+        vocabCfgs.push_back(bar);
+
+        ui->VocabularyCfgListContentVLayout->insertWidget(0, (bar));
     }
 
     // ************* dirs *************
@@ -62,21 +62,16 @@ void VocabularyLearnEditSet::Populate()
         VocabularyCfgListEntry* bar = new VocabularyCfgListEntry(fileInfo);
         vocabCfgs.push_back(bar);
 
-        ui->VocabularyCfgListContentVLayout->addWidget(bar);
+        ui->VocabularyCfgListContentVLayout->insertWidget(0, bar);
     }
 
-    // ************* *.cfg *************
-    foreach(const QFileInfo& fileInfo, currentDir.entryInfoList(QStringList() << "*.oben", QDir::Files))
+    QDir upDir = currentDir;
+    if (upDir.cdUp())
     {
-        VocabularyCfgListEntry* bar = new VocabularyCfgListEntry(fileInfo);
-        vocabCfgs.push_back(bar);
-
-        ui->VocabularyCfgListContentVLayout->addWidget(bar);
+        VocabularyCfgListEntry* foo = new VocabularyCfgListEntry(QFileInfo(upDir, upDir.path()), true);
+        vocabCfgs.push_back(foo);
+        ui->VocabularyCfgListContentVLayout->insertWidget(0, foo);
     }
-
-    // ************* endSpacerItem *************
-    ui->VocabularyCfgListContentVLayout->addStretch(); // add SpacerItem to prevent spacing between entries
-std::cout << "SANITY CHECK " << ui->VocabularyCfgListContentVLayout->count() << std::endl;
 
     // ************* UI touch inputs stuff *************
     connect( ui->VocabularyCfgList->verticalScrollBar(), &QScrollBar::sliderReleased, this, &VocabularyLearnEditSet::OnSliderReleased);
