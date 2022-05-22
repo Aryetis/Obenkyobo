@@ -53,6 +53,9 @@
      <property name="lineWidth">
       <number>0</number>
      </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::AdjustIgnored</enum>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>

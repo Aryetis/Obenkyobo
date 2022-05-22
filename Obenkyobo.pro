@@ -1,6 +1,7 @@
 #-------------------------------------------------
 # TODO : - update Readme.md
 #        - proper home button visual for Vocabs
+#        - proper way to handle endSpacer for Vocabs (also fix the alphabetical order)
 #-------------------------------------------------
 # TODO later : - less janky popup messages height
 #              - tweak MenuBar spacing and marging (probably not happening because of kobo quirk)

@@ -15,7 +15,7 @@ VocabularyLearnEditSet::VocabularyLearnEditSet(QWidget *parent) :
     currentVocabDirString = GetMy::Instance().SettingSerializer()->value("vocab/currentDirectory", QString(QCoreApplication::applicationDirPath() + "/vocab/")).toString();
     currentDir = QDir(currentVocabDirString);
 
-    ui->VocabularyCfgListContentVLayout->addStretch();
+    ui->VocabularyCfgListContentVLayout->addStretch(); // TODO : for some reasons storing and inserting/removing SpacerItem at each Populate does not work because reasons... It's good enough for now
 
     GetMy::Instance().SetVocabularyLearnEditSetWidget(this);
 }
@@ -47,30 +47,30 @@ void VocabularyLearnEditSet::Populate()
         curDirLabelText = "[...]" + curDirLabelText.right(15);
     ui->curDirLabel->setText("Current Dir : "+curDirLabelText);
 
-    // ************* *.cfg *************
-    foreach(const QFileInfo& fileInfo, currentDir.entryInfoList(QStringList() << "*.oben", QDir::Files))
-    {
-        VocabularyCfgListEntry* bar = new VocabularyCfgListEntry(fileInfo);
-        vocabCfgs.push_back(bar);
-
-        ui->VocabularyCfgListContentVLayout->insertWidget(0, (bar));
-    }
-
     // ************* dirs *************
-    foreach(const QFileInfo& fileInfo, currentDir.entryInfoList(QStringList() << "*", QDir::Dirs | QDir::Hidden | QDir::NoDotAndDotDot | QDir::NoSymLinks ))
-    {
-        VocabularyCfgListEntry* bar = new VocabularyCfgListEntry(fileInfo);
-        vocabCfgs.push_back(bar);
-
-        ui->VocabularyCfgListContentVLayout->insertWidget(0, bar);
-    }
-
     QDir upDir = currentDir;
     if (upDir.cdUp())
     {
         VocabularyCfgListEntry* foo = new VocabularyCfgListEntry(QFileInfo(upDir, upDir.path()), true);
         vocabCfgs.push_back(foo);
         ui->VocabularyCfgListContentVLayout->insertWidget(0, foo);
+    }
+
+    foreach(const QFileInfo& fileInfo, currentDir.entryInfoList(QStringList() << "*", QDir::Dirs | QDir::Hidden | QDir::NoDotAndDotDot | QDir::NoSymLinks ))
+    {
+        VocabularyCfgListEntry* bar = new VocabularyCfgListEntry(fileInfo);
+        vocabCfgs.push_back(bar);
+
+        ui->VocabularyCfgListContentVLayout->insertWidget(ui->VocabularyCfgListContentVLayout->count()-1, bar);
+    }
+
+    // ************* *.cfg *************
+    foreach(const QFileInfo& fileInfo, currentDir.entryInfoList(QStringList() << "*.oben", QDir::Files))
+    {
+        VocabularyCfgListEntry* bar = new VocabularyCfgListEntry(fileInfo);
+        vocabCfgs.push_back(bar);
+
+        ui->VocabularyCfgListContentVLayout->insertWidget(ui->VocabularyCfgListContentVLayout->count()-1, (bar));
     }
 
     // ************* UI touch inputs stuff *************
