@@ -82,26 +82,26 @@ void QcmEntryGuess::CorrectFontSize()
     {
         fntWarnDisplayed = true;
 
-QString debug;
-if (textRect.height() <= ui->EntryGuess->height())
-    debug += "Height too big +"
-            "(textRectHeight : "+QString::number(textRect.height())+
-            "; EntryHeight : "+QString::number(ui->EntryGuess->height())+")\n";
-if (textRect.width() <= ui->EntryGuess->width())
-    debug += "Height too big +"
-            "(textRectHeight : "+QString::number(textRect.height())+
-            "; EntryHeight : "+QString::number(ui->EntryGuess->height())+")\n";
-debug += "TEXT : "+ui->EntryGuess->text();
-Tools::GetInstance().DisplayPopup(debug, 0.5f);
+//QString debug;
+//if (textRect.height() <= ui->EntryGuess->height())
+//    debug += "Height too big +"
+//            "(textRectHeight : "+QString::number(textRect.height())+
+//            "; EntryHeight : "+QString::number(ui->EntryGuess->height())+")\n";
+//if (textRect.width() <= ui->EntryGuess->width())
+//    debug += "Height too big +"
+//            "(textRectHeight : "+QString::number(textRect.height())+
+//            "; EntryHeight : "+QString::number(ui->EntryGuess->height())+")\n";
+//debug += "TEXT : "+ui->EntryGuess->text();
+//Tools::GetInstance().DisplayPopup(debug, 0.5f);
 
-//        Tools::GetInstance().DisplayPopup(
-//                    "MCQ Answers (cf :Settings->Fonts) font size("+
-//                    QString::number((qcmSubType == QcmTypeEnum::RmjToKana)
-//                                    ? GetMy::Instance().FntSettingWidget().GetAnswerRmjKanaSize()
-//                                    : GetMy::Instance().FntSettingWidget().GetAnswerKanaRmjSize())+
-//                    ") is too big,\n"
-//                    "Resizing them to " + QString::number(newFontSize)
-//                    ,0.3f);
+        Tools::GetInstance().DisplayPopup(
+                    "MCQ Answers (cf :Settings->Fonts) font size("+
+                    QString::number((qcmSubType == QcmTypeEnum::RmjToKana)
+                                    ? GetMy::Instance().FntSettingWidget().GetAnswerRmjKanaSize()
+                                    : GetMy::Instance().FntSettingWidget().GetAnswerKanaRmjSize())+
+                    ") is too big,\n"
+                    "Resizing them to " + QString::number(newFontSize)
+                    ,0.3f);
         if (qcmSubType == QcmTypeEnum::RmjToKana)
             GetMy::Instance().FntSettingWidget().SetAnswerRmjKanaSize(newFontSize);
         else

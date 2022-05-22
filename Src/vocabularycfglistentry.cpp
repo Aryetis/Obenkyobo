@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include "Src/vocabularydisplay.h"
 #include "Src/appsettings.h"
+#include "Src/vocabularylearneditset.h"
 
 #include "GetMy.h"
 #include "tools.h"
@@ -14,17 +15,25 @@ VocabularyCfgListEntry::VocabularyCfgListEntry(QWidget *parent) :
     ui->setupUi(this);
 }
 
-VocabularyCfgListEntry::VocabularyCfgListEntry(QFileInfo fi, QWidget *parent)
+VocabularyCfgListEntry::VocabularyCfgListEntry(QFileInfo fi, bool dirtyUpDirHack, QWidget *parent)
     : QWidget(parent), ui(new Ui::VocabularyCfgListEntry)
     , vocabFileInfo(fi), vocabSetting(fi.filePath(), QSettings::IniFormat)
 {
     ui->setupUi(this);
 
-    QString title = vocabFileInfo.completeBaseName();
-    if (title.size() > 20)
+    QString title;
+    if (dirtyUpDirHack)
+        title = "[UP_DIR] ..";
+    else
     {
-        title.truncate(20);
-        title.append("...");
+        title = vocabFileInfo.fileName();
+        if (fi.isDir())
+            title = "[DIR] " + title;
+        if (title.size() > 20)
+        {
+            title.truncate(20);
+            title.append("...");
+        }
     }
     ui->TitleButton->setText(title);
     // another dirty hack because koboQT... for some reasons I can't use TitleButton.height to set checkbox's one
@@ -40,16 +49,23 @@ VocabularyCfgListEntry::~VocabularyCfgListEntry()
 
 void VocabularyCfgListEntry::on_TitleButton_clicked()
 {
-    GetMy::Instance().VocabularyDisplayWidget()->InitializeGrid(this);
-    GetMy::Instance().MainWindowWidget().SwitchStackedWidgetIndex(8);
-
-    if ( GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->value("AppSettings/firstTimeVocabDisplayPage", true).toBool() )
+    if (vocabFileInfo.isDir())
     {
-        Tools::GetInstance().DisplayPopup("You can click the top row buttons to hide/show the associated column.\n"
-                                          "Each cell is also independently clickable.\n"
-                                          "Combine that with the \"Randomize\" button to enhance your learning session"
-                                          ,0.4f);
-        GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeVocabDisplayPage", false);
+        GetMy::Instance().VocabularyLearnEditSetWidget()->Populate(vocabFileInfo.filePath());
+    }
+    else
+    {
+        GetMy::Instance().VocabularyDisplayWidget()->InitializeGrid(this);
+        GetMy::Instance().MainWindowWidget().SwitchStackedWidgetIndex(8);
+
+        if ( GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->value("AppSettings/firstTimeVocabDisplayPage", true).toBool() )
+        {
+            Tools::GetInstance().DisplayPopup("You can click the top row buttons to hide/show the associated column.\n"
+                                              "Each cell is also independently clickable.\n"
+                                              "Combine that with the \"Randomize\" button to enhance your learning session"
+                                              ,0.4f);
+            GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeVocabDisplayPage", false);
+        }
     }
 }
 

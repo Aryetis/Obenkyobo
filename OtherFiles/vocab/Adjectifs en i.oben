@@ -1,4 +1,4 @@
-# Welcome to vocabulary .cfg files
+# Welcome to vocabulary .oben files
 # Here's a template line [fontType=hiragana][jp=いぬ][kanji=犬][trad=chien][learningScore=5]
 # fontType possible values : hiragana/katakana/kanji , will determine what fonts will be used in Obenkyobo to display this entry
 # LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo

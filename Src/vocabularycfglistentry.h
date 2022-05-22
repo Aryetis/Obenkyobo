@@ -16,7 +16,7 @@ class VocabularyCfgListEntry : public QWidget
 
 public:
     VocabularyCfgListEntry() = delete;
-    explicit VocabularyCfgListEntry(QFileInfo fileInfo, QWidget *parent = nullptr);
+    explicit VocabularyCfgListEntry(QFileInfo fileInfo, bool dirtyUpDirHack = false, QWidget *parent = nullptr);
     explicit VocabularyCfgListEntry(QWidget *parent = nullptr);
     ~VocabularyCfgListEntry();
 

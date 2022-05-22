@@ -33,6 +33,16 @@
     <number>0</number>
    </property>
    <item>
+    <widget class="QLabel" name="curDirLabel">
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QScrollArea" name="VocabularyCfgList">
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -52,7 +62,7 @@
         <x>0</x>
         <y>0</y>
         <width>400</width>
-        <height>377</height>
+        <height>360</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -89,11 +99,40 @@
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="SelectAllButton">
-     <property name="text">
-      <string>Select / Unselect All</string>
+    <layout class="QHBoxLayout" name="BotLayout">
+     <property name="spacing">
+      <number>0</number>
      </property>
-    </widget>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>⌂</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="SelectAllButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Select / Unselect All</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
