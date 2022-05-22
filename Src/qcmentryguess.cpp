@@ -25,6 +25,7 @@ void QcmEntryGuess::SetGuess(Symbol* s, QcmExercice::QcmExerciceType qcmType, bo
         case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
         case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_Kbd :
         {
+            qcmSubType = QcmTypeEnum::KanaToRmj;
             ui->EntryGuess->setFont(GetMy::Instance().FntSettingWidget().GetCurrentHiraganaFnt());
             ui->EntryGuess->setText(symbol->JP());
             break;
@@ -32,6 +33,7 @@ void QcmEntryGuess::SetGuess(Symbol* s, QcmExercice::QcmExerciceType qcmType, bo
         case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
         case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
         {
+            qcmSubType = QcmTypeEnum::KanaToRmj;
             ui->EntryGuess->setFont(GetMy::Instance().FntSettingWidget().GetCurrentKatakanaFnt());
             ui->EntryGuess->setText(symbol->JP());
             break;
@@ -39,6 +41,7 @@ void QcmEntryGuess::SetGuess(Symbol* s, QcmExercice::QcmExerciceType qcmType, bo
         case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :
         case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
         {
+            qcmSubType = QcmTypeEnum::RmjToKana;
             ui->EntryGuess->setFont(GetMy::Instance().FntSettingWidget().GetCurrentRomanjiFnt());
             ui->EntryGuess->setText(symbol->Romanji());
             break;
@@ -58,25 +61,38 @@ void QcmEntryGuess::resizeEvent(QResizeEvent* event)
 
 void QcmEntryGuess::CorrectFontSize()
 {
-    int newFontSize = ui->EntryGuess->font().pixelSize();
+    int newFontSize = (qcmSubType == QcmTypeEnum::RmjToKana)
+                        ? GetMy::Instance().FntSettingWidget().GetAnswerRmjKanaSize()
+                        : GetMy::Instance().FntSettingWidget().GetAnswerKanaRmjSize();
     QRect textRect = ui->EntryGuess->fontMetrics().boundingRect(ui->EntryGuess->text());
-    bool corrected = textRect.height() >  height() || textRect.width() > width();
-    while ( textRect.height() >  height() || textRect.width() > width() )
+    QFont correctedFont = QFont(ui->EntryGuess->fontInfo().family(), newFontSize);
+    ui->EntryGuess->setFont(correctedFont);
+    bool corrected = false;
+
+    while ( (textRect.height() > ui->EntryGuess->height() || textRect.width() > ui->EntryGuess->width()) && newFontSize > 20)
     {
         newFontSize -= 10;
-        QFont correctedFont = QFont(ui->EntryGuess->font());
-        correctedFont.setPixelSize(newFontSize);
+        QFont correctedFont = QFont(ui->EntryGuess->fontInfo().family(), newFontSize);
         ui->EntryGuess->setFont(correctedFont);
 
         textRect = ui->EntryGuess->fontMetrics().boundingRect(ui->EntryGuess->text());
+        corrected = true;
     }
     if (corrected && !fntWarnDisplayed)
     {
-        Tools::GetInstance().DisplayPopup(
-                    "MCQ Entries font is too big,\nplease consider changing their size\n(Settings->Fonts). \n"
-                    "Resizing them to " + QString::number(newFontSize) + " for now."
-                    ,0.3f);
         fntWarnDisplayed = true;
+        Tools::GetInstance().DisplayPopup(
+                    "MCQ Answers (cf :Settings->Fonts) font size("+
+                    QString::number((qcmSubType == QcmTypeEnum::RmjToKana)
+                                    ? GetMy::Instance().FntSettingWidget().GetAnswerRmjKanaSize()
+                                    : GetMy::Instance().FntSettingWidget().GetAnswerKanaRmjSize())+
+                    ") is too big,\n"
+                    "Resizing them to " + QString::number(newFontSize)
+                    ,0.3f);
+        if (qcmSubType == QcmTypeEnum::RmjToKana)
+            GetMy::Instance().FntSettingWidget().SetAnswerRmjKanaSize(newFontSize);
+        else
+            GetMy::Instance().FntSettingWidget().SetAnswerKanaRmjSize(newFontSize);
     }
 }
 

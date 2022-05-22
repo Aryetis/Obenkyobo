@@ -40,6 +40,12 @@ private:
     bool correctGuess;
 
     static bool fntWarnDisplayed;
+    enum QcmTypeEnum
+    {
+        KanaToRmj,
+        RmjToKana
+    };
+    QcmTypeEnum qcmSubType;
 };
 
 #endif // QCMENTRYGUESS_H

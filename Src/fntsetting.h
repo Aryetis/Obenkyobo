@@ -28,33 +28,24 @@ public:
     QString GetCurrentRomanjiFamily() { return romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentRomanjiFntIdx)].family(); }
     QString GetCurrentKanjiFamily() { return kanjiFonts[static_cast<std::vector<QFont>::size_type>(currentKanjiFontIdx)].family(); }
 
-    int GetCurrentHiraganaSize() { return currentHiraganaSize; }
-    int GetCurrentKatakanaSize() { return currentKatakanaSize; }
-    int GetCurrentRomanjiSize() { return currentRomanjiSize; }
-
-    int GetStemBoostSize() const { return stemBoostSize; }
+    int GetStemSize() const { return stemSize; }
+    int GetAnswerRmjKanaSize() const { return answerRmjKanaSize; }
+    int GetAnswerKanaRmjSize() const { return answerKanaRmjSize; }
+    void SetAnswerRmjKanaSize(int size);
+    void SetAnswerKanaRmjSize(int size);
 
 private slots:
     void on_HiraganaFntDropdown_activated(int index);
     void on_KatakanaFntDropdown_activated(int index);
     void on_RomanjiFntDropdown_activated(int index);
 
-    void on_HiraganaSizeSlider_valueChanged(int size);
-    void on_KatakanaSizeSlider_valueChanged(int size);
-    void on_RomanjiSizeSlider_valueChanged(int size);
-
-    void on_BoostStemSlider_valueChanged(int size);
-
     void on_KanjiFntDropdown_currentIndexChanged(int index);
 
+    void on_StemSlider_valueChanged(int size);
+    void on_AnswerRmjKanaSlider_valueChanged(int size);
+    void on_AnswerKanaRmjSlider_valueChanged(int size);
+
 private:
-    enum fntTypeEnum
-    {
-        hiragana,
-        katakana,
-        romanji,
-        kanji
-    };
     Ui::FntSetting *ui;
 
     void RegisterFntsFromResources();
@@ -64,7 +55,7 @@ private:
     void RegisterRomanjiFont(QString fntAddress);
     void RegisterKanjiFont(QString fntAddress);
 
-    QFont GetFont(QString fntAddress, fntTypeEnum type);
+    QFont GetFont(QString fntAddress);
 
     std::vector<QFont> hiraganaFonts{};
     std::vector<QFont> katakanaFonts{};
@@ -74,11 +65,10 @@ private:
     int currentKatakanaFntIdx;
     int currentRomanjiFntIdx;
     int currentKanjiFontIdx;
-    int currentHiraganaSize;
-    int currentKatakanaSize;
-    int currentRomanjiSize;
 
-    int stemBoostSize;
+    int stemSize;
+    int answerRmjKanaSize;
+    int answerKanaRmjSize;
 
     QSettings* settingsSerializer;
 };

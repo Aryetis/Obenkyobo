@@ -54,17 +54,17 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
             case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
             case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
             {
-                stemFont = QFont(fntSetting.GetCurrentRomanjiFamily(), fntSetting.GetCurrentRomanjiSize() + fntSetting.GetStemBoostSize());
+                stemFont = QFont(fntSetting.GetCurrentRomanjiFamily(), fntSetting.GetStemSize());
                 break;
             }
             case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :
             {
-                stemFont = QFont(fntSetting.GetCurrentHiraganaFamily(), fntSetting.GetCurrentHiraganaSize() + fntSetting.GetStemBoostSize());
+                stemFont = QFont(fntSetting.GetCurrentHiraganaFamily(), fntSetting.GetStemSize());
                 break;
             }
             case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
             {
-                stemFont = QFont(fntSetting.GetCurrentKatakanaFamily(), fntSetting.GetCurrentKatakanaSize() + fntSetting.GetStemBoostSize());
+                stemFont = QFont(fntSetting.GetCurrentKatakanaFamily(), fntSetting.GetStemSize());
                 break;
             }
         }

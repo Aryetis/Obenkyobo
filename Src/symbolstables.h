@@ -143,7 +143,7 @@ namespace SymbolsTables
 {
     extern SymbolsTableFamily HiraganaSymbolsTableFamily;
     extern SymbolsTableFamily KatakanaSymbolsTableFamily;
-    extern SymbolsTableFamily VocabTableFamily; // TODO MG
+    extern SymbolsTableFamily VocabTableFamily; // TODO
 }
 
 #endif // SYMBOLSTABLES_H

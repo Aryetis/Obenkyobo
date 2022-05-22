@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>400</height>
+    <width>775</width>
+    <height>524</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="2,0,3,0,3,0,2,0,3">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="4,0,2,0,2,0,2,0,2">
    <property name="topMargin">
     <number>9</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="OverallContainer" stretch="1,1">
+    <layout class="QVBoxLayout" name="OverallContainer" stretch="1,1,1,1">
      <property name="topMargin">
       <number>0</number>
      </property>
@@ -41,34 +41,161 @@
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="BoostStemSizeContainer">
+      <layout class="QHBoxLayout" name="StemSizeContainer" stretch="2,3">
        <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
-        <widget class="QLabel" name="BoostStemLabel">
-         <property name="text">
-          <string>Increase stem's size by : </string>
+        <layout class="QHBoxLayout" name="StemLabelContainer">
+         <property name="rightMargin">
+          <number>0</number>
          </property>
-        </widget>
+         <item>
+          <widget class="QLabel" name="StemLabel">
+           <property name="text">
+            <string>Stem Size : </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="StemValueLabel">
+           <property name="text">
+            <string>20</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
-        <widget class="QLabel" name="BoostStemValueLabel">
-         <property name="text">
-          <string>20</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSlider" name="BoostStemSlider">
+        <widget class="QSlider" name="StemSlider">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimum">
+          <number>10</number>
+         </property>
          <property name="maximum">
-          <number>20</number>
+          <number>100</number>
+         </property>
+         <property name="pageStep">
+          <number>5</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="AnswerKanaRmjSizeContainer" stretch="2,3">
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <layout class="QHBoxLayout" name="AnswerKanaRmjLabelContainer">
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="AnswerKanaRmjLabel">
+           <property name="text">
+            <string>Answers Size
+(Kana-&gt;Rmj) : </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="AnswerKanaRmjValueLabel">
+           <property name="text">
+            <string>20</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QSlider" name="AnswerKanaRmjSlider">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimum">
+          <number>10</number>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="pageStep">
+          <number>5</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="AnswerRmjKanaSizeContainer" stretch="2,3">
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <layout class="QHBoxLayout" name="AnswerRmjKanaLabelContainer">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="AnswerRmjKanaLabel">
+           <property name="text">
+            <string>Answers Size
+(Rmj-&gt;Kana) : </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="AnswerRmjKanaValueLabel">
+           <property name="text">
+            <string>20</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QSlider" name="AnswerRmjKanaSlider">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimum">
+          <number>10</number>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="pageStep">
+          <number>5</number>
          </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -87,7 +214,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="HiraganaContainer" stretch="1,1,1">
+    <layout class="QVBoxLayout" name="HiraganaContainer" stretch="1,1">
      <property name="topMargin">
       <number>0</number>
      </property>
@@ -130,46 +257,6 @@
        </item>
       </layout>
      </item>
-     <item>
-      <layout class="QHBoxLayout" name="HiraganaSizeSubContainer">
-       <item>
-        <widget class="QLabel" name="HiraganaSizeLabel">
-         <property name="text">
-          <string>Size : </string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="HiraganaSizeValueLabel">
-         <property name="text">
-          <string>15</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSlider" name="HiraganaSizeSlider">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimum">
-          <number>20</number>
-         </property>
-         <property name="maximum">
-          <number>150</number>
-         </property>
-         <property name="value">
-          <number>20</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
     </layout>
    </item>
    <item>
@@ -180,7 +267,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="KatakanaContainer" stretch="1,1,1">
+    <layout class="QVBoxLayout" name="KatakanaContainer" stretch="1,1">
      <property name="topMargin">
       <number>0</number>
      </property>
@@ -218,49 +305,6 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="KatakanaSizeSubContainer">
-       <item>
-        <widget class="QLabel" name="KatakanaSizeLabel">
-         <property name="text">
-          <string>Size : </string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="KatakanaSizeValueLabel">
-         <property name="text">
-          <string>15</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSlider" name="KatakanaSizeSlider">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimum">
-          <number>20</number>
-         </property>
-         <property name="maximum">
-          <number>150</number>
-         </property>
-         <property name="value">
-          <number>20</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
@@ -329,7 +373,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="RomanjiContainer" stretch="1,1,1">
+    <layout class="QVBoxLayout" name="RomanjiContainer" stretch="1,1">
      <property name="topMargin">
       <number>0</number>
      </property>
@@ -367,49 +411,6 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="RomanjiSizeSubContainer">
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="RomanjiSizeLabel">
-         <property name="text">
-          <string>Size : </string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="RomanjiSizeValueLabel">
-         <property name="text">
-          <string>15</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSlider" name="RomanjiSizeSlider">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimum">
-          <number>20</number>
-         </property>
-         <property name="maximum">
-          <number>150</number>
-         </property>
-         <property name="value">
-          <number>20</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>

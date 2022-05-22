@@ -5,10 +5,9 @@
 #include <QDirIterator>
 #include <QDir>
 
-#define DEFAULT_HIRAGANA_FNT_SIZE 60
-#define DEFAULT_KATAKANA_FNT_SIZE 60
-#define DEFAULT_ROMANJI_FNT_SIZE 40
-#define DEFAULT_STEM_BOOST_SIZE 20
+#define DEFAULT_ANSWER_RMJ_KANA_FNT_SIZE 60
+#define DEFAULT_ANSWER_KANA_RMJ_SIZE 60
+#define DEFAULT_STEM_FNT_SIZE 30
 
 FntSetting::FntSetting(QWidget *parent) :
     QWidget(parent),
@@ -25,6 +24,18 @@ FntSetting::FntSetting(QWidget *parent) :
 FntSetting::~FntSetting()
 {
     delete ui;
+}
+
+void FntSetting::SetAnswerRmjKanaSize(int size)
+{
+    on_AnswerRmjKanaSlider_valueChanged(size);
+    ui->AnswerRmjKanaSlider->setValue(size);
+}
+
+void FntSetting::SetAnswerKanaRmjSize(int size)
+{
+    on_AnswerKanaRmjSlider_valueChanged(size);
+    ui->AnswerKanaRmjSlider->setValue(size);
 }
 
 void FntSetting::RegisterFntsFromResources()
@@ -77,57 +88,43 @@ void FntSetting::RegisterFntsFromResources()
     ui->RomanjiFntDropdown->setCurrentIndex(currentRomanjiFntIdx);
     ui->KanjiFntDropdown->setCurrentIndex(currentKanjiFontIdx);
 
-    currentHiraganaSize =  settingsSerializer->value("FntSettings/HiraganaFntSize", DEFAULT_HIRAGANA_FNT_SIZE).toInt();
-    currentKatakanaSize =  settingsSerializer->value("FntSettings/KatakanaFntSize", DEFAULT_KATAKANA_FNT_SIZE).toInt();
-    currentRomanjiSize =  settingsSerializer->value("FntSettings/RomanjiFntSize", DEFAULT_ROMANJI_FNT_SIZE).toInt();
-    ui->HiraganaSizeValueLabel->setText(QString::number(currentHiraganaSize));
-    ui->HiraganaSizeSlider->setValue(currentHiraganaSize);
-    ui->KatakanaSizeValueLabel->setText(QString::number(currentKatakanaSize));
-    ui->KatakanaSizeSlider->setValue(currentKatakanaSize);
-    ui->RomanjiSizeValueLabel->setText(QString::number(currentRomanjiSize));
-    ui->RomanjiSizeSlider->setValue(currentRomanjiSize);
-
-    stemBoostSize =  settingsSerializer->value("FntSettings/stemBoostSize", DEFAULT_STEM_BOOST_SIZE).toInt();
-    ui->BoostStemSlider->setValue(stemBoostSize);
+    stemSize =  settingsSerializer->value("FntSettings/stemSize", DEFAULT_STEM_FNT_SIZE).toInt();
+    ui->StemSlider->setValue(stemSize);
+    ui->StemValueLabel->setText(QString::number(stemSize));
+    answerRmjKanaSize =  settingsSerializer->value("FntSettings/answerRmjKanaSize", DEFAULT_ANSWER_RMJ_KANA_FNT_SIZE).toInt();
+    ui->AnswerRmjKanaSlider->setValue(answerRmjKanaSize);
+    ui->AnswerRmjKanaValueLabel->setText(QString::number(answerRmjKanaSize));
+    answerKanaRmjSize =  settingsSerializer->value("FntSettings/answerKanaRmjSize", DEFAULT_ANSWER_KANA_RMJ_SIZE).toInt();
+    ui->AnswerKanaRmjSlider->setValue(answerKanaRmjSize);
+    ui->AnswerKanaRmjValueLabel->setText(QString::number(answerKanaRmjSize));
 }
 
 void FntSetting::RegisterHiraganaFont(QString fntAddress)
 {
-    hiraganaFonts.emplace_back(GetFont(fntAddress, fntTypeEnum::hiragana));
+    hiraganaFonts.emplace_back(GetFont(fntAddress));
 }
 
 void FntSetting::RegisterKatakanaFont(QString fntAddress)
 {
-    katakanaFonts.emplace_back(GetFont(fntAddress, fntTypeEnum::katakana));
+    katakanaFonts.emplace_back(GetFont(fntAddress));
 }
 
 void FntSetting::RegisterRomanjiFont(QString fntAddress)
 {
-    romanjiFonts.emplace_back(GetFont(fntAddress, fntTypeEnum::romanji));
+    romanjiFonts.emplace_back(GetFont(fntAddress));
 }
 
 void FntSetting::RegisterKanjiFont(QString fntAddress)
 {
-    kanjiFonts.emplace_back(GetFont(fntAddress, fntTypeEnum::kanji));
+    kanjiFonts.emplace_back(GetFont(fntAddress));
 }
 
-QFont FntSetting::GetFont(QString fntAddress, fntTypeEnum type)
+QFont FntSetting::GetFont(QString fntAddress)
 {
     int id = QFontDatabase::addApplicationFont(fntAddress);
     QString name = QFontDatabase::applicationFontFamilies(id).at(0);
-    switch (type)
-    {
-        case fntTypeEnum::hiragana :
-            return QFont(name, DEFAULT_HIRAGANA_FNT_SIZE);
-        case fntTypeEnum::katakana :
-            return QFont(name, DEFAULT_KATAKANA_FNT_SIZE);
-        case fntTypeEnum::romanji :
-            return QFont(name, DEFAULT_ROMANJI_FNT_SIZE);
-        case fntTypeEnum::kanji :
-            return QFont(name);
-    }
 
-    assert(false);
+    return QFont(name);
 }
 
 void FntSetting::on_HiraganaFntDropdown_activated(int index)
@@ -136,7 +133,6 @@ void FntSetting::on_HiraganaFntDropdown_activated(int index)
     settingsSerializer->setValue("FntSettings/HiraganaFntIdx", index);
     hiraganaFonts[static_cast<std::vector<QFont>::size_type>(currentHiraganFntIdx)].setFamily(
                 ui->HiraganaFntDropdown->itemText(currentHiraganFntIdx));
-    hiraganaFonts[static_cast<std::vector<QFont>::size_type>(currentHiraganFntIdx)].setPixelSize(currentHiraganaSize);
 }
 
 void FntSetting::on_KatakanaFntDropdown_activated(int index)
@@ -145,8 +141,6 @@ void FntSetting::on_KatakanaFntDropdown_activated(int index)
     settingsSerializer->setValue("FntSettings/KatakanaFntIdx", index);
     katakanaFonts[static_cast<std::vector<QFont>::size_type>(currentKatakanaFntIdx)].setFamily(
                 ui->KatakanaFntDropdown->itemText(currentKatakanaFntIdx));
-    katakanaFonts[static_cast<std::vector<QFont>::size_type>(currentKatakanaFntIdx)].setPixelSize(currentKatakanaSize);
-
 }
 
 void FntSetting::on_RomanjiFntDropdown_activated(int index)
@@ -155,38 +149,6 @@ void FntSetting::on_RomanjiFntDropdown_activated(int index)
     settingsSerializer->setValue("FntSettings/RomanjiFntIdx", index);
     romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentRomanjiFntIdx)].setFamily(
                 ui->RomanjiFntDropdown->itemText(currentRomanjiFntIdx));
-    romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentRomanjiFntIdx)].setPixelSize(currentRomanjiSize);
-}
-
-void FntSetting::on_HiraganaSizeSlider_valueChanged(int size)
-{
-    currentHiraganaSize = size;
-    ui->HiraganaSizeValueLabel->setText(QString::number(size));
-    settingsSerializer->setValue("FntSettings/HiraganaFntSize", size);
-    hiraganaFonts[static_cast<std::vector<QFont>::size_type>(currentHiraganFntIdx)].setPixelSize(size);
-}
-
-void FntSetting::on_KatakanaSizeSlider_valueChanged(int size)
-{
-    currentKatakanaSize = size;
-    ui->KatakanaSizeValueLabel->setText(QString::number(size));
-    settingsSerializer->setValue("FntSettings/KatakanaFntSize", size);
-    katakanaFonts[static_cast<std::vector<QFont>::size_type>(currentKatakanaFntIdx)].setPixelSize(size);
-}
-
-void FntSetting::on_RomanjiSizeSlider_valueChanged(int size)
-{
-    currentRomanjiSize = size;
-    ui->RomanjiSizeValueLabel->setText(QString::number(size));
-    settingsSerializer->setValue("FntSettings/RomanjiFntSize", size);
-    romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentRomanjiFntIdx)].setPixelSize(size);
-}
-
-void FntSetting::on_BoostStemSlider_valueChanged(int size)
-{
-    stemBoostSize = size;
-    ui->BoostStemValueLabel->setText(QString::number(size));
-    settingsSerializer->setValue("FntSettings/stemBoostSize", size);
 }
 
 void FntSetting::on_KanjiFntDropdown_currentIndexChanged(int index)
@@ -195,4 +157,25 @@ void FntSetting::on_KanjiFntDropdown_currentIndexChanged(int index)
     settingsSerializer->setValue("FntSettings/KanjiFntIdx", index);
     romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentKanjiFontIdx)].setFamily(
                 ui->RomanjiFntDropdown->itemText(currentKanjiFontIdx));
+}
+
+void FntSetting::on_StemSlider_valueChanged(int size)
+{
+    stemSize = size;
+    ui->StemValueLabel->setText(QString::number(size));
+    settingsSerializer->setValue("FntSettings/stemSize", size);
+}
+
+void FntSetting::on_AnswerRmjKanaSlider_valueChanged(int size)
+{
+    answerRmjKanaSize = size;
+    ui->AnswerRmjKanaValueLabel->setText(QString::number(size));
+    settingsSerializer->setValue("FntSettings/answerRmjKanaSize", size);
+}
+
+void FntSetting::on_AnswerKanaRmjSlider_valueChanged(int size)
+{
+    answerKanaRmjSize = size;
+    ui->AnswerKanaRmjValueLabel->setText(QString::number(size));
+    settingsSerializer->setValue("FntSettings/answerKanaRmjSize", size);
 }
