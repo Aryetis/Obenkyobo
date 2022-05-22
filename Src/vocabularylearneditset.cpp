@@ -122,7 +122,7 @@ void VocabularyLearnEditSet::OnValueChanged(int /*value*/) const
 
 void VocabularyLearnEditSet::on_pushButton_clicked()
 {
-    currentVocabDirString = QString(QCoreApplication::applicationDirPath());
+    currentVocabDirString = QString(QCoreApplication::applicationDirPath() + "/vocab/");
     currentDir = QDir(currentVocabDirString);
     Populate();
 }
