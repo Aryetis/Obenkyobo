@@ -26,9 +26,9 @@ VocabularyCfgListEntry::VocabularyCfgListEntry(QFileInfo fi, bool dirtyUpDirHack
         title = "[UP_DIR] ..";
     else
     {
-        title = vocabFileInfo.fileName();
+        title = vocabFileInfo.completeBaseName();
         if (fi.isDir())
-            title = "[DIR] " + title;
+            title = "[DIR] " + vocabFileInfo.fileName(); // because hidden dir completeBaseName is empty
         if (title.size() > 20)
         {
             title.truncate(20);
