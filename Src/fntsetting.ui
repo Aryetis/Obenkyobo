@@ -13,12 +13,12 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="4,0,2,0,2,0,2,0,2">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="4,0,5">
    <property name="topMargin">
     <number>9</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="OverallContainer" stretch="1,1,1,1">
+    <layout class="QVBoxLayout" name="MCQFontSizesContainer" stretch="1,1,1,1">
      <property name="topMargin">
       <number>0</number>
      </property>
@@ -33,7 +33,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Overall MCQ Settings : </string>
+        <string>MCQ Fonts Sizes : </string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -214,7 +214,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="HiraganaContainer" stretch="1,1">
+    <layout class="QVBoxLayout" name="FontFamiliesContainer" stretch="1,1,1,1,1">
      <property name="topMargin">
       <number>0</number>
      </property>
@@ -229,7 +229,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Hiragana Settings : </string>
+        <string>Font Families</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -241,7 +241,7 @@
        <item>
         <widget class="QLabel" name="HiraganaFntLabel">
          <property name="text">
-          <string>Font : </string>
+          <string>Hiragana Font :</string>
          </property>
         </widget>
        </item>
@@ -257,44 +257,12 @@
        </item>
       </layout>
      </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="Line" name="line_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QVBoxLayout" name="KatakanaContainer" stretch="1,1">
-     <property name="topMargin">
-      <number>0</number>
-     </property>
-     <property name="bottomMargin">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QLabel" name="KatakanaTitle">
-       <property name="font">
-        <font>
-         <underline>true</underline>
-        </font>
-       </property>
-       <property name="text">
-        <string>Katakana Settings :</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
      <item>
       <layout class="QHBoxLayout" name="KatakanaFntSubContainer">
        <item>
         <widget class="QLabel" name="katakanaFntLabel">
          <property name="text">
-          <string>Font  : </string>
+          <string>Katakana Font : </string>
          </property>
         </widget>
        </item>
@@ -310,35 +278,6 @@
        </item>
       </layout>
      </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="Line" name="line_4">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QVBoxLayout" name="KanjiContainer" stretch="1,1">
-     <property name="topMargin">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="font">
-        <font>
-         <underline>true</underline>
-        </font>
-       </property>
-       <property name="text">
-        <string>Kanji Settings :</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
      <item>
       <layout class="QHBoxLayout" name="KanjiSubContainer">
        <property name="topMargin">
@@ -347,7 +286,7 @@
        <item>
         <widget class="QLabel" name="KanjiFntLabel">
          <property name="text">
-          <string>Font :</string>
+          <string>Kanji Font : </string>
          </property>
         </widget>
        </item>
@@ -363,44 +302,12 @@
        </item>
       </layout>
      </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="Line" name="line_3">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QVBoxLayout" name="RomanjiContainer" stretch="1,1">
-     <property name="topMargin">
-      <number>0</number>
-     </property>
-     <property name="bottomMargin">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QLabel" name="RomanjiTitle">
-       <property name="font">
-        <font>
-         <underline>true</underline>
-        </font>
-       </property>
-       <property name="text">
-        <string>Romanji Settings : </string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
      <item>
       <layout class="QHBoxLayout" name="RomanjiFntSubContainer">
        <item>
         <widget class="QLabel" name="RomanjiFntLabel">
          <property name="text">
-          <string>Font : </string>
+          <string>Romanji Font : </string>
          </property>
         </widget>
        </item>
