@@ -1,12 +1,11 @@
 #-------------------------------------------------
 # TODO : - update Readme.md
-#        - proper home button visual for Vocabs
-#        - proper way to handle endSpacer for Vocabs (also fix the alphabetical order)
-#        - Regroup fonts setting in one category Font Family
+#        - Fix qt platform plugin for Kobo Glo HD
 #-------------------------------------------------
 # TODO later : - less janky popup messages height
 #              - tweak MenuBar spacing and marging (probably not happening because of kobo quirk)
-#              - handle sleep
+#              - handle sleep properly
+#              - proper way to handle endSpacer for Vocabs (also fix the alphabetical order)
 #-------------------------------------------------
 
 QT       += core gui

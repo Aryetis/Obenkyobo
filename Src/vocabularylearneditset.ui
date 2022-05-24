@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>400</height>
+    <width>549</width>
+    <height>696</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -33,14 +33,24 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QLabel" name="curDirLabel">
-     <property name="text">
-      <string>TextLabel</string>
+    <layout class="QHBoxLayout" name="TopLayout">
+     <property name="topMargin">
+      <number>6</number>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+     <property name="bottomMargin">
+      <number>6</number>
      </property>
-    </widget>
+     <item>
+      <widget class="QLabel" name="curDirLabel">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <widget class="QScrollArea" name="VocabularyCfgList">
@@ -64,8 +74,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>400</width>
-        <height>360</height>
+        <width>549</width>
+        <height>643</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -102,7 +112,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="BotLayout">
+    <layout class="QHBoxLayout" name="BotLayout" stretch="2,8">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -118,7 +128,11 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>⌂</string>
+        <string extracomment="⌂"/>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resources/Pictures.qrc">
+         <normaloff>:/pictures/Logos/HomeLogo64.png</normaloff>:/pictures/Logos/HomeLogo64.png</iconset>
        </property>
       </widget>
      </item>
@@ -139,6 +153,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../Resources/Pictures.qrc"/>
+ </resources>
  <connections/>
 </ui>

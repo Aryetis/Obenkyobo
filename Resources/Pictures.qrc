@@ -12,5 +12,6 @@
         <file>Battery/battery4.png</file>
         <file>Battery/batteryCharging.png</file>
         <file>Battery/batteryEmpty.png</file>
+        <file>Logos/HomeLogo64.png</file>
     </qresource>
 </RCC>

@@ -43,8 +43,8 @@ void VocabularyLearnEditSet::Populate()
 
     // ************* curDirLabelText and top dir *************
     QString curDirLabelText = currentVocabDirString;
-    if (curDirLabelText.size() > 15)
-        curDirLabelText = "[...]" + curDirLabelText.right(15);
+    if (curDirLabelText.size() > 16)
+        curDirLabelText = "[...]" + curDirLabelText.right(16);
     ui->curDirLabel->setText("Current Dir : "+curDirLabelText);
 
     // ************* dirs *************
