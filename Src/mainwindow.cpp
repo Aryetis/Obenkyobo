@@ -82,8 +82,8 @@ void MainWindow::AggressiveClearScreen(bool force /*=false*/) const // requires 
     {
         KoboPlatformFunctions::setFullScreenRefreshMode(WaveForm::WaveForm_GC16);
         KoboPlatformFunctions::clearScreen(true);
-        ui->menuBar->repaint();
         ui->centralWidget->repaint();
+        ui->menuBar->repaint();
     }
 }
 
