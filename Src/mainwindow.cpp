@@ -34,6 +34,15 @@ MainWindow::MainWindow(QWidget *parent) :
     statusBar->addAction(actionBatteryIcon);
     actionBatteryTxt = new QAction("init", statusBar);
     statusBar->addAction(actionBatteryTxt);
+
+    // Refresh button
+    refresh = new QAction(QIcon(":/pictures/Logos/refresh64.png"), "ref", ui->menuBar);
+    refresh->setObjectName("refresh");
+    ui->menuBar->addAction(refresh);
+    connect(refresh, &QAction::triggered, this, &MainWindow::on_refresh_triggered);
+    connect(refresh, &QAction::hovered, this, &MainWindow::on_refresh_hovered);
+
+    // Stylesheet
     float onePercentHeightPx = GetMy::Instance().Descriptor().height/100.0f; // 12.64
     ui->menuBar->setStyleSheet
     (
@@ -63,12 +72,13 @@ MainWindow::~MainWindow()
     delete actionBatteryIcon;
     delete actionBatteryTxt;
     delete statusBar;
+    delete refresh;
     delete ui;
 }
 
-void MainWindow::AggressiveClearScreen() const // requires adding DRAW=1 to fbink build parameter of koboplatformplugin
+void MainWindow::AggressiveClearScreen(bool force /*=false*/) const // requires adding DRAW=1 to fbink build parameter of koboplatformplugin
 {
-    if (GetMy::Instance().AppSettingWidget().GetKanaHardRefresh())
+    if (GetMy::Instance().AppSettingWidget().GetKanaHardRefresh() || force)
     {
         KoboPlatformFunctions::setFullScreenRefreshMode(WaveForm::WaveForm_GC16);
         KoboPlatformFunctions::clearScreen(true);
@@ -153,6 +163,21 @@ void MainWindow::OnWakeUp()
     wasBatteryCharging = -1;
 
     UpdateStatusBarGeometry();
+}
+
+void MainWindow::on_refresh_triggered()
+{
+    AggressiveClearScreen(true);
+    on_refresh_hovered();
+}
+
+void MainWindow::on_refresh_hovered()
+{
+    // hack : I DO NOT want any stylesheet when triggering, hovering from another menu, anything !
+    // but obviously qt doesn't seem to allow us to stylesheet for one precise QMenuBar::item
+    // Soooooo there we go... I embrace the jank
+    refresh->setEnabled(false);
+    refresh->setEnabled(true);
 }
 
 void MainWindow::refreshTimeAndBattery()

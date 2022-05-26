@@ -20,7 +20,7 @@ public:
 
     void UpdateStatusBarGeometry() const;
     void SwitchStackedWidgetIndex(int i);
-    void AggressiveClearScreen() const;
+    void AggressiveClearScreen(bool force = false) const;
     void OnSleep() const;
     void OnWakeUp();
 
@@ -54,6 +54,10 @@ private slots:
     //===========================================================================
     void refreshTimeAndBattery();
 
+    //===========================================================================
+    void on_refresh_triggered();
+    void on_refresh_hovered();
+
 private:
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
@@ -66,6 +70,7 @@ private:
     QAction* timeDisplay;
     QAction* actionBatteryIcon;
     QAction* actionBatteryTxt;
+    QAction* refresh;
 
     QTimer timer;
     int wasBatteryLvl;
