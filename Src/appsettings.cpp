@@ -133,12 +133,11 @@ bool AppSettings::IsWeightedRandomEnabled() const
 void AppSettings::on_WifiCheckBox_clicked(bool checked)
 {
     wifiStatus = checked;
-    settingsSerializer->setValue("AppSettings/wifiOffStartup", wifiStatus);
 
     QString originalText = ui->WifiLabel->text();
-    ui->WifiLabel->setText(QString(originalText).append(" (Working...)"));
+    ui->WifiLabel->setText(QString(originalText).append(" (Working...)")); // TODO rewrite wifi script completly ...
 
-    wifiStatus = settingsSerializer->value("AppSettings/wifi", false).toBool();
+    wifiStatus = settingsSerializer->value("AppSettings/wifi", checked).toBool();
     if (wifiStatus)
         KoboPlatformFunctions::enableWiFiConnection();
     else
