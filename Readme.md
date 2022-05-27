@@ -14,7 +14,7 @@ Obenkyobo is an application for kyobo ereaders designed to help you memorize Hir
   <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/about.png" width="252" height="320" >
   <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/hiragana1.png" width="252" height="320" >
   <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/hiragana2.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/katakana1.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/katakana2.png" width="252" height="320" >
   <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/hiraganaEdit.png" width="252" height="320" >
   <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/hiraganaEdit2.png" width="252" height="320" >
   <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/VocabDir.png" width="252" height="320" >
