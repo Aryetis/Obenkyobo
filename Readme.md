@@ -12,19 +12,19 @@ Obenkyobo is an application for kyobo ereaders designed to help you memorize Hir
 ## How does it look ?
 <p align="center">
   <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/about.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/hiragana.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/hiragana1.png" width="252" height="320" >
   <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/hiragana2.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/katakana.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/katakanaEdit.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/katakana1.png" width="252" height="320" >
   <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/hiraganaEdit.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/vocabList.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/vocabGrid.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/vocabGrid2.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/appsettings.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/fontSettings.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/screenSettings.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/hiraganaEdit2.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/VocabDir.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/vocabLearn1.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/vocabLearn2.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/SettingsApplication.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/SettingsFonts.png" width="252" height="320" >
+  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/SettingsScreen.png" width="252" height="320" >
 </p>
-More screenshots : <a href="https://imgur.com/gallery/PWeMgeI">here (imgur gallery)</a>
+More screenshots : <a href="https://imgur.com/a/8ehpdbf">here (imgur gallery)</a>
 
 ## Features ? (and Roadmap)
 
