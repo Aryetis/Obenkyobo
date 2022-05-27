@@ -37,7 +37,7 @@ Here's what available currently
 - Multiple fonts and font settings
 - Screen options (Luminosity/Tint) support
 - Physical buttons support
-- Wifi support 
+- Wifi support (kind of)
 
 What's planned / Roadmap (in order of priority):
 (For incoming weeks/months)
@@ -49,7 +49,7 @@ What's planned / Roadmap (in order of priority):
 - "learn how to count" exercices
 - "guess the particle の, は, が, etc" exercices
 (Somewhen between the release of Bayonetta 3 and infinity)
-- Include "kanji-data-media" dictionary 
+- Include "kanji-data-media" dictionary / jisho.org API calls 
 
 Tested on : 
 - Libra h2o
@@ -60,7 +60,7 @@ Tested on :
 
 ## How to install ?
 
-Firstly, this application is designed to be compatible with most (if not all) Kobo devices with a recent firmware (probably 4.6+). Do not try to install it for other ereader, it will not work ! This application is provided "as is". Don't come to me if somehow your device catch fire.
+Firstly, this application is designed to be compatible with most (except some new models) Kobo devices with a recent firmware (probably 4.6+). Do not try to install it for other ereader, it will not work ! This application is provided "as is". Don't come to me if somehow your device catch on fire.
 
 Secondly, you'll need to install a "launcher" beforehand. Common options are : 
 - <a href="https://github.com/pgaskin/NickelMenu">NickelMenu (NM)</a>, recommended option
@@ -79,12 +79,12 @@ And voilà ! You should now have a NickelMenu entry at the bottom right corner o
 
 ## How to create my vocabulary sheets ?
 
-Each file in `Obenkyobo/vocab` is a Vocabulary sheet.<br/>
+Each file (.oben) in `Obenkyobo/vocab` is a Vocabulary sheet.<br/> (default ones are my early ones in french, I encourage you to write your owns)
 To make your own, create a file and follow the same template as the default ones.
 
 Each line should follow this format : `[fontType=hiragana][jp=いぬ][kanji=犬][trad=chien][learningScore=5]`<br/>
 You can insert commentary line by having it start with a `#`.<br/>
-Possible values for fontType : hiragana/katakana/kanji, it will determine what fonts is used in Obenkyobo to display this entry.<br/>
+Possible values for fontType : hiragana/katakana, it will determine what fonts is used in Obenkyobo to display this entry.<br/>
 LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo.
 
 If your file is misinterpreted in Obenkyobo, please make sure your text editor (notepad++, sublimeText, etc) is saving the file in UTF-8 format.
