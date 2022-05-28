@@ -194,3 +194,6 @@ Install <a href="https://www.mobileread.com/forums/showthread.php?t=254214">Nilu
 - `fbgrab picture.png` to take screenshots
 - etc 
 
+### Miscellaneous
+
+How to read the backtrace logs : convert address to line using `addr2line -e [NonStrippedProgramBinary] [HexAddress]`
