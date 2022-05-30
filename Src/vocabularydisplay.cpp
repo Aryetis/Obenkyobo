@@ -84,7 +84,7 @@ void VocabularyDisplay::InitializeGrid(VocabularyCfgListEntry* vocab)
         vocabFile.close();
     }
 
-    maxPage = std::ceil(static_cast<float>(gridEntries.count()) / GetMy::Instance().AppSettingWidget().GetNbrOfRowPerVocabPage());
+    maxPage = std::ceil(static_cast<float>(gridEntries.count()) / GetMy::Instance().AppSettingWidget().GetNumberOfRowPerVocabPage());
 
     /************************ Popuplating VocabGrid ************************/
     PopulateGrid();
@@ -122,7 +122,7 @@ void VocabularyDisplay::PopulateGrid(bool random /*= false*/, int turnPage /*= 0
 
     // Pages stuff
     int curGridLine=0;
-    int nbrOfRow = GetMy::Instance().AppSettingWidget().GetNbrOfRowPerVocabPage();
+    int nbrOfRow = GetMy::Instance().AppSettingWidget().GetNumberOfRowPerVocabPage();
     int fntSize = GetMy::Instance().AppSettingWidget().GetVocabFntSize();
     ui->previousPageButton->setCheckable(curPage != 0);
     ui->nextPageButton->setCheckable(curPage != maxPage);

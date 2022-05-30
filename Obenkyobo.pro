@@ -1,6 +1,5 @@
 #-------------------------------------------------
 # TODO : - update Readme.md
-#        - Fix qt platform plugin for Kobo Glo HD
 #-------------------------------------------------
 # TODO later : - less janky popup messages height
 #              - tweak MenuBar spacing and marging (probably not happening because of kobo quirk)

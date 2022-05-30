@@ -9,7 +9,7 @@ LongName="Obenkyobo !"
 RemoteIp="192.168.1.18"
 Author="Aryetis"
 KfMonDbComment="Obenkyo clone-ish"
-Version="0.2.1"
+Version="0.2.2"
 LauncherName=$4_launcher.sh
 QtPluginKobo=kobo_obenkyobo
 

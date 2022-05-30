@@ -186,10 +186,10 @@ void AppSettings::on_comboBox_currentIndexChanged(int index)
     settingsSerializer->setValue("AppSettings/vocabFntSizeIdx", index);
 }
 
-int AppSettings::GetNbrOfRowPerVocabPage() const
+int AppSettings::GetHardRefreshFreq() const
 {
     bool parsed;
-    int num = ui->RowPerPageComboBox->currentText().toInt(&parsed);
+    int num = ui->HardRefreshDropdown->currentText().toInt(&parsed);
 
     return (parsed) ? num : -1;
 }

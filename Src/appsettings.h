@@ -28,7 +28,7 @@ public:
     bool IsWeightedRandomEnabled() const;
     int GetBatteryFormatIdx() const { return batteryFormatIdx; }
     int GetDateFormatIdx() const { return dateFormatIdx; } // 0 <=> 13:37, 1 <=> 1:37 pm
-    int GetNbrOfRowPerVocabPage() const;
+    int GetHardRefreshFreq() const;
     bool GetKanaHardRefresh() const { return kanaHardRefresh; }
     int GetVocabFntSize() const;
     void UpdateScoreCounters() const;
