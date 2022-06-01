@@ -53,9 +53,10 @@ What's planned / Roadmap (in order of priority):
 
 Tested on : 
 - Libra h2o
-- Forma (scaling issue, should be fixed now)
-- Mini (scaling issue, should be fixed now)
-- Glo HD (not working due to qpa issue, cf <a href="https://github.com/Rain92/qt5-kobo-platform-plugin/issues/4">this github issue</a>)
+- Forma
+- Mini (might have minor scaling issues)
+- Glo
+- Glo HD
 - More incoming, please report if it works for your model too
 
 ## How to install ?
