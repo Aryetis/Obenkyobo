@@ -1,0 +1,15 @@
+# Welcome to vocabulary .oben files
+# Here's a template line [fontType=hiragana][jp=いぬ][kanji=犬][trad=chien][learningScore=5]
+# fontType possible values : hiragana/katakana, will determine what fonts will be used in Obenkyobo to display this entry
+# LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo
+
+[fontType=katakana][jp=ﾃﾆｽ][kanji=ﾃﾆｽ][trad=tennis][learningScore=5]
+[fontType=katakana][jp=ﾄﾗﾝﾌﾟ][kanji=ﾄﾗﾝﾌﾟ][trad="triomphe"][learningScore=5]
+[fontType=hiragana][jp=しごと][kanji=仕事][trad=travail][learningScore=5]
+[fontType=hiragana][jp=べんきょう][kanji=勉強][trad=études][learningScore=5]
+[fontType=hiragana][jp=さんぽ][kanji=散歩][trad=promenade][learningScore=5]
+[fontType=hiragana][jp=せんたく][kanji=洗濯][trad=lessive][learningScore=5]
+[fontType=hiragana][jp=そうじ][kanji=掃除][trad=ménage][learningScore=5]
+[fontType=hiragana][jp=うんてん][kanji=運転][trad=conduite(véhicule)][learningScore=5]
+[fontType=hiragana][jp=しゅうり][kanji=修理][trad=réparation][learningScore=5]
+[fontType=hiragana][jp=けっこん][kanji=結婚][trad=mariage][learningScore=5]

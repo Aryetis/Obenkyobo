@@ -1,0 +1,13 @@
+# Welcome to vocabulary .oben files
+# Here's a template line [fontType=hiragana][jp=いぬ][kanji=犬][trad=chien][learningScore=5]
+# fontType possible values : hiragana/katakana , will determine what fonts will be used in Obenkyobo to display this entry
+# LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo
+
+[fontType=hiragana][jp=とても][kanji=彼方][trad=très (deg.,fréq., quté.)][learningScore=5]
+[fontType=hiragana][jp=すこし][kanji=彼方][trad=un peu (deg.,fréq., quté.)][learningScore=5]
+[fontType=hiragana][jp=あまり][kanji=彼方][trad=pas très (deg.,fréq., quté.)][learningScore=5]
+[fontType=hiragana][jp=ぜんぜん][kanji=彼方][trad=pas du tout (deg.,fréq., quté.)][learningScore=5]
+
+[fontType=hiragana][jp=たくさん][kanji=彼方][trad=très (quantité)][learningScore=5]
+[fontType=hiragana][jp=よく][kanji=彼方][trad=souvent][learningScore=5]
+[fontType=hiragana][jp=ときどき][kanji=彼方][trad=de temps en temps][learningScore=5]

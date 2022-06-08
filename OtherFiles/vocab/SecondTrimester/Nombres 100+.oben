@@ -1,0 +1,24 @@
+# Welcome to vocabulary .oben files
+# Here's a template line [fontType=hiragana][jp=いぬ][kanji=犬][trad=chien][learningScore=5]
+# fontType possible values : hiragana/katakana, will determine what fonts will be used in Obenkyobo to display this entry
+# LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo
+
+[fontType=hiragana][jp=ひゃく][kanji=百][trad=100][learningScore=5]
+[fontType=hiragana][jp=にひゃく][kanji=二百][trad=200][learningScore=5]
+[fontType=hiragana][jp=さんびゃく][kanji=三百][trad=300][learningScore=5]
+[fontType=hiragana][jp=よんひゃく][kanji=四百][trad=400][learningScore=5]
+[fontType=hiragana][jp=ごひゃく][kanji=五百][trad=500][learningScore=5]
+[fontType=hiragana][jp=ろうぴゃく][kanji=六百][trad=600][learningScore=5]
+[fontType=hiragana][jp=ななひゃく][kanji=七百][trad=700][learningScore=5]
+[fontType=hiragana][jp=はっぴゃく][kanji=八百][trad=800][learningScore=5]
+[fontType=hiragana][jp=きゅうひゃく][kanji=九百][trad=900][learningScore=5]
+[fontType=hiragana][jp=せん][kanji=二千][trad=1000][learningScore=5]
+[fontType=hiragana][jp=にせん][kanji=二千][trad=2000][learningScore=5]
+[fontType=hiragana][jp=さんぜん][kanji=三千][trad=3000][learningScore=5]
+[fontType=hiragana][jp=よんせん][kanji=四千][trad=4000][learningScore=5]
+[fontType=hiragana][jp=ごせん][kanji=五千][trad=5000][learningScore=5]
+[fontType=hiragana][jp=ろくせん][kanji=六千][trad=6000][learningScore=5]
+[fontType=hiragana][jp=ななせん][kanji=七千][trad=7000][learningScore=5]
+[fontType=hiragana][jp=はっせん][kanji=八千][trad=8000][learningScore=5]
+[fontType=hiragana][jp=きゅうせん][kanji=九千][trad=9000][learningScore=5]
+[fontType=hiragana][jp=いちまん][kanji=万][trad=10000][learningScore=5]

@@ -1,0 +1,25 @@
+# Welcome to vocabulary .oben files
+# Here's a template line [fontType=hiragana][jp=いぬ][kanji=犬][trad=chien][learningScore=5]
+# fontType possible values : hiragana/katakana/kanji , will determine what fonts will be used in Obenkyobo to display this entry
+# LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo
+
+[fontType=hiragana][jp=らくな][kanji=楽な][trad=facile][learningScore=5]
+[fontType=hiragana][jp=むりな][kanji=無理な][trad=impossible][learningScore=5]
+
+[fontType=hiragana][jp=まじめな][kanji=真面目な][trad=sérieux][learningScore=5]
+[fontType=hiragana][jp=ひつような][kanji=必要な][trad=nécessaire][learningScore=5]
+
+[fontType=hiragana][jp=じょうぶな][kanji=丈夫な][trad=solide][learningScore=5]
+[fontType=hiragana][jp=ふべんな][kanji=不便な][trad=pas pratique][learningScore=5]
+
+[fontType=hiragana][jp=あんぜんな][kanji=安全な][trad=sûr][learningScore=5]
+[fontType=hiragana][jp=たいせつな][kanji=大切な][trad=important][learningScore=5]
+
+[fontType=hiragana][jp=むだな][kanji=無駄な][trad=inutile][learningScore=5]
+[fontType=hiragana][jp=へんな][kanji=変な][trad=bizarre][learningScore=5]
+
+[fontType=hiragana][jp=しあわせな][kanji=幸せな][trad=hereux][learningScore=5]
+[fontType=hiragana][jp=ていねいな][kanji=丁寧な][trad=poli][learningScore=5]
+
+[fontType=hiragana][jp=ふくざつな][kanji=複雑な][trad=compliqué][learningScore=5]
+[fontType=hiragana][jp=きけんな][kanji=危険な][trad=dangereux][learningScore=5]

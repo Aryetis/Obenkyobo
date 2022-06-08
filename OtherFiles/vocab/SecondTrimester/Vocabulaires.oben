@@ -1,0 +1,24 @@
+# Welcome to vocabulary .oben files
+# Here's a template line [fontType=hiragana][jp=いぬ][kanji=犬][trad=chien][learningScore=5]
+# fontType possible values : hiragana/katakana, will determine what fonts will be used in Obenkyobo to display this entry
+# LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo
+
+[fontType=katakana][jp=プレセント][kanji=プレセント][trad=cadeau][learningScore=5]
+[fontType=hiragana][jp=くだもの][kanji=果物][trad=fruit][learningScore=5]
+[fontType=hiragana][jp=りんご][kanji=林檎][trad=pomme][learningScore=5]
+[fontType=hiragana][jp=にく][kanji=肉][trad=viande][learningScore=5]
+[fontType=katakana][jp=パン][kanji=パン][trad=pain][learningScore=5]
+[fontType=hiragana][jp=みず][kanji=水][trad=eau (fraiche)][learningScore=5]
+[fontType=hiragana][jp=やさい][kanji=野菜][trad=légumes][learningScore=5]
+[fontType=hiragana][jp=ふうとう][kanji=封筒][trad=enveloppe][learningScore=5]
+[fontType=hiragana][jp=きって][kanji=切手][trad=timbre][learningScore=5]
+[fontType=hiragana][jp=にもつ][kanji=荷物][trad=colis/bagage][learningScore=5]
+[fontType=hiragana][jp=びじゅつかん][kanji=美術館][trad=musée d'art][learningScore=5]
+[fontType=hiragana][jp=としょかん][kanji=図書館][trad=librairie][learningScore=5]
+
+[fontType=hiragana][jp=せ][kanji=背][trad=taille/stature][learningScore=5]
+[fontType=hiragana][jp=くすり][kanji=薬][trad=médicament][learningScore=5]
+[fontType=hiragana][jp=りょう][kanji=寮][trad=hôtel][learningScore=5]
+[fontType=hiragana][jp=せいかつ][kanji=生活][trad=vie odinaire (living))][learningScore=5]
+[fontType=hiragana][jp=にちじょう][kanji=日常][trad=vie quotidienne][learningScore=5]
+[fontType=hiragana][jp=まち][kanji=町][trad=ville][learningScore=5]

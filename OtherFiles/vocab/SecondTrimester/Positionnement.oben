@@ -1,0 +1,17 @@
+# Welcome to vocabulary .oben files
+# Here's a template line [fontType=hiragana][jp=いぬ][kanji=犬][trad=chien][learningScore=5]
+# fontType possible values : hiragana/katakana , will determine what fonts will be used in Obenkyobo to display this entry
+# LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo
+
+[fontType=hiragana][jp=あちら][kanji=彼方][trad=là (locuteur, poli)][learningScore=5]
+[fontType=hiragana][jp=そちら][kanji=其方][trad=là (interlocuteur, poli)][learningScore=5]
+[fontType=hiragana][jp=あちら][kanji=彼方][trad=là (loin, poli)][learningScore=5]
+
+[fontType=hiragana][jp=ここ][kanji=此処][trad=là (locuteur, normal)][learningScore=5]
+[fontType=hiragana][jp=そこ][kanji=其処][trad=là (interlocuteur, normal)][learningScore=5]
+[fontType=hiragana][jp=あそこ][kanji=彼処][trad=là (loin, normal)][learningScore=5]
+
+[fontType=hiragana][jp=こっち][kanji=此方][trad=là (locuteur, fami.)][learningScore=5]
+[fontType=hiragana][jp=そっち][kanji=其方][trad=là (interlocuteur, fami.)][learningScore=5]
+[fontType=hiragana][jp=あっち][kanji=彼方][trad=là (loin, fami.)][learningScore=5]
+

@@ -1,0 +1,16 @@
+# Welcome to vocabulary .oben files
+# Here's a template line [fontType=hiragana][jp=いぬ][kanji=犬][trad=chien][learningScore=5]
+# fontType possible values : hiragana/katakana , will determine what fonts will be used in Obenkyobo to display this entry
+# LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo
+
+[fontType=hiragana][jp=しごと][kanji=仕事][trad=travail][learningScore=5]
+[fontType=hiragana][jp=だいとうりょう][kanji=大統領][trad=président][learningScore=5]
+[fontType=hiragana][jp=しゅしょう][kanji=首相][trad=1erMinistre][learningScore=5]
+[fontType=hiragana][jp=せんせい][kanji=先生][trad=professeur][learningScore=5]
+[fontType=hiragana][jp=がくせい][kanji=学生][trad=étudiant][learningScore=5]
+[fontType=hiragana][jp=はいゆう][kanji=俳優][trad=acteur][learningScore=5]
+[fontType=hiragana][jp=かいしゃいん][kanji=会社員][trad=salarié][learningScore=5]
+[fontType=hiragana][jp=かいしゃ][kanji=会社][trad=entreprise][learningScore=5]
+[fontType=katakana][jp=デベロップ][kanji=デベロップ][trad=développeur][learningScore=5]
+[fontType=hiragana][jp=べんごし][kanji=弁護士][trad=avocat][learningScore=5]
+[fontType=hiragana][jp=けいさつ(かん)][kanji=警察(官)][trad=police(ier)][learningScore=5]

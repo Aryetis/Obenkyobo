@@ -1,0 +1,73 @@
+# Welcome to vocabulary .oben files
+# Here's a template line [fontType=hiragana][jp=いぬ][kanji=犬][trad=chien][learningScore=5]
+# fontType possible values : hiragana/katakana, will determine what fonts will be used in Obenkyobo to display this entry
+# LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo
+
+[fontType=hiragana][jp=こんど][kanji=今度][trad=ce [xxx] (temporel)][learningScore=5]
+
+[fontType=hiragana][jp=おととい][kanji=一昨日][trad=avant-hier][learningScore=5]
+[fontType=hiragana][jp=きのう][kanji=昨日][trad=hier][learningScore=5]
+[fontType=hiragana][jp=きょう][kanji=今日][trad=aujourd'hui][learningScore=5]
+[fontType=hiragana][jp=あした][kanji=明日][trad=demain][learningScore=5]
+[fontType=hiragana][jp=あさって][kanji=明後日][trad=après demain][learningScore=5]
+[fontType=hiragana][jp=まいにち][kanji=毎日][trad=chaque jour][learningScore=5]
+
+[fontType=hiragana][jp=あさ][kanji=朝][trad=matin][learningScore=5]
+[fontType=hiragana][jp=おとといのあさ][kanji=一昨日の朝][trad=avant-hier matin][learningScore=5]
+[fontType=hiragana][jp=きのうのあさ][kanji=昨日の朝][trad=hier matin][learningScore=5]
+[fontType=hiragana][jp=けさ/きょうのあさ][kanji=今日の朝][trad=ce matin][learningScore=5]
+[fontType=hiragana][jp=あしたのあさ][kanji=明日の朝][trad=demain matin][learningScore=5]
+[fontType=hiragana][jp=あさってのあさ][kanji=明後日の朝][trad=après demain matin][learningScore=5]
+[fontType=hiragana][jp=まいあさ][kanji=毎朝][trad=chaque matin][learningScore=5]
+
+[fontType=hiragana][jp=ひる][kanji=昼][trad=midi(ish))][learningScore=5]
+[fontType=hiragana][jp=おとといのひる][kanji=一昨日の昼][trad=avant-hier midi][learningScore=5]
+[fontType=hiragana][jp=きのうのひる][kanji=昨日の昼][trad=hier midi][learningScore=5]
+[fontType=hiragana][jp=きゅおうのひる][kanji=今日の昼][trad=ce midi][learningScore=5]
+[fontType=hiragana][jp=あしたのひる][kanji=明日の昼][trad=demain midi][learningScore=5]
+[fontType=hiragana][jp=あさってのひる][kanji=明後日の昼][trad=après demain midi][learningScore=5]
+[fontType=hiragana][jp=まいにちのひる][kanji=毎昼][trad=chaque midi][learningScore=5]
+
+[fontType=hiragana][jp=よる/ばん][kanji=夜/晩][trad=soir][learningScore=5]
+[fontType=hiragana][jp=おとといのよる/ばん][kanji=一昨日の(夜/晩)][trad=avant-hier soir][learningScore=5]
+[fontType=hiragana][jp=きのうのよる/ばん][kanji=昨日の(夜/晩)][trad=hier soir][learningScore=5]
+[fontType=hiragana][jp=こにゃ/こんばん/きょうの(ひる/ばん)][kanji=今(夜/晩)][trad=ce soir][learningScore=5]
+[fontType=hiragana][jp=あしたのよるい/ばん][kanji=明日の(夜/晩)][trad=demain soir][learningScore=5]
+[fontType=hiragana][jp=あさってのよる/ばん][kanji=明日の(夜/晩)][trad=après demain soir][learningScore=5]
+[fontType=hiragana][jp=まいばん][kanji=毎(夜/晩)][trad=chaque soir][learningScore=5]
+
+[fontType=hiragana][jp=ごぜん][kanji=午前][trad=matiné(AM)][learningScore=5]
+[fontType=hiragana][jp=ごご][kanji=午後][trad=après-midi(PM)][learningScore=5]
+
+[fontType=hiragana][jp=なにょうび][kanji=何曜日][trad=quel jour][learningScore=5]
+[fontType=hiragana][jp=げつようび][kanji=月曜日][trad=lundi][learningScore=5]
+[fontType=hiragana][jp=かようび][kanji=火曜日][trad=mardi][learningScore=5]
+[fontType=hiragana][jp=すいようび][kanji=水曜日][trad=mercredi][learningScore=5]
+[fontType=hiragana][jp=もくようび][kanji=木曜日][trad=jeudi][learningScore=5]
+[fontType=hiragana][jp=きにょうび][kanji=金曜日][trad=vendredi][learningScore=5]
+[fontType=hiragana][jp=どようび][kanji=土曜日][trad=samedi][learningScore=5]
+[fontType=hiragana][jp=にちようび][kanji=日曜日][trad=dimanche][learningScore=5]
+[fontType=hiragana][jp=しゅうまつ][kanji=週末][trad=week-end][learningScore=5]
+
+[fontType=hiragana][jp=しゅう][kanji=週][trad=semaine][learningScore=5]
+[fontType=hiragana][jp=せんしゅう][kanji=先週][trad=semaine dernière][learningScore=5]
+[fontType=hiragana][jp=こんしゅう][kanji=今週][trad=cette semaine][learningScore=5]
+[fontType=hiragana][jp=らいしゅう][kanji=来週][trad=semaine prochaine][learningScore=5]
+[fontType=hiragana][jp=まいしゅう][kanji=毎週][trad=chaque semaine][learningScore=5]
+
+[fontType=hiragana][jp=つき][kanji=月][trad=mois][learningScore=5]
+[fontType=hiragana][jp=せんげつ][kanji=先月][trad=mois dernier][learningScore=5]
+[fontType=hiragana][jp=こんげつ][kanji=今月][trad=ce mois][learningScore=5]
+[fontType=hiragana][jp=らいげつ][kanji=来月][trad=mois prochain][learningScore=5]
+[fontType=hiragana][jp=まいつき][kanji=毎月][trad=chaque mois][learningScore=5]
+
+[fontType=hiragana][jp=とし][kanji=年][trad=année][learningScore=5]
+[fontType=hiragana][jp=きょねん][kanji=去年][trad=année dernière][learningScore=5]
+[fontType=hiragana][jp=ことし][kanji=今年][trad=cette année][learningScore=5]
+[fontType=hiragana][jp=らいねん][kanji=来年][trad=année prochaine][learningScore=5]
+[fontType=hiragana][jp=まいとし][kanji=毎年][trad=chaque année][learningScore=5]
+
+[fontType=hiragana][jp=はる][kanji=春][trad=printemps][learningScore=5]
+[fontType=hiragana][jp=なつ][kanji=夏][trad=été][learningScore=5]
+[fontType=hiragana][jp=あき][kanji=秋][trad=automne][learningScore=5]
+[fontType=hiragana][jp=ふゆ][kanji=冬][trad=hiver][learningScore=5]

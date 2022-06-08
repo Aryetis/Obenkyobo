@@ -1,0 +1,16 @@
+# Welcome to vocabulary .oben files
+# Here's a template line [fontType=hiragana][jp=いぬ][kanji=犬][trad=chien][learningScore=5]
+# fontType possible values : hiragana/katakana/kanji , will determine what fonts will be used in Obenkyobo to display this entry
+# LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo
+# regex hell \[fontType=(?'fontType'[a-zA-Z]+)]\[jp=(?'jp'[^\]]+)]\[kanji=(?'kanji'[^\]]+)]\[trad=(?'trad'[a-zA-Z]+)]\[learningScore=(?'LS'[0-9])]
+
+[fontType=hiragana][jp=あかるい][kanji=明るい][trad=clair/lumineux][learningScore=5]
+[fontType=hiragana][jp=くらい][kanji=暗い][trad=sombre][learningScore=5]
+[fontType=hiragana][jp=ふとい][kanji=太い][trad=gros(circonf.))][learningScore=5]
+[fontType=hiragana][jp=ほそい][kanji=細い][trad=mince(circonf.)][learningScore=5]
+[fontType=hiragana][jp=あまい][kanji=甘い][trad=sucré][learningScore=5]
+[fontType=hiragana][jp=からい][kanji=辛い][trad=pimenté][learningScore=5]
+[fontType=hiragana][jp=うれしい][kanji=嬉しい][trad=content][learningScore=5]
+[fontType=hiragana][jp=かなしい][kanji=悲しい][trad=triste][learningScore=5]
+[fontType=hiragana][jp=あたたかい][kanji=暖かい][trad=tiède/doux][learningScore=5]
+[fontType=hiragana][jp=すずしい][kanji=涼しい][trad=frais][learningScore=5]
