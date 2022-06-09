@@ -1,0 +1,12 @@
+# Welcome to vocabulary .oben files
+# Here's a template line [fontType=hiragana][jp=いぬ][kanji=犬][trad=chien][learningScore=5]
+# fontType possible values : hiragana/katakana/kanji , will determine what fonts will be used in Obenkyobo to display this entry
+# LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo
+
+[fontType=hiragana][jp=します][kanji=為ます][trad=faire][learningScore=5]
+[fontType=hiragana][jp=べんきょうします][kanji=勉強します][trad=chien][learningScore=5]
+[fontType=hiragana][jp=けっこんします][kanji=結婚します][trad=chien][learningScore=5]
+[fontType=hiragana][jp=しょくじします][kanji=食事します][trad=dîner][learningScore=5]
+[fontType=hiragana][jp=さんぽします][kanji=散歩します][trad=promener][learningScore=5]
+
+[fontType=hiragana][jp=きます][kanji=来ます][trad=venir][learningScore=5]

@@ -1,0 +1,50 @@
+# Welcome to vocabulary .oben files
+# Here's a template line [fontType=hiragana][jp=いぬ][kanji=犬][trad=chien][learningScore=5]
+# fontType possible values : hiragana/katakana/kanji , will determine what fonts will be used in Obenkyobo to display this entry
+# LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo
+
+[fontType=hiragana][jp=あるきます][kanji=歩きます][trad=marcher][learningScore=5]
+[fontType=hiragana][jp=はたらきます][kanji=働きます][trad=travailler][learningScore=5]
+[fontType=hiragana][jp=いきます][kanji=行きます][trad=aller][learningScore=5]
+[fontType=hiragana][jp=ききます][kanji=聞きます][trad=entendre][learningScore=5]
+[fontType=hiragana][jp=かきます][kanji=書きます][trad=écrire][learningScore=5]
+[fontType=hiragana][jp=おきます][kanji=起きます][trad=(se) réveiller][learningScore=5]
+
+[fontType=hiragana][jp=およぎます][kanji=泳ぎます][trad=chien][learningScore=5]
+[fontType=hiragana][jp=いそぎます][kanji=急ぎます][trad=se dépêcher][learningScore=5]
+
+[fontType=hiragana][jp=やすみます][kanji=休みます][trad=(se) reposer][learningScore=5]
+[fontType=hiragana][jp=のみます][kanji=飲みます][trad=boire][learningScore=5]
+[fontType=hiragana][jp=よみます][kanji=読みます][trad=lire][learningScore=5]
+
+[fontType=hiragana][jp=あそびます][kanji=遊びます][trad=jouer][learningScore=5]
+[fontType=hiragana][jp=よびます][kanji=呼びます][trad=invoquer/appeler][learningScore=5]
+
+[fontType=hiragana][jp=おわります][kanji=終わります][trad=finir/terminer][learningScore=5]
+[fontType=hiragana][jp=かえります][kanji=帰ります][trad=revenir][learningScore=5]
+[fontType=hiragana][jp=とります][kanji=取ります][trad=prendre/attraper][learningScore=5]
+[fontType=hiragana][jp=きります][kanji=着ます][trad=porter(vêtement)][learningScore=5]
+[fontType=hiragana][jp=おくります][kanji=贈ります][trad=donner/offrir][learningScore=5]
+[fontType=hiragana][jp=わかります][kanji=分かります][trad=comprendre][learningScore=5]
+[fontType=hiragana][jp=あります][kanji=有ります][trad=être(loc+inanimé)][learningScore=5]
+[fontType=hiragana][jp=はしります][kanji=走ります][trad=courir][learningScore=5]
+[fontType=hiragana][jp=のります][kanji=乗ります][trad=embarquer][learningScore=5]
+
+[fontType=hiragana][jp=まちます][kanji=待ちます][trad=attendre][learningScore=5]
+[fontType=hiragana][jp=もちます][kanji=持ちます][trad=tenir/posséder][learningScore=5]
+
+[fontType=hiragana][jp=すいます][kanji=吸います][trad=fumer][learningScore=5]
+[fontType=hiragana][jp=かいます][kanji=買います][trad=acheter][learningScore=5]
+[fontType=hiragana][jp=あいます][kanji=会います][trad=rencontrer][learningScore=5]
+[fontType=hiragana][jp=もらいます][kanji=貰います][trad=recevoir][learningScore=5]
+[fontType=hiragana][jp=ならいます][kanji=習います][trad=apprendre][learningScore=5]
+[fontType=hiragana][jp=てっだいます][kanji=?手伝います?][trad=aider][learningScore=5]
+[fontType=hiragana][jp=あらいます][kanji=洗います][trad=laver][learningScore=5]
+[fontType=hiragana][jp=はらいます][kanji=払います][trad=payer][learningScore=5]
+
+[fontType=hiragana][jp=かします][kanji=貸します][trad=prêter][learningScore=5]
+[fontType=hiragana][jp=だします][kanji=出します][trad=sortir(obj)][learningScore=5]
+[fontType=hiragana][jp=けします][kanji=消します][trad=éteindre][learningScore=5]
+[fontType=hiragana][jp=はなします][kanji=話します][trad=parler][learningScore=5]
+
+[fontType=hiragana][jp=しにます][kanji=死にます][trad=mourir][learningScore=5]

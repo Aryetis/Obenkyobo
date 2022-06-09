@@ -1,0 +1,29 @@
+# Welcome to vocabulary .oben files
+# Here's a template line [fontType=hiragana][jp=いぬ][kanji=犬][trad=chien][learningScore=5]
+# fontType possible values : hiragana/katakana/kanji , will determine what fonts will be used in Obenkyobo to display this entry
+# LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo
+
+[fontType=hiragana][jp=ねます][kanji=寝ます][trad=dormir][learningScore=5]
+[fontType=hiragana][jp=たべます][kanji=食べます][trad=manger][learningScore=5]
+[fontType=hiragana][jp=あげます][kanji=上げます][trad=donner][learningScore=5]
+[fontType=hiragana][jp=おしえます][kanji=教えます][trad=enseigner][learningScore=5]
+[fontType=hiragana][jp=かけます][kanji=掛けます][trad=passer(un appel)][learningScore=5]
+[fontType=hiragana][jp=つかれます][kanji=疲れます][trad=fatiguer][learningScore=5]
+[fontType=hiragana][jp=でます][kanji=出ます][trad=sortir/partir][learningScore=5]
+[fontType=hiragana][jp=つけます][kanji=付けます][trad=allumer][learningScore=5]
+[fontType=hiragana][jp=あけます][kanji=開けます][trad=ouvrir][learningScore=5]
+[fontType=hiragana][jp=しめます][kanji=閉めます][trad=fermer][learningScore=5]
+[fontType=hiragana][jp=とめます][kanji=止めます][trad=to park/to stop][learningScore=5]
+[fontType=hiragana][jp=みせます][kanji=見せます][trad=montrer][learningScore=5]
+
+################ EXCEPTIONS BELOW ################
+
+[fontType=hiragana][jp=おきます][kanji=起きます][trad=réveiller][learningScore=5]
+[fontType=hiragana][jp=みます][kanji=見ます][trad=regarder][learningScore=5]
+[fontType=hiragana][jp=かります][kanji=借ります][trad=emprunter][learningScore=5]
+[fontType=hiragana][jp=います][kanji=居ます][trad=être(loca+animé))][learningScore=5]
+
+[fontType=hiragana][jp=おります][kanji=降ります][trad=sortir (du bus)][learningScore=5]
+[fontType=hiragana][jp=あびます][kanji=浴びます][trad=se doucher][learningScore=5]
+[fontType=hiragana][jp=きます][kanji=着ます][trad=mettre/porter][learningScore=5]
+[fontType=hiragana][jp=できます][kanji=出来ます][trad=être capable de][learningScore=5]
