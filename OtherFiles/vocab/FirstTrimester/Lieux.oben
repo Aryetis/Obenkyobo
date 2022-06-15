@@ -3,11 +3,10 @@
 # fontType possible values : hiragana/katakana , will determine what fonts will be used in Obenkyobo to display this entry
 # LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo
 
-[fontType=hiragana][jp=じてんしゃ][kanji=自転車][trad=vélo][learningScore=5]
 [fontType=hiragana][jp=へや][kanji=部屋][trad=salle][learningScore=5]
 [fontType=katakana][jp=ドア][kanji=ドア][trad=porte][learningScore=5]
-[fontType=katakana][jp=テーブル][kanji=テーブル][trad=table][learningScore=5]
-[fontType=katakana][jp=コップ][kanji=洋杯][trad=verre][learningScore=5]
+[fontType=katakana][jp=テブル][kanji=テブル][trad=table][learningScore=5]
+[fontType=katakana][jp=カップ][kanji=カップ][trad=verre][learningScore=5]
 [fontType=katakana][jp=ベッド][kanji=ベッド][trad=lit][learningScore=5]
 [fontType=hiragana][jp=はな][kanji=花][trad=fleur][learningScore=5]
 [fontType=hiragana][jp=かびん][kanji=花瓶][trad=vase][learningScore=5]
@@ -19,7 +18,7 @@
 [fontType=hiragana][jp=こうえん][kanji=公園][trad=parc][learningScore=5]
 [fontType=katakana][jp=タクシー][kanji=タクシー][trad=taxi][learningScore=5]
 [fontType=katakana][jp=バス][kanji=バス][trad=bus][learningScore=5]
-[fontType=hiragana][jp=のりば][kanji=乗り場][trad=arrêt(bus/train/etc)][learningScore=5]
+[fontType=hiragana][jp=のりば][kanji=乗り場][trad=arrêt(bus/taxi/etc)][learningScore=5]
 [fontType=hiragana][jp=ゆうびんきょく][kanji=郵便局][trad=poste(lieu)][learningScore=5]
 [fontType=hiragana][jp=びょういん][kanji=病院][trad=hôpital][learningScore=5]
 [fontType=hiragana][jp=がっこう][kanji=学校][trad=école][learningScore=5]
