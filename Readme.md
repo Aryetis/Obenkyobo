@@ -27,7 +27,7 @@ Obenkyobo is an application for kyobo ereaders designed to help you memorize Hir
 </p>
 More screenshots : <a href="https://imgur.com/a/8ehpdbf">here (imgur gallery)</a>
 
-## Features ? (and Roadmap)
+## Features ?
 
 Here's what available currently :
 - Hiragana/Katakana to Romanji customizable MCQ
@@ -64,6 +64,7 @@ If you're only updating Obenkyobo, you can install the "light" version of the ar
 <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/NickelMenu.png" width="303" height="184" align="left"/>
 <br/>
 <br/>
+<br/>
 And voilà ! You should now have a NickelMenu entry at the bottom right corner of your ereader "home screen" and/or a new "book" in your library to open with KfMon.
 <br clear="left"/>
 
@@ -93,9 +94,9 @@ If you encounter any issues, please report them by either :
 
 Thank you for actually reading a readme file
 
-And big big thanks to <a href="https://github.com/Rain92/">@Rain92/OfficerAction</a> , <a href="https://github.com/NiLuJe">@NiLuJe</a> and <a href="https://github.com/tux-linux">@NiMa</a> for putting up with me on Discord helping me setup my environment and walking me throught some Qt Kobo specific minefields. And creating all those nice tools that allowed me to develop this app.
+And big big thanks to <a href="https://github.com/Rain92/">@Rain92/OfficerAction</a> , <a href="https://github.com/NiLuJe">@NiLuJe</a> and <a href="https://github.com/tux-linux">@NiMa</a> for putting up with me on Discord helping me setup my environment, walking me throught some Qt Kobo specific minefields and creating all those nice tools that allowed me to develop this app.
 
 ## For developpers, dummies, and future me. How to compile it ?
 
-Please check the DevReadme.md 
+Please check the [DevReadme.md ](DevReadme.md) file.
 
