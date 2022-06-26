@@ -228,14 +228,20 @@
    </property>
   </action>
   <action name="actionHiragana_to_Romanji_Kbd">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
-    <string>Hiragana to Romanji (Kbd) TODO</string>
+    <string>Hiragana to Romanji (Kbd)</string>
    </property>
    <property name="font">
     <font>
      <family>Helvetica</family>
      <pointsize>12</pointsize>
     </font>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionKatakana_to_Romanji_QCM">
@@ -261,14 +267,20 @@
    </property>
   </action>
   <action name="actionKatakana_to_Romanji_Kbd">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
-    <string>Katakana to Romanji (Kbd) TODO</string>
+    <string>Katakana to Romanji (Kbd)</string>
    </property>
    <property name="font">
     <font>
      <family>Helvetica</family>
      <pointsize>12</pointsize>
     </font>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionHiragana_to_Romanji_QCM">
@@ -338,25 +350,37 @@
    </property>
   </action>
   <action name="actionKana_To_Romanji_MCQ">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
-    <string>Kana To Romanji (MCQ) TODO</string>
+    <string>Kana To Romanji (MCQ)</string>
    </property>
    <property name="font">
     <font>
      <family>Helvetica</family>
      <pointsize>12</pointsize>
     </font>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionRomanji_to_Kanas_MCQ">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
-    <string>Romanji to Kana (MCQ) TODO</string>
+    <string>Romanji to Kana (MCQ)</string>
    </property>
    <property name="font">
     <font>
      <family>Helvetica</family>
      <pointsize>12</pointsize>
     </font>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionLearn_Edit_Set">

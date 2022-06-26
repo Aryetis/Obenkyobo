@@ -17,7 +17,7 @@ SymbolSettingEntry::~SymbolSettingEntry()
     delete ui;
 }
 
-void SymbolSettingEntry::InitializeSymbolSettingEntry(Symbol* _symbol, ::SymbolFamilyEnum symbolFamily)
+void SymbolSettingEntry::InitializeSymbolSettingEntry(Symbol* _symbol, SymbolFamilyEnum symbolFamily)
 {
     symbol = _symbol;
 
@@ -25,13 +25,16 @@ void SymbolSettingEntry::InitializeSymbolSettingEntry(Symbol* _symbol, ::SymbolF
     ui->SymbolSettingEntryButton->setJpText(symbol->JP());
     ui->SymbolSettingEntryButton->setRmjText(symbol->Romanji());
     ui->SymbolSettingEntryButton->setLearningState(symbol->LearningState());
-    ui->SymbolSettingEntryButton->setChecked(symbol->Enabled());
+    ui->SymbolSettingEntryButton->setChecked(symbol->IsEnabled());
 }
 
 void SymbolSettingEntry::on_SymbolSettingEntryButton_clicked(bool checked)
 {
     std::cout << "LOG : SymbolSettingEntry::on_SymbolSettingEntryButton_clicked()" << std::endl;
     symbol->Enabled(checked);
+    SymbolSettingSection* symbolSettingSectionParent = static_cast<SymbolSettingSection*>(parent());
+    if (symbolSettingSectionParent)
+        symbolSettingSectionParent->UpdateSectionCheckboxTristate(checked);
 }
 
 void SymbolSettingEntry::FakeClick(bool checked)

@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
 
     a.setStyleSheet
     (
+// TODO replace scrollbar ugly icons with QStyle::SP_ArrowUp ?
         QString(
             /////////////// Scrollbar stuff
             "QScrollBar                                                                                                 "

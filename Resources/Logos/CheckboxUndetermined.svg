@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="25"
+   height="25"
+   fill="none"
+   version="1.1"
+   id="svg387"
+   sodipodi:docname="test.svg"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs391" />
+  <sodipodi:namedview
+     id="namedview389"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="true"
+     inkscape:zoom="36.76183"
+     inkscape:cx="8.6502767"
+     inkscape:cy="14.199511"
+     inkscape:window-width="1920"
+     inkscape:window-height="1057"
+     inkscape:window-x="-8"
+     inkscape:window-y="93"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="text395">
+    <inkscape:grid
+       type="xygrid"
+       id="grid401"
+       originx="0"
+       originy="0" />
+  </sodipodi:namedview>
+  <g
+     aria-label="~"
+     transform="scale(0.84009859,1.1903365)"
+     id="text395"
+     style="font-size:35.5747px;fill:#000000;stroke-width:2.96456">
+    <path
+       d="m 26.187374,5.8806971 q -0.03474,1.7196754 -0.39952,3.3872395 -0.34741,1.6675644 -1.12908,2.9703484 -0.799041,1.337525 -1.928121,2.101826 -1.12908,0.7643 -2.866126,0.7643 -1.632823,0 -2.900867,-0.677448 Q 15.695617,13.732144 14.236498,11.960358 12.464712,9.7890503 11.665671,9.2331957 10.866629,8.677341 9.9981066,8.677341 q -1.6328232,0 -2.5013461,1.5286 -0.8685229,1.51123 -1.0248571,4.91584 H 3.5710368 Q 3.6057778,13.384735 3.9531869,11.751912 4.3179666,10.101719 5.0822667,8.7641933 5.8291965,7.4787793 7.0277581,6.6971087 8.2263198,5.8980676 9.8938838,5.8980676 q 1.6154522,0 2.8834962,0.6774479 1.285414,0.6600774 2.761903,2.4666051 1.389637,1.7023054 2.27553,2.5013464 0.885893,0.78167 1.945491,0.78167 1.789158,0 2.62294,-1.754416 0.851152,-1.7544164 0.903263,-4.6900239 z"
+       id="path818" />
+  </g>
+  <text
+     xml:space="preserve"
+     style="fill:#000000"
+     x="21.564425"
+     y="4.2690992"
+     id="text399"><tspan
+       sodipodi:role="line"
+       id="tspan397"
+       x="21.564425"
+       y="4.2690992" /></text>
+</svg>

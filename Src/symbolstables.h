@@ -46,7 +46,7 @@ public :
     const QString& JP() const { return jp; }
     const QString& Romanji() const {return romanji;}
 
-    bool Enabled() const { return enabled; }
+    bool IsEnabled() const { return enabled; }
     void Enabled(bool b); // inlined at the end because of parentedFamily->NbrOfEnabled
 
     int LearningState() const { return learningState; }

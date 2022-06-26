@@ -19,6 +19,7 @@ public:
 
     void InitializeSymbolSettingEntry(Symbol* _symbol, SymbolFamilyEnum symbolFamily);
     void FakeClick(bool b);
+    bool IsEnabled() const { return symbol->IsEnabled(); }
 
 private slots:
     void on_SymbolSettingEntryButton_clicked(bool checked);

@@ -49,10 +49,17 @@ MainWindow::MainWindow(QWidget *parent) :
         QString(
             "QMenuBar { spacing : %1px; }"
             "QMenuBar::item { padding-top : %2px; padding-bottom : %3px; color: black; }"
+            "QMenuBar::item { padding-top : %2px; padding-bottom : %3px; color: black; }"
+            "QMenu::item#menuHiragana { padding : %4px; }"
+
+            // hack : margin-right and left, to account for shifting right-arrow "correctly"
+            "QMenu::right-arrow#menuMain { image: url(:/pictures/Arrows/qmenuArrowRight.png); left: %5px;}"
+            "QMenu::item#menuMain { padding : %4px; margin-right : %5px; }"
+
             "QMenuBar::item#statusBar { background : transparent; }"
 
             "QMenu::separator { height : 2px ; background : darkgray }"
-                ).arg(onePercentHeightPx*2).arg(onePercentHeightPx*2).arg(onePercentHeightPx)
+                ).arg(onePercentHeightPx*2).arg(onePercentHeightPx*2).arg(onePercentHeightPx).arg(onePercentHeightPx/2).arg(ui->menuHiragana->height())
     );
 
     // Handle time and battery
@@ -113,9 +120,9 @@ void MainWindow::DisplayFirstTimeMainWindowPagePopup()
 {
     if ( GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->value("AppSettings/firstTimeMainWindowPage", true).toBool() )
     {
-        Tools::GetInstance().DisplayPopup("This software is still in development, everything marked as TODO is not implemented yet.\n"
-                                          "Wifi and sleep functions aren't supported for now.\n"
-                                          "Therefore it is recommended that you turn OFF wifi before launching Obenkyobo to save battery life.\n"
+        Tools::GetInstance().DisplayPopup("This software is still in development, Some functions are not implemented yet.\n"
+                                          "Sleep functionality is not supported for now.\n"
+                                          "Therefore it is recommended that you close Obenkyobo between each session to save battery life.\n"
                                           "Each popup will be used only once and sparingly to introduce some mechanisms.\n"
                                           "If you wish to see any popup again later on, please go to Settings->Application->Reset Help Popup\n\n"
                                           "Thanks for reading, enjoy."

@@ -18,13 +18,16 @@ public:
     ~SymbolSettingSection() override;
 
     void InitializeSymbolSettingSection(SymbolsTableSection& symbolTableSection, SymbolFamilyEnum symbolFamily);
+    void UpdateSectionCheckboxTristate(bool update);
 
 private slots:
     void on_SymbolSettingSectionCheckbox_clicked(bool checked);
+    void InitializeCheckbox();
 
 private:
     Ui::SymbolSettingSection *ui;
     QList<SymbolSettingEntry*> symbolSettingsEntries;
+    int nbrSymbolChecked;
 };
 
 #endif // SYMBOLSETTINGSECTION_H

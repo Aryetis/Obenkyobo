@@ -14,5 +14,8 @@
         <file>Battery/batteryEmpty.png</file>
         <file>Logos/HomeLogo64.png</file>
         <file>Logos/refresh64.png</file>
+        <file>Arrows/qmenuArrowRight.png</file>
+        <file>Logos/CheckboxChecked.svg</file>
+        <file>Logos/CheckboxUndetermined.svg</file>
     </qresource>
 </RCC>

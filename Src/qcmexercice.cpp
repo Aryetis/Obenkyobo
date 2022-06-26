@@ -78,7 +78,7 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
 
     for (SymbolsTableSection& SymbolSection : targetFamily.Data() )
         for(Symbol& symbol : SymbolSection.Data())
-            if (symbol.Enabled())
+            if (symbol.IsEnabled())
                 entriesPool.push_back(&symbol);
 
     //************************ Initialize Shuffled Symbols Pool ************************

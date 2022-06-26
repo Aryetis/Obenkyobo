@@ -1,9 +1,8 @@
 #-------------------------------------------------
 # TODO : - update Readme.md
-#        - tristate checkable buttons for kana edit and vocab pages
+#        - harmonize QCheckbox stylesheet among the whole app
 #-------------------------------------------------
 # TODO later : - less janky popup messages height
-#              - tweak MenuBar spacing and marging (probably not happening because of kobo quirk)
 #              - handle sleep properly
 #              - proper way to handle endSpacer for Vocabs (also fix the alphabetical order)
 #-------------------------------------------------
