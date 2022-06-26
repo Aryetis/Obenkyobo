@@ -49,16 +49,15 @@ MainWindow::MainWindow(QWidget *parent) :
         QString(
             "QMenuBar { spacing : %1px; }"
             "QMenuBar::item { padding-top : %2px; padding-bottom : %3px; color: black; }"
-            "QMenuBar::item { padding-top : %2px; padding-bottom : %3px; color: black; }"
-            "QMenu::item#menuHiragana { padding : %4px; }"
 
             // hack : margin-right and left, to account for shifting right-arrow "correctly"
             "QMenu::right-arrow#menuMain { image: url(:/pictures/Arrows/qmenuArrowRight.png); left: %5px;}"
-            "QMenu::item#menuMain { padding : %4px; margin-right : %5px; }"
+            "QMenu::item#menuMain { margin-right : %5px; }"
 
             "QMenuBar::item#statusBar { background : transparent; }"
 
-            "QMenu::separator { height : 2px ; background : darkgray }"
+            "QMenu::item { padding : %4px; }"
+            "QMenu::separator { height : 2px ; }"
                 ).arg(onePercentHeightPx*2).arg(onePercentHeightPx*2).arg(onePercentHeightPx).arg(onePercentHeightPx/2).arg(ui->menuHiragana->height())
     );
 

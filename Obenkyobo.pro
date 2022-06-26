@@ -1,5 +1,6 @@
 #-------------------------------------------------
 # TODO : - Add enabled state to vocab sheet "and directories"
+#        - Investigate weird hard refresh (Edit page) glitch on Kobo Glo HD under unknown circumstances
 #-------------------------------------------------
 # TODO later : - less janky popup messages height
 #              - handle sleep properly
