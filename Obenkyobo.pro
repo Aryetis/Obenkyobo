@@ -1,6 +1,5 @@
 #-------------------------------------------------
-# TODO : - update Readme.md
-#        - harmonize QCheckbox stylesheet among the whole app
+# TODO : - Add enabled state to vocab sheet "and directories"
 #-------------------------------------------------
 # TODO later : - less janky popup messages height
 #              - handle sleep properly

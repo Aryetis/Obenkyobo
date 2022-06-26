@@ -51,10 +51,13 @@ void VocabularyDisplay::InitializeGrid(VocabularyCfgListEntry* vocab)
     QFile vocabFile(vocab->VocabFileInfo().filePath());
     if (vocabFile.open(QIODevice::ReadOnly))
     {
+        int lineNbr = 0;
+        std::vector<int> malformedLines;
         QTextStream in(&vocabFile);
         in.setCodec("UTF-8");
         while (!in.atEnd())
         {
+            ++lineNbr;
             QString line = in.readLine();
             if (line.count() <= 0 || line[0] == '#') // skip empty lines and comments
                 continue;
@@ -72,15 +75,35 @@ void VocabularyDisplay::InitializeGrid(VocabularyCfgListEntry* vocab)
                 else if (parsedFields[1] == "katakana")
                     fontType_ = SymbolFamilyEnum::katakana;
                 else
+                {
+                    malformedLines.push_back(lineNbr);
                     continue;
+                }
                 QString kanas_ = parsedFields[2];
                 QString kanji_ = parsedFields[3];
                 QString trad_ = parsedFields[4];
                 int learningScore_ = parsedFields[5].toInt();
+                if (learningScore_ < 0 || learningScore_ > Symbol::GetMaxlearningState())
+                {
+                    malformedLines.push_back(lineNbr);
+                    continue;
+                }
 
                 gridEntries.push_back(new tempVocab(fontType_, kanas_, kanji_, trad_, learningScore_));
             }
+            else
+                malformedLines.push_back(lineNbr);
         }
+        if (malformedLines.size() > 0)
+        {
+            QString popupMsg = "Malformed Vocab sheet, errors on lines : ";
+            for (int line : malformedLines)
+                popupMsg += QString::number(line) + ", " ;
+            popupMsg.chop(2);
+            popupMsg += '.';
+            Tools::GetInstance().DisplayPopup(popupMsg, 0.3f);
+        }
+
         vocabFile.close();
     }
 

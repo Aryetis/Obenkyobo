@@ -60,7 +60,6 @@ private:
     bool kanjiShow;
     bool traductionShow;
     bool lsShow;
-
 };
 
 #endif // VOCABULARYDISPLAY_H

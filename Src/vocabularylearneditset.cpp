@@ -77,6 +77,8 @@ void VocabularyLearnEditSet::Populate()
     connect( ui->VocabularyCfgList->verticalScrollBar(), &QScrollBar::sliderReleased, this, &VocabularyLearnEditSet::OnSliderReleased);
     connect( ui->VocabularyCfgList->verticalScrollBar(), &QScrollBar::valueChanged, this, &VocabularyLearnEditSet::OnValueChanged);
     ui->VocabularyCfgList->verticalScrollBar()->installEventFilter(this);
+
+    ui->VocabularyCfgList->setFocus(); // force focus on scrollbar so it handles physical buttons
 }
 
 VocabularyLearnEditSet::~VocabularyLearnEditSet()
@@ -98,7 +100,6 @@ bool VocabularyLearnEditSet::eventFilter(QObject *obj, QEvent *event)
 void VocabularyLearnEditSet::InitializeVocabularyLearnEditSet()
 {
     Populate();
-    ui->VocabularyCfgList->setFocus(); // force focus on scrollbar so it handles physical buttons
 }
 
 void VocabularyLearnEditSet::on_SelectAllButton_clicked()
