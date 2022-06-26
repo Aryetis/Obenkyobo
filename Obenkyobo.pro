@@ -4,6 +4,7 @@
 #-------------------------------------------------
 # TODO later : - less janky popup messages height
 #              - handle sleep properly
+#              - redo the Qmenu::right-arrow
 #-------------------------------------------------
 
 QT       += core gui
