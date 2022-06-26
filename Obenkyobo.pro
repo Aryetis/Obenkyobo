@@ -4,7 +4,6 @@
 #-------------------------------------------------
 # TODO later : - less janky popup messages height
 #              - handle sleep properly
-#              - proper way to handle endSpacer for Vocabs (also fix the alphabetical order)
 #-------------------------------------------------
 
 QT       += core gui

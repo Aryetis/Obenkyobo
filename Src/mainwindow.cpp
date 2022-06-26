@@ -138,8 +138,8 @@ void MainWindow::DisplayFirstTimeKanasEditPagePopup()
         Tools::GetInstance().DisplayPopup("Here you can add/remove kanas to the related MCQ's guesses.\n"
                                           "The background color and circle gyzmo indicate their status.\n"
                                           "The number at the bottom right corner indicate its Learning Score (LS).\n"
-                                          "It ranges from 0 to 5 and reflets your progress.\n"
-                                          "You can use the checkboxes to quickly toggle kanas from associated section."
+                                          "It ranges reflects your progress, ranging from 0 to 5.\n"
+                                          "You can use the checkboxes to quickly toggle whole kanas section."
                                          , 0.5f);
         GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeKanasEditPage", false);
     }
@@ -441,9 +441,9 @@ void MainWindow::on_actionLearn_Edit_Set_triggered()
 
     if ( GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->value("AppSettings/firstTimeVocabListPage", true).toBool() )
     {
-        Tools::GetInstance().DisplayPopup("Here is displayed every \"vocab sheet\" you have, check Obenkyobo's github page for more information about them.\n"
+        Tools::GetInstance().DisplayPopup("Here is displayed every \"vocab sheet\" you have, check Obenkyobo's github page to learn how to create your owns.\n"
                                           "Click on any one to learn/display its content.\n"
-                                          "Ignore the LS and checkbox for now, those are related unimplemented features for now."
+                                          "Ignore the LS and checkbox for now, those are related to unimplemented features for now."
                                           , 0.4f);
         GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeVocabListPage", false);
     }

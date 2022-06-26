@@ -25,15 +25,15 @@ int main(int argc, char *argv[])
     (
 // TODO replace scrollbar ugly icons with QStyle::SP_ArrowUp ?
         QString(
-            /////////////// Scrollbar stuff
+            /******************************** Scrollbar stuff ********************************/
             "QScrollBar                                                                                                 "
-            "{ border: 2px solid grey; background: white; width: %1px; margin: %1px 0 %1px 0; }                      "
+            "{ border: 2px solid grey; background: white; width: %1px; margin: %1px 0 %1px 0; }                         "
             "QScrollBar::handle                                                                                         "
             "{ background: rgb(60,60,60); min-height: 20px; }                                                           "
             "QScrollBar::add-line                                                                                       "
-            "{ border: none; background: white; height: %1px; subcontrol-position: bottom; subcontrol-origin: margin; }"
+            "{ border: none; background: white; height: %1px; subcontrol-position: bottom; subcontrol-origin: margin; } "
             "QScrollBar::sub-line                                                                                       "
-            "{ border: none; background: white; height: %1px; subcontrol-position: top; subcontrol-origin: margin; }   "
+            "{ border: none; background: white; height: %1px; subcontrol-position: top; subcontrol-origin: margin; }    "
             "QScrollBar::add-page, QScrollBar::sub-page                                                                 "
             "{ background: none; }                                                                                      "
             "                                                                                                           "
@@ -56,6 +56,19 @@ int main(int argc, char *argv[])
             "{                                                                                                          "
             "	image: url(:/pictures/Arrows/rightArrow.png);                                                           "
             "	border: none; width: %1px; height: %1px; background: none;                                              "
+            "}                                                                                                          "
+            /******************************** Checkbox stuff ********************************/
+            "QCheckBox::indicator                                                                                       "
+            "{                                                                                                          "
+            "   border : 3px inset gray;                                                                                "
+            "}                                                                                                          "
+            "QCheckBox::indicator:indeterminate                                                                         "
+            "{                                                                                                          "
+                "image : url(:/pictures/Logos/CheckboxUndetermined.svg);                                                "
+            "}                                                                                                          "
+            "QCheckBox::indicator:checked                                                                               "
+            "{                                                                                                          "
+                "image : url(:/pictures/Logos/CheckboxChecked.svg);                                                     "
             "}                                                                                                          "
         ).arg( GetMy::Instance().Descriptor().width/10 )
     );

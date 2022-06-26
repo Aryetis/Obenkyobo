@@ -8,21 +8,8 @@ SymbolSettingSection::SymbolSettingSection(QWidget *parent) :
     ui->setupUi(this);
 
     ui->SymbolSettingSectionCheckbox->setStyleSheet(
-                QString(
-                        "QCheckBox::indicator                                        "
-                        "{                                                           "
-                        "   width: %1px; height: %1px;                               "
-                        "   border : 3px inset gray;                                 "
-                        "}                                                           "
-                        "QCheckBox::indicator:indeterminate                          "
-                        "{                                                           "
-                            "image : url(:/pictures/Logos/CheckboxUndetermined.svg); "
-                        "}                                                           "
-                        "QCheckBox::indicator:checked                                "
-                        "{                                                           "
-                            "image : url(:/pictures/Logos/CheckboxChecked.svg);      "
-                        "}                                                           "
-                        ).arg(GetMy::Instance().Descriptor().width/14) // TODO rework this, fix logic, use everywhere including setting pages
+                QString(QString("QCheckBox::indicator { width: %1px; height: %1px;}")
+                        .arg((int)(GetMy::Instance().Descriptor().width*0.075f)))
     );
 }
 
