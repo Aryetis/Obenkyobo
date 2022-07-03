@@ -2,7 +2,7 @@
 # TODO : - Add enabled state to vocab sheet "and directories"
 #        - Investigate weird hard refresh (Edit page) glitch on Kobo Glo HD under unknown circumstances
 #-------------------------------------------------
-# TODO later : - less janky popup messages height
+# TODO later : - fix popup message
 #              - handle sleep properly
 #              - redo the Qmenu::right-arrow
 #-------------------------------------------------

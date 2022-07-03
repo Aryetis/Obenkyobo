@@ -472,7 +472,7 @@ void MainWindow::on_actionLearn_Edit_Set_triggered()
 
     if ( GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->value("AppSettings/firstTimeVocabListPage", true).toBool() )
     {
-        Tools::GetInstance().DisplayPopup("Here is displayed every \"vocab sheet\" you have, check Obenkyobo's github page to learn how to create your owns.\n"
+        Tools::GetInstance().DisplayPopup("Here are displayed your \"vocab sheets\". Please check Obenkyobo's github page to learn how to create your owns.\n"
                                           "Click on any one to learn/display its content.\n"
                                           "Ignore the LS and checkbox for now, those are related to unimplemented features for now.");
         GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeVocabListPage", false);

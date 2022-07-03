@@ -19,12 +19,6 @@
 #include "Src/screensettings.h"
 #include "Src/mainwindow.h"
 #include "Src/appsettings.h"
-
-#include <QLabel>
-#include <QRect>
-#include <QDialog>
-#include <QDialogButtonBox>
-#include <QVBoxLayout>
 #include "popup.h"
 
 class Tools
@@ -124,7 +118,6 @@ public :
         std::uniform_int_distribution<> distr(rangeStart, rangeEnd);
         return distr(rng_engine);
     }
-
 
     std::mt19937& MT() { return mt; }
     std::default_random_engine& Rng_Engine() { return rng_engine; }
