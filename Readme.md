@@ -1,14 +1,14 @@
 
 # Obenkyobo
 
-## What is it ?
-
-Obenkyobo is an application for kyobo ereaders designed to help you memorize Hiraganas and Katakanas. 
-
 ```diff
 - Please be aware, this application is still early in its life cycle.
 - Turning off your device will not put it to sleep, it will only turn off the light.
 ```
+
+## What is it ?
+
+Obenkyobo is an application for kyobo ereaders designed to help you memorize Hiraganas, Katakanas and vocabulary. 
 
 ## How does it look ?
 <p align="center">
@@ -30,11 +30,10 @@ More screenshots : <a href="https://imgur.com/a/8ehpdbf">here (imgur gallery)</a
 ## Features ?
 
 Here's what available currently :
-- Hiragana/Katakana to Romanji customizable MCQ
-- Romanji to Hiragana/Katakana customizable MCQ
+- Hiragana/Katakana <-> Romanji customizable MCQ
 - Vocabulary sheet system (create your owns sheets, hide columns, hide cells, randomize content, change number of row per page, etc)
 - Weighted random / "learning state" for each Hiragana/Katakana to keep MCQ more entertaining (of course, progress is stored in between each session)
-- Quality of Life feature such a; multiple fonts, font settings, screen options (Luminosity/Tint) support, physical buttons support, etc
+- Quality of Life features such a; multiple fonts, font settings, screen options (Luminosity/Tint) support, physical buttons support, etc
 - Wifi support (kind of)
 
 Tested on : 
@@ -54,12 +53,12 @@ Secondly, you'll need to install a "launcher" beforehand. Common options are :
 - <a href="https://github.com/NiLuJe/kfmon">Kute File Monitor (KfMon)</a>
 
 Once you're done installing at least one of those you can :
--  download the archive  <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_AIO_Release_V0.2.2.zip</a> 
+- download the archive  <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_AIO_Release_V*.*.*.zip</a> 
 - connect the ereader to your computer and extract the package at its root.
 
  It should work "as is" assuming you're using NickelMenu. If you're using KfMon you'll have to uncomment the associated entry file (`.adds/kfmon/config/Obenkyobo.ini`) by removing one of the `;` located at the start of each line. And you might want to delete the useless NickelMenu entry too `.adds/nm/Obenkyobo`
 
-If you're only updating Obenkyobo, you can install the "light" version of the archive instead.  <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_Light_Release_V0.2.2.zip</a>.  This version is stripped from qt packages you already installed with the previous version and should work fine for updating except if told otherwise.
+If you're only updating Obenkyobo, you can install the "light" version of the archive instead.  <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_Light_Release_V*.*.*.zip</a>.  This version is stripped from qt packages you already installed with the previous version and should work fine for updating except if told otherwise.
 
 <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/NickelMenu.png" width="303" height="184" align="left"/>
 <br/>
@@ -92,7 +91,7 @@ If you encounter any issues, please report them by either :
 
 ## Thanks
 
-Thank you for actually reading a readme file
+Thank you for actually reading a readme file.
 
 And big big thanks to <a href="https://github.com/Rain92/">@Rain92/OfficerAction</a> , <a href="https://github.com/NiLuJe">@NiLuJe</a> and <a href="https://github.com/tux-linux">@NiMa</a> for putting up with me on Discord helping me setup my environment, walking me throught some Qt Kobo specific minefields and creating all those nice tools that allowed me to develop this app.
 
