@@ -2,8 +2,7 @@
 # TODO : - Add enabled state to vocab sheet "and directories"
 #        - Investigate weird hard refresh (Edit page) glitch on Kobo Glo HD under unknown circumstances
 #-------------------------------------------------
-# TODO later : - fix popup message
-#              - handle sleep properly
+# TODO later : - handle sleep properly
 #              - redo the Qmenu::right-arrow
 #-------------------------------------------------
 
