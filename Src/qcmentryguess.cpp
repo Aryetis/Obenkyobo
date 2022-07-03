@@ -22,7 +22,7 @@ void QcmEntryGuess::SetGuess(Symbol* s, QcmExercice::QcmExerciceType qcmType, bo
 
     switch (qcmType)
     {
-        case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
+        case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_MCQ :
         case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_Kbd :
         {
             qcmSubType = QcmTypeEnum::KanaToRmj;
@@ -30,7 +30,7 @@ void QcmEntryGuess::SetGuess(Symbol* s, QcmExercice::QcmExerciceType qcmType, bo
             ui->EntryGuess->setText(symbol->JP());
             break;
         }
-        case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
+        case QcmExercice::QcmExerciceType::Katakana_to_Romanji_MCQ :
         case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
         {
             qcmSubType = QcmTypeEnum::KanaToRmj;
@@ -38,8 +38,8 @@ void QcmEntryGuess::SetGuess(Symbol* s, QcmExercice::QcmExerciceType qcmType, bo
             ui->EntryGuess->setText(symbol->JP());
             break;
         }
-        case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :
-        case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
+        case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_MCQ :
+        case QcmExercice::QcmExerciceType::Romanji_to_Katakana_MCQ :
         {
             qcmSubType = QcmTypeEnum::RmjToKana;
             ui->EntryGuess->setFont(GetMy::Instance().FntSettingWidget().GetCurrentRomanjiFnt());
@@ -100,8 +100,7 @@ void QcmEntryGuess::CorrectFontSize()
                                     ? GetMy::Instance().FntSettingWidget().GetAnswerRmjKanaSize()
                                     : GetMy::Instance().FntSettingWidget().GetAnswerKanaRmjSize())+
                     ") is too big,\n"
-                    "Resizing them to " + QString::number(newFontSize)
-                    ,0.3f);
+                    "Resizing them to " + QString::number(newFontSize));
         if (qcmSubType == QcmTypeEnum::RmjToKana)
             GetMy::Instance().FntSettingWidget().SetAnswerRmjKanaSize(newFontSize);
         else

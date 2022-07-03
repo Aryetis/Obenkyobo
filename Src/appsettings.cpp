@@ -87,17 +87,22 @@ bool AppSettings::IsThereEnough(QcmExercice::QcmExerciceType qcmType) const
 
     switch (qcmType)
     {
-        case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
+        case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_MCQ :
         case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_Kbd :
-        case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :
+        case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_MCQ :
         {
             return (SymbolsTables::HiraganaSymbolsTableFamily.NbrOfEnabled() >= minRequiredSymbol);
         }
-        case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
+        case QcmExercice::QcmExerciceType::Katakana_to_Romanji_MCQ :
         case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
-        case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
+        case QcmExercice::QcmExerciceType::Romanji_to_Katakana_MCQ :
         {
             return (SymbolsTables::KatakanaSymbolsTableFamily.NbrOfEnabled() >= minRequiredSymbol);
+        }
+        case QcmExercice::QcmExerciceType::Vocabulary_to_Romanji_MCQ :
+        case QcmExercice::QcmExerciceType::Romanji_to_Vocabulary_MCQ :
+        {
+            return true; // TODO
         }
     }
 

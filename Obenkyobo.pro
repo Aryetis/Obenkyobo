@@ -35,6 +35,7 @@ QMAKE_CXXFLAGS += -g -rdynamic # for backtrace debuging
 SOURCES += \
     Src/main.cpp \
     Src/mainwindow.cpp \
+    Src/popup.cpp \
     Src/qsymbolpushbutton.cpp \
     Src/symbolsetting.cpp \
     Src/symbolsettingentry.cpp \
@@ -62,6 +63,7 @@ RESOURCES += \
 HEADERS += \
     Src/GetMy.h \
     Src/mainwindow.h \
+    Src/popup.h \
     Src/qsymbolpushbutton.h \
     Src/symbolsetting.h \
     Src/symbolsettingentry.h \
@@ -84,6 +86,7 @@ OTHER_FILES += \
 
 FORMS += \
     Src/mainwindow.ui \
+    Src/popup.ui \
     Src/symbolsetting.ui \
     Src/symbolsettingentry.ui \
     Src/symbolsettingsection.ui \

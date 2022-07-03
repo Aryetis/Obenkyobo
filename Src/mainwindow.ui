@@ -129,8 +129,8 @@
      <property name="title">
       <string>Katakana</string>
      </property>
-     <addaction name="actionKatakana_to_Romanji_QCM"/>
-     <addaction name="actionRomanji_to_Katakana_QCM"/>
+     <addaction name="actionKatakana_to_Romanji_MCQ"/>
+     <addaction name="actionRomanji_to_Katakana_MCQ"/>
      <addaction name="actionKatakana_to_Romanji_Kbd"/>
      <addaction name="actionEdit_Katakana_Set"/>
     </widget>
@@ -156,8 +156,8 @@
      <property name="title">
       <string>Hiragana</string>
      </property>
-     <addaction name="actionHiragana_to_Romanji_QCM"/>
-     <addaction name="actionRomanji_to_Hiragana_QCM"/>
+     <addaction name="actionHiragana_to_Romanji_MCQ"/>
+     <addaction name="actionRomanji_to_Hiragana_MCQ"/>
      <addaction name="actionHiragana_to_Romanji_Kbd"/>
      <addaction name="actionEdit_Hiragana_Set"/>
     </widget>
@@ -183,8 +183,8 @@
      <property name="title">
       <string>Vocabulary</string>
      </property>
-     <addaction name="actionKana_To_Romanji_MCQ"/>
-     <addaction name="actionRomanji_to_Kanas_MCQ"/>
+     <addaction name="actionVocabulary_to_Romanji_MCQ"/>
+     <addaction name="actionRomanji_to_Vocabulary_MCQ"/>
      <addaction name="actionLearn_Edit_Set"/>
     </widget>
     <addaction name="menuHiragana"/>
@@ -216,7 +216,7 @@
     </font>
    </property>
   </action>
-  <action name="actionRomanji_to_Hiragana_QCM">
+  <action name="actionRomanji_to_Hiragana_MCQ">
    <property name="text">
     <string>Romanji to Hiragana (MCQ)</string>
    </property>
@@ -244,7 +244,7 @@
     <bool>false</bool>
    </property>
   </action>
-  <action name="actionKatakana_to_Romanji_QCM">
+  <action name="actionKatakana_to_Romanji_MCQ">
    <property name="text">
     <string>Katakana to Romanji (MCQ)</string>
    </property>
@@ -255,7 +255,7 @@
     </font>
    </property>
   </action>
-  <action name="actionRomanji_to_Katakana_QCM">
+  <action name="actionRomanji_to_Katakana_MCQ">
    <property name="text">
     <string>Romanji to Katakana (MCQ)</string>
    </property>
@@ -283,7 +283,7 @@
     <bool>false</bool>
    </property>
   </action>
-  <action name="actionHiragana_to_Romanji_QCM">
+  <action name="actionHiragana_to_Romanji_MCQ">
    <property name="text">
     <string>Hiragana to Romanji (MCQ)</string>
    </property>
@@ -363,7 +363,7 @@
     </font>
    </property>
    <property name="visible">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionRomanji_to_Kanas_MCQ">
@@ -380,7 +380,7 @@
     </font>
    </property>
    <property name="visible">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionLearn_Edit_Set">
@@ -403,6 +403,16 @@
      <family>Helvetica</family>
      <pointsize>12</pointsize>
     </font>
+   </property>
+  </action>
+  <action name="actionVocabulary_to_Romanji_MCQ">
+   <property name="text">
+    <string>Vocabulary to Romanji (MCQ)</string>
+   </property>
+  </action>
+  <action name="actionRomanji_to_Vocabulary_MCQ">
+   <property name="text">
+    <string>Romanji to Vocabulary (MCQ)</string>
    </property>
   </action>
  </widget>

@@ -16,7 +16,7 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow),
-    timer(this), wasBatteryLvl(-1), wasBatteryDisplayFormat(-1), wasBatteryCharging(-1)
+    timer(this), wasBatteryLvl(-1), wasBatteryDisplayFormat(-1), wasBatteryCharging(-1), curBatteryIconStr("")
 {
     std::cout << "LOG: MainWindow::MainWindow()::Start" << std::endl;
     ui->setupUi(this);
@@ -82,7 +82,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::AggressiveClearScreen(bool force /*=false*/) const // requires adding DRAW=1 to fbink build parameter of koboplatformplugin
+void MainWindow::AggressiveClearScreen(bool force /*=false*/) const
 {
     if (GetMy::Instance().AppSettingWidget().GetKanaHardRefresh() || force)
     {
@@ -97,21 +97,21 @@ void MainWindow::AggressiveClearScreen(bool force /*=false*/) const // requires 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == KoboKey::Key_Power)
-    {
-        if (Tools::GetInstance().Sleeping())
+    {        
+        if (Tools::GetInstance().GetDeviceState() == Tools::DeviceState::asleep)
             Tools::GetInstance().WakeUp();
-        else
+        else if (Tools::GetInstance().GetDeviceState() == Tools::DeviceState::awake)
             Tools::GetInstance().Sleep();
     }
-    else if (event->key() == KoboKey::Key_SleepCover && !Tools::GetInstance().Sleeping())
+    else if (event->key() == KoboKey::Key_SleepCover && Tools::GetInstance().GetDeviceState() == Tools::DeviceState::awake)
         Tools::GetInstance().Sleep();
     else if (event->key() == KoboKey::Key_Light)
         GetMy::Instance().ScreenSettingsWidget().ToggleLight();
 }
 
-void MainWindow::keyReleaseEvent(QKeyEvent *event) // requires qpa fix https://github.com/Rain92/qt5-kobo-platform-plugin/pull/5
+void MainWindow::keyReleaseEvent(QKeyEvent *event)
 {
-    if (event->key() == KoboKey::Key_SleepCover && Tools::GetInstance().Sleeping())
+    if (event->key() == KoboKey::Key_SleepCover && Tools::GetInstance().GetDeviceState() == Tools::DeviceState::asleep)
         Tools::GetInstance().WakeUp();
 }
 
@@ -124,8 +124,7 @@ void MainWindow::DisplayFirstTimeMainWindowPagePopup()
                                           "Therefore it is recommended that you close Obenkyobo between each session to save battery life.\n"
                                           "Each popup will be used only once and sparingly to introduce some mechanisms.\n"
                                           "If you wish to see any popup again later on, please go to Settings->Application->Reset Help Popup\n\n"
-                                          "Thanks for reading, enjoy."
-                                          , 0.75f);
+                                          "Thanks for reading, enjoy.", true);
         GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeMainWindowPage", false);
     }
 }
@@ -135,19 +134,18 @@ void MainWindow::DisplayFirstTimeKanasEditPagePopup()
     if ( GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->value("AppSettings/firstTimeKanasEditPage", true).toBool() )
     {
         Tools::GetInstance().DisplayPopup("Here you can add/remove kanas to the related MCQ's guesses.\n"
-                                          "The background color and circle gyzmo indicate their status.\n"
-                                          "The number at the bottom right corner indicate its Learning Score (LS).\n"
+                                          "The background color and circle gyzmo indicates their status.\n"
+                                          "The number at the bottom right corner indicates its Learning Score (LS).\n"
                                           "It ranges reflects your progress, ranging from 0 to 5.\n"
-                                          "You can use the checkboxes to quickly toggle whole kanas section."
-                                         , 0.5f);
+                                          "You can use the checkboxes to quickly toggle whole kanas section.");
         GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeKanasEditPage", false);
     }
 }
 
 void MainWindow::OnSleep() const
 {
-    if (Tools::GetInstance().Sleeping())
-        return;
+//    if (Tools::GetInstance().GetDeviceState() != Tools::DeviceState::busy)
+//        return;
 
     disconnect(&timer, nullptr, nullptr, nullptr);
     actionBatteryIcon->setIcon(QIcon());
@@ -159,14 +157,16 @@ void MainWindow::OnSleep() const
 
 void MainWindow::OnWakeUp()
 {
-    if (!Tools::GetInstance().Sleeping())
-        return;
+//    if (Tools::GetInstance().GetDeviceState() != Tools::DeviceState::busy)
+//        return;
 
     connect(&timer, &QTimer::timeout, this, &MainWindow::refreshTimeAndBattery);
     // reinitializing icons format
     wasBatteryLvl = -1;
     wasBatteryDisplayFormat = -1;
     wasBatteryCharging = -1;
+    curBatteryIconStr = "";
+    timeDisplay->setText("Waking up !");
 
     UpdateStatusBarGeometry();
 }
@@ -188,14 +188,17 @@ void MainWindow::on_refresh_hovered()
 
 void MainWindow::refreshTimeAndBattery()
 {
+    if (Tools::GetInstance().GetDeviceState() != Tools::DeviceState::awake)
+        return;
+
     bool ugly = false;
 
     // Handle Time
     QTime time = QTime::currentTime();
-    QString text = time.toString((GetMy::Instance().AppSettingWidget().GetDateFormatIdx() == 0) ? "hh:mm" : "hh:mm a" );
-    if (text.compare(timeDisplay->text()) != 0)
+    QString timeText = time.toString((GetMy::Instance().AppSettingWidget().GetDateFormatIdx() == 0) ? "hh:mm" : "hh:mm a" );
+    if (timeDisplay->text() != timeText)
     {
-        timeDisplay->setText(text);
+        timeDisplay->setText(timeText);
         ugly = true;
     }
 
@@ -210,24 +213,33 @@ void MainWindow::refreshTimeAndBattery()
     if (isBatteryCharging != wasBatteryCharging || batteryLvl != wasBatteryLvl || batteryDisplayFormat != wasBatteryDisplayFormat)
     {
         if (isBatteryTextVisible)
-            actionBatteryTxt->setText((isBatteryCharging)
-                                     ? QString("⚡%1%⚡ ").arg(batteryLvl)
-                                     : QString("%1% ").arg(batteryLvl)); // defeated for now, adding an extra space for margin... I hate stylesheet
+        {
+            QString batteryTxt =(isBatteryCharging) ? QString("⚡%1%⚡ ").arg(batteryLvl) : QString("%1% ").arg(batteryLvl);
+            if (actionBatteryTxt->text() != batteryTxt)
+                actionBatteryTxt->setText(batteryTxt); // defeated for now, adding an extra space for margin... I hate stylesheet
+        }
 
         if (isBatteryIconVisible)
         {
+            QString newBatteryIconStr;
             if (isBatteryCharging)
-                actionBatteryIcon->setIcon(QIcon(":/pictures/Battery/batteryCharging.png"));
+                newBatteryIconStr = ":/pictures/Battery/batteryCharging.png";
             else if (batteryLvl > 77.5)
-                actionBatteryIcon->setIcon(QIcon(":/pictures/Battery/battery4.png"));
+                newBatteryIconStr = ":/pictures/Battery/battery4.png";
             else if(batteryLvl > 55)
-                actionBatteryIcon->setIcon(QIcon(":/pictures/Battery/battery3.png"));
+                newBatteryIconStr = ":/pictures/Battery/battery3.png";
             else if(batteryLvl > 32.5)
-                actionBatteryIcon->setIcon(QIcon(":/pictures/Battery/battery2.png"));
+                newBatteryIconStr = ":/pictures/Battery/battery2.png";
             else if(batteryLvl > 10)
-                actionBatteryIcon->setIcon(QIcon(":/pictures/Battery/battery1.png"));
+                newBatteryIconStr = ":/pictures/Battery/battery1.png";
             else
-                actionBatteryIcon->setIcon(QIcon(":/pictures/Battery/batteryEmpty.png"));
+                newBatteryIconStr = ":/pictures/Battery/batteryEmpty.png";
+
+            if (curBatteryIconStr != newBatteryIconStr)
+            {
+                curBatteryIconStr = newBatteryIconStr;
+                actionBatteryIcon->setIcon(QIcon(curBatteryIconStr));
+            }
         }
 
         ugly = true;
@@ -279,18 +291,18 @@ void MainWindow::on_actionAbout_triggered()
 void MainWindow::on_actionExit_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionExit_triggered()" << std::endl;
-    QApplication::quit();
+    QApplication::quit(); // TODO : called when going to sleep ?
 }
 
 
 
 //===========================================================================
-void MainWindow::on_actionHiragana_to_Romanji_QCM_triggered()
+void MainWindow::on_actionHiragana_to_Romanji_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionHiragana_to_Romanji_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM))
+    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_MCQ))
     {
-        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM, true);
+        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
@@ -298,16 +310,15 @@ void MainWindow::on_actionHiragana_to_Romanji_QCM_triggered()
         Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Hiragana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
-                " at :\nMain->Hiragana->Edit Hiragana Set"
-                , 0.3f);
+                " at :\nMain->Hiragana->Edit Hiragana Set");
 }
 
-void MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()
+void MainWindow::on_actionRomanji_to_Hiragana_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM))
+    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Romanji_to_Hiragana_MCQ))
     {
-        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM, true);
+        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Hiragana_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
@@ -315,8 +326,7 @@ void MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()
         Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Hiragana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
-                " at :\nMain->Hiragana->Edit Hiragana Set"
-                , 0.3f);
+                " at :\nMain->Hiragana->Edit Hiragana Set");
 }
 
 void MainWindow::on_actionHiragana_to_Romanji_Kbd_triggered()
@@ -339,12 +349,12 @@ void MainWindow::on_actionEdit_Hiragana_Set_triggered()
 
 
 //===========================================================================
-void MainWindow::on_actionKatakana_to_Romanji_QCM_triggered()
+void MainWindow::on_actionKatakana_to_Romanji_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionKatakana_to_Romanji_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM))
+    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Katakana_to_Romanji_MCQ))
     {
-        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM, true);
+        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Katakana_to_Romanji_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
@@ -352,16 +362,15 @@ void MainWindow::on_actionKatakana_to_Romanji_QCM_triggered()
         Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Katakana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
-                " at :\nMain->Hiragana->Edit Hiragana Set"
-                , 0.3f);
+                " at :\nMain->Hiragana->Edit Hiragana Set");
 }
 
-void MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()
+void MainWindow::on_actionRomanji_to_Katakana_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM))
+    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Romanji_to_Katakana_MCQ))
     {
-        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM, true);
+        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Katakana_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
@@ -369,8 +378,7 @@ void MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()
         Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Katakana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
-                " at :\nMain->Hiragana->Edit Hiragana Set"
-                , 0.3f);
+                " at :\nMain->Hiragana->Edit Hiragana Set");
 }
 
 void MainWindow::on_actionKatakana_to_Romanji_Kbd_triggered()
@@ -421,14 +429,38 @@ void MainWindow::on_actionScreen_Setting_triggered()
 
 
 //===========================================================================
-void MainWindow::on_actionKana_To_Romanji_MCQ_triggered()
+void MainWindow::on_actionVocabulary_to_Romanji_MCQ_triggered()
 {
-
+    std::cout << "LOG: MainWindow::on_actionVocabulary_to_Romanji_triggered()" << std::endl;
+//    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Vocabulary_to_Romanji_QCM)) // TODO
+    {
+        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Vocabulary_to_Romanji_MCQ, true);
+        ui->ContentStackedWidget->setCurrentIndex(1);
+        AggressiveClearScreen();
+    }
+//    else
+//        Tools::GetInstance().DisplayPopup(
+//                "Not enough enabled Katakana,\nplease enable at least " +
+//                QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
+//                " at :\nMain->Hiragana->Edit Hiragana Set"
+//                , 0.3f);
 }
 
-void MainWindow::on_actionRomanji_to_Kanas_MCQ_triggered()
+void MainWindow::on_actionRomanji_to_Vocabulary_MCQ_triggered()
 {
-
+    std::cout << "LOG: MainWindow::on_actionVocabulary_to_Romanji_triggered()" << std::endl;
+//    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Vocabulary_to_Romanji_QCM)) // TODO
+    {
+        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Vocabulary_MCQ, true);
+        ui->ContentStackedWidget->setCurrentIndex(1);
+        AggressiveClearScreen();
+    }
+//    else
+//        Tools::GetInstance().DisplayPopup(
+//                "Not enough enabled Katakana,\nplease enable at least " +
+//                QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
+//                " at :\nMain->Hiragana->Edit Hiragana Set"
+//                , 0.3f);
 }
 
 void MainWindow::on_actionLearn_Edit_Set_triggered()
@@ -442,8 +474,7 @@ void MainWindow::on_actionLearn_Edit_Set_triggered()
     {
         Tools::GetInstance().DisplayPopup("Here is displayed every \"vocab sheet\" you have, check Obenkyobo's github page to learn how to create your owns.\n"
                                           "Click on any one to learn/display its content.\n"
-                                          "Ignore the LS and checkbox for now, those are related to unimplemented features for now."
-                                          , 0.4f);
+                                          "Ignore the LS and checkbox for now, those are related to unimplemented features for now.");
         GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeVocabListPage", false);
     }
 }

@@ -30,14 +30,14 @@ private slots:
     void on_actionExit_triggered();
 
     //===========================================================================
-    void on_actionHiragana_to_Romanji_QCM_triggered();
-    void on_actionRomanji_to_Hiragana_QCM_triggered();
+    void on_actionHiragana_to_Romanji_MCQ_triggered();
+    void on_actionRomanji_to_Hiragana_MCQ_triggered();
     void on_actionHiragana_to_Romanji_Kbd_triggered();
     void on_actionEdit_Hiragana_Set_triggered();
 
     //===========================================================================
-    void on_actionKatakana_to_Romanji_QCM_triggered();
-    void on_actionRomanji_to_Katakana_QCM_triggered();
+    void on_actionKatakana_to_Romanji_MCQ_triggered();
+    void on_actionRomanji_to_Katakana_MCQ_triggered();
     void on_actionKatakana_to_Romanji_Kbd_triggered();
     void on_actionEdit_Katakana_Set_triggered();
 
@@ -47,8 +47,8 @@ private slots:
     void on_actionScreen_Setting_triggered();
 
     //===========================================================================
-    void on_actionKana_To_Romanji_MCQ_triggered();
-    void on_actionRomanji_to_Kanas_MCQ_triggered();
+    void on_actionVocabulary_to_Romanji_MCQ_triggered();
+    void on_actionRomanji_to_Vocabulary_MCQ_triggered();
     void on_actionLearn_Edit_Set_triggered();
 
     //===========================================================================
@@ -57,6 +57,7 @@ private slots:
     //===========================================================================
     void on_refresh_triggered();
     void on_refresh_hovered();
+
 
 private:
     void keyPressEvent(QKeyEvent *event) override;
@@ -76,6 +77,7 @@ private:
     int wasBatteryLvl;
     int wasBatteryDisplayFormat;
     int wasBatteryCharging;
+    QString curBatteryIconStr;
 
     bool firstTimeMainWindow;
 };

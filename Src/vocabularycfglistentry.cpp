@@ -62,8 +62,7 @@ void VocabularyCfgListEntry::on_TitleButton_clicked()
         {
             Tools::GetInstance().DisplayPopup("You can click the top row buttons to hide/show the associated column.\n"
                                               "Each cell is also independently clickable.\n"
-                                              "Combine that with the \"Randomize\" button to enhance your learning session"
-                                              ,0.4f);
+                                              "Combine that with the \"Randomize\" button to enhance your learning session");
             GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeVocabDisplayPage", false);
         }
     }

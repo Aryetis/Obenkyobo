@@ -64,7 +64,7 @@ bool ScreenSettings::AreSettingsAvailablePopup() const
 {
     if(!settingAvailable)
     {
-        Tools::GetInstance().DisplayPopup("Sorry,\nno Screen Settings (luminosity, tint) available for your ereader", 0.2f);
+        Tools::GetInstance().DisplayPopup("Sorry,\nno Screen Settings (luminosity, tint) available for your ereader");
         return false;
     }
     return true;
@@ -72,8 +72,8 @@ bool ScreenSettings::AreSettingsAvailablePopup() const
 
 void ScreenSettings::OnSleep() const
 {
-    if (Tools::GetInstance().Sleeping())
-        return;
+//    if (Tools::GetInstance().GetDeviceState() != Tools::DeviceState::busy)
+//        return;
 
     if(settingAvailable)
         KoboPlatformFunctions::setFrontlightLevel(desc.frontlightSettings.naturalLightMin, tint);
@@ -81,8 +81,8 @@ void ScreenSettings::OnSleep() const
 
 void ScreenSettings::OnWakeUp() const
 {
-    if (!Tools::GetInstance().Sleeping())
-        return;
+//    if (Tools::GetInstance().GetDeviceState() != Tools::DeviceState::busy)
+//        return;
 
     if(settingAvailable)
         KoboPlatformFunctions::setFrontlightLevel(luminosity, tint);

@@ -20,6 +20,13 @@
 #include "Src/mainwindow.h"
 #include "Src/appsettings.h"
 
+#include <QLabel>
+#include <QRect>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QVBoxLayout>
+#include "popup.h"
+
 class Tools
 {
 public :
@@ -123,161 +130,140 @@ public :
     std::default_random_engine& Rng_Engine() { return rng_engine; }
 
     //======================================================================
-    void DisplayPopup(QString message, float height)
+    void DisplayPopup(QString message, bool fullscreen = false)
     {
-        BigMessageBox popup;
-        popup.setHeight(height);
-        popup.setText(message);
-        popup.setStyleSheet("QMessageBox { border: 5px solid black ;}");
-
-        popup.exec();
+        Popup pop(message, fullscreen);
+        pop.exec();
     }
 
     //======================================================================
-    void Sleeping(bool _b) { sleeping = _b; }
-    bool Sleeping() const { return sleeping; }
+    enum DeviceState { asleep, awake, busy };
+    DeviceState GetDeviceState() const { return deviceState; }
 
-    void Sleep()
+    void Sleep() // needs to turn off wifi, stop printing stuff on screen (like clock, battery level, etc), etc
     {
-        if (sleeping)
+        if (deviceState != DeviceState::awake)
             return;
 
+        deviceState = DeviceState::busy;
+
+        qApp->processEvents();
+
         std::cout << "LOG: going to sleep" << std::endl;
-        GetMy::Instance().ScreenSettingsWidget().OnSleep();
+        GetMy::Instance().ScreenSettingsWidget().OnSleep(); // TODO : replace with signals at some point
         GetMy::Instance().MainWindowWidget().OnSleep();
-//        qApp->processEvents();
 
-//        std::cout << "LOG: disabling WiFi" << std::endl;
-//        KoboPlatformFunctions::disableWiFiConnection();
-//        QThread::sleep(6);
+        std::cout << "LOG: disabling WiFi" << std::endl;
+        KoboPlatformFunctions::disableWiFiConnection();
 
-//        //-------------------------------------------------------------
-//        std::cout << "LOG: /sys/power/stateExtendedFile << 1 (1st stage)" << std::endl;
-//        QFile stateExtendedFile("/sys/power/state-extended");
-//        if (!stateExtendedFile.open(QIODevice::WriteOnly | QIODevice::Text))
-//        {
-//            std::cout << "ERROR: Couldn't open /sys/power/state-extended (1st stage)" << std::endl;
-//            return;
-//        }
-//        else
-//        {
-//            QTextStream out(&stateExtendedFile);
-//            out << "1\n";
-//        }
-//        stateExtendedFile.close();
+        //-------------------------------------------------------------
+        std::cout << "LOG: /sys/power/stateExtendedFile << 1 (1st stage)" << std::endl;
+        QFile stateExtendedFile("/sys/power/state-extended");
+        if (!stateExtendedFile.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
+            std::cout << "ERROR: Couldn't open /sys/power/state-extended (1st stage)" << std::endl;
+            return;
+        }
+        else
+        {
+            QTextStream out(&stateExtendedFile);
+            out << "1\n";
+        }
+        stateExtendedFile.close();
 
-//        //-------------------------------------------------------------
-//        std::cout << "LOG: sync" << std::endl;
-//        QThread::sleep(2);
-//        QProcess::execute("sync", {});
+        //-------------------------------------------------------------
+        std::cout << "LOG: sync" << std::endl;
+        QThread::sleep(2);
+        QProcess::execute("sync", {});
 
-//        //-------------------------------------------------------------
-//        QFile stateFile("/sys/power/state");
-//        if (!stateFile.open(QIODevice::WriteOnly | QIODevice::Text))
-//        {
-//            std::cout << "ERROR: Couldn't open /sys/power/state" << std::endl;
+        //-------------------------------------------------------------
+        QFile stateFile("/sys/power/state");
+        if (!stateFile.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
+            std::cout << "ERROR: Couldn't open /sys/power/state" << std::endl;
 
-//            QFile stateExtendedFile2("/sys/power/state-extended");
-//            if (!stateExtendedFile2.open(QIODevice::WriteOnly | QIODevice::Text))
-//            {
-//                std::cout << "ERROR: Couldn't open /sys/power/state-extended (2nd stage)" << std::endl;
-//                return;
-//            }
-//            else
-//            {
-//                std::cout << "LOG: /sys/power/state-extended << 0 (2nd stage)" << std::endl;
-//                QTextStream out(&stateExtendedFile2);
-//                out << "0\n";
-//            }
-//            stateExtendedFile2.close();
-//        }
-//        else
-//        {
-//            std::cout << "LOG: /sys/power/state << mem (2nd stage)" << std::endl;
-//            QTextStream out(&stateFile);
-//            out << "mem\n";
-//        }
-//        stateFile.close();
+            QFile stateExtendedFile2("/sys/power/state-extended");
+            if (!stateExtendedFile2.open(QIODevice::WriteOnly | QIODevice::Text))
+            {
+                std::cout << "ERROR: Couldn't open /sys/power/state-extended (2nd stage)" << std::endl;
+                return;
+            }
+            else
+            {
+                std::cout << "LOG: /sys/power/state-extended << 0 (2nd stage)" << std::endl;
+                QTextStream out(&stateExtendedFile2);
+                out << "0\n";
+            }
+            stateExtendedFile2.close();
+        }
+        else
+        {
+            std::cout << "LOG: /sys/power/state << mem (2nd stage)" << std::endl;
+            QTextStream out(&stateFile);
+            out << "mem\n";
+        }
+        stateFile.close();
 
-//        //-------------------------------------------------------------
+        //-------------------------------------------------------------
 
-//        std::cout << "sleeping" << std::endl;
-        sleeping = true;
+        std::cout << "sleeping" << std::endl;
+        deviceState = DeviceState::asleep; // probably useless...
     }
 
     void WakeUp()
     {
-        if (!sleeping)
+        if (deviceState != DeviceState::asleep)
             return;
 
-        std::cout << "Waking up" << std::endl;
-        GetMy::Instance().ScreenSettingsWidget().OnWakeUp();
+        deviceState = DeviceState::busy;
+        std::cout << "LOG: Waking up" << std::endl;
+
+        //-------------------------------------------------------------
+        QFile file("/sys/power/state-extended");
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
+            std::cout << "ERROR: Couldn't open /sys/power/state-extended" << std::endl;
+            return;
+        }
+        else
+        {
+            QTextStream out(&file);
+            out << "2\n";
+        }
+        file.close();
+
+        //-------------------------------------------------------------
+        QThread::msleep(100);
+
+        //-------------------------------------------------------------
+        file.setFileName("/sys/devices/virtual/input/input1/neocmd");
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+            std::cout << "LOG: Couldn't open /sys/devices/virtual/input/input1/neocmd" << std::endl;
+        else
+        {
+            QTextStream out(&file);
+            out << "2\n";
+        }
+        file.close();
+
+        //-------------------------------------------------------------
+        GetMy::Instance().ScreenSettingsWidget().OnWakeUp();  // TODO : replace with signals at some point
         GetMy::Instance().MainWindowWidget().OnWakeUp();
 
+        if (GetMy::Instance().AppSettingWidget().GetWifiStatus())
+            KoboPlatformFunctions::enableWiFiConnection();
 
-//        if (GetMy::Instance().AppSettingWidget().GetWifiStatus())
-//            KoboPlatformFunctions::enableWiFiConnection();
-
-//        //-------------------------------------------------------------
-//        QFile file("/sys/power/state-extended");
-//        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-//        {
-//            std::cout << "ERROR: Couldn't open /sys/power/state-extended" << std::endl;
-//            return;
-//        }
-//        else
-//        {
-//            QTextStream out(&file);
-//            out << "2\n";
-//        }
-//        file.close();
-
-//        //-------------------------------------------------------------
-//        QThread::msleep(100);
-
-//        //-------------------------------------------------------------
-//        file.setFileName("/sys/devices/virtual/input/input1/neocmd");
-//        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-//        {
-//            std::cout << "ERROR: Couldn't open /sys/devices/virtual/input/input1/neocmd" << std::endl;
-//            return;
-//        }
-//        else
-//        {
-//            QTextStream out(&file);
-//            out << "2\n";
-//        }
-//        file.close();
-
-//        //-------------------------------------------------------------
-
-//        std::cout << "Woken up, that's done" << std::endl;
-        sleeping = false;
+        std::cout << "LOG: Woken up, ready to go" << std::endl;
+        deviceState = DeviceState::awake;
     }
 
 //==========================================================================
 private :
-    class BigMessageBox : public QMessageBox // I hate everything about this ...
-    {
-        public :
-            void setHeight(float h) { height = h; }
-
-        private :
-            void resizeEvent(QResizeEvent *Event)
-            {
-                QMessageBox::resizeEvent(Event);
-                this->setFixedWidth(GetMy::Instance().Descriptor().width*0.9f);
-                this->setFixedHeight(GetMy::Instance().Descriptor().height*height);
-            }
-
-            float height = 0.9f;
-    };
-
     Tools()
     {
         mt = std::mt19937(rd_device());
         rng_engine = std::default_random_engine{};
-        sleeping = false;
+        deviceState = DeviceState::awake;
         isLocalTimeFormatUS = false;
         firmwareStr = "";
     }
@@ -289,7 +275,7 @@ private :
     std::map<int, std::string> handledErrors = { {SIGINT, "SIGINT"}, {SIGALRM, "SIGALRM"}, {SIGSEGV, "SIGSEGV"}, {SIGILL, "SIGILL"},
                                                  {SIGFPE, "SIGFPE"}, {SIGABRT, "SIGABRT"}, {SIGBUS, "SIGBUS"}, {SIGUSR1, "SIGUSR1"},
                                                  {SIGUSR2, "SIGUSR2"}, {SIGSYS, "SIGSYS"}};
-    bool sleeping;
+    DeviceState deviceState;
     bool isLocalTimeFormatUS;
     std::string firmwareStr;
 };

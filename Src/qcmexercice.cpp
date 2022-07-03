@@ -11,7 +11,7 @@
 
 QcmExercice::QcmExercice(QWidget *parent) :
     QWidget(parent), ui(new Ui::QcmExercice), scoreCounter(0), errorCounter(0),
-    currentQcmType(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM),
+    currentQcmType(),
     refreshCounter(0), curHiraganaNonSized(), curKatakanaNonSized(), curRomanjiNonSized(), stemFont(),
     settingsSerializer(GetMy::Instance().SettingSerializer())
 {
@@ -35,7 +35,6 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     //************************ Initialize Fonts, reset counters ************************
     if (newQcmRequested)
     {
-        currentQcmType = qcmType;
         scoreCounter = 0;
         errorCounter = 0;
 
@@ -49,30 +48,44 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
         FntSetting& fntSetting = GetMy::Instance().FntSettingWidget();
         switch (qcmType)
         {
-            case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
+            case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_MCQ :
             case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_Kbd :
-            case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
+            case QcmExercice::QcmExerciceType::Katakana_to_Romanji_MCQ :
             case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
             {
+                if (newQcmRequested && (ui->SwitchButton->isVisible() || !currentQcmType.has_value()))
+                    ui->SwitchButton->setVisible(false);
                 stemFont = QFont(fntSetting.GetCurrentRomanjiFamily(), fntSetting.GetStemSize());
                 break;
             }
-            case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :
+            case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_MCQ :
             {
+                if (newQcmRequested && (ui->SwitchButton->isVisible() || !currentQcmType.has_value()))
+                    ui->SwitchButton->setVisible(false);
                 stemFont = QFont(fntSetting.GetCurrentHiraganaFamily(), fntSetting.GetStemSize());
                 break;
             }
-            case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
+            case QcmExercice::QcmExerciceType::Romanji_to_Katakana_MCQ :
             {
+                if (newQcmRequested && (ui->SwitchButton->isVisible() || !currentQcmType.has_value()))
+                    ui->SwitchButton->setVisible(false);
                 stemFont = QFont(fntSetting.GetCurrentKatakanaFamily(), fntSetting.GetStemSize());
                 break;
             }
+            case QcmExercice::QcmExerciceType::Vocabulary_to_Romanji_MCQ :
+            case QcmExercice::QcmExerciceType::Romanji_to_Vocabulary_MCQ :
+            {
+            if (newQcmRequested && (!ui->SwitchButton->isVisible() || !currentQcmType.has_value()))
+                    ui->SwitchButton->setVisible(true);
+                break;
+            }
         }
+        currentQcmType = qcmType;
     }
 
     //************************ Initialize Entries Pool ************************
     std::vector<Symbol*> entriesPool;
-    SymbolsTableFamily& targetFamily = (qcmType < Katakana_to_Romanji_QCM)
+    SymbolsTableFamily& targetFamily = (qcmType < Katakana_to_Romanji_MCQ)
             ? SymbolsTables::HiraganaSymbolsTableFamily  // hiragana QCM
             : SymbolsTables::KatakanaSymbolsTableFamily; // katakana QCM
 
@@ -105,16 +118,16 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     ui->GuessMe->setFont(stemFont);
     switch (qcmType)
     {
-        case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
+        case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_MCQ :
         case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_Kbd :
-        case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
+        case QcmExercice::QcmExerciceType::Katakana_to_Romanji_MCQ :
         case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
         {
             ui->GuessMe->setText(stem->Romanji());
             break;
         }
-        case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :
-        case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
+        case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_MCQ :
+        case QcmExercice::QcmExerciceType::Romanji_to_Katakana_MCQ :
         {
             ui->GuessMe->setText(stem->JP());
             break;
@@ -138,13 +151,13 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
         Symbol* curSym = shuffledSymbols[static_cast<std::vector<Symbol>::size_type>(i)];
 
         if (i == stemSlot)
-            foo->SetGuess(stem, currentQcmType, true);
+            foo->SetGuess(stem, currentQcmType.value(), true);
         else
         {
             if (curSym == stem) // avoid double entries
-                foo->SetGuess(joker, currentQcmType, false);
+                foo->SetGuess(joker, currentQcmType.value(), false);
             else
-                foo->SetGuess(curSym, currentQcmType, false);
+                foo->SetGuess(curSym, currentQcmType.value(), false);
         }
 
         ui->EntriesGridLayout->addWidget(foo, entryPos.rem, entryPos.quot);
@@ -160,7 +173,6 @@ void QcmExercice::InitializeExercice(QcmExercice::QcmExerciceType qcmType, bool 
     {
         refreshCounter = 0;
         GetMy::Instance().MainWindowWidget().AggressiveClearScreen(true);
-//        this->repaint();
     }
 }
 
@@ -190,9 +202,9 @@ void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
 
 
     // print feedback informing of correct / incorrect choice // TODO use the correct font for the jp part
-    switch (currentQcmType)
+    switch (currentQcmType.value())
     {
-        case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_QCM :
+        case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_MCQ :
         case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_Kbd :
         {
             ui->ResultLabelLeft->setFont(curRomanjiNonSized);
@@ -204,7 +216,7 @@ void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
             ui->ResultLabelMiddle->setStyleSheet("QLabel { border: none }");
             break;
         }
-        case QcmExercice::QcmExerciceType::Katakana_to_Romanji_QCM :
+        case QcmExercice::QcmExerciceType::Katakana_to_Romanji_MCQ :
         case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
         {
             ui->ResultLabelLeft->setFont(curRomanjiNonSized);
@@ -216,7 +228,7 @@ void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
             ui->ResultLabelMiddle->setStyleSheet("QLabel { border: none }");
             break;
         }
-        case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_QCM :
+        case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_MCQ :
         {
             ui->ResultLabelLeft->setFont(curHiraganaNonSized);
             ui->ResultLabelLeft->setText(stem->JP());
@@ -227,7 +239,7 @@ void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
             ui->ResultLabelMiddle->setStyleSheet("QLabel { border: none }");
             break;
         }
-        case QcmExercice::QcmExerciceType::Romanji_to_Katakana_QCM :
+        case QcmExercice::QcmExerciceType::Romanji_to_Katakana_MCQ :
         {
             ui->ResultLabelLeft->setFont(curKatakanaNonSized);
             ui->ResultLabelLeft->setText(stem->JP());
@@ -246,5 +258,5 @@ void QcmExercice::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
     ui->ResultLabelGroupBox->setStyleSheet((correct) ? "QGroupBox { border : none }"
                                                      : "QGroupBox { border : 5px solid black }");
 
-    InitializeExercice(currentQcmType);
+    InitializeExercice(currentQcmType.value());
 }

@@ -101,7 +101,7 @@ void VocabularyDisplay::InitializeGrid(VocabularyCfgListEntry* vocab)
                 popupMsg += QString::number(line) + ", " ;
             popupMsg.chop(2);
             popupMsg += '.';
-            Tools::GetInstance().DisplayPopup(popupMsg, 0.3f);
+            Tools::GetInstance().DisplayPopup(popupMsg);
         }
 
         vocabFile.close();
