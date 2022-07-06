@@ -62,13 +62,13 @@
       <item>
        <widget class="QStackedWidget" name="ContentStackedWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>4</number>
         </property>
         <widget class="WidgetWelcome" name="WelcomePage"/>
         <widget class="QcmExercice" name="ExerciceQcmPage"/>
         <widget class="KeyboardExercice" name="ExerciceKbdPage"/>
         <widget class="SymbolSetting" name="ExerciceSetSettingPage"/>
-        <widget class="AppSettings" name="AppSettingsPage"/>
+        <widget class="AppSettingsPage" name="AppStgPg"/>
         <widget class="FntSetting" name="FontSettingPage"/>
         <widget class="ScreenSettings" name="ScreenSettingsPage"/>
         <widget class="VocabularyLearnEditSet" name="VocabularyEditSetPage"/>
@@ -443,9 +443,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>AppSettings</class>
+   <class>AppSettingsPage</class>
    <extends>QWidget</extends>
-   <header>Src/appsettings.h</header>
+   <header>Src/Pages/AppSettingsPage.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

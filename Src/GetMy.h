@@ -5,7 +5,7 @@
 
 class QcmExercice;
 class FntSetting;
-class AppSettings;
+class AppSettingsPage;
 class SymbolSetting;
 class ScreenSettings;
 class MainWindow;
@@ -29,8 +29,8 @@ public:
     void SetFntSettingWidget(FntSetting* fntSetting) { fntSettingInstance = fntSetting;}
     FntSetting& FntSettingWidget() { return *fntSettingInstance; }
 
-    void SetAppSettingWidget(AppSettings* appSetting) { appSettingsInstance = appSetting;}
-    AppSettings& AppSettingWidget() { return *appSettingsInstance; }
+    void SetAppSettingWidget(AppSettingsPage* appSetting) { appSettingsInstance = appSetting;}
+    AppSettingsPage& AppSettingWidget() { return *appSettingsInstance; }
 
     void SetSymbolSettingWidget(SymbolSetting* symbolSetting) { symbolSettingInstance = symbolSetting;}
     SymbolSetting& SymbolSettingWidget() { return *symbolSettingInstance; }
@@ -54,7 +54,7 @@ private :
     MainWindow*                     mainWindowInstance;
     QcmExercice*                    qcmExerciceInstance;
     FntSetting*                     fntSettingInstance;
-    AppSettings*                    appSettingsInstance;
+    AppSettingsPage*                    appSettingsInstance;
     ScreenSettings*                 screenSettingsInstance;
     SymbolSetting*                  symbolSettingInstance;
     VocabularyLearnEditSet*         vocabularyLearnEditSetInstance;

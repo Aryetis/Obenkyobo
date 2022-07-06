@@ -18,7 +18,7 @@
 #include "Src/GetMy.h"
 #include "Src/screensettings.h"
 #include "Src/mainwindow.h"
-#include "Src/appsettings.h"
+#include "Src/Pages/AppSettingsPage.h"
 #include "popup.h"
 
 class Tools

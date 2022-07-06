@@ -1,14 +1,14 @@
-#include "Src/appsettings.h"
-#include "ui_appsettings.h"
+#include "Src/Pages/AppSettingsPage.h"
+#include "ui_AppSettingsPage.h"
 #include "Src/GetMy.h"
 #include "Src/tools.h"
 #include "Src/mainwindow.h"
 
 #include <QAbstractItemView>
 
-AppSettings::AppSettings(QWidget *parent) :
+AppSettingsPage::AppSettingsPage(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::AppSettings)
+    ui(new Ui::AppSettingsPage)
 {
     ui->setupUi(this);
 
@@ -23,7 +23,7 @@ AppSettings::AppSettings(QWidget *parent) :
     GetMy::Instance().SetAppSettingWidget(this);
 }
 
-void AppSettings::ParseConfigFile()
+void AppSettingsPage::ParseConfigFile()
 {
     settingsSerializer = GetMy::Instance().SettingSerializer();
     nbrOfEntryLinesIdx = settingsSerializer->value("AppSettings/entriesPerLineIdx", 2).toInt();
@@ -47,7 +47,7 @@ void AppSettings::ParseConfigFile()
         KoboPlatformFunctions::disableWiFiConnection();
 }
 
-void AppSettings::InitializeUIValues() const
+void AppSettingsPage::InitializeUIValues() const
 {
     UpdateScoreCounters();
     ui->WifiCheckBox->setChecked(wifiStatus);
@@ -67,7 +67,7 @@ void AppSettings::InitializeUIValues() const
     ui->VocabFntSizeCombox->setCurrentIndex(vocabFntSizeIdx);
 }
 
-void AppSettings::UpdateScoreCounters() const
+void AppSettingsPage::UpdateScoreCounters() const
 {
     int appStatisticsScore = settingsSerializer->value("AppStatistics/score", 0).toInt();
     ui->ScoreCounterValueLabel->setText(QString::number(appStatisticsScore));
@@ -75,12 +75,12 @@ void AppSettings::UpdateScoreCounters() const
     ui->ErrorsCounterValueLabel->setText(QString::number(appStatisticsError));
 }
 
-AppSettings::~AppSettings()
+AppSettingsPage::~AppSettingsPage()
 {
     delete ui;
 }
 
-bool AppSettings::IsThereEnough(QcmExercice::QcmExerciceType qcmType) const
+bool AppSettingsPage::IsThereEnough(QcmExercice::QcmExerciceType qcmType) const
 {
     int minRequiredSymbol = GetMy::Instance().AppSettingWidget().GetNumberOfEntryLine() *
                             GetMy::Instance().AppSettingWidget().GetNumberOfEntryRow();
@@ -109,7 +109,7 @@ bool AppSettings::IsThereEnough(QcmExercice::QcmExerciceType qcmType) const
     assert(false);
 }
 
-void AppSettings::on_ResetStatsButton_clicked()
+void AppSettingsPage::on_ResetStatsButton_clicked()
 {
     settingsSerializer->setValue("AppStatistics/score", 0);
     settingsSerializer->setValue("AppStatistics/error", 0);
@@ -118,24 +118,24 @@ void AppSettings::on_ResetStatsButton_clicked()
     ui->ErrorsCounterValueLabel->setText("0");
 }
 
-void AppSettings::on_nbrOfEntryLinesDropdown_activated(int index)
+void AppSettingsPage::on_nbrOfEntryLinesDropdown_activated(int index)
 {
     nbrOfEntryLinesIdx = index;
     settingsSerializer->setValue("AppSettings/entriesPerLineIdx", index);
 }
 
-void AppSettings::on_RandomnessDropdown_currentIndexChanged(int index)
+void AppSettingsPage::on_RandomnessDropdown_currentIndexChanged(int index)
 {
     randomChoiceIdx = index;
     settingsSerializer->setValue("AppSettings/randomChoiceIdx", index);
 }
 
-bool AppSettings::IsWeightedRandomEnabled() const
+bool AppSettingsPage::IsWeightedRandomEnabled() const
 {
     return randomChoiceIdx == 1;
 }
 
-void AppSettings::on_WifiCheckBox_clicked(bool checked)
+void AppSettingsPage::on_WifiCheckBox_clicked(bool checked)
 {
     wifiStatus = checked;
     settingsSerializer->setValue("AppSettings/wifi", wifiStatus);
@@ -147,51 +147,51 @@ void AppSettings::on_WifiCheckBox_clicked(bool checked)
         KoboPlatformFunctions::disableWiFiConnection();
 }
 
-void AppSettings::on_ResetWeightsButton_clicked()
+void AppSettingsPage::on_ResetWeightsButton_clicked()
 {
     SymbolsTables::HiraganaSymbolsTableFamily.ResetWeights();
     SymbolsTables::KatakanaSymbolsTableFamily.ResetWeights();
 }
 
-void AppSettings::on_HardRefreshDropdown_currentIndexChanged(int index)
+void AppSettingsPage::on_HardRefreshDropdown_currentIndexChanged(int index)
 {
     hardRefreshFreqIdx = index;
     settingsSerializer->setValue("AppSettings/hardRefreshFreqIdx", index);
 }
 
-void AppSettings::on_BatteryIndicatorDropdown_currentIndexChanged(int index)
+void AppSettingsPage::on_BatteryIndicatorDropdown_currentIndexChanged(int index)
 {
     batteryFormatIdx = index;
     settingsSerializer->setValue("AppSettings/batteryFormatIdx", index);
     GetMy::Instance().MainWindowWidget().UpdateStatusBarGeometry();
 }
 
-void AppSettings::on_DateDisplayFormatDropdown_currentIndexChanged(int index)
+void AppSettingsPage::on_DateDisplayFormatDropdown_currentIndexChanged(int index)
 {
     dateFormatIdx = index;
     settingsSerializer->setValue("AppSettings/dateFormatIdx", index);
     GetMy::Instance().MainWindowWidget().UpdateStatusBarGeometry();
 }
 
-void AppSettings::on_RowPerPageComboBox_currentIndexChanged(int index)
+void AppSettingsPage::on_RowPerPageComboBox_currentIndexChanged(int index)
 {
     nbrOfRowPerVocabIdx = index;
     settingsSerializer->setValue("AppSettings/rowPerVocabPage", index);
 }
 
-void AppSettings::on_KanaHardRefreshCheckBox_clicked(bool checked)
+void AppSettingsPage::on_KanaHardRefreshCheckBox_clicked(bool checked)
 {
     kanaHardRefresh = checked;
     settingsSerializer->setValue("AppSettings/kanaHardRefresh", checked);
 }
 
-void AppSettings::on_comboBox_currentIndexChanged(int index)
+void AppSettingsPage::on_comboBox_currentIndexChanged(int index)
 {
     vocabFntSizeIdx = index;
     settingsSerializer->setValue("AppSettings/vocabFntSizeIdx", index);
 }
 
-int AppSettings::GetHardRefreshFreq() const
+int AppSettingsPage::GetHardRefreshFreq() const
 {
     bool parsed;
     int num = ui->HardRefreshDropdown->currentText().toInt(&parsed);
@@ -199,7 +199,7 @@ int AppSettings::GetHardRefreshFreq() const
     return (parsed) ? num : -1;
 }
 
-int AppSettings::GetNumberOfRowPerVocabPage() const
+int AppSettingsPage::GetNumberOfRowPerVocabPage() const
 {
     bool parsed;
     int num = ui->RowPerPageComboBox->currentText().toInt(&parsed);
@@ -207,7 +207,7 @@ int AppSettings::GetNumberOfRowPerVocabPage() const
     return (parsed) ? num : -1;
 }
 
-int AppSettings::GetVocabFntSize() const
+int AppSettingsPage::GetVocabFntSize() const
 {
     bool parsed;
     int num = ui->VocabFntSizeCombox->currentText().toInt(&parsed);
@@ -215,7 +215,7 @@ int AppSettings::GetVocabFntSize() const
     return (parsed) ? num : -1;
 }
 
-void AppSettings::on_resetPopup_clicked()
+void AppSettingsPage::on_resetPopup_clicked()
 {
     settingsSerializer->setValue("AppSettings/firstTimeMainWindowPage", true);
     settingsSerializer->setValue("AppSettings/firstTimeVocabListPage", true);

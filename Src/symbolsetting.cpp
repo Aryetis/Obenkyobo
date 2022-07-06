@@ -3,7 +3,7 @@
 #include "Src/GetMy.h"
 #include "Src/symbolsettingsection.h"
 #include "Src/symbolstables.h"
-#include "Src/appsettings.h"
+#include "Src/Pages/AppSettingsPage.h"
 #include <QScrollBar>
 #include "Src/mainwindow.h"
 

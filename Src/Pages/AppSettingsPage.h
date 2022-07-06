@@ -1,5 +1,5 @@
-#ifndef APPSETTINGS_H
-#define APPSETTINGS_H
+#ifndef APPSETTINGSPAGE_H
+#define APPSETTINGSPAGE_H
 
 #include <QWidget>
 #include <QSettings>
@@ -9,16 +9,16 @@
 
 namespace Ui
 {
-    class AppSettings;
+    class AppSettingsPage;
 }
 
-class AppSettings : public QWidget
+class AppSettingsPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit AppSettings(QWidget *parent = nullptr);
-    ~AppSettings() override;
+    explicit AppSettingsPage(QWidget *parent = nullptr);
+    ~AppSettingsPage() override;
 
     int GetNumberOfEntryLine() const { return nbrOfEntryLinesIdx+1; }
     int GetNumberOfEntryRow() const { return ENTRY_PER_ROW; }
@@ -27,7 +27,7 @@ public:
     bool IsThereEnough(QcmExercice::QcmExerciceType qcmType) const;
     bool IsWeightedRandomEnabled() const;
     int GetBatteryFormatIdx() const { return batteryFormatIdx; }
-    int GetDateFormatIdx() const { return dateFormatIdx; } // 0 <=> 13:37, 1 <=> 1:37 pm
+    int GetDateFormatIdx() const { return dateFormatIdx; } // 0 <=> 13:37, 1 <=> 1:37 pm // TODO : use bool and IsDateAmPmFormat
     int GetHardRefreshFreq() const;
     bool GetKanaHardRefresh() const { return kanaHardRefresh; }
     int GetVocabFntSize() const;
@@ -55,7 +55,7 @@ private slots:
     void on_resetPopup_clicked();
 
 private:
-    Ui::AppSettings *ui;
+    Ui::AppSettingsPage *ui;
     int nbrOfEntryLinesIdx;
     int randomChoiceIdx;
     bool wifiStatus;
@@ -69,4 +69,4 @@ private:
     QSettings* settingsSerializer;
 };
 
-#endif // APPSETTINGS_H
+#endif // APPSETTINGSPAGE_H

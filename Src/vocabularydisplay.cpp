@@ -2,7 +2,7 @@
 #include "ui_vocabularydisplay.h"
 #include "Src/fntsetting.h"
 #include "Src/tools.h"
-#include "Src/appsettings.h"
+#include "Src/Pages/AppSettingsPage.h"
 #include "Src/mainwindow.h"
 
 #include <algorithm>

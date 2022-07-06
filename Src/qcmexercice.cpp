@@ -5,7 +5,7 @@
 #include "Src/GetMy.h"
 #include "Src/tools.h"
 #include <algorithm>
-#include "Src/appsettings.h"
+#include "Src/Pages/AppSettingsPage.h"
 #include "Src/mainwindow.h"
 #include <QString>
 

@@ -2,7 +2,7 @@
 #include "ui_vocabularycfglistentry.h"
 #include "mainwindow.h"
 #include "Src/vocabularydisplay.h"
-#include "Src/appsettings.h"
+#include "Src/Pages/AppSettingsPage.h"
 #include "Src/vocabularylearneditset.h"
 
 #include "GetMy.h"
