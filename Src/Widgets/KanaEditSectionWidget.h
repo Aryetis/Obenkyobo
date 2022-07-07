@@ -21,7 +21,7 @@ public:
     void UpdateSectionCheckboxTristate(bool update);
 
 private slots:
-    void on_KanaSettingSectionWidgetCheckbox_clicked(bool checked);
+    void on_KanaSectionCheckbox_clicked(bool checked);
     void InitializeCheckbox();
 
 private:

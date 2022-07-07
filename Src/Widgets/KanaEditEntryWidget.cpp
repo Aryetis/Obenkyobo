@@ -28,7 +28,7 @@ void KanaEditEntryWidget::InitializeSymbolSettingEntry(Kana* _kana, KanaFamilyEn
     ui->KanaEntryButton->setChecked(kana->IsEnabled());
 }
 
-void KanaEditEntryWidget::on_SymbolSettingEntryButton_clicked(bool checked)
+void KanaEditEntryWidget::on_KanaEntryButton_clicked(bool checked)
 {
     std::cout << "LOG : SymbolSettingEntry::on_SymbolSettingEntryButton_clicked()" << std::endl;
     kana->Enabled(checked);

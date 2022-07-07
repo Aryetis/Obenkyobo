@@ -22,7 +22,7 @@ public:
     bool IsEnabled() const { return kana->IsEnabled(); }
 
 private slots:
-    void on_SymbolSettingEntryButton_clicked(bool checked);
+    void on_KanaEntryButton_clicked(bool checked);
 
 private:
     Ui::KanaEditEntryWidget *ui; // holds a KanaEditButtonWidget, TODO : simplify this and merge them

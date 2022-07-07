@@ -61,7 +61,7 @@ void KanaEditSectionWidget::UpdateSectionCheckboxTristate(bool update)
     InitializeCheckbox();
 }
 
-void KanaEditSectionWidget::on_KanaSettingSectionWidgetCheckbox_clicked(bool checked)
+void KanaEditSectionWidget::on_KanaSectionCheckbox_clicked(bool checked)
 {
     nbrSymbolChecked = (checked) ? symbolSettingsEntries.size() : 0;
     ui->KanaSectionCheckbox->setCheckState(checked ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
