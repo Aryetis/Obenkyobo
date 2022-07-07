@@ -16,10 +16,10 @@
 #include <iostream>
 #include <QGridLayout>
 #include "Src/GetMy.h"
-#include "Src/screensettings.h"
+#include "Src/Pages/ScreenSettingsPage.h"
 #include "Src/mainwindow.h"
 #include "Src/Pages/AppSettingsPage.h"
-#include "popup.h"
+#include "Src/Widgets/PopupWidget.h"
 
 class Tools
 {
@@ -125,7 +125,7 @@ public :
     //======================================================================
     void DisplayPopup(QString message, bool fullscreen = false)
     {
-        Popup pop(message, fullscreen);
+        PopupWidget pop(message, fullscreen);
         pop.exec();
     }
 
@@ -143,8 +143,8 @@ public :
         qApp->processEvents();
 
         std::cout << "LOG: going to sleep" << std::endl;
-        GetMy::Instance().ScreenSettingsWidget().OnSleep(); // TODO : replace with signals at some point
-        GetMy::Instance().MainWindowWidget().OnSleep();
+        GetMy::Instance().ScreenSettingsPageInst().OnSleep(); // TODO : replace with signals at some point
+        GetMy::Instance().MainWindowInst().OnSleep();
 
         std::cout << "LOG: disabling WiFi" << std::endl;
         KoboPlatformFunctions::disableWiFiConnection();
@@ -240,10 +240,10 @@ public :
         file.close();
 
         //-------------------------------------------------------------
-        GetMy::Instance().ScreenSettingsWidget().OnWakeUp();  // TODO : replace with signals at some point
-        GetMy::Instance().MainWindowWidget().OnWakeUp();
+        GetMy::Instance().ScreenSettingsPageInst().OnWakeUp();  // TODO : replace with signals at some point
+        GetMy::Instance().MainWindowInst().OnWakeUp();
 
-        if (GetMy::Instance().AppSettingWidget().GetWifiStatus())
+        if (GetMy::Instance().AppSettingsPageInst().GetWifiStatus())
             KoboPlatformFunctions::enableWiFiConnection();
 
         std::cout << "LOG: Woken up, ready to go" << std::endl;

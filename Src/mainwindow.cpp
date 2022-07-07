@@ -1,13 +1,13 @@
 #include "Src/mainwindow.h"
 #include "ui_mainwindow.h"
-#include "Src/fntsetting.h"
-#include "Src/qcmexercice.h"
+#include "Src/Pages/FntSettingsPage.h"
+#include "Src/Pages/QcmExercicePage.h"
 #include "Src/GetMy.h"
 #include "Src/tools.h"
-#include "Src/symbolsetting.h"
+#include "Src/Pages/KanaEditPage.h"
 #include <QKeyEvent>
 #include "koboplatformfunctions.h"
-#include "qsymbolpushbutton.h"
+#include "Src/Widgets/KanaEditButtonWidget.h"
 
 #include <QPainter>
 
@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
     timer.start(1000);
     refreshTimeAndBattery();
 
-    GetMy::Instance().SetMainWindowWidget(this);
+    GetMy::Instance().SetMainWindowInst(this);
     std::cout << "LOG: MainWindow::MainWindow()::End" << std::endl;
 
     DisplayFirstTimeMainWindowPagePopup();
@@ -84,7 +84,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::AggressiveClearScreen(bool force /*=false*/) const
 {
-    if (GetMy::Instance().AppSettingWidget().GetKanaHardRefresh() || force)
+    if (GetMy::Instance().AppSettingsPageInst().GetKanaHardRefresh() || force)
     {
         KoboPlatformFunctions::setFullScreenRefreshMode(WaveForm::WaveForm_GC16);
         KoboPlatformFunctions::clearScreen(true);
@@ -106,7 +106,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     else if (event->key() == KoboKey::Key_SleepCover && Tools::GetInstance().GetDeviceState() == Tools::DeviceState::awake)
         Tools::GetInstance().Sleep();
     else if (event->key() == KoboKey::Key_Light)
-        GetMy::Instance().ScreenSettingsWidget().ToggleLight();
+        GetMy::Instance().ScreenSettingsPageInst().ToggleLight();
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent *event)
@@ -117,7 +117,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
 
 void MainWindow::DisplayFirstTimeMainWindowPagePopup()
 {
-    if ( GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->value("AppSettings/firstTimeMainWindowPage", true).toBool() )
+    if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeMainWindowPage", true).toBool() )
     {
         Tools::GetInstance().DisplayPopup("This software is still in development, Some functions are not implemented yet.\n"
                                           "Sleep functionality is not supported for now.\n"
@@ -125,20 +125,20 @@ void MainWindow::DisplayFirstTimeMainWindowPagePopup()
                                           "Each popup will be used only once and sparingly to introduce some mechanisms.\n"
                                           "If you wish to see any popup again later on, please go to Settings->Application->Reset Help Popup\n\n"
                                           "Thanks for reading, enjoy.", true);
-        GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeMainWindowPage", false);
+        GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->setValue("AppSettings/firstTimeMainWindowPage", false);
     }
 }
 
 void MainWindow::DisplayFirstTimeKanasEditPagePopup()
 {
-    if ( GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->value("AppSettings/firstTimeKanasEditPage", true).toBool() )
+    if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeKanasEditPage", true).toBool() )
     {
         Tools::GetInstance().DisplayPopup("Here you can add/remove kanas to the related MCQ's guesses.\n"
                                           "The background color and circle gyzmo indicates their status.\n"
                                           "The number at the bottom right corner indicates its Learning Score (LS).\n"
                                           "It ranges reflects your progress, ranging from 0 to 5.\n"
                                           "You can use the checkboxes to quickly toggle whole kanas section.");
-        GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeKanasEditPage", false);
+        GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->setValue("AppSettings/firstTimeKanasEditPage", false);
     }
 }
 
@@ -195,7 +195,7 @@ void MainWindow::refreshTimeAndBattery()
 
     // Handle Time
     QTime time = QTime::currentTime();
-    QString timeText = time.toString((GetMy::Instance().AppSettingWidget().GetDateFormatIdx() == 0) ? "hh:mm" : "hh:mm a" );
+    QString timeText = time.toString((GetMy::Instance().AppSettingsPageInst().GetDateFormatIdx() == 0) ? "hh:mm" : "hh:mm a" );
     if (timeDisplay->text() != timeText)
     {
         timeDisplay->setText(timeText);
@@ -203,7 +203,7 @@ void MainWindow::refreshTimeAndBattery()
     }
 
     // Handle Battery
-    int batteryDisplayFormat = GetMy::Instance().AppSettingWidget().GetBatteryFormatIdx();
+    int batteryDisplayFormat = GetMy::Instance().AppSettingsPageInst().GetBatteryFormatIdx();
     bool isBatteryIconVisible = (batteryDisplayFormat == 0 || batteryDisplayFormat == 1) ? true : false;
     bool isBatteryTextVisible = (batteryDisplayFormat == 0 || batteryDisplayFormat == 2) ? true : false;
     bool isBatteryCharging = KoboPlatformFunctions::isBatteryCharging();
@@ -300,32 +300,32 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_actionHiragana_to_Romanji_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionHiragana_to_Romanji_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_MCQ))
+    if (GetMy::Instance().AppSettingsPageInst().IsThereEnough(QcmExercicePage::QcmExerciceType::Hiragana_to_Romanji_MCQ))
     {
-        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Hiragana_to_Romanji_MCQ, true);
+        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExercicePage::QcmExerciceType::Hiragana_to_Romanji_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
     else
         Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Hiragana,\nplease enable at least " +
-                QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
+                QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry()) +
                 " at :\nMain->Hiragana->Edit Hiragana Set");
 }
 
 void MainWindow::on_actionRomanji_to_Hiragana_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Romanji_to_Hiragana_MCQ))
+    if (GetMy::Instance().AppSettingsPageInst().IsThereEnough(QcmExercicePage::QcmExerciceType::Romanji_to_Hiragana_MCQ))
     {
-        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Hiragana_MCQ, true);
+        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExercicePage::QcmExerciceType::Romanji_to_Hiragana_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
     else
         Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Hiragana,\nplease enable at least " +
-                QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
+                QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry()) +
                 " at :\nMain->Hiragana->Edit Hiragana Set");
 }
 
@@ -339,8 +339,8 @@ void MainWindow::on_actionHiragana_to_Romanji_Kbd_triggered()
 void MainWindow::on_actionEdit_Hiragana_Set_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionEdit_Hiragana_Set_triggered()" << std::endl;
-    QSymbolPushButton::RefreshJpFixedSizedFnt();
-    GetMy::Instance().SymbolSettingWidget().InitializeSymbolSetting(SymbolFamilyEnum::hiragana);
+    KanaEditButtonWidget::RefreshJpFixedSizedFnt();
+    GetMy::Instance().KanaEditPageInst().InitializeKanaPage(KanaFamilyEnum::hiragana);
     ui->ContentStackedWidget->setCurrentIndex(3);
     DisplayFirstTimeKanasEditPagePopup();
     AggressiveClearScreen();
@@ -352,32 +352,32 @@ void MainWindow::on_actionEdit_Hiragana_Set_triggered()
 void MainWindow::on_actionKatakana_to_Romanji_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionKatakana_to_Romanji_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Katakana_to_Romanji_MCQ))
+    if (GetMy::Instance().AppSettingsPageInst().IsThereEnough(QcmExercicePage::QcmExerciceType::Katakana_to_Romanji_MCQ))
     {
-        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Katakana_to_Romanji_MCQ, true);
+        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExercicePage::QcmExerciceType::Katakana_to_Romanji_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
     else
         Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Katakana,\nplease enable at least " +
-                QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
+                QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry()) +
                 " at :\nMain->Hiragana->Edit Hiragana Set");
 }
 
 void MainWindow::on_actionRomanji_to_Katakana_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Romanji_to_Katakana_MCQ))
+    if (GetMy::Instance().AppSettingsPageInst().IsThereEnough(QcmExercicePage::QcmExerciceType::Romanji_to_Katakana_MCQ))
     {
-        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Katakana_MCQ, true);
+        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExercicePage::QcmExerciceType::Romanji_to_Katakana_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
     else
         Tools::GetInstance().DisplayPopup(
                 "Not enough enabled Katakana,\nplease enable at least " +
-                QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
+                QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry()) +
                 " at :\nMain->Hiragana->Edit Hiragana Set");
 }
 
@@ -391,8 +391,8 @@ void MainWindow::on_actionKatakana_to_Romanji_Kbd_triggered()
 void MainWindow::on_actionEdit_Katakana_Set_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionEdit_Katakana_Set_triggered()" << std::endl;
-    QSymbolPushButton::RefreshJpFixedSizedFnt();
-    GetMy::Instance().SymbolSettingWidget().InitializeSymbolSetting(SymbolFamilyEnum::katakana);
+    KanaEditButtonWidget::RefreshJpFixedSizedFnt();
+    GetMy::Instance().KanaEditPageInst().InitializeKanaPage(KanaFamilyEnum::katakana);
     ui->ContentStackedWidget->setCurrentIndex(3);
     DisplayFirstTimeKanasEditPagePopup();
     AggressiveClearScreen();
@@ -404,7 +404,7 @@ void MainWindow::on_actionEdit_Katakana_Set_triggered()
 void MainWindow::on_actionApplication_Setting_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionApplication_Setting_triggered()" << std::endl;
-    GetMy::Instance().AppSettingWidget().UpdateScoreCounters();
+    GetMy::Instance().AppSettingsPageInst().UpdateScoreCounters();
     ui->ContentStackedWidget->setCurrentIndex(4);
     AggressiveClearScreen();
 }
@@ -419,7 +419,7 @@ void MainWindow::on_actionFonts_Setting_triggered()
 void MainWindow::on_actionScreen_Setting_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionScreen_Setting_triggered()" << std::endl;
-    if (GetMy::Instance().ScreenSettingsWidget().AreSettingsAvailablePopup())
+    if (GetMy::Instance().ScreenSettingsPageInst().AreSettingsAvailablePopup())
     {
         ui->ContentStackedWidget->setCurrentIndex(6);
         AggressiveClearScreen();
@@ -434,7 +434,7 @@ void MainWindow::on_actionVocabulary_to_Romanji_MCQ_triggered()
     std::cout << "LOG: MainWindow::on_actionVocabulary_to_Romanji_triggered()" << std::endl;
 //    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Vocabulary_to_Romanji_QCM)) // TODO
     {
-        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Vocabulary_to_Romanji_MCQ, true);
+        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExercicePage::QcmExerciceType::Vocabulary_to_Romanji_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
@@ -451,7 +451,7 @@ void MainWindow::on_actionRomanji_to_Vocabulary_MCQ_triggered()
     std::cout << "LOG: MainWindow::on_actionVocabulary_to_Romanji_triggered()" << std::endl;
 //    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Vocabulary_to_Romanji_QCM)) // TODO
     {
-        GetMy::Instance().QcmExerciceWidget().InitializeExercice(QcmExercice::QcmExerciceType::Romanji_to_Vocabulary_MCQ, true);
+        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExercicePage::QcmExerciceType::Romanji_to_Vocabulary_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
@@ -466,16 +466,16 @@ void MainWindow::on_actionRomanji_to_Vocabulary_MCQ_triggered()
 void MainWindow::on_actionLearn_Edit_Set_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionLearn_Edit_Set_triggered()" << std::endl;
-    GetMy::Instance().VocabularyLearnEditSetWidget()->InitializeVocabularyLearnEditSet();
+    GetMy::Instance().VocabExplorerPageInst()->InitializeVocabularyLearnEditSet();
     ui->ContentStackedWidget->setCurrentIndex(7);
     AggressiveClearScreen();
 
-    if ( GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->value("AppSettings/firstTimeVocabListPage", true).toBool() )
+    if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeVocabListPage", true).toBool() )
     {
         Tools::GetInstance().DisplayPopup("Here are displayed your \"vocab sheets\". Please check Obenkyobo's github page to learn how to create your owns.\n"
                                           "Click on any one to learn/display its content.\n"
                                           "Ignore the LS and checkbox for now, those are related to unimplemented features for now.");
-        GetMy::Instance().AppSettingWidget().GetSettingsSerializer()->setValue("AppSettings/firstTimeVocabListPage", false);
+        GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->setValue("AppSettings/firstTimeVocabListPage", false);
     }
 }
 

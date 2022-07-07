@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 
     // Needed to save .cfg next to application...
     QSettings serializer = QSettings(QString(QCoreApplication::applicationDirPath() + "/config.cfg"), QSettings::IniFormat);
-    GetMy::Instance().SetSettingSerialier(&serializer);
+    GetMy::Instance().SetSettingSerialierInst(&serializer);
 
     a.setStyleSheet
     (

@@ -20,12 +20,12 @@ AppSettingsPage::AppSettingsPage(QWidget *parent) :
     ParseConfigFile();
     InitializeUIValues();
 
-    GetMy::Instance().SetAppSettingWidget(this);
+    GetMy::Instance().SetAppSettingsPageInst(this);
 }
 
 void AppSettingsPage::ParseConfigFile()
 {
-    settingsSerializer = GetMy::Instance().SettingSerializer();
+    settingsSerializer = GetMy::Instance().SettingSerializerInst();
     nbrOfEntryLinesIdx = settingsSerializer->value("AppSettings/entriesPerLineIdx", 2).toInt();
     randomChoiceIdx = settingsSerializer->value("AppSettings/randomChoiceIdx", 1).toInt();
     hardRefreshFreqIdx = settingsSerializer->value("AppSettings/hardRefreshFreqIdx", 3).toInt();
@@ -80,27 +80,27 @@ AppSettingsPage::~AppSettingsPage()
     delete ui;
 }
 
-bool AppSettingsPage::IsThereEnough(QcmExercice::QcmExerciceType qcmType) const
+bool AppSettingsPage::IsThereEnough(QcmExercicePage::QcmExerciceType qcmType) const
 {
-    int minRequiredSymbol = GetMy::Instance().AppSettingWidget().GetNumberOfEntryLine() *
-                            GetMy::Instance().AppSettingWidget().GetNumberOfEntryRow();
+    int minRequiredSymbol = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine() *
+                            GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
 
     switch (qcmType)
     {
-        case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_MCQ :
-        case QcmExercice::QcmExerciceType::Hiragana_to_Romanji_Kbd :
-        case QcmExercice::QcmExerciceType::Romanji_to_Hiragana_MCQ :
+        case QcmExercicePage::QcmExerciceType::Hiragana_to_Romanji_MCQ :
+        case QcmExercicePage::QcmExerciceType::Hiragana_to_Romanji_Kbd :
+        case QcmExercicePage::QcmExerciceType::Romanji_to_Hiragana_MCQ :
         {
-            return (SymbolsTables::HiraganaSymbolsTableFamily.NbrOfEnabled() >= minRequiredSymbol);
+            return (KanasTables::HiraganaSymbolsTableFamily.NbrOfEnabled() >= minRequiredSymbol);
         }
-        case QcmExercice::QcmExerciceType::Katakana_to_Romanji_MCQ :
-        case QcmExercice::QcmExerciceType::Katakana_to_Romanji_Kbd :
-        case QcmExercice::QcmExerciceType::Romanji_to_Katakana_MCQ :
+        case QcmExercicePage::QcmExerciceType::Katakana_to_Romanji_MCQ :
+        case QcmExercicePage::QcmExerciceType::Katakana_to_Romanji_Kbd :
+        case QcmExercicePage::QcmExerciceType::Romanji_to_Katakana_MCQ :
         {
-            return (SymbolsTables::KatakanaSymbolsTableFamily.NbrOfEnabled() >= minRequiredSymbol);
+            return (KanasTables::KatakanaSymbolsTableFamily.NbrOfEnabled() >= minRequiredSymbol);
         }
-        case QcmExercice::QcmExerciceType::Vocabulary_to_Romanji_MCQ :
-        case QcmExercice::QcmExerciceType::Romanji_to_Vocabulary_MCQ :
+        case QcmExercicePage::QcmExerciceType::Vocabulary_to_Romanji_MCQ :
+        case QcmExercicePage::QcmExerciceType::Romanji_to_Vocabulary_MCQ :
         {
             return true; // TODO
         }
@@ -149,8 +149,8 @@ void AppSettingsPage::on_WifiCheckBox_clicked(bool checked)
 
 void AppSettingsPage::on_ResetWeightsButton_clicked()
 {
-    SymbolsTables::HiraganaSymbolsTableFamily.ResetWeights();
-    SymbolsTables::KatakanaSymbolsTableFamily.ResetWeights();
+    KanasTables::HiraganaSymbolsTableFamily.ResetWeights();
+    KanasTables::KatakanaSymbolsTableFamily.ResetWeights();
 }
 
 void AppSettingsPage::on_HardRefreshDropdown_currentIndexChanged(int index)
@@ -163,14 +163,14 @@ void AppSettingsPage::on_BatteryIndicatorDropdown_currentIndexChanged(int index)
 {
     batteryFormatIdx = index;
     settingsSerializer->setValue("AppSettings/batteryFormatIdx", index);
-    GetMy::Instance().MainWindowWidget().UpdateStatusBarGeometry();
+    GetMy::Instance().MainWindowInst().UpdateStatusBarGeometry();
 }
 
 void AppSettingsPage::on_DateDisplayFormatDropdown_currentIndexChanged(int index)
 {
     dateFormatIdx = index;
     settingsSerializer->setValue("AppSettings/dateFormatIdx", index);
-    GetMy::Instance().MainWindowWidget().UpdateStatusBarGeometry();
+    GetMy::Instance().MainWindowInst().UpdateStatusBarGeometry();
 }
 
 void AppSettingsPage::on_RowPerPageComboBox_currentIndexChanged(int index)

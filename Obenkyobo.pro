@@ -1,5 +1,11 @@
 #-------------------------------------------------
 # TODO : - Add enabled state to vocab sheet "and directories"
+# Plan : Store in connfig.cfg
+# std::vector<std::filesystem::path> enabled Oben files path (should be easier this way to build the qcm's pool
+# std::vector<std::pair<std::filesystempath, enum[enabled, partiallyEnabled, disabled]>> directories status
+# => no ! split those in 3 list instead, should be easier and faster to decide the status of a directory (if one file/dir disabled => partial, if no info on subdirs/files => fully enabled, if for some reasons every file and dir is disabled manualy.... delete the entry)
+# by default any subdir(not files !) of an enabled directory will be considered enabled if not precised otherwise, should be easier if some idiot decide to enable '/'
+#        - Fix what's been broken by the refacto => tristate checkbox, and probably other things
 #        - Investigate weird hard refresh (Edit page) glitch on Kobo Glo HD under unknown circumstances
 #-------------------------------------------------
 # TODO later : - handle sleep properly
@@ -32,24 +38,24 @@ CONFIG += c++17 \
 QMAKE_CXXFLAGS += -g -rdynamic # for backtrace debuging
 
 SOURCES += \
+    Src/KanasTables.cpp \
+    Src/Pages/AppSettingsPage.cpp \
+    Src/Pages/FntSettingsPage.cpp \
+    Src/Pages/KanaEditPage.cpp \
+    Src/Pages/KeyboardExercicePage.cpp \
+    Src/Pages/QcmExercicePage.cpp \
+    Src/Pages/ScreenSettingsPage.cpp \
+    Src/Pages/VocabExplorerPage.cpp \
+    Src/Pages/VocabularyDisplayPage.cpp \
+    Src/Pages/WelcomePage.cpp \
+    Src/Widgets/KanaEditButtonWidget.cpp \
+    Src/Widgets/KanaEditEntryWidget.cpp \
+    Src/Widgets/KanaEditSectionWidget.cpp \
+    Src/Widgets/PopupWidget.cpp \
+    Src/Widgets/QcmEntryGuess.cpp \
+    Src/Widgets/VocabFileEntryWidget.cpp \
     Src/main.cpp \
-    Src/mainwindow.cpp \
-    Src/popup.cpp \
-    Src/qsymbolpushbutton.cpp \
-    Src/symbolsetting.cpp \
-    Src/symbolsettingentry.cpp \
-    Src/symbolsettingsection.cpp \
-    Src/symbolstables.cpp \
-    Src/vocabularycfglistentry.cpp \
-    Src/vocabularydisplay.cpp \
-    Src/vocabularylearneditset.cpp \
-    Src/widgetwelcome.cpp \
-    Src/qcmexercice.cpp \
-    Src/keyboardexercice.cpp \
-    Src/qcmentryguess.cpp \
-    Src/appsettings.cpp \
-    Src/fntsetting.cpp \
-    Src/screensettings.cpp
+    Src/mainwindow.cpp
 
 RESOURCES += \
     Resources/HiraganaFonts.qrc \
@@ -61,44 +67,44 @@ RESOURCES += \
 
 HEADERS += \
     Src/GetMy.h \
+    Src/KanasTables.h \
+    Src/Pages/AppSettingsPage.h \
+    Src/Pages/FntSettingsPage.h \
+    Src/Pages/KanaEditPage.h \
+    Src/Pages/KeyboardExercicePage.h \
+    Src/Pages/QcmExercicePage.h \
+    Src/Pages/ScreenSettingsPage.h \
+    Src/Pages/VocabExplorerPage.h \
+    Src/Pages/VocabularyDisplayPage.h \
+    Src/Pages/WelcomePage.h \
+    Src/Widgets/KanaEditButtonWidget.h \
+    Src/Widgets/KanaEditEntryWidget.h \
+    Src/Widgets/KanaEditSectionWidget.h \
+    Src/Widgets/PopupWidget.h \
+    Src/Widgets/QcmEntryGuess.h \
+    Src/Widgets/VocabFileEntryWidget.h \
     Src/mainwindow.h \
-    Src/popup.h \
-    Src/qsymbolpushbutton.h \
-    Src/symbolsetting.h \
-    Src/symbolsettingentry.h \
-    Src/symbolsettingsection.h \
-    Src/vocabularycfglistentry.h \
-    Src/vocabularydisplay.h \
-    Src/vocabularylearneditset.h \
-    Src/widgetwelcome.h \
-    Src/qcmexercice.h \
-    Src/keyboardexercice.h \
-    Src/qcmentryguess.h \
-    Src/appsettings.h \
-    Src/fntsetting.h \
-    Src/screensettings.h \
-    Src/symbolstables.h \
     Src/tools.h
 
 OTHER_FILES += \
     OtherFiles/*
 
 FORMS += \
-    Src/mainwindow.ui \
-    Src/popup.ui \
-    Src/symbolsetting.ui \
-    Src/symbolsettingentry.ui \
-    Src/symbolsettingsection.ui \
-    Src/vocabularycfglistentry.ui \
-    Src/vocabularydisplay.ui \
-    Src/vocabularylearneditset.ui \
-    Src/widgetwelcome.ui \
-    Src/qcmexercice.ui \
-    Src/keyboardexercice.ui \
-    Src/qcmentryguess.ui \
-    Src/appsettings.ui \
-    Src/fntsetting.ui \
-    Src/screensettings.ui
+    Src/Pages/AppSettingsPage.ui \
+    Src/Pages/FntSettingsPage.ui \
+    Src/Pages/KanaEditPage.ui \
+    Src/Pages/KeyboardExercicePage.ui \
+    Src/Pages/QcmExercicePage.ui \
+    Src/Pages/ScreenSettingsPage.ui \
+    Src/Pages/VocabExplorerPage.ui \
+    Src/Pages/VocabularyDisplayPage.ui \
+    Src/Pages/WelcomePage.ui \
+    Src/Widgets/KanaEditEntryWidget.ui \
+    Src/Widgets/KanaEditSectionWidget.ui \
+    Src/Widgets/PopupWidget.ui \
+    Src/Widgets/QcmEntryGuess.ui \
+    Src/Widgets/VocabFileEntryWidget.ui \
+    Src/mainwindow.ui
 
 # "everything" contains ... everything including qt libs (=>slow deployment)
 everything.path = /mnt/onboard/.adds

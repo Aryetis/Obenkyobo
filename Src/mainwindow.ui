@@ -62,17 +62,17 @@
       <item>
        <widget class="QStackedWidget" name="ContentStackedWidget">
         <property name="currentIndex">
-         <number>4</number>
+         <number>0</number>
         </property>
-        <widget class="WidgetWelcome" name="WelcomePage"/>
-        <widget class="QcmExercice" name="ExerciceQcmPage"/>
-        <widget class="KeyboardExercice" name="ExerciceKbdPage"/>
-        <widget class="SymbolSetting" name="ExerciceSetSettingPage"/>
+        <widget class="WelcomePage" name="WelcomePg"/>
+        <widget class="QcmExercicePage" name="QcmExcPg"/>
+        <widget class="KeyboardExercicePage" name="KbdExcPg"/>
+        <widget class="KanaEditPage" name="ExerciceSetSettingPg"/>
         <widget class="AppSettingsPage" name="AppStgPg"/>
-        <widget class="FntSetting" name="FontSettingPage"/>
-        <widget class="ScreenSettings" name="ScreenSettingsPage"/>
-        <widget class="VocabularyLearnEditSet" name="VocabularyEditSetPage"/>
-        <widget class="VocabularyDisplay" name="VocabularyDisplayPage"/>
+        <widget class="FntSettingsPage" name="FntStgPg"/>
+        <widget class="ScreenSettingsPage" name="ScreenSettingsPg"/>
+        <widget class="VocabExplorerPage" name="VocabExplorerPg"/>
+        <widget class="VocabularyDisplayPage" name="VocabularyDisplayPg"/>
        </widget>
       </item>
      </layout>
@@ -419,27 +419,21 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>WidgetWelcome</class>
+   <class>QcmExercicePage</class>
    <extends>QWidget</extends>
-   <header>Src/widgetwelcome.h</header>
+   <header>Src/Pages/QcmExercicePage.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>QcmExercice</class>
+   <class>KeyboardExercicePage</class>
    <extends>QWidget</extends>
-   <header>Src/qcmexercice.h</header>
+   <header>Src/Pages/KeyboardExercicePage.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>KeyboardExercice</class>
+   <class>KanaEditPage</class>
    <extends>QWidget</extends>
-   <header>Src/keyboardexercice.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>SymbolSetting</class>
-   <extends>QWidget</extends>
-   <header>Src/symbolsetting.h</header>
+   <header>Src/Pages/KanaEditPage.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -449,27 +443,33 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>FntSetting</class>
+   <class>FntSettingsPage</class>
    <extends>QWidget</extends>
-   <header>Src/fntsetting.h</header>
+   <header>Src/Pages/FntSettingsPage.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>ScreenSettings</class>
+   <class>ScreenSettingsPage</class>
    <extends>QWidget</extends>
-   <header>Src/screensettings.h</header>
+   <header>Src/Pages/ScreenSettingsPage.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>VocabularyLearnEditSet</class>
+   <class>VocabExplorerPage</class>
    <extends>QWidget</extends>
-   <header>Src/vocabularylearneditset.h</header>
+   <header>Src/Pages/VocabExplorerPage.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>VocabularyDisplay</class>
+   <class>VocabularyDisplayPage</class>
    <extends>QWidget</extends>
-   <header>Src/vocabularydisplay.h</header>
+   <header>Src/Pages/VocabularyDisplayPage.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WelcomePage</class>
+   <extends>QWidget</extends>
+   <header>Src/Pages/WelcomePage.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

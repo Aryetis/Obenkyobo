@@ -3,14 +3,14 @@
 #include <QSettings>
 #include "koboplatformfunctions.h"
 
-class QcmExercice;
-class FntSetting;
+class QcmExercicePage;
+class FntSettingsPage;
 class AppSettingsPage;
-class SymbolSetting;
-class ScreenSettings;
+class KanaEditPage;
+class ScreenSettingsPage;
 class MainWindow;
-class VocabularyLearnEditSet;
-class VocabularyDisplay;
+class VocabExplorerPage;
+class VocabularyDisplayPage;
 class GetMy
 {
 public:
@@ -20,45 +20,45 @@ public:
         return instance;
     }
 
-    void SetMainWindowWidget(MainWindow* mainWindow) { mainWindowInstance = mainWindow;}
-    MainWindow& MainWindowWidget() { return *mainWindowInstance; }
+    void SetMainWindowInst(MainWindow* mainWindow) { mainWindowInstance = mainWindow;}
+    MainWindow& MainWindowInst() { return *mainWindowInstance; }
 
-    void SetQcmExerciceWidget(QcmExercice* exercice) { qcmExerciceInstance = exercice;}
-    QcmExercice& QcmExerciceWidget() { return *qcmExerciceInstance; }
+    void SetQcmExercicePageInst(QcmExercicePage* exercice) { qcmExerciceInstance = exercice;}
+    QcmExercicePage& QcmExercicePageInst() { return *qcmExerciceInstance; }
 
-    void SetFntSettingWidget(FntSetting* fntSetting) { fntSettingInstance = fntSetting;}
-    FntSetting& FntSettingWidget() { return *fntSettingInstance; }
+    void SetFntSettingsPageInst(FntSettingsPage* fntSetting) { fntSettingInstance = fntSetting;}
+    FntSettingsPage& FntSettingsPageInst() { return *fntSettingInstance; }
 
-    void SetAppSettingWidget(AppSettingsPage* appSetting) { appSettingsInstance = appSetting;}
-    AppSettingsPage& AppSettingWidget() { return *appSettingsInstance; }
+    void SetAppSettingsPageInst(AppSettingsPage* appSetting) { appSettingsInstance = appSetting;}
+    AppSettingsPage& AppSettingsPageInst() { return *appSettingsInstance; }
 
-    void SetSymbolSettingWidget(SymbolSetting* symbolSetting) { symbolSettingInstance = symbolSetting;}
-    SymbolSetting& SymbolSettingWidget() { return *symbolSettingInstance; }
+    void SetKanaEditPageInst(KanaEditPage* symbolSetting) { KanaEditInstance = symbolSetting;}
+    KanaEditPage& KanaEditPageInst() { return *KanaEditInstance; }
 
-    void SetScreenSettingsWidget(ScreenSettings* screenSettings) { screenSettingsInstance = screenSettings; }
-    ScreenSettings& ScreenSettingsWidget() { return *screenSettingsInstance; }
+    void SetScreenSettingsPageInst(ScreenSettingsPage* screenSettings) { screenSettingsInstance = screenSettings; }
+    ScreenSettingsPage& ScreenSettingsPageInst() { return *screenSettingsInstance; }
 
-    void SetVocabularyLearnEditSetWidget(VocabularyLearnEditSet* vocab) { vocabularyLearnEditSetInstance = vocab;}
-    VocabularyLearnEditSet* VocabularyLearnEditSetWidget() { return vocabularyLearnEditSetInstance; }
+    void SetVocabExplorerPageInst(VocabExplorerPage* vocab) { vocabularyLearnEditSetInstance = vocab;}
+    VocabExplorerPage* VocabExplorerPageInst() { return vocabularyLearnEditSetInstance; }
 
-    void SetVocabularyDisplayWidget(VocabularyDisplay* vocab) { vocabularyDisplayInstance = vocab;}
-    VocabularyDisplay* VocabularyDisplayWidget() { return vocabularyDisplayInstance; }
+    void SetVocabularyDisplayPageInst(VocabularyDisplayPage* vocab) { vocabularyDisplayInstance = vocab;}
+    VocabularyDisplayPage* VocabularyDisplayPageInst() { return vocabularyDisplayInstance; }
 
-    void SetSettingSerialier(QSettings* settingSerializer) { settingSerializerInstance = settingSerializer;}
-    QSettings* SettingSerializer() { return settingSerializerInstance; }
+    void SetSettingSerialierInst(QSettings* settingSerializer) { settingSerializerInstance = settingSerializer;}
+    QSettings* SettingSerializerInst() { return settingSerializerInstance; }
 
     const KoboDeviceDescriptor& Descriptor() { return desc; }
 
 private :
     GetMy() = default;
     MainWindow*                     mainWindowInstance;
-    QcmExercice*                    qcmExerciceInstance;
-    FntSetting*                     fntSettingInstance;
-    AppSettingsPage*                    appSettingsInstance;
-    ScreenSettings*                 screenSettingsInstance;
-    SymbolSetting*                  symbolSettingInstance;
-    VocabularyLearnEditSet*         vocabularyLearnEditSetInstance;
-    VocabularyDisplay*              vocabularyDisplayInstance;
+    QcmExercicePage*                qcmExerciceInstance;
+    FntSettingsPage*                fntSettingInstance;
+    AppSettingsPage*                appSettingsInstance;
+    ScreenSettingsPage*             screenSettingsInstance;
+    KanaEditPage*                   KanaEditInstance;
+    VocabExplorerPage*         vocabularyLearnEditSetInstance;
+    VocabularyDisplayPage*              vocabularyDisplayInstance;
 
     KoboDeviceDescriptor desc =  KoboPlatformFunctions::getKoboDeviceDescriptor();
 
