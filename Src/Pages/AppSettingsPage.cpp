@@ -17,6 +17,8 @@ AppSettingsPage::AppSettingsPage(QWidget *parent) :
     ui->KanaHardRefreshCheckBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
                                                      .arg((int)(GetMy::Instance().Descriptor().width*0.075f)));
 
+
+    qRegisterMetaTypeStreamOperators<QSet<QString> >("QSet<QString>");
     ParseConfigFile();
     InitializeUIValues();
 
@@ -45,6 +47,15 @@ void AppSettingsPage::ParseConfigFile()
         KoboPlatformFunctions::enableWiFiConnection();
     else
         KoboPlatformFunctions::disableWiFiConnection();
+
+    enabledSheets = settingsSerializer->value("Vocabs/enabledSheets").value<QSet<QString>>();
+    QMutableSetIterator<QString> it(enabledSheets);
+    while (it.hasNext()) // removing dead sheets infos
+    {
+        QString filePath = it.next();
+        if (!QFile::exists(filePath)) // warning, can be a directory if I fucked up really bad => don't fully trust what's stored
+            it.remove();
+    }
 }
 
 void AppSettingsPage::InitializeUIValues() const
@@ -73,6 +84,30 @@ void AppSettingsPage::UpdateScoreCounters() const
     ui->ScoreCounterValueLabel->setText(QString::number(appStatisticsScore));
     int appStatisticsError = settingsSerializer->value("AppStatistics/error", 0).toInt();
     ui->ErrorsCounterValueLabel->setText(QString::number(appStatisticsError));
+}
+
+void AppSettingsPage::AddEnabledVocabSheet(QString filePath)
+{
+    enabledSheets.insert(filePath);
+    settingsSerializer->setValue("Vocabs/enabledSheets", QVariant::fromValue(enabledSheets));
+}
+
+void AppSettingsPage::AddEnabledVocabSheets(QSet<QString> filePaths)
+{
+    enabledSheets = enabledSheets.unite(filePaths);
+    settingsSerializer->setValue("Vocabs/enabledSheets", QVariant::fromValue(enabledSheets));
+}
+
+void AppSettingsPage::RemoveEnabledVocabSheet(QString filePath)
+{
+    enabledSheets.remove(filePath);
+    settingsSerializer->setValue("Vocabs/enabledSheets", QVariant::fromValue(enabledSheets));
+}
+
+void AppSettingsPage::RemoveEnabledVocabSheets(QSet<QString> filePaths)
+{
+    enabledSheets = enabledSheets.subtract(filePaths);
+    settingsSerializer->setValue("Vocabs/enabledSheets", QVariant::fromValue(enabledSheets));
 }
 
 AppSettingsPage::~AppSettingsPage()
@@ -221,4 +256,10 @@ void AppSettingsPage::on_resetPopup_clicked()
     settingsSerializer->setValue("AppSettings/firstTimeVocabListPage", true);
     settingsSerializer->setValue("AppSettings/firstTimeVocabDisplayPage", true);
     settingsSerializer->setValue("AppSettings/firstTimeKanasEditPage", true);
+}
+
+void AppSettingsPage::on_DisableVocabSheets_clicked()
+{
+    enabledSheets.clear();
+    settingsSerializer->setValue("Vocabs/enabledSheets", QVariant::fromValue(enabledSheets));
 }

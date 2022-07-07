@@ -3,9 +3,12 @@
 
 #include <QWidget>
 #include <QSettings>
+#include <QMap>
 #include "Src/Pages/QcmExercicePage.h"
 
 #define ENTRY_PER_ROW 3
+
+Q_DECLARE_METATYPE(QSet<QString>)
 
 namespace Ui
 {
@@ -34,6 +37,12 @@ public:
     void UpdateScoreCounters() const;
     bool GetWifiStatus() const { return wifiStatus; }
 
+    QSet<QString> const& GetEnabledVocabSheets() const { return enabledSheets; }
+    void AddEnabledVocabSheet(QString filePath);
+    void AddEnabledVocabSheets(QSet<QString> filePaths);
+    void RemoveEnabledVocabSheet(QString filePath);
+    void RemoveEnabledVocabSheets(QSet<QString> filePaths);
+
     QSettings* GetSettingsSerializer() const { return settingsSerializer; }
 
 private:
@@ -54,6 +63,8 @@ private slots:
     void on_comboBox_currentIndexChanged(int index);
     void on_resetPopup_clicked();
 
+    void on_DisableVocabSheets_clicked();
+
 private:
     Ui::AppSettingsPage *ui;
     int nbrOfEntryLinesIdx;
@@ -65,6 +76,7 @@ private:
     int nbrOfRowPerVocabIdx;
     bool kanaHardRefresh;
     int vocabFntSizeIdx;
+    QSet<QString> enabledSheets;
 
     QSettings* settingsSerializer;
 };

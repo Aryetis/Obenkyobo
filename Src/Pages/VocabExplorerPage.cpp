@@ -56,7 +56,7 @@ void VocabExplorerPage::Populate()
         ui->VocabularyCfgListContentVLayout->insertWidget(0, foo);
     }
 
-    foreach(const QFileInfo& fileInfo, currentDir.entryInfoList(QStringList() << "*", QDir::Dirs | QDir::Hidden | QDir::NoDotAndDotDot | QDir::NoSymLinks ))
+    foreach(const QFileInfo& fileInfo, currentDir.entryInfoList(QStringList() << "*", QDir::Dirs | QDir::Hidden | QDir::NoDotAndDotDot | QDir::NoSymLinks))
     {
         VocabFileEntryWidget* bar = new VocabFileEntryWidget(fileInfo);
         vocabFileWidgets.push_back(bar);

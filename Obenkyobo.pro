@@ -1,15 +1,9 @@
 #-------------------------------------------------
-# TODO : - Add enabled state to vocab sheet "and directories"
-# Plan : Store in connfig.cfg
-# std::vector<std::filesystem::path> enabled Oben files path (should be easier this way to build the qcm's pool
-# std::vector<std::pair<std::filesystempath, enum[enabled, partiallyEnabled, disabled]>> directories status
-# => no ! split those in 3 list instead, should be easier and faster to decide the status of a directory (if one file/dir disabled => partial, if no info on subdirs/files => fully enabled, if for some reasons every file and dir is disabled manualy.... delete the entry)
-# by default any subdir(not files !) of an enabled directory will be considered enabled if not precised otherwise, should be easier if some idiot decide to enable '/'
-#        - Fix what's been broken by the refacto => tristate checkbox, and probably other things
-#        - Investigate weird hard refresh (Edit page) glitch on Kobo Glo HD under unknown circumstances
+# TODO : - Refactor QcmExercice so it can handle AppSettings::enabledSheets
+#        - Finish sleep handling properly
 #-------------------------------------------------
-# TODO later : - handle sleep properly
-#              - redo the Qmenu::right-arrow
+# TODO later : - redo the Qmenu::right-arrow
+#              - Investigate weird hard refresh (Edit page) glitch on Kobo Glo HD under unknown circumstances
 #-------------------------------------------------
 
 QT       += core gui

@@ -8,6 +8,11 @@
 #include "Src/GetMy.h"
 #include "Src/tools.h"
 
+#include <QList>
+#include <QString>
+#include <QStringList>
+#include <QDir>
+#include <QDirIterator>
 
 VocabFileEntryWidget::VocabFileEntryWidget(QWidget *parent) :
     QWidget(parent), ui(new Ui::VocabFileEntryWidget)
@@ -23,7 +28,10 @@ VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fi, bool dirtyUpDirHack, QW
 
     QString title;
     if (dirtyUpDirHack)
+    {
         title = "[UP_DIR] ..";
+        ui->checkBox->setDisabled(true);
+    }
     else
     {
         title = vocabFileInfo.completeBaseName();
@@ -33,6 +41,30 @@ VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fi, bool dirtyUpDirHack, QW
         {
             title.truncate(20);
             title.append("...");
+        }
+
+        if  (vocabFileInfo.isFile())
+        {
+            ui->checkBox->setChecked(GetMy::Instance().AppSettingsPageInst().GetEnabledVocabSheets().contains(vocabFileInfo.absoluteFilePath()));
+        }
+        else
+        {
+            ui->checkBox->setTristate(true);
+            ui->checkBox->setCheckState(Qt::CheckState::Unchecked);
+
+            QDirIterator it(vocabFileInfo.absoluteFilePath(), {"*.oben"}, QDir::Files, QDirIterator::Subdirectories);
+            while (it.hasNext())
+            {
+                if (ui->checkBox->checkState() == Qt::CheckState::Unchecked && GetMy::Instance().AppSettingsPageInst().GetEnabledVocabSheets().contains(it.next()))
+                {
+                    ui->checkBox->setCheckState(Qt::CheckState::Checked);
+                }
+                else if (ui->checkBox->checkState() == Qt::CheckState::Checked && !GetMy::Instance().AppSettingsPageInst().GetEnabledVocabSheets().contains(it.next()))
+                {
+                    ui->checkBox->setCheckState(Qt::CheckState::PartiallyChecked);
+                    break;
+                }
+            }
         }
     }
     ui->TitleButton->setText(title);
@@ -68,9 +100,30 @@ void VocabFileEntryWidget::on_TitleButton_clicked()
     }
 }
 
-void VocabFileEntryWidget::on_checkBox_clicked(bool /*checked*/)
+Q_DECLARE_METATYPE(QList<int>)
+void VocabFileEntryWidget::on_checkBox_clicked(bool checked)
 {
-    // TODO
+    if ( vocabFileInfo.isFile() )
+    {
+        ui->checkBox->setChecked(checked);
+        if (checked)
+            GetMy::Instance().AppSettingsPageInst().AddEnabledVocabSheet(vocabFileInfo.absoluteFilePath());
+        else
+            GetMy::Instance().AppSettingsPageInst().RemoveEnabledVocabSheet(vocabFileInfo.absoluteFilePath());
+    }
+    else
+    {
+        ui->checkBox->setCheckState(checked ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
+        QSet<QString> sheetSet;
+        QDirIterator it(vocabFileInfo.absoluteFilePath(), {"*.oben"}, QDir::Files, QDirIterator::Subdirectories);
+        while (it.hasNext())
+            sheetSet << it.next();
+
+        if (checked)
+            GetMy::Instance().AppSettingsPageInst().AddEnabledVocabSheets(sheetSet);
+        else
+            GetMy::Instance().AppSettingsPageInst().RemoveEnabledVocabSheets(sheetSet);
+    }
 }
 
 void VocabFileEntryWidget::FakeClick(bool checked)
