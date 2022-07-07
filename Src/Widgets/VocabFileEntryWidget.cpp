@@ -50,21 +50,25 @@ VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fi, bool dirtyUpDirHack, QW
         else
         {
             ui->checkBox->setTristate(true);
-            ui->checkBox->setCheckState(Qt::CheckState::Unchecked);
 
             QDirIterator it(vocabFileInfo.absoluteFilePath(), {"*.oben"}, QDir::Files, QDirIterator::Subdirectories);
+            bool foundOne = false, missedOne = false;
             while (it.hasNext())
             {
-                if (ui->checkBox->checkState() == Qt::CheckState::Unchecked && GetMy::Instance().AppSettingsPageInst().GetEnabledVocabSheets().contains(it.next()))
-                {
-                    ui->checkBox->setCheckState(Qt::CheckState::Checked);
-                }
-                else if (ui->checkBox->checkState() == Qt::CheckState::Checked && !GetMy::Instance().AppSettingsPageInst().GetEnabledVocabSheets().contains(it.next()))
-                {
-                    ui->checkBox->setCheckState(Qt::CheckState::PartiallyChecked);
+                bool containsItSheet = GetMy::Instance().AppSettingsPageInst().GetEnabledVocabSheets().contains(it.next());
+
+                foundOne = foundOne || containsItSheet;
+                missedOne = missedOne || !containsItSheet;
+
+                if (foundOne && missedOne)
                     break;
-                }
             }
+            if (foundOne && missedOne)
+                ui->checkBox->setCheckState(Qt::CheckState::PartiallyChecked);
+            else if (foundOne && !missedOne)
+                ui->checkBox->setCheckState(Qt::CheckState::Checked);
+            else if (!foundOne && missedOne)
+                ui->checkBox->setCheckState(Qt::CheckState::Unchecked);
         }
     }
     ui->TitleButton->setText(title);
@@ -100,7 +104,6 @@ void VocabFileEntryWidget::on_TitleButton_clicked()
     }
 }
 
-Q_DECLARE_METATYPE(QList<int>)
 void VocabFileEntryWidget::on_checkBox_clicked(bool checked)
 {
     if ( vocabFileInfo.isFile() )
