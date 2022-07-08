@@ -42,6 +42,7 @@ SOURCES += \
     Src/Pages/VocabExplorerPage.cpp \
     Src/Pages/VocabularyDisplayPage.cpp \
     Src/Pages/WelcomePage.cpp \
+    Src/VocabularyParser.cpp \
     Src/Widgets/KanaEditButtonWidget.cpp \
     Src/Widgets/KanaEditEntryWidget.cpp \
     Src/Widgets/KanaEditSectionWidget.cpp \
@@ -71,6 +72,7 @@ HEADERS += \
     Src/Pages/VocabExplorerPage.h \
     Src/Pages/VocabularyDisplayPage.h \
     Src/Pages/WelcomePage.h \
+    Src/VocabularyParser.h \
     Src/Widgets/KanaEditButtonWidget.h \
     Src/Widgets/KanaEditEntryWidget.h \
     Src/Widgets/KanaEditSectionWidget.h \
