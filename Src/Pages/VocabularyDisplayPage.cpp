@@ -29,17 +29,17 @@ VocabularyDisplayPage::VocabularyDisplayPage(QWidget *parent) :
 
 VocabularyDisplayPage::~VocabularyDisplayPage()
 {
-    qDeleteAll(gridEntries);
-    gridEntries.clear();
+    for(auto lineLabels : gridLabels)
+        qDeleteAll(lineLabels);
+    gridLabels.clear();
+    delete vdf;
     delete ui;
 }
 
 void VocabularyDisplayPage::InitializeGrid(VocabFileEntryWidget* vocab)
 {
-    /************************ Cleaning previous stuff ************************/
-    CleanGrid();
-    qDeleteAll(gridEntries);
-    gridEntries.clear();
+    /************************ Initializing stuff ************************/
+//    CleanGrid(); // called by PopulateGrid()
     curPage = 0;
     maxPage = 0;
     kanasShow = true;
@@ -48,66 +48,18 @@ void VocabularyDisplayPage::InitializeGrid(VocabFileEntryWidget* vocab)
     lsShow = true;
 
     /************************ Parsing Vocab File ************************/
-    QFile vocabFile(vocab->VocabFileInfo().filePath());
-    if (vocabFile.open(QIODevice::ReadOnly))
+    vdf = new VocabDataFile(vocab->VocabFileInfo().filePath());
+    if (vdf->MalformedLines().size() > 0)
     {
-        int lineNbr = 0;
-        std::vector<int> malformedLines;
-        QTextStream in(&vocabFile);
-        in.setCodec("UTF-8");
-        while (!in.atEnd())
-        {
-            ++lineNbr;
-            QString line = in.readLine();
-            if (line.count() <= 0 || line[0] == '#') // skip empty lines and comments
-                continue;
-
-            //[fontType=hiragana][jp=sanity][kanji=kan][trad=check][learningScore=5]
-            QRegExp rx("\\[fontType=([a-zA-Z]+)\\]\\[jp=([^\\]]+)\\]\\[kanji=([^\\]]+)\\]\\[trad=([^\\]]+)\\]\\[learningScore=([0-5])\\]");
-            rx.indexIn(line);
-            QStringList parsedFields = rx.capturedTexts(); // first one is matched line, not fields
-
-            if ( parsedFields.count() == 6 )
-            {
-                KanaFamilyEnum fontType_;
-                if (parsedFields[1] == "hiragana")
-                    fontType_ = KanaFamilyEnum::hiragana;
-                else if (parsedFields[1] == "katakana")
-                    fontType_ = KanaFamilyEnum::katakana;
-                else
-                {
-                    malformedLines.push_back(lineNbr);
-                    continue;
-                }
-                QString kanas_ = parsedFields[2];
-                QString kanji_ = parsedFields[3];
-                QString trad_ = parsedFields[4];
-                int learningScore_ = parsedFields[5].toInt();
-                if (learningScore_ < 0 || learningScore_ > Kana::GetMaxlearningState())
-                {
-                    malformedLines.push_back(lineNbr);
-                    continue;
-                }
-
-                gridEntries.push_back(new tempVocab(fontType_, kanas_, kanji_, trad_, learningScore_));
-            }
-            else
-                malformedLines.push_back(lineNbr);
-        }
-        if (malformedLines.size() > 0)
-        {
-            QString popupMsg = "Malformed Vocab sheet, errors on lines : ";
-            for (int line : malformedLines)
-                popupMsg += QString::number(line) + ", " ;
-            popupMsg.chop(2);
-            popupMsg += '.';
-            Tools::GetInstance().DisplayPopup(popupMsg);
-        }
-
-        vocabFile.close();
+        QString popupMsg = "Malformed Vocab sheet, errors on lines : ";
+        for (VocabDataEntry const* entry : vdf->MalformedLines())
+            popupMsg += QString::number(entry->GetLineNumber()) + ", " ;
+        popupMsg.chop(2);
+        popupMsg += '.';
+        Tools::GetInstance().DisplayPopup(popupMsg);
     }
 
-    maxPage = std::ceil(static_cast<float>(gridEntries.count()) / GetMy::Instance().AppSettingsPageInst().GetNumberOfRowPerVocabPage());
+    maxPage = std::ceil(static_cast<float>(vdf->Entries().count()) / GetMy::Instance().AppSettingsPageInst().GetNumberOfRowPerVocabPage());
 
     /************************ Popuplating VocabGrid ************************/
     PopulateGrid();
@@ -120,7 +72,13 @@ void VocabularyDisplayPage::CleanGrid()
         {
             QLayoutItem* item = ui->vocabGrid->itemAtPosition(i, j);
             if (item != nullptr)
-                delete item->widget();
+            {
+                // Don't delete, recycle them for next page
+                // need to hide ALL the element of the grid in case the next page contains
+                // less elements than the previous one (and removeItem does not hide it)
+                item->widget()->hide();
+                ui->vocabGrid->removeItem(item);
+            }
         }
 }
 
@@ -136,49 +94,61 @@ void VocabularyDisplayPage::PopulateGrid(bool random /*= false*/, int turnPage /
     // Cleaning previous stuff
     CleanGrid();
 
-    // Randomize
+    // Sort / Randomize
+    QList<VocabDataEntry*> vdfEntriesList = vdf->Entries().values();
     if (random)
     {
-        std::shuffle(gridEntries.begin(), gridEntries.end(), Tools::GetInstance().MT());
+        std::shuffle(vdfEntriesList.begin(), vdfEntriesList.end(), Tools::GetInstance().MT());
         curPage = 0;
     }
+    else
+        std::sort(vdfEntriesList.begin(), vdfEntriesList.end(),
+                  [](VocabDataEntry* a, VocabDataEntry* b)
+                    {return a->GetLineNumber() < b->GetLineNumber();});
 
     // Pages stuff
-    int curGridLine=0;
+    int x = 0;
+    int curGridLine = 0;
     int nbrOfRow = GetMy::Instance().AppSettingsPageInst().GetNumberOfRowPerVocabPage();
     int fntSize = GetMy::Instance().AppSettingsPageInst().GetVocabFntSize();
     ui->previousPageButton->setCheckable(curPage != 0);
     ui->nextPageButton->setCheckable(curPage != maxPage);
 
     // Populating the grid
-    for (int i = nbrOfRow*curPage; i < gridEntries.count() && i < nbrOfRow*(curPage+1); ++i)
+    for (int curVDEIdx = nbrOfRow*curPage; curVDEIdx < vdf->Entries().count() && curVDEIdx < nbrOfRow*(curPage+1); ++curVDEIdx)
     {
-        tempVocab* gridEntry = gridEntries[i];
+        VocabDataEntry* curVDE = vdfEntriesList[curVDEIdx];
+        if ( static_cast<int>(gridLabels.size()) <= x) // reuse previous QPushButton, delete in destructor
+            gridLabels.emplace_back(std::vector<QPushButton*>({new QPushButton(), new QPushButton(), new QPushButton(), new QPushButton()}));
 
-        gridEntry->labels[0] = new QPushButton(gridEntry->kanas);
-        gridEntry->labels[0]->setFont
-        ({(gridEntry->fontType == KanaFamilyEnum::hiragana)
+        gridLabels[x][0]->setText(curVDE->GetKanas());
+        gridLabels[x][0]->setFont
+        ({(curVDE->GetFontType() == KanaFamilyEnum::hiragana)
                 ? GetMy::Instance().FntSettingsPageInst().GetCurrentHiraganaFamily()
                 : GetMy::Instance().FntSettingsPageInst().GetCurrentKatakanaFamily(), fntSize}
         );
-        gridEntry->labels[1] = new QPushButton(gridEntry->kanji);
-        gridEntry->labels[1]->setFont({GetMy::Instance().FntSettingsPageInst().GetCurrentKanjiFamily(), fntSize});
-        gridEntry->labels[2] = new QPushButton(gridEntry->trad);
-        gridEntry->labels[2]->setFont({gridEntry->labels[2]->font().family(), fntSize});
-        gridEntry->labels[3] = new QPushButton(QString::number(gridEntry->learningScore));
-        gridEntry->labels[3]->setFont({gridEntry->labels[3]->font().family(), fntSize});
+
+        gridLabels[x][1]->setText(curVDE->GetKanji());
+        gridLabels[x][1]->setFont({GetMy::Instance().FntSettingsPageInst().GetCurrentKanjiFamily(), fntSize});
+
+        gridLabels[x][2]->setText(curVDE->GetTrad());
+        gridLabels[x][2]->setFont({gridLabels[x][2]->font().family(), fntSize});
+
+        gridLabels[x][3]->setText(QString::number(curVDE->GetLearningScore()));
+        gridLabels[x][3]->setFont({gridLabels[x][3]->font().family(), fntSize});
 
         for (int j=0; j<4; ++j)
         {
-            ui->vocabGrid->addWidget((gridEntry->labels[j]), curGridLine, j);
-            gridEntry->labels[j]->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
-            gridEntry->labels[j]->setCheckable(true);
-            gridEntry->labels[j]->setStyleSheet((j != 3)
+            ui->vocabGrid->addWidget(gridLabels[x][j], curGridLine, j);
+            gridLabels[x][j]->show();
+            gridLabels[x][j]->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
+            gridLabels[x][j]->setCheckable(true);
+            gridLabels[x][j]->setStyleSheet((j != 3)
                 ? "QPushButton{ Text-align:left; border : none; } QPushButton:checked{ color: rgba(0,0,0,0); border : none; } QPushButton:focus { outline : none; }"
                 : "QPushButton{ border : none; } QPushButton:checked{ color: rgba(0,0,0,0); border : none; } QPushButton:focus { outline : none; }");
         }
 
-        ++curGridLine;
+        ++curGridLine; ++x;
     }
 
     // Apply show status to columns
@@ -249,6 +219,3 @@ void VocabularyDisplayPage::HideColumn(int col, bool b)
         }
     }
 }
-
-
-

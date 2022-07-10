@@ -14,7 +14,7 @@ enum KanaFamilyEnum
 {
     hiragana,
     katakana,
-    kanji // meh we'll see during refacto
+    dummy
 };
 
 //================================== Symbol ==================================

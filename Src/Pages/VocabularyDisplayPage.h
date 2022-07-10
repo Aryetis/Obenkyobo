@@ -6,26 +6,12 @@
 #include <QPushButton>
 #include "Src/Widgets/VocabFileEntryWidget.h"
 #include "Src/KanasTables.h"
+#include "Src/VocabularyParser.h"
 
 namespace Ui
 {
     class VocabularyDisplayPage;
 }
-
-struct tempVocab // TODO add to some "vocab entry set" => refactor qcm
-{
-    KanaFamilyEnum fontType;
-    QString kanas;
-    QString kanji;
-    QString trad;
-    int learningScore;
-    QPushButton* labels[4] = {nullptr};
-
-    tempVocab() = delete;
-    tempVocab(KanaFamilyEnum sfe, QString kanas_, QString kanji_, QString t, int ls)
-        : fontType(sfe), kanas(kanas_), kanji(kanji_), trad(t), learningScore(ls)
-    { }
-};
 
 class VocabularyDisplayPage : public QWidget
 {
@@ -51,8 +37,9 @@ private:
     void PopulateGrid(bool random = false, int turnPage = 0);
     void HideColumn(int col, bool b);
 
+    VocabDataFile* vdf;
     Ui::VocabularyDisplayPage *ui;
-    QList<tempVocab*> gridEntries;
+    std::vector<std::vector<QPushButton*>> gridLabels; // std::vector<std::vector<{kana, kanji, trad, LS}>>
 
     int curPage;
     int maxPage;
