@@ -83,6 +83,11 @@ VocabFileEntryWidget::~VocabFileEntryWidget()
     delete ui;
 }
 
+void VocabFileEntryWidget::SetLearningScore(int learningScore)
+{
+    ui->learningScore->setText(QString::number(learningScore));
+}
+
 void VocabFileEntryWidget::on_TitleButton_clicked()
 {
     if (vocabFileInfo.isDir())

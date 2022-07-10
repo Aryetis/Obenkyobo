@@ -1,5 +1,6 @@
 #-------------------------------------------------
 # TODO : - Refactor QcmExercice so it can handle AppSettings::enabledSheets
+#        - Refactor VocabDisplayPage (fix UI shifting with LS, use a fontMetrics().boundingRect to determine the max lentgth of a title)
 #        - Finish sleep handling properly
 #-------------------------------------------------
 # TODO later : - redo the Qmenu::right-arrow

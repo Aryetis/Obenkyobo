@@ -43,7 +43,7 @@ class VocabDataEntry
         QString const& GetKanji() const { return kanji; }
         QString const& GetTrad() const { return trad; }
         int GetLearningScore() const { return learningScore; }
-        void SetLearningScore(int ls); // Need to save ls into vocabSheetPath
+        void SetLearningScore(int ls); // TODO : Need to save ls into vocabSheetPath
         QString const& GetPath() const { return vocabDataFile->GetPath(); }
         int GetLineNumber() const { return lineNumber; }
         KanaFamilyEnum GetFontType() const { return fontType; }

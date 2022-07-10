@@ -3,6 +3,7 @@
 #include "Src/GetMy.h"
 #include "Src/Pages/VocabularyDisplayPage.h"
 #include "Src/mainwindow.h"
+#include "Src/VocabularyParser.h"
 
 #include <QScrollBar>
 
@@ -64,11 +65,14 @@ void VocabExplorerPage::Populate()
         ui->VocabularyCfgListContentVLayout->insertWidget(ui->VocabularyCfgListContentVLayout->count()-1, bar);
     }
 
-    // ************* *.cfg *************
+    // ************* *.oben *************
     foreach(const QFileInfo& fileInfo, currentDir.entryInfoList(QStringList() << "*.oben", QDir::Files))
     {
         VocabFileEntryWidget* bar = new VocabFileEntryWidget(fileInfo);
         vocabFileWidgets.push_back(bar);
+
+        VocabDataFile vdf(fileInfo.absoluteFilePath()); // costly on low hardware ? make it optional ?
+        bar->SetLearningScore(vdf.GetLearningScore());
 
         ui->VocabularyCfgListContentVLayout->insertWidget(ui->VocabularyCfgListContentVLayout->count()-1, (bar));
     }

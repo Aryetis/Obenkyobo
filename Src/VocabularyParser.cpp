@@ -9,7 +9,7 @@ void VocabDataEntry::SetLearningScore(int ls)
     // TODO later on, called during QCM
 }
 
-VocabDataFile::VocabDataFile(QString sheetPath) : vocabSheetPath(sheetPath)
+VocabDataFile::VocabDataFile(QString sheetPath) : vocabSheetPath(sheetPath), learningScore(0)
 {
     QFile vocabFile(sheetPath);
     if (vocabFile.open(QIODevice::ReadOnly))
@@ -64,9 +64,10 @@ void VocabDataFile::ParseLine(const QString &line, int lineNumber_)
         kanji_ = parsedFields[3];
         trad_ = parsedFields[4];
         learningScore_ = parsedFields[5].toInt();
-        learningScore += learningScore_;
         if (learningScore_ < 0 || learningScore_ > Kana::GetMaxlearningState())
             malformedLines.insert(new VocabDataEntry(kanas_, kanji_, trad_, learningScore_, this, lineNumber_, fontType_));
+        else
+            learningScore += learningScore_;
 
         entries.insert(new VocabDataEntry(kanas_, kanji_, trad_, learningScore_, this, lineNumber_, fontType_));
     }
