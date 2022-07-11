@@ -1,7 +1,6 @@
+#include <iostream>
 #include "Src/Pages/WelcomePage.h"
 #include "ui_WelcomePage.h"
-
-#include <iostream>
 
 WelcomePage::WelcomePage(QWidget *parent) :
     QWidget(parent),

@@ -1,10 +1,8 @@
 #ifndef TOOLS_H
 #define TOOLS_H
-#include <random>
-#include <iterator>
-#include <QString>
-#include <QMessageBox>
 
+#include <random>
+#include <QString>
 #include <signal.h>
 #include <execinfo.h>
 #include <unistd.h>
@@ -14,7 +12,6 @@
 #include <QThread>
 #include <QProcess>
 #include <iostream>
-#include <QGridLayout>
 #include "Src/GetMy.h"
 #include "Src/Pages/ScreenSettingsPage.h"
 #include "Src/mainwindow.h"
@@ -86,6 +83,8 @@ public :
         }
     }
 
+    //======================================================================
+//    static int GetMaxlearningState() { return MAX_LEARNING_STATE_VALUE; }
 
     //======================================================================
     bool IsLocalTimeFormatUS() const
@@ -130,7 +129,6 @@ public :
     }
 
     //======================================================================
-    enum DeviceState { asleep, awake, busy };
     DeviceState GetDeviceState() const { return deviceState; }
 
     void Sleep() // needs to turn off wifi, stop printing stuff on screen (like clock, battery level, etc), etc

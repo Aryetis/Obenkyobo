@@ -1,5 +1,6 @@
 #ifndef GETMY_H
 #define GETMY_H
+
 #include <QSettings>
 #include "koboplatformfunctions.h"
 

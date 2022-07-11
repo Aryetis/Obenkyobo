@@ -28,7 +28,7 @@ void KanaEditSectionWidget::InitializeKanaSettingSectionWidget(SymbolsTableSecti
 
     nbrSymbolChecked = 0;
     int i=0;
-    for (Kana& symbol : symbolTableSection.Data())
+    for (QcmDataEntry& symbol : symbolTableSection.Data())
     {
         if (i==36 || i==38) // leave empty space for (yi || ye), ugly but I don't care
             ++i;

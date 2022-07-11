@@ -1,9 +1,7 @@
-﻿#include "Src/Widgets/KanaEditButtonWidget.h"
-#include <QPainter>
-#include "Src/KanasTables.h"
+﻿#include <QPainter>
+#include "Src/Widgets/KanaEditButtonWidget.h"
 #include "Src/Pages/FntSettingsPage.h"
-
-#define JP_SYMBOL_FNT_SIZE 20
+#include "Src/GetMy.h"
 
 KanaEditButtonWidget::KanaEditButtonWidget(QWidget* /*widget*/)
     : learningState(-1), JP(), Romanji()

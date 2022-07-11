@@ -1,6 +1,9 @@
 #-------------------------------------------------
 # TODO : - Refactor QcmExercice so it can handle AppSettings::enabledSheets
 #        - Refactor VocabDisplayPage (fix UI shifting with LS, use a fontMetrics().boundingRect to determine the max lentgth of a title)
+#        - Make VocabDisplayPage tweakable (Do not display / display only for current directory .oben / display for directories too)
+#        - Vocab QCM needs a "do not resize if overflow" option in the FntSettings
+#        - Fix errorTest.oben display empty line at top and bot
 #        - Finish sleep handling properly
 #-------------------------------------------------
 # TODO later : - redo the Qmenu::right-arrow
@@ -17,7 +20,8 @@ TEMPLATE = app
 # any feature of Qt which has been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
-DEFINES += QT_DEPRECATED_WARNINGS
+DEFINES +=\
+    QT_DEPRECATED_WARNINGS
 
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -62,6 +66,7 @@ RESOURCES += \
     Resources/Pictures.qrc
 
 HEADERS += \
+    Src/DefinesLand.h \
     Src/GetMy.h \
     Src/KanasTables.h \
     Src/Pages/AppSettingsPage.h \
@@ -73,6 +78,7 @@ HEADERS += \
     Src/Pages/VocabExplorerPage.h \
     Src/Pages/VocabularyDisplayPage.h \
     Src/Pages/WelcomePage.h \
+    Src/QcmDataEntry.h \
     Src/VocabularyParser.h \
     Src/Widgets/KanaEditButtonWidget.h \
     Src/Widgets/KanaEditEntryWidget.h \

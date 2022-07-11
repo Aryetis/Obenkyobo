@@ -1,10 +1,10 @@
+#include <QAbstractItemView>
 #include "Src/Pages/AppSettingsPage.h"
 #include "ui_AppSettingsPage.h"
 #include "Src/GetMy.h"
 #include "Src/tools.h"
 #include "Src/mainwindow.h"
-
-#include <QAbstractItemView>
+#include "Src/KanasTables.h"
 
 AppSettingsPage::AppSettingsPage(QWidget *parent) :
     QWidget(parent),
@@ -115,27 +115,27 @@ AppSettingsPage::~AppSettingsPage()
     delete ui;
 }
 
-bool AppSettingsPage::IsThereEnough(QcmExercicePage::QcmExerciceType qcmType) const
+bool AppSettingsPage::IsThereEnough(QcmExerciceType qcmType) const
 {
     int minRequiredSymbol = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine() *
                             GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
 
     switch (qcmType)
     {
-        case QcmExercicePage::QcmExerciceType::Hiragana_to_Romanji_MCQ :
-        case QcmExercicePage::QcmExerciceType::Hiragana_to_Romanji_Kbd :
-        case QcmExercicePage::QcmExerciceType::Romanji_to_Hiragana_MCQ :
+        case QcmExerciceType::Hiragana_to_Romanji_MCQ :
+        case QcmExerciceType::Hiragana_to_Romanji_Kbd :
+        case QcmExerciceType::Romanji_to_Hiragana_MCQ :
         {
             return (KanasTables::HiraganaSymbolsTableFamily.NbrOfEnabled() >= minRequiredSymbol);
         }
-        case QcmExercicePage::QcmExerciceType::Katakana_to_Romanji_MCQ :
-        case QcmExercicePage::QcmExerciceType::Katakana_to_Romanji_Kbd :
-        case QcmExercicePage::QcmExerciceType::Romanji_to_Katakana_MCQ :
+        case QcmExerciceType::Katakana_to_Romanji_MCQ :
+        case QcmExerciceType::Katakana_to_Romanji_Kbd :
+        case QcmExerciceType::Romanji_to_Katakana_MCQ :
         {
             return (KanasTables::KatakanaSymbolsTableFamily.NbrOfEnabled() >= minRequiredSymbol);
         }
-        case QcmExercicePage::QcmExerciceType::Vocabulary_to_Romanji_MCQ :
-        case QcmExercicePage::QcmExerciceType::Romanji_to_Vocabulary_MCQ :
+        case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
+        case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
         {
             return true; // TODO
         }

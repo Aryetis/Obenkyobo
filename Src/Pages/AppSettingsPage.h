@@ -3,10 +3,9 @@
 
 #include <QWidget>
 #include <QSettings>
-#include <QMap>
-#include "Src/Pages/QcmExercicePage.h"
-
-#define ENTRY_PER_ROW 3
+#include <QString>
+#include <QSet>
+#include "Src/DefinesLand.h"
 
 Q_DECLARE_METATYPE(QSet<QString>)
 
@@ -27,7 +26,7 @@ public:
     int GetNumberOfEntryRow() const { return ENTRY_PER_ROW; }
     int GetNumberOfEntry() const { return (nbrOfEntryLinesIdx+1) * ENTRY_PER_ROW; }
     int GetNumberOfRowPerVocabPage() const;
-    bool IsThereEnough(QcmExercicePage::QcmExerciceType qcmType) const;
+    bool IsThereEnough(QcmExerciceType qcmType) const;
     bool IsWeightedRandomEnabled() const;
     int GetBatteryFormatIdx() const { return batteryFormatIdx; }
     int GetDateFormatIdx() const { return dateFormatIdx; } // 0 <=> 13:37, 1 <=> 1:37 pm // TODO : use bool and IsDateAmPmFormat

@@ -1,18 +1,16 @@
+#include <QList>
+#include <QString>
+#include <QStringList>
+#include <QDir>
+#include <QDirIterator>
 #include "Src/Widgets/VocabFileEntryWidget.h"
 #include "ui_VocabFileEntryWidget.h"
 #include "Src/mainwindow.h"
 #include "Src/Pages/VocabularyDisplayPage.h"
 #include "Src/Pages/AppSettingsPage.h"
 #include "Src/Pages/VocabExplorerPage.h"
-
 #include "Src/GetMy.h"
 #include "Src/tools.h"
-
-#include <QList>
-#include <QString>
-#include <QStringList>
-#include <QDir>
-#include <QDirIterator>
 
 VocabFileEntryWidget::VocabFileEntryWidget(QWidget *parent) :
     QWidget(parent), ui(new Ui::VocabFileEntryWidget)

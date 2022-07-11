@@ -2,7 +2,8 @@
 #define KANAEDITENTRYWIDGET_H
 
 #include <QWidget>
-#include "Src/KanasTables.h"
+#include "Src/DefinesLand.h"
+#include "Src/QcmDataEntry.h"
 
 namespace Ui
 {
@@ -17,7 +18,7 @@ public:
     explicit KanaEditEntryWidget(QWidget *parent = nullptr);
     ~KanaEditEntryWidget() override;
 
-    void InitializeSymbolSettingEntry(Kana* _kana, KanaFamilyEnum kanaFamily);
+    void InitializeSymbolSettingEntry(QcmDataEntry* _kana, KanaFamilyEnum kanaFamily);
     void FakeClick(bool b);
     bool IsEnabled() const { return kana->IsEnabled(); }
 
@@ -26,7 +27,7 @@ private slots:
 
 private:
     Ui::KanaEditEntryWidget *ui; // holds a KanaEditButtonWidget, TODO : simplify this and merge them
-    Kana* kana;
+    QcmDataEntry* kana;
 };
 
 #endif // KANAEDITENTRYWIDGET_H

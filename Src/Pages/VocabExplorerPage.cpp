@@ -1,11 +1,10 @@
+#include <QScrollBar>
 #include "Src/Pages/VocabExplorerPage.h"
 #include "ui_VocabExplorerPage.h"
 #include "Src/GetMy.h"
-#include "Src/Pages/VocabularyDisplayPage.h"
 #include "Src/mainwindow.h"
 #include "Src/VocabularyParser.h"
-
-#include <QScrollBar>
+#include "Src/Widgets/VocabFileEntryWidget.h"
 
 VocabExplorerPage::VocabExplorerPage(QWidget *parent) :
     QWidget(parent), ui(new Ui::VocabExplorerPage), selectAllStatus(false)

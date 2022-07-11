@@ -3,6 +3,7 @@
 #include "Src/Pages/FntSettingsPage.h"
 #include "Src/GetMy.h"
 #include "Src/tools.h"
+#include "Src/Pages/QcmExercicePage.h"
 
 QcmEntryGuess::QcmEntryGuess(QWidget *parent) :
     QWidget(parent),
@@ -16,34 +17,34 @@ QcmEntryGuess::~QcmEntryGuess()
     delete ui;
 }
 
-void QcmEntryGuess::SetGuess(Kana* s, QcmExercicePage::QcmExerciceType qcmType, bool b)
+void QcmEntryGuess::SetGuess(QcmDataEntry* s, QcmExerciceType qcmType, bool b)
 {
     symbol = s;
 
     switch (qcmType)
     {
-        case QcmExercicePage::QcmExerciceType::Hiragana_to_Romanji_MCQ :
-        case QcmExercicePage::QcmExerciceType::Hiragana_to_Romanji_Kbd :
+        case QcmExerciceType::Hiragana_to_Romanji_MCQ :
+        case QcmExerciceType::Hiragana_to_Romanji_Kbd :
         {
             qcmSubType = QcmTypeEnum::KanaToRmj;
             ui->EntryGuess->setFont(GetMy::Instance().FntSettingsPageInst().GetCurrentHiraganaFnt());
-            ui->EntryGuess->setText(symbol->JP());
+            ui->EntryGuess->setText(*symbol->Kanas());
             break;
         }
-        case QcmExercicePage::QcmExerciceType::Katakana_to_Romanji_MCQ :
-        case QcmExercicePage::QcmExerciceType::Katakana_to_Romanji_Kbd :
+        case QcmExerciceType::Katakana_to_Romanji_MCQ :
+        case QcmExerciceType::Katakana_to_Romanji_Kbd :
         {
             qcmSubType = QcmTypeEnum::KanaToRmj;
             ui->EntryGuess->setFont(GetMy::Instance().FntSettingsPageInst().GetCurrentKatakanaFnt());
-            ui->EntryGuess->setText(symbol->JP());
+            ui->EntryGuess->setText(*symbol->Kanas());
             break;
         }
-        case QcmExercicePage::QcmExerciceType::Romanji_to_Hiragana_MCQ :
-        case QcmExercicePage::QcmExerciceType::Romanji_to_Katakana_MCQ :
+        case QcmExerciceType::Romanji_to_Hiragana_MCQ :
+        case QcmExerciceType::Romanji_to_Katakana_MCQ :
         {
             qcmSubType = QcmTypeEnum::RmjToKana;
             ui->EntryGuess->setFont(GetMy::Instance().FntSettingsPageInst().GetCurrentRomanjiFnt());
-            ui->EntryGuess->setText(symbol->Romanji());
+            ui->EntryGuess->setText(*symbol->Romanji());
             break;
         }
     }

@@ -72,7 +72,7 @@ bool ScreenSettingsPage::AreSettingsAvailablePopup() const
 
 void ScreenSettingsPage::OnSleep() const
 {
-//    if (Tools::GetInstance().GetDeviceState() != Tools::DeviceState::busy)
+//    if (Tools::GetInstance().GetDeviceState() != DeviceState::busy)
 //        return;
 
     if(settingAvailable)
@@ -81,7 +81,7 @@ void ScreenSettingsPage::OnSleep() const
 
 void ScreenSettingsPage::OnWakeUp() const
 {
-//    if (Tools::GetInstance().GetDeviceState() != Tools::DeviceState::busy)
+//    if (Tools::GetInstance().GetDeviceState() != DeviceState::busy)
 //        return;
 
     if(settingAvailable)

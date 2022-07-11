@@ -1,5 +1,6 @@
 #ifndef FNTSETTINGSPAGE_H
 #define FNTSETTINGSPAGE_H
+
 #include <QWidget>
 #include <QString>
 #include <vector>

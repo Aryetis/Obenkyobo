@@ -2,7 +2,7 @@
 #define KANAEDITBUTTONWIDGET_H
 
 #include <QPushButton>
-#include "Src/Pages/KanaEditPage.h"
+#include "Src/DefinesLand.h"
 
 class KanaEditButtonWidget : public QPushButton
 {

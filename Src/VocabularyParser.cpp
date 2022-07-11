@@ -1,8 +1,7 @@
-#include "Src/VocabularyParser.h"
-#include "Src/tools.h"
-
 #include <QFile>
 #include <QTextStream>
+#include "Src/VocabularyParser.h"
+#include "Src/tools.h"
 
 void VocabDataEntry::SetLearningScore(int ls)
 {
@@ -64,7 +63,7 @@ void VocabDataFile::ParseLine(const QString &line, int lineNumber_)
         kanji_ = parsedFields[3];
         trad_ = parsedFields[4];
         learningScore_ = parsedFields[5].toInt();
-        if (learningScore_ < 0 || learningScore_ > Kana::GetMaxlearningState())
+        if (learningScore_ < 0 || learningScore_ > MAX_LEARNING_STATE_VALUE)
             malformedLines.insert(new VocabDataEntry(kanas_, kanji_, trad_, learningScore_, this, lineNumber_, fontType_));
         else
             learningScore += learningScore_;

@@ -1,10 +1,9 @@
 #ifndef VOCABULARYPARSER_H
 #define VOCABULARYPARSER_H
 
-#include "Src/KanasTables.h"
-
 #include <QString>
 #include <QSet>
+#include "Src/DefinesLand.h"
 
 class VocabDataEntry;
 class VocabDataFile

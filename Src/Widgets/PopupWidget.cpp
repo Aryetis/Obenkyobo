@@ -1,15 +1,9 @@
-#include "Src/Widgets/PopupWidget.h"
-#include "ui_popup.h"
-
-#include "Src/GetMy.h"
-
 #include <QFontMetrics>
 #include <QRect>
-
-#define POPUP_BORDER_SIZE 5
-#define POPUP_MARGIN_X 0.04f
-#define POPUP_MARGIN_Y 0.02f
-#define POPUP_WIDTH 0.9f
+#include "Src/Widgets/PopupWidget.h"
+#include "ui_popup.h"
+#include "Src/DefinesLand.h"
+#include "Src/GetMy.h"
 
 PopupWidget::PopupWidget(QString message, bool fullscreen, QWidget *parent/* = nullptr*/) : QDialog(parent), ui(new Ui::Popup)
 {

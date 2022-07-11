@@ -1,10 +1,9 @@
+#include <QScrollBar>
 #include "Src/Pages/KanaEditPage.h"
 #include "ui_KanaEditPage.h"
 #include "Src/GetMy.h"
 #include "Src/Widgets/KanaEditSectionWidget.h"
 #include "Src/KanasTables.h"
-#include "Src/Pages/AppSettingsPage.h"
-#include <QScrollBar>
 #include "Src/mainwindow.h"
 
 

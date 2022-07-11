@@ -1,17 +1,13 @@
-#include "Src/Pages/FntSettingsPage.h"
-#include "ui_FntSettingsPage.h"
-#include <QFontDatabase>
-#include "Src/GetMy.h"
 #include <QDirIterator>
 #include <QDir>
-
-#define DEFAULT_ANSWER_RMJ_KANA_FNT_SIZE 25
-#define DEFAULT_ANSWER_KANA_RMJ_SIZE 50
-#define DEFAULT_STEM_FNT_SIZE 70
+#include <QFontDatabase>
+#include "Src/Pages/FntSettingsPage.h"
+#include "ui_FntSettingsPage.h"
+#include "Src/GetMy.h"
+#include "Src/DefinesLand.h"
 
 FntSettingsPage::FntSettingsPage(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::FntSettingsPage),
+    QWidget(parent), ui(new Ui::FntSettingsPage),
     settingsSerializer(GetMy::Instance().SettingSerializerInst())
 {
     ui->setupUi(this);

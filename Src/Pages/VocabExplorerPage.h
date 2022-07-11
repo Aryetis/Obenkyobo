@@ -4,14 +4,13 @@
 #include <vector>
 #include <QWidget>
 #include <QDir>
-#include <QSpacerItem>
-#include "Src/Widgets/VocabFileEntryWidget.h"
 
 namespace Ui
 {
     class VocabExplorerPage;
 }
 
+class VocabFileEntryWidget;
 class VocabExplorerPage : public QWidget
 {
     Q_OBJECT

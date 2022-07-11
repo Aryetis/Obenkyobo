@@ -1,18 +1,15 @@
+#include <QKeyEvent>
+#include <QPainter>
+#include <QIcon>
+#include <QStyle>
 #include "Src/mainwindow.h"
 #include "ui_mainwindow.h"
-#include "Src/Pages/FntSettingsPage.h"
 #include "Src/Pages/QcmExercicePage.h"
 #include "Src/GetMy.h"
 #include "Src/tools.h"
 #include "Src/Pages/KanaEditPage.h"
-#include <QKeyEvent>
 #include "koboplatformfunctions.h"
 #include "Src/Widgets/KanaEditButtonWidget.h"
-
-#include <QPainter>
-
-#include <QIcon>
-#include <QStyle>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow),
@@ -82,7 +79,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::AggressiveClearScreen(bool force /*=false*/) const
+void MainWindow::AggressiveClearScreen(bool force /*=false*/) const // TODO : move to tools ?
 {
     if (GetMy::Instance().AppSettingsPageInst().GetKanaHardRefresh() || force)
     {
@@ -98,12 +95,12 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == KoboKey::Key_Power)
     {        
-        if (Tools::GetInstance().GetDeviceState() == Tools::DeviceState::asleep)
+        if (Tools::GetInstance().GetDeviceState() == DeviceState::asleep)
             Tools::GetInstance().WakeUp();
-        else if (Tools::GetInstance().GetDeviceState() == Tools::DeviceState::awake)
+        else if (Tools::GetInstance().GetDeviceState() == DeviceState::awake)
             Tools::GetInstance().Sleep();
     }
-    else if (event->key() == KoboKey::Key_SleepCover && Tools::GetInstance().GetDeviceState() == Tools::DeviceState::awake)
+    else if (event->key() == KoboKey::Key_SleepCover && Tools::GetInstance().GetDeviceState() == DeviceState::awake)
         Tools::GetInstance().Sleep();
     else if (event->key() == KoboKey::Key_Light)
         GetMy::Instance().ScreenSettingsPageInst().ToggleLight();
@@ -111,7 +108,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::keyReleaseEvent(QKeyEvent *event)
 {
-    if (event->key() == KoboKey::Key_SleepCover && Tools::GetInstance().GetDeviceState() == Tools::DeviceState::asleep)
+    if (event->key() == KoboKey::Key_SleepCover && Tools::GetInstance().GetDeviceState() == DeviceState::asleep)
         Tools::GetInstance().WakeUp();
 }
 
@@ -144,7 +141,7 @@ void MainWindow::DisplayFirstTimeKanasEditPagePopup()
 
 void MainWindow::OnSleep() const
 {
-//    if (Tools::GetInstance().GetDeviceState() != Tools::DeviceState::busy)
+//    if (Tools::GetInstance().GetDeviceState() != DeviceState::busy)
 //        return;
 
     disconnect(&timer, nullptr, nullptr, nullptr);
@@ -157,7 +154,7 @@ void MainWindow::OnSleep() const
 
 void MainWindow::OnWakeUp()
 {
-//    if (Tools::GetInstance().GetDeviceState() != Tools::DeviceState::busy)
+//    if (Tools::GetInstance().GetDeviceState() != DeviceState::busy)
 //        return;
 
     connect(&timer, &QTimer::timeout, this, &MainWindow::refreshTimeAndBattery);
@@ -188,7 +185,7 @@ void MainWindow::on_refresh_hovered()
 
 void MainWindow::refreshTimeAndBattery()
 {
-    if (Tools::GetInstance().GetDeviceState() != Tools::DeviceState::awake)
+    if (Tools::GetInstance().GetDeviceState() != DeviceState::awake)
         return;
 
     bool ugly = false;
@@ -300,9 +297,9 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_actionHiragana_to_Romanji_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionHiragana_to_Romanji_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().AppSettingsPageInst().IsThereEnough(QcmExercicePage::QcmExerciceType::Hiragana_to_Romanji_MCQ))
+    if (GetMy::Instance().AppSettingsPageInst().IsThereEnough(QcmExerciceType::Hiragana_to_Romanji_MCQ))
     {
-        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExercicePage::QcmExerciceType::Hiragana_to_Romanji_MCQ, true);
+        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Hiragana_to_Romanji_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
@@ -316,9 +313,9 @@ void MainWindow::on_actionHiragana_to_Romanji_MCQ_triggered()
 void MainWindow::on_actionRomanji_to_Hiragana_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().AppSettingsPageInst().IsThereEnough(QcmExercicePage::QcmExerciceType::Romanji_to_Hiragana_MCQ))
+    if (GetMy::Instance().AppSettingsPageInst().IsThereEnough(QcmExerciceType::Romanji_to_Hiragana_MCQ))
     {
-        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExercicePage::QcmExerciceType::Romanji_to_Hiragana_MCQ, true);
+        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Romanji_to_Hiragana_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
@@ -352,9 +349,9 @@ void MainWindow::on_actionEdit_Hiragana_Set_triggered()
 void MainWindow::on_actionKatakana_to_Romanji_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionKatakana_to_Romanji_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().AppSettingsPageInst().IsThereEnough(QcmExercicePage::QcmExerciceType::Katakana_to_Romanji_MCQ))
+    if (GetMy::Instance().AppSettingsPageInst().IsThereEnough(QcmExerciceType::Katakana_to_Romanji_MCQ))
     {
-        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExercicePage::QcmExerciceType::Katakana_to_Romanji_MCQ, true);
+        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Katakana_to_Romanji_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
@@ -368,9 +365,9 @@ void MainWindow::on_actionKatakana_to_Romanji_MCQ_triggered()
 void MainWindow::on_actionRomanji_to_Katakana_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().AppSettingsPageInst().IsThereEnough(QcmExercicePage::QcmExerciceType::Romanji_to_Katakana_MCQ))
+    if (GetMy::Instance().AppSettingsPageInst().IsThereEnough(QcmExerciceType::Romanji_to_Katakana_MCQ))
     {
-        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExercicePage::QcmExerciceType::Romanji_to_Katakana_MCQ, true);
+        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Romanji_to_Katakana_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
@@ -434,7 +431,7 @@ void MainWindow::on_actionVocabulary_to_Romanji_MCQ_triggered()
     std::cout << "LOG: MainWindow::on_actionVocabulary_to_Romanji_triggered()" << std::endl;
 //    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Vocabulary_to_Romanji_QCM)) // TODO
     {
-        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExercicePage::QcmExerciceType::Vocabulary_to_Romanji_MCQ, true);
+        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Vocabulary_to_Romanji_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
@@ -451,7 +448,7 @@ void MainWindow::on_actionRomanji_to_Vocabulary_MCQ_triggered()
     std::cout << "LOG: MainWindow::on_actionVocabulary_to_Romanji_triggered()" << std::endl;
 //    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Vocabulary_to_Romanji_QCM)) // TODO
     {
-        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExercicePage::QcmExerciceType::Romanji_to_Vocabulary_MCQ, true);
+        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Romanji_to_Vocabulary_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }

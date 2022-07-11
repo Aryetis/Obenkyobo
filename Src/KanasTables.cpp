@@ -1,4 +1,5 @@
 #include "Src/KanasTables.h"
+#include "Src/DefinesLand.h"
 
 //========================================== HIRAGANA ==========================================
 KanasTableFamily KanasTables::HiraganaSymbolsTableFamily
@@ -349,3 +350,53 @@ KanasTableFamily KanasTables::KatakanaSymbolsTableFamily
         )
     }
 );
+
+bool Kana::RegisterAndInitializeSerializedVals(QString serializedAddress, KanasTableFamily *_p)
+{
+    parentedFamily = _p;
+
+    enabledSerializedAddress = ("Symbols/enabled_"+serializedAddress+"_"+romanji).toUtf8();
+    enabled = GetMy::Instance().SettingSerializerInst()->value(enabledSerializedAddress, true).toBool();
+    learningStateSerializedAddress = ("Symbols/learningState"+serializedAddress+"_"+romanji).toUtf8();
+    learningState = GetMy::Instance().SettingSerializerInst()->value(learningStateSerializedAddress, 5).toInt();
+    return enabled;
+}
+
+bool Kana::operator==(const Kana &rhs) const
+{
+    return (this->romanji== rhs.romanji && this->kanas == rhs.kanas);
+}
+
+void KanasTableFamily::InitializeSerializedVals() // Can't do it in constructor because SettingSerializer isn't set yet.
+{
+    for (SymbolsTableSection& sts : data)
+        for (QcmDataEntry& s : sts.Data())
+            if (s.RegisterAndInitializeSerializedVals(name, this))
+                ++nbrOfEnabled;
+}
+
+void KanasTableFamily::ResetWeights()
+{
+    for (SymbolsTableSection& sts : data)
+        for (QcmDataEntry& s : sts.Data())
+            s.LearningState(MAX_LEARNING_STATE_VALUE);
+}
+
+void Kana::Enabled(bool b)
+{
+    if (b != enabled)
+    {
+        enabled = b;
+        GetMy::Instance().SettingSerializerInst()->setValue(enabledSerializedAddress, enabled);
+        if (enabled)
+            parentedFamily->NbrOfEnabled(parentedFamily->NbrOfEnabled()+1);
+        else
+            parentedFamily->NbrOfEnabled(parentedFamily->NbrOfEnabled()-1);
+    }
+}
+
+void Kana::LearningState(int ls)
+{
+    learningState = ls;
+    GetMy::Instance().SettingSerializerInst()->setValue(learningStateSerializedAddress, learningState);
+}

@@ -4,15 +4,14 @@
 #include <QWidget>
 #include <QList>
 #include <QPushButton>
-#include "Src/Widgets/VocabFileEntryWidget.h"
-#include "Src/KanasTables.h"
-#include "Src/VocabularyParser.h"
 
 namespace Ui
 {
     class VocabularyDisplayPage;
 }
 
+class VocabFileEntryWidget;
+class VocabDataFile;
 class VocabularyDisplayPage : public QWidget
 {
     Q_OBJECT

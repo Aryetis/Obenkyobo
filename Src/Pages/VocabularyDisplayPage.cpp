@@ -1,15 +1,13 @@
+#include <algorithm>
+#include <QSizePolicy>
 #include "Src/Pages/VocabularyDisplayPage.h"
 #include "ui_VocabularyDisplayPage.h"
 #include "Src/Pages/FntSettingsPage.h"
 #include "Src/tools.h"
 #include "Src/Pages/AppSettingsPage.h"
 #include "Src/mainwindow.h"
-
-#include <algorithm>
-#include <QTextStream>
-#include <QSizePolicy>
-#include <QKeyEvent>
-#include <QShortcut>
+#include "Src/Widgets/VocabFileEntryWidget.h"
+#include "Src/VocabularyParser.h"
 
 VocabularyDisplayPage::VocabularyDisplayPage(QWidget *parent) :
     QWidget(parent), ui(new Ui::VocabularyDisplayPage)

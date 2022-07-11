@@ -1,8 +1,7 @@
+#include <iostream>
 #include "Src/Widgets/KanaEditEntryWidget.h"
 #include "ui_KanaEditEntryWidget.h"
-
-#include "Src/GetMy.h"
-#include "Src/Pages/FntSettingsPage.h"
+#include "Src/Widgets/KanaEditSectionWidget.h"
 
 KanaEditEntryWidget::KanaEditEntryWidget(QWidget *parent) :
     QWidget(parent),
@@ -17,13 +16,13 @@ KanaEditEntryWidget::~KanaEditEntryWidget()
     delete ui;
 }
 
-void KanaEditEntryWidget::InitializeSymbolSettingEntry(Kana* _kana, KanaFamilyEnum kanaFamily)
+void KanaEditEntryWidget::InitializeSymbolSettingEntry(QcmDataEntry* _kana, KanaFamilyEnum kanaFamily)
 {
     kana = _kana;
 
     ui->KanaEntryButton->setSymbolFamilyEnum(kanaFamily);
-    ui->KanaEntryButton->setJpText(kana->JP());
-    ui->KanaEntryButton->setRmjText(kana->Romanji());
+    ui->KanaEntryButton->setJpText(*kana->Kanas());
+    ui->KanaEntryButton->setRmjText(*kana->Romanji());
     ui->KanaEntryButton->setLearningState(kana->LearningState());
     ui->KanaEntryButton->setChecked(kana->IsEnabled());
 }

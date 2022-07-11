@@ -2,14 +2,14 @@
 #define SYMBOLSET_H
 
 #include <QWidget>
-#include "Src/KanasTables.h"
-#include "Src/Widgets/KanaEditSectionWidget.h"
+#include "Src/DefinesLand.h"
 
 namespace Ui
 {
     class KanaEditPage;
 }
 
+class KanaEditSectionWidget;
 class KanaEditPage : public QWidget
 {
     Q_OBJECT
