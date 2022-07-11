@@ -1,5 +1,8 @@
 #include "Src/Widgets/KanaEditSectionWidget.h"
 #include "ui_KanaEditSectionWidget.h"
+#include "Src/QcmDataEntryKana.h"
+#include "Src/GetMy.h"
+#include "Src/KanasTables.h"
 
 KanaEditSectionWidget::KanaEditSectionWidget(QWidget *parent) :
     QWidget(parent),

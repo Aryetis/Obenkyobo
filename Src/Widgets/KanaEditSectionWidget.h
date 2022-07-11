@@ -2,13 +2,14 @@
 #define KANAEDITSECTIONWIDGET_H
 
 #include <QWidget>
-#include "Src/KanasTables.h"
 #include "Src/Widgets/KanaEditEntryWidget.h"
 
-namespace Ui {
-class KanaEditSectionWidget;
+namespace Ui
+{
+    class KanaEditSectionWidget;
 }
 
+class SymbolsTableSection;
 class KanaEditSectionWidget : public QWidget
 {
     Q_OBJECT

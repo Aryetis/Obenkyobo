@@ -6,56 +6,23 @@
 #include <QString>
 #include "Src/GetMy.h"
 #include "Src/QcmDataEntry.h"
-
-//================================== Symbol ==================================
-// TODO NOW : adapt and rename to work with VocabularyData
-class KanasTableFamily;
-class Kana : public QcmDataEntry
-{
-public :
-    Kana() = delete;
-    Kana(QString romanji_, QString kanas_) : romanji(romanji_), kanas(kanas_) {}
-
-    bool RegisterAndInitializeSerializedVals(QString serializedAddress, KanasTableFamily* _p);
-
-    bool operator==(Kana const & rhs) const;
-
-    QString const* Kanas() const { return &kanas; }
-    QString const* Kanjis() const { return nullptr; }
-    QString const* Romanji() const { return &romanji; }
-
-    bool IsEnabled() const { return enabled; }
-    void Enabled(bool b); // inlined at the end because of parentedFamily->NbrOfEnabled
-
-    int LearningState() const { return learningState; }
-    void LearningState(int ls);
-
-private :
-    QString romanji;
-    QString kanas;
-    QString enabledSerializedAddress;
-    bool enabled;
-    QString learningStateSerializedAddress;
-    int learningState; // [0;1] learned, [2;4] learning, 5 unknown
-    KanasTableFamily* parentedFamily;
-};
-
+#include "Src/QcmDataEntryKana.h"
 
 //================================== SymbolsTableSection ==================================
 class SymbolsTableSection
 {
 public :
-    SymbolsTableSection(QString _name, std::vector<Kana> _data, int _el)
+    SymbolsTableSection(QString _name, std::vector<QcmDataEntryKana> _data, int _el)
         : sectionName(_name), data(_data), elementPerColumnInDisplaySet(_el)
     {}
 
     const QString& Name() const { return sectionName; }
-    std::vector<Kana>& Data() { return data; } // not const as we need to adjust their LearningState
+    std::vector<QcmDataEntryKana>& Data() { return data; } // not const as we need to adjust their LearningState
     int ElementPerColumnInDisplaySet() { return elementPerColumnInDisplaySet; }
 
 private :
     QString sectionName;
-    std::vector<Kana> data;
+    std::vector<QcmDataEntryKana> data;
     int elementPerColumnInDisplaySet;
 };
 

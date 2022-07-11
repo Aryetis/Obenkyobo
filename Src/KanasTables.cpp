@@ -1,5 +1,6 @@
 #include "Src/KanasTables.h"
 #include "Src/DefinesLand.h"
+#include "Src/QcmDataEntryKana.h"
 
 //========================================== HIRAGANA ==========================================
 KanasTableFamily KanasTables::HiraganaSymbolsTableFamily
@@ -10,64 +11,64 @@ KanasTableFamily KanasTables::HiraganaSymbolsTableFamily
         SymbolsTableSection
         (
             "Gojūon",
-            std::vector<Kana>
+            std::vector<QcmDataEntryKana>
             {
-                Kana{"a", QStringLiteral("あ")},
-                Kana{"i", QStringLiteral("い")},
-                Kana{"u", QStringLiteral("う")},
-                Kana{"e", QStringLiteral("え")},
-                Kana{"o", QStringLiteral("お")},
+                QcmDataEntryKana{"a", QStringLiteral("あ")},
+                QcmDataEntryKana{"i", QStringLiteral("い")},
+                QcmDataEntryKana{"u", QStringLiteral("う")},
+                QcmDataEntryKana{"e", QStringLiteral("え")},
+                QcmDataEntryKana{"o", QStringLiteral("お")},
 
-                Kana{"ka", QStringLiteral("か")},
-                Kana{"ki", QStringLiteral("き")},
-                Kana{"ku", QStringLiteral("く")},
-                Kana{"ke", QStringLiteral("け")},
-                Kana{"ko", QStringLiteral("こ")},
+                QcmDataEntryKana{"ka", QStringLiteral("か")},
+                QcmDataEntryKana{"ki", QStringLiteral("き")},
+                QcmDataEntryKana{"ku", QStringLiteral("く")},
+                QcmDataEntryKana{"ke", QStringLiteral("け")},
+                QcmDataEntryKana{"ko", QStringLiteral("こ")},
 
 
-                Kana{"sa", QStringLiteral("さ")},
-                Kana{"shi", QStringLiteral("し")},
-                Kana{"su", QStringLiteral("す")},
-                Kana{"se", QStringLiteral("せ")},
-                Kana{"so", QStringLiteral("そ")},
+                QcmDataEntryKana{"sa", QStringLiteral("さ")},
+                QcmDataEntryKana{"shi", QStringLiteral("し")},
+                QcmDataEntryKana{"su", QStringLiteral("す")},
+                QcmDataEntryKana{"se", QStringLiteral("せ")},
+                QcmDataEntryKana{"so", QStringLiteral("そ")},
 
-                Kana{"ta", QStringLiteral("た")},
-                Kana{"chi", QStringLiteral("ち")},
-                Kana{"tsu", QStringLiteral("つ")},
-                Kana{"te", QStringLiteral("て")},
-                Kana{"to", QStringLiteral("と")},
+                QcmDataEntryKana{"ta", QStringLiteral("た")},
+                QcmDataEntryKana{"chi", QStringLiteral("ち")},
+                QcmDataEntryKana{"tsu", QStringLiteral("つ")},
+                QcmDataEntryKana{"te", QStringLiteral("て")},
+                QcmDataEntryKana{"to", QStringLiteral("と")},
 
-                Kana{"na", QStringLiteral("な")},
-                Kana{"ni", QStringLiteral("に")},
-                Kana{"nu", QStringLiteral("ぬ")},
-                Kana{"ne", QStringLiteral("ね")},
-                Kana{"no", QStringLiteral("の")},
+                QcmDataEntryKana{"na", QStringLiteral("な")},
+                QcmDataEntryKana{"ni", QStringLiteral("に")},
+                QcmDataEntryKana{"nu", QStringLiteral("ぬ")},
+                QcmDataEntryKana{"ne", QStringLiteral("ね")},
+                QcmDataEntryKana{"no", QStringLiteral("の")},
 
-                Kana{"ha", QStringLiteral("は")},
-                Kana{"hi", QStringLiteral("ひ")},
-                Kana{"fu", QStringLiteral("ふ")},
-                Kana{"he", QStringLiteral("へ")},
-                Kana{"ho", QStringLiteral("ほ")},
+                QcmDataEntryKana{"ha", QStringLiteral("は")},
+                QcmDataEntryKana{"hi", QStringLiteral("ひ")},
+                QcmDataEntryKana{"fu", QStringLiteral("ふ")},
+                QcmDataEntryKana{"he", QStringLiteral("へ")},
+                QcmDataEntryKana{"ho", QStringLiteral("ほ")},
 
-                Kana{"ma", QStringLiteral("ま")},
-                Kana{"mi", QStringLiteral("み")},
-                Kana{"mu", QStringLiteral("む")},
-                Kana{"me", QStringLiteral("め")},
-                Kana{"mo", QStringLiteral("も")},
+                QcmDataEntryKana{"ma", QStringLiteral("ま")},
+                QcmDataEntryKana{"mi", QStringLiteral("み")},
+                QcmDataEntryKana{"mu", QStringLiteral("む")},
+                QcmDataEntryKana{"me", QStringLiteral("め")},
+                QcmDataEntryKana{"mo", QStringLiteral("も")},
 
-                Kana{"ya", QStringLiteral("や")},
-                Kana{"yu", QStringLiteral("ゆ")},
-                Kana{"yo", QStringLiteral("よ")},
+                QcmDataEntryKana{"ya", QStringLiteral("や")},
+                QcmDataEntryKana{"yu", QStringLiteral("ゆ")},
+                QcmDataEntryKana{"yo", QStringLiteral("よ")},
 
-                Kana{"ra", QStringLiteral("ら")},
-                Kana{"ri", QStringLiteral("り")},
-                Kana{"ru", QStringLiteral("る")},
-                Kana{"re", QStringLiteral("れ")},
-                Kana{"ro", QStringLiteral("ろ")},
+                QcmDataEntryKana{"ra", QStringLiteral("ら")},
+                QcmDataEntryKana{"ri", QStringLiteral("り")},
+                QcmDataEntryKana{"ru", QStringLiteral("る")},
+                QcmDataEntryKana{"re", QStringLiteral("れ")},
+                QcmDataEntryKana{"ro", QStringLiteral("ろ")},
 
-                Kana{"wa", QStringLiteral("わ")},
-                Kana{"(w)o", QStringLiteral("を")},
-                Kana{"n", QStringLiteral("ん")}
+                QcmDataEntryKana{"wa", QStringLiteral("わ")},
+                QcmDataEntryKana{"(w)o", QStringLiteral("を")},
+                QcmDataEntryKana{"n", QStringLiteral("ん")}
             },
             5
         ),
@@ -75,37 +76,37 @@ KanasTableFamily KanasTables::HiraganaSymbolsTableFamily
         SymbolsTableSection
         (
             "Gojūon with (han)dakuten",
-            std::vector<Kana>
+            std::vector<QcmDataEntryKana>
             {
-                Kana{"ga", QStringLiteral("が")},
-                Kana{"gi", QStringLiteral("ぎ")},
-                Kana{"gu", QStringLiteral("ぐ")},
-                Kana{"ge", QStringLiteral("げ")},
-                Kana{"go", QStringLiteral("ご")},
+                QcmDataEntryKana{"ga", QStringLiteral("が")},
+                QcmDataEntryKana{"gi", QStringLiteral("ぎ")},
+                QcmDataEntryKana{"gu", QStringLiteral("ぐ")},
+                QcmDataEntryKana{"ge", QStringLiteral("げ")},
+                QcmDataEntryKana{"go", QStringLiteral("ご")},
 
-                Kana{"za", QStringLiteral("ざ")},
-                Kana{"zi", QStringLiteral("じ")},
-                Kana{"zu", QStringLiteral("ず")},
-                Kana{"ze", QStringLiteral("ぜ")},
-                Kana{"zo", QStringLiteral("ぞ")},
+                QcmDataEntryKana{"za", QStringLiteral("ざ")},
+                QcmDataEntryKana{"zi", QStringLiteral("じ")},
+                QcmDataEntryKana{"zu", QStringLiteral("ず")},
+                QcmDataEntryKana{"ze", QStringLiteral("ぜ")},
+                QcmDataEntryKana{"zo", QStringLiteral("ぞ")},
 
-                Kana{"da", QStringLiteral("だ")},
-                Kana{"ji", QStringLiteral("ぢ")},
-                Kana{"(d)zu", QStringLiteral("づ")},
-                Kana{"de", QStringLiteral("で")},
-                Kana{"do", QStringLiteral("ど")},
+                QcmDataEntryKana{"da", QStringLiteral("だ")},
+                QcmDataEntryKana{"ji", QStringLiteral("ぢ")},
+                QcmDataEntryKana{"(d)zu", QStringLiteral("づ")},
+                QcmDataEntryKana{"de", QStringLiteral("で")},
+                QcmDataEntryKana{"do", QStringLiteral("ど")},
 
-                Kana{"ba", QStringLiteral("ば")},
-                Kana{"bi", QStringLiteral("び")},
-                Kana{"bu", QStringLiteral("ぶ")},
-                Kana{"be", QStringLiteral("べ")},
-                Kana{"bo", QStringLiteral("ぼ")},
+                QcmDataEntryKana{"ba", QStringLiteral("ば")},
+                QcmDataEntryKana{"bi", QStringLiteral("び")},
+                QcmDataEntryKana{"bu", QStringLiteral("ぶ")},
+                QcmDataEntryKana{"be", QStringLiteral("べ")},
+                QcmDataEntryKana{"bo", QStringLiteral("ぼ")},
 
-                Kana{"pa", QStringLiteral("ぱ")},
-                Kana{"pi", QStringLiteral("ぴ")},
-                Kana{"pu", QStringLiteral("ぷ")},
-                Kana{"pe", QStringLiteral("ぺ")},
-                Kana{"po", QStringLiteral("ぽ")}
+                QcmDataEntryKana{"pa", QStringLiteral("ぱ")},
+                QcmDataEntryKana{"pi", QStringLiteral("ぴ")},
+                QcmDataEntryKana{"pu", QStringLiteral("ぷ")},
+                QcmDataEntryKana{"pe", QStringLiteral("ぺ")},
+                QcmDataEntryKana{"po", QStringLiteral("ぽ")}
             },
             5
         ),
@@ -113,35 +114,35 @@ KanasTableFamily KanasTables::HiraganaSymbolsTableFamily
         SymbolsTableSection
         (
             "Yōon",
-            std::vector<Kana>
+            std::vector<QcmDataEntryKana>
             {
-                Kana{"kya", QStringLiteral("きゃ")},
-                Kana{"kyu", QStringLiteral("きゅ")},
-                Kana{"kyo", QStringLiteral("きょ")},
+                QcmDataEntryKana{"kya", QStringLiteral("きゃ")},
+                QcmDataEntryKana{"kyu", QStringLiteral("きゅ")},
+                QcmDataEntryKana{"kyo", QStringLiteral("きょ")},
 
-                Kana{"sha", QStringLiteral("しゃ")},
-                Kana{"shu", QStringLiteral("しゅ")},
-                Kana{"sho", QStringLiteral("しょ")},
+                QcmDataEntryKana{"sha", QStringLiteral("しゃ")},
+                QcmDataEntryKana{"shu", QStringLiteral("しゅ")},
+                QcmDataEntryKana{"sho", QStringLiteral("しょ")},
 
-                Kana{"cha", QStringLiteral("ちゃ")},
-                Kana{"chu", QStringLiteral("ちゅ")},
-                Kana{"cho", QStringLiteral("ちょ")},
+                QcmDataEntryKana{"cha", QStringLiteral("ちゃ")},
+                QcmDataEntryKana{"chu", QStringLiteral("ちゅ")},
+                QcmDataEntryKana{"cho", QStringLiteral("ちょ")},
 
-                Kana{"nya", QStringLiteral("にゃ")},
-                Kana{"nyu", QStringLiteral("にゅ")},
-                Kana{"nyo", QStringLiteral("にょ")},
+                QcmDataEntryKana{"nya", QStringLiteral("にゃ")},
+                QcmDataEntryKana{"nyu", QStringLiteral("にゅ")},
+                QcmDataEntryKana{"nyo", QStringLiteral("にょ")},
 
-                Kana{"hya", QStringLiteral("ひゃ")},
-                Kana{"hyu", QStringLiteral("ひゅ")},
-                Kana{"hyo", QStringLiteral("ひょ")},
+                QcmDataEntryKana{"hya", QStringLiteral("ひゃ")},
+                QcmDataEntryKana{"hyu", QStringLiteral("ひゅ")},
+                QcmDataEntryKana{"hyo", QStringLiteral("ひょ")},
 
-                Kana{"mya", QStringLiteral("みゃ")},
-                Kana{"myu", QStringLiteral("みゅ")},
-                Kana{"myo", QStringLiteral("みょ")},
+                QcmDataEntryKana{"mya", QStringLiteral("みゃ")},
+                QcmDataEntryKana{"myu", QStringLiteral("みゅ")},
+                QcmDataEntryKana{"myo", QStringLiteral("みょ")},
 
-                Kana{"rya", QStringLiteral("りゃ")},
-                Kana{"ryu", QStringLiteral("りゅ")},
-                Kana{"ryo", QStringLiteral("りょ")}
+                QcmDataEntryKana{"rya", QStringLiteral("りゃ")},
+                QcmDataEntryKana{"ryu", QStringLiteral("りゅ")},
+                QcmDataEntryKana{"ryo", QStringLiteral("りょ")}
             },
             3
         ),
@@ -149,27 +150,27 @@ KanasTableFamily KanasTables::HiraganaSymbolsTableFamily
         SymbolsTableSection
         (
             "Yōon with (han)dakuten",
-            std::vector<Kana>
+            std::vector<QcmDataEntryKana>
             {
-                Kana{"gya", QStringLiteral("ぎゃ")},
-                Kana{"gyu", QStringLiteral("ぎゅ")},
-                Kana{"gyo", QStringLiteral("ぎょ")},
+                QcmDataEntryKana{"gya", QStringLiteral("ぎゃ")},
+                QcmDataEntryKana{"gyu", QStringLiteral("ぎゅ")},
+                QcmDataEntryKana{"gyo", QStringLiteral("ぎょ")},
 
-                Kana{"zya/ja", QStringLiteral("じゃ")},
-                Kana{"zyu/ju", QStringLiteral("じゅ")},
-                Kana{"zyo/jo", QStringLiteral("じょ")},
+                QcmDataEntryKana{"zya/ja", QStringLiteral("じゃ")},
+                QcmDataEntryKana{"zyu/ju", QStringLiteral("じゅ")},
+                QcmDataEntryKana{"zyo/jo", QStringLiteral("じょ")},
 
-                Kana{"dya/ja", QStringLiteral("ぢゃ")},
-                Kana{"dyu/ju", QStringLiteral("ぢゅ")},
-                Kana{"dyo/jo", QStringLiteral("ぢょ")},
+                QcmDataEntryKana{"dya/ja", QStringLiteral("ぢゃ")},
+                QcmDataEntryKana{"dyu/ju", QStringLiteral("ぢゅ")},
+                QcmDataEntryKana{"dyo/jo", QStringLiteral("ぢょ")},
 
-                Kana{"bya", QStringLiteral("びゃ")},
-                Kana{"byu", QStringLiteral("びゅ")},
-                Kana{"byo", QStringLiteral("びょ")},
+                QcmDataEntryKana{"bya", QStringLiteral("びゃ")},
+                QcmDataEntryKana{"byu", QStringLiteral("びゅ")},
+                QcmDataEntryKana{"byo", QStringLiteral("びょ")},
 
-                Kana{"pya", QStringLiteral("ぴゃ")},
-                Kana{"pyu", QStringLiteral("ぴゅ")},
-                Kana{"pyo", QStringLiteral("ぴょ")}
+                QcmDataEntryKana{"pya", QStringLiteral("ぴゃ")},
+                QcmDataEntryKana{"pyu", QStringLiteral("ぴゅ")},
+                QcmDataEntryKana{"pyo", QStringLiteral("ぴょ")}
             },
             3
         )
@@ -185,64 +186,64 @@ KanasTableFamily KanasTables::KatakanaSymbolsTableFamily
         SymbolsTableSection
         (
             "Gojūon",
-            std::vector<Kana>
+            std::vector<QcmDataEntryKana>
             {
-                Kana{"a", QStringLiteral("ア")},
-                Kana{"i", QStringLiteral("イ")},
-                Kana{"u", QStringLiteral("ウ")},
-                Kana{"e", QStringLiteral("エ")},
-                Kana{"o", QStringLiteral("オ")},
+                QcmDataEntryKana{"a", QStringLiteral("ア")},
+                QcmDataEntryKana{"i", QStringLiteral("イ")},
+                QcmDataEntryKana{"u", QStringLiteral("ウ")},
+                QcmDataEntryKana{"e", QStringLiteral("エ")},
+                QcmDataEntryKana{"o", QStringLiteral("オ")},
 
-                Kana{"ka", QStringLiteral("カ")},
-                Kana{"ki", QStringLiteral("キ")},
-                Kana{"ku", QStringLiteral("ク")},
-                Kana{"ke", QStringLiteral("ケ")},
-                Kana{"ko", QStringLiteral("コ")},
+                QcmDataEntryKana{"ka", QStringLiteral("カ")},
+                QcmDataEntryKana{"ki", QStringLiteral("キ")},
+                QcmDataEntryKana{"ku", QStringLiteral("ク")},
+                QcmDataEntryKana{"ke", QStringLiteral("ケ")},
+                QcmDataEntryKana{"ko", QStringLiteral("コ")},
 
 
-                Kana{"sa", QStringLiteral("サ")},
-                Kana{"shi", QStringLiteral("シ")},
-                Kana{"su", QStringLiteral("ス")},
-                Kana{"se", QStringLiteral("セ")},
-                Kana{"so", QStringLiteral("ソ")},
+                QcmDataEntryKana{"sa", QStringLiteral("サ")},
+                QcmDataEntryKana{"shi", QStringLiteral("シ")},
+                QcmDataEntryKana{"su", QStringLiteral("ス")},
+                QcmDataEntryKana{"se", QStringLiteral("セ")},
+                QcmDataEntryKana{"so", QStringLiteral("ソ")},
 
-                Kana{"ta", QStringLiteral("タ")},
-                Kana{"chi", QStringLiteral("チ")},
-                Kana{"tsu", QStringLiteral("ツ")},
-                Kana{"te", QStringLiteral("テ")},
-                Kana{"to", QStringLiteral("ト")},
+                QcmDataEntryKana{"ta", QStringLiteral("タ")},
+                QcmDataEntryKana{"chi", QStringLiteral("チ")},
+                QcmDataEntryKana{"tsu", QStringLiteral("ツ")},
+                QcmDataEntryKana{"te", QStringLiteral("テ")},
+                QcmDataEntryKana{"to", QStringLiteral("ト")},
 
-                Kana{"na", QStringLiteral("ナ")},
-                Kana{"ni", QStringLiteral("ニ")},
-                Kana{"nu", QStringLiteral("ヌ")},
-                Kana{"ne", QStringLiteral("ネ")},
-                Kana{"no", QStringLiteral("ノ")},
+                QcmDataEntryKana{"na", QStringLiteral("ナ")},
+                QcmDataEntryKana{"ni", QStringLiteral("ニ")},
+                QcmDataEntryKana{"nu", QStringLiteral("ヌ")},
+                QcmDataEntryKana{"ne", QStringLiteral("ネ")},
+                QcmDataEntryKana{"no", QStringLiteral("ノ")},
 
-                Kana{"ha", QStringLiteral("ハ")},
-                Kana{"hi", QStringLiteral("ヒ")},
-                Kana{"fu", QStringLiteral("フ")},
-                Kana{"he", QStringLiteral("ヘ")},
-                Kana{"ho", QStringLiteral("ホ")},
+                QcmDataEntryKana{"ha", QStringLiteral("ハ")},
+                QcmDataEntryKana{"hi", QStringLiteral("ヒ")},
+                QcmDataEntryKana{"fu", QStringLiteral("フ")},
+                QcmDataEntryKana{"he", QStringLiteral("ヘ")},
+                QcmDataEntryKana{"ho", QStringLiteral("ホ")},
 
-                Kana{"ma", QStringLiteral("マ")},
-                Kana{"mi", QStringLiteral("ミ")},
-                Kana{"mu", QStringLiteral("ム")},
-                Kana{"me", QStringLiteral("メ")},
-                Kana{"mo", QStringLiteral("モ")},
+                QcmDataEntryKana{"ma", QStringLiteral("マ")},
+                QcmDataEntryKana{"mi", QStringLiteral("ミ")},
+                QcmDataEntryKana{"mu", QStringLiteral("ム")},
+                QcmDataEntryKana{"me", QStringLiteral("メ")},
+                QcmDataEntryKana{"mo", QStringLiteral("モ")},
 
-                Kana{"ya", QStringLiteral("ヤ")},
-                Kana{"yu", QStringLiteral("ユ")},
-                Kana{"yo", QStringLiteral("ヨ")},
+                QcmDataEntryKana{"ya", QStringLiteral("ヤ")},
+                QcmDataEntryKana{"yu", QStringLiteral("ユ")},
+                QcmDataEntryKana{"yo", QStringLiteral("ヨ")},
 
-                Kana{"ra", QStringLiteral("ラ")},
-                Kana{"ri", QStringLiteral("リ")},
-                Kana{"ru", QStringLiteral("ル")},
-                Kana{"re", QStringLiteral("レ")},
-                Kana{"ro", QStringLiteral("ロ")},
+                QcmDataEntryKana{"ra", QStringLiteral("ラ")},
+                QcmDataEntryKana{"ri", QStringLiteral("リ")},
+                QcmDataEntryKana{"ru", QStringLiteral("ル")},
+                QcmDataEntryKana{"re", QStringLiteral("レ")},
+                QcmDataEntryKana{"ro", QStringLiteral("ロ")},
 
-                Kana{"wa", QStringLiteral("ワ")},
-                Kana{"(w)o", QStringLiteral("ヲ")},
-                Kana{"n", QStringLiteral("ン")}
+                QcmDataEntryKana{"wa", QStringLiteral("ワ")},
+                QcmDataEntryKana{"(w)o", QStringLiteral("ヲ")},
+                QcmDataEntryKana{"n", QStringLiteral("ン")}
             },
             5
         ),
@@ -250,37 +251,37 @@ KanasTableFamily KanasTables::KatakanaSymbolsTableFamily
         SymbolsTableSection
         (
             "Gojūon with (han)dakuten",
-            std::vector<Kana>
+            std::vector<QcmDataEntryKana>
             {
-                Kana{"ga", QStringLiteral("ガ")},
-                Kana{"gi", QStringLiteral("ギ")},
-                Kana{"gu", QStringLiteral("グ")},
-                Kana{"ge", QStringLiteral("ゲ")},
-                Kana{"go", QStringLiteral("ゴ")},
+                QcmDataEntryKana{"ga", QStringLiteral("ガ")},
+                QcmDataEntryKana{"gi", QStringLiteral("ギ")},
+                QcmDataEntryKana{"gu", QStringLiteral("グ")},
+                QcmDataEntryKana{"ge", QStringLiteral("ゲ")},
+                QcmDataEntryKana{"go", QStringLiteral("ゴ")},
 
-                Kana{"za", QStringLiteral("ザ")},
-                Kana{"zi", QStringLiteral("ジ")},
-                Kana{"zu", QStringLiteral("ズ")},
-                Kana{"ze", QStringLiteral("ゼ")},
-                Kana{"zo", QStringLiteral("ゾ")},
+                QcmDataEntryKana{"za", QStringLiteral("ザ")},
+                QcmDataEntryKana{"zi", QStringLiteral("ジ")},
+                QcmDataEntryKana{"zu", QStringLiteral("ズ")},
+                QcmDataEntryKana{"ze", QStringLiteral("ゼ")},
+                QcmDataEntryKana{"zo", QStringLiteral("ゾ")},
 
-                Kana{"da", QStringLiteral("ダ")},
-                Kana{"ji", QStringLiteral("ヂ")},
-                Kana{"(d)zu", QStringLiteral("ヅ")},
-                Kana{"de", QStringLiteral("デ")},
-                Kana{"do", QStringLiteral("ド")},
+                QcmDataEntryKana{"da", QStringLiteral("ダ")},
+                QcmDataEntryKana{"ji", QStringLiteral("ヂ")},
+                QcmDataEntryKana{"(d)zu", QStringLiteral("ヅ")},
+                QcmDataEntryKana{"de", QStringLiteral("デ")},
+                QcmDataEntryKana{"do", QStringLiteral("ド")},
 
-                Kana{"ba", QStringLiteral("バ")},
-                Kana{"bi", QStringLiteral("ビ")},
-                Kana{"bu", QStringLiteral("ブ")},
-                Kana{"be", QStringLiteral("ベ")},
-                Kana{"bo", QStringLiteral("ボ")},
+                QcmDataEntryKana{"ba", QStringLiteral("バ")},
+                QcmDataEntryKana{"bi", QStringLiteral("ビ")},
+                QcmDataEntryKana{"bu", QStringLiteral("ブ")},
+                QcmDataEntryKana{"be", QStringLiteral("ベ")},
+                QcmDataEntryKana{"bo", QStringLiteral("ボ")},
 
-                Kana{"pa", QStringLiteral("パ")},
-                Kana{"pi", QStringLiteral("ピ")},
-                Kana{"pu", QStringLiteral("プ")},
-                Kana{"pe", QStringLiteral("ペ")},
-                Kana{"po", QStringLiteral("ポ")}
+                QcmDataEntryKana{"pa", QStringLiteral("パ")},
+                QcmDataEntryKana{"pi", QStringLiteral("ピ")},
+                QcmDataEntryKana{"pu", QStringLiteral("プ")},
+                QcmDataEntryKana{"pe", QStringLiteral("ペ")},
+                QcmDataEntryKana{"po", QStringLiteral("ポ")}
             },
             5
         ),
@@ -288,35 +289,35 @@ KanasTableFamily KanasTables::KatakanaSymbolsTableFamily
         SymbolsTableSection
         (
             "Yōon",
-            std::vector<Kana>
+            std::vector<QcmDataEntryKana>
             {
-                Kana{"kya", QStringLiteral("キャ")},
-                Kana{"kyu", QStringLiteral("キュ")},
-                Kana{"kyo", QStringLiteral("キョ")},
+                QcmDataEntryKana{"kya", QStringLiteral("キャ")},
+                QcmDataEntryKana{"kyu", QStringLiteral("キュ")},
+                QcmDataEntryKana{"kyo", QStringLiteral("キョ")},
 
-                Kana{"sha", QStringLiteral("シャ")},
-                Kana{"shu", QStringLiteral("シュ")},
-                Kana{"sho", QStringLiteral("ショ")},
+                QcmDataEntryKana{"sha", QStringLiteral("シャ")},
+                QcmDataEntryKana{"shu", QStringLiteral("シュ")},
+                QcmDataEntryKana{"sho", QStringLiteral("ショ")},
 
-                Kana{"cha", QStringLiteral("チャ")},
-                Kana{"chu", QStringLiteral("チュ")},
-                Kana{"cho", QStringLiteral("チョ")},
+                QcmDataEntryKana{"cha", QStringLiteral("チャ")},
+                QcmDataEntryKana{"chu", QStringLiteral("チュ")},
+                QcmDataEntryKana{"cho", QStringLiteral("チョ")},
 
-                Kana{"nya", QStringLiteral("ニャ")},
-                Kana{"nyu", QStringLiteral("ニュ")},
-                Kana{"nyo", QStringLiteral("ニョ")},
+                QcmDataEntryKana{"nya", QStringLiteral("ニャ")},
+                QcmDataEntryKana{"nyu", QStringLiteral("ニュ")},
+                QcmDataEntryKana{"nyo", QStringLiteral("ニョ")},
 
-                Kana{"hya", QStringLiteral("ヒャ")},
-                Kana{"hyu", QStringLiteral("ヒュ")},
-                Kana{"hyo", QStringLiteral("ヒョ")},
+                QcmDataEntryKana{"hya", QStringLiteral("ヒャ")},
+                QcmDataEntryKana{"hyu", QStringLiteral("ヒュ")},
+                QcmDataEntryKana{"hyo", QStringLiteral("ヒョ")},
 
-                Kana{"mya", QStringLiteral("ミャ")},
-                Kana{"myu", QStringLiteral("ミュ")},
-                Kana{"myo", QStringLiteral("ミョ")},
+                QcmDataEntryKana{"mya", QStringLiteral("ミャ")},
+                QcmDataEntryKana{"myu", QStringLiteral("ミュ")},
+                QcmDataEntryKana{"myo", QStringLiteral("ミョ")},
 
-                Kana{"rya", QStringLiteral("リャ")},
-                Kana{"ryu", QStringLiteral("リュ")},
-                Kana{"ryo", QStringLiteral("リョ")},
+                QcmDataEntryKana{"rya", QStringLiteral("リャ")},
+                QcmDataEntryKana{"ryu", QStringLiteral("リュ")},
+                QcmDataEntryKana{"ryo", QStringLiteral("リョ")},
             },
             3
         ),
@@ -324,48 +325,32 @@ KanasTableFamily KanasTables::KatakanaSymbolsTableFamily
         SymbolsTableSection
         (
             "Yōon with (han)dakuten",
-            std::vector<Kana>
+            std::vector<QcmDataEntryKana>
             {
-                Kana{"gya", QStringLiteral("ギャ")},
-                Kana{"gyu", QStringLiteral("ギュ")},
-                Kana{"gyo", QStringLiteral("ギョ")},
+                QcmDataEntryKana{"gya", QStringLiteral("ギャ")},
+                QcmDataEntryKana{"gyu", QStringLiteral("ギュ")},
+                QcmDataEntryKana{"gyo", QStringLiteral("ギョ")},
 
-                Kana{"zya/ja", QStringLiteral("ジャ")},
-                Kana{"zyu/ju", QStringLiteral("ジュ")},
-                Kana{"zyo/jo", QStringLiteral("ジョ")},
+                QcmDataEntryKana{"zya/ja", QStringLiteral("ジャ")},
+                QcmDataEntryKana{"zyu/ju", QStringLiteral("ジュ")},
+                QcmDataEntryKana{"zyo/jo", QStringLiteral("ジョ")},
 
-                Kana{"dya/ja", QStringLiteral("ヂャ")},
-                Kana{"dyu/ju", QStringLiteral("ヂュ")},
-                Kana{"dyo/jo", QStringLiteral("ヂョ")},
+                QcmDataEntryKana{"dya/ja", QStringLiteral("ヂャ")},
+                QcmDataEntryKana{"dyu/ju", QStringLiteral("ヂュ")},
+                QcmDataEntryKana{"dyo/jo", QStringLiteral("ヂョ")},
 
-                Kana{"bya", QStringLiteral("ビャ")},
-                Kana{"byu", QStringLiteral("ビュ")},
-                Kana{"byo", QStringLiteral("ビョ")},
+                QcmDataEntryKana{"bya", QStringLiteral("ビャ")},
+                QcmDataEntryKana{"byu", QStringLiteral("ビュ")},
+                QcmDataEntryKana{"byo", QStringLiteral("ビョ")},
 
-                Kana{"pya", QStringLiteral("ピャ")},
-                Kana{"pyu", QStringLiteral("ピュ")},
-                Kana{"pyo", QStringLiteral("ピョ")}
+                QcmDataEntryKana{"pya", QStringLiteral("ピャ")},
+                QcmDataEntryKana{"pyu", QStringLiteral("ピュ")},
+                QcmDataEntryKana{"pyo", QStringLiteral("ピョ")}
             },
             3
         )
     }
 );
-
-bool Kana::RegisterAndInitializeSerializedVals(QString serializedAddress, KanasTableFamily *_p)
-{
-    parentedFamily = _p;
-
-    enabledSerializedAddress = ("Symbols/enabled_"+serializedAddress+"_"+romanji).toUtf8();
-    enabled = GetMy::Instance().SettingSerializerInst()->value(enabledSerializedAddress, true).toBool();
-    learningStateSerializedAddress = ("Symbols/learningState"+serializedAddress+"_"+romanji).toUtf8();
-    learningState = GetMy::Instance().SettingSerializerInst()->value(learningStateSerializedAddress, 5).toInt();
-    return enabled;
-}
-
-bool Kana::operator==(const Kana &rhs) const
-{
-    return (this->romanji== rhs.romanji && this->kanas == rhs.kanas);
-}
 
 void KanasTableFamily::InitializeSerializedVals() // Can't do it in constructor because SettingSerializer isn't set yet.
 {
@@ -382,21 +367,3 @@ void KanasTableFamily::ResetWeights()
             s.LearningState(MAX_LEARNING_STATE_VALUE);
 }
 
-void Kana::Enabled(bool b)
-{
-    if (b != enabled)
-    {
-        enabled = b;
-        GetMy::Instance().SettingSerializerInst()->setValue(enabledSerializedAddress, enabled);
-        if (enabled)
-            parentedFamily->NbrOfEnabled(parentedFamily->NbrOfEnabled()+1);
-        else
-            parentedFamily->NbrOfEnabled(parentedFamily->NbrOfEnabled()-1);
-    }
-}
-
-void Kana::LearningState(int ls)
-{
-    learningState = ls;
-    GetMy::Instance().SettingSerializerInst()->setValue(learningStateSerializedAddress, learningState);
-}
