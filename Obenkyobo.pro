@@ -49,6 +49,7 @@ SOURCES += \
     Src/Pages/WelcomePage.cpp \
     Src/QcmDataEntryKana.cpp \
     Src/QcmDataEntryVocab.cpp \
+    Src/Tools.cpp \
     Src/VocabularyParser.cpp \
     Src/Widgets/KanaEditButtonWidget.cpp \
     Src/Widgets/KanaEditEntryWidget.cpp \
@@ -83,6 +84,7 @@ HEADERS += \
     Src/QcmDataEntry.h \
     Src/QcmDataEntryKana.h \
     Src/QcmDataEntryVocab.h \
+    Src/Tools.h \
     Src/VocabularyParser.h \
     Src/Widgets/KanaEditButtonWidget.h \
     Src/Widgets/KanaEditEntryWidget.h \
@@ -90,8 +92,7 @@ HEADERS += \
     Src/Widgets/PopupWidget.h \
     Src/Widgets/QcmEntryGuess.h \
     Src/Widgets/VocabFileEntryWidget.h \
-    Src/mainwindow.h \
-    Src/tools.h
+    Src/mainwindow.h
 
 OTHER_FILES += \
     OtherFiles/*

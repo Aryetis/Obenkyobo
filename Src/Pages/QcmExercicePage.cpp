@@ -5,7 +5,7 @@
 #include "Src/Widgets/QcmEntryGuess.h"
 #include "Src/Pages/FntSettingsPage.h"
 #include "Src/GetMy.h"
-#include "Src/tools.h"
+#include "Src/Tools.h"
 #include "Src/Pages/AppSettingsPage.h"
 #include "Src/mainwindow.h"
 #include "Src/KanasTables.h"
@@ -99,7 +99,7 @@ void QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
     std::vector<QcmDataEntry*> shuffledSymbols{};
     shuffledSymbols.reserve(entriesPool.size()-1);
     std::remove_copy(entriesPool.begin(), entriesPool.end(), std::back_inserter(shuffledSymbols), stem);
-    std::shuffle(std::begin(shuffledSymbols), std::end(shuffledSymbols), Tools::GetInstance().Rng_Engine());
+    std::shuffle(std::begin(shuffledSymbols), std::end(shuffledSymbols), GetMy::Instance().ToolsInst()->Rng_Engine());
 
     //************************ Initialize Stem  ************************
     if (GetMy::Instance().AppSettingsPageInst().IsWeightedRandomEnabled())
@@ -109,10 +109,10 @@ void QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
             weights.push_back(symbol->LearningState());
 
         std::discrete_distribution<size_t> distr(weights.begin(), weights.end());
-        stem = shuffledSymbols[distr(Tools::GetInstance().MT())];
+        stem = shuffledSymbols[distr(GetMy::Instance().ToolsInst()->MT())];
     }
     else
-        stem = *Tools::GetInstance().GetRandom(shuffledSymbols.begin(), shuffledSymbols.end());
+        stem = *GetMy::Instance().ToolsInst()->GetRandom(shuffledSymbols.begin(), shuffledSymbols.end());
 
     assert(stem != nullptr);
 
@@ -133,7 +133,12 @@ void QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
             ui->GuessMe->setText(*stem->Kanas());
             break;
         }
-//    case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
+        case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
+        case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
+        {
+            // TODO NOW
+            break;
+        }
     }
 
     //************************ Clearing previous board ************************
@@ -143,7 +148,7 @@ void QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
     //************************ Initialize Entries board ************************
     int NbrOfEntriesLine = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine();
     int NbrOfEntriesRow = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
-    int stemSlot = Tools::GetInstance().GetRandomInt(0, (NbrOfEntriesLine*NbrOfEntriesRow)-1);
+    int stemSlot = GetMy::Instance().ToolsInst()->GetRandomInt(0, (NbrOfEntriesLine*NbrOfEntriesRow)-1);
     QcmDataEntry* joker = shuffledSymbols[static_cast<std::vector<QcmDataEntry>::size_type>(stemSlot)]; // Symbol replaced by stem
     for(int i= 0; i<NbrOfEntriesLine*NbrOfEntriesRow; ++i)
     {
@@ -204,6 +209,8 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
 
 
     // print feedback informing of correct / incorrect choice // TODO use the correct font for the jp part
+    ui->ResultLabelLeft->setStyleSheet("QLabel { border: none }");
+    ui->ResultLabelMiddle->setStyleSheet("QLabel { border: none }");
     switch (currentQcmType.value())
     {
         case QcmExerciceType::Hiragana_to_Romanji_MCQ :
@@ -211,11 +218,9 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
         {
             ui->ResultLabelLeft->setFont(curRomanjiNonSized);
             ui->ResultLabelLeft->setText(*stem->Romanji());
-            ui->ResultLabelLeft->setStyleSheet("QLabel { border: none }");
 
             ui->ResultLabelMiddle->setFont(curHiraganaNonSized);
             ui->ResultLabelMiddle->setText(*stem->Kanas());
-            ui->ResultLabelMiddle->setStyleSheet("QLabel { border: none }");
             break;
         }
         case QcmExerciceType::Katakana_to_Romanji_MCQ :
@@ -223,33 +228,37 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
         {
             ui->ResultLabelLeft->setFont(curRomanjiNonSized);
             ui->ResultLabelLeft->setText(*stem->Romanji());
-            ui->ResultLabelLeft->setStyleSheet("QLabel { border: none }");
 
             ui->ResultLabelMiddle->setFont(curKatakanaNonSized);
             ui->ResultLabelMiddle->setText(*stem->Kanas());
-            ui->ResultLabelMiddle->setStyleSheet("QLabel { border: none }");
             break;
         }
         case QcmExerciceType::Romanji_to_Hiragana_MCQ :
         {
             ui->ResultLabelLeft->setFont(curHiraganaNonSized);
             ui->ResultLabelLeft->setText(*stem->Kanas());
-            ui->ResultLabelLeft->setStyleSheet("QLabel { border: none }");
 
             ui->ResultLabelMiddle->setFont(curRomanjiNonSized);
             ui->ResultLabelMiddle->setText(*stem->Romanji());
-            ui->ResultLabelMiddle->setStyleSheet("QLabel { border: none }");
             break;
         }
         case QcmExerciceType::Romanji_to_Katakana_MCQ :
         {
             ui->ResultLabelLeft->setFont(curKatakanaNonSized);
             ui->ResultLabelLeft->setText(*stem->Kanas());
-            ui->ResultLabelLeft->setStyleSheet("QLabel { border: none }");
 
             ui->ResultLabelMiddle->setFont(curRomanjiNonSized);
             ui->ResultLabelMiddle->setText(*stem->Romanji());
-            ui->ResultLabelMiddle->setStyleSheet("QLabel { border: none }");
+            break;
+        }
+        case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
+        {
+            // TODO NOW
+            break;
+        }
+        case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
+        {
+            // TODO NOW
             break;
         }
     }

@@ -26,7 +26,6 @@ public:
     int GetNumberOfEntryRow() const { return ENTRY_PER_ROW; }
     int GetNumberOfEntry() const { return (nbrOfEntryLinesIdx+1) * ENTRY_PER_ROW; }
     int GetNumberOfRowPerVocabPage() const;
-    bool IsThereEnough(QcmExerciceType qcmType) const;
     bool IsWeightedRandomEnabled() const;
     int GetBatteryFormatIdx() const { return batteryFormatIdx; }
     int GetDateFormatIdx() const { return dateFormatIdx; } // 0 <=> 13:37, 1 <=> 1:37 pm // TODO : use bool and IsDateAmPmFormat

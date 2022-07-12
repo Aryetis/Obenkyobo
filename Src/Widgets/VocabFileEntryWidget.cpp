@@ -10,7 +10,7 @@
 #include "Src/Pages/AppSettingsPage.h"
 #include "Src/Pages/VocabExplorerPage.h"
 #include "Src/GetMy.h"
-#include "Src/tools.h"
+#include "Src/Tools.h"
 
 VocabFileEntryWidget::VocabFileEntryWidget(QWidget *parent) :
     QWidget(parent), ui(new Ui::VocabFileEntryWidget)
@@ -99,7 +99,7 @@ void VocabFileEntryWidget::on_TitleButton_clicked()
 
         if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeVocabDisplayPage", true).toBool() )
         {
-            Tools::GetInstance().DisplayPopup("You can click the top row buttons to hide/show the associated column.\n"
+            GetMy::Instance().ToolsInst()->DisplayPopup("You can click the top row buttons to hide/show the associated column.\n"
                                               "Each cell is also independently clickable.\n"
                                               "Combine that with the \"Randomize\" button to enhance your learning session");
             GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->setValue("AppSettings/firstTimeVocabDisplayPage", false);

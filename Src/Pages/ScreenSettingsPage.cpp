@@ -1,7 +1,7 @@
 #include "Src/Pages/ScreenSettingsPage.h"
 #include "ui_ScreenSettingsPage.h"
 #include "Src/GetMy.h"
-#include "Src/tools.h"
+#include "Src/Tools.h"
 
 // Note : the whole kobo family frontlight drivers only take integeter, so we're good setting sliders's step to 1
 ScreenSettingsPage::ScreenSettingsPage(QWidget *parent) :
@@ -64,7 +64,7 @@ bool ScreenSettingsPage::AreSettingsAvailablePopup() const
 {
     if(!settingAvailable)
     {
-        Tools::GetInstance().DisplayPopup("Sorry,\nno Screen Settings (luminosity, tint) available for your ereader");
+        GetMy::Instance().ToolsInst()->DisplayPopup("Sorry,\nno Screen Settings (luminosity, tint) available for your ereader");
         return false;
     }
     return true;
@@ -72,7 +72,7 @@ bool ScreenSettingsPage::AreSettingsAvailablePopup() const
 
 void ScreenSettingsPage::OnSleep() const
 {
-//    if (Tools::GetInstance().GetDeviceState() != DeviceState::busy)
+//    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::busy)
 //        return;
 
     if(settingAvailable)
@@ -81,7 +81,7 @@ void ScreenSettingsPage::OnSleep() const
 
 void ScreenSettingsPage::OnWakeUp() const
 {
-//    if (Tools::GetInstance().GetDeviceState() != DeviceState::busy)
+//    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::busy)
 //        return;
 
     if(settingAvailable)

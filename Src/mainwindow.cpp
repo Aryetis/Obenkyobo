@@ -6,7 +6,7 @@
 #include "ui_mainwindow.h"
 #include "Src/Pages/QcmExercicePage.h"
 #include "Src/GetMy.h"
-#include "Src/tools.h"
+#include "Src/Tools.h"
 #include "Src/Pages/KanaEditPage.h"
 #include "koboplatformfunctions.h"
 #include "Src/Widgets/KanaEditButtonWidget.h"
@@ -95,28 +95,28 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == KoboKey::Key_Power)
     {        
-        if (Tools::GetInstance().GetDeviceState() == DeviceState::asleep)
-            Tools::GetInstance().WakeUp();
-        else if (Tools::GetInstance().GetDeviceState() == DeviceState::awake)
-            Tools::GetInstance().Sleep();
+        if (GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::asleep)
+            GetMy::Instance().ToolsInst()->WakeUp();
+        else if (GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::awake)
+            GetMy::Instance().ToolsInst()->Sleep();
     }
-    else if (event->key() == KoboKey::Key_SleepCover && Tools::GetInstance().GetDeviceState() == DeviceState::awake)
-        Tools::GetInstance().Sleep();
+    else if (event->key() == KoboKey::Key_SleepCover && GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::awake)
+        GetMy::Instance().ToolsInst()->Sleep();
     else if (event->key() == KoboKey::Key_Light)
         GetMy::Instance().ScreenSettingsPageInst().ToggleLight();
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent *event)
 {
-    if (event->key() == KoboKey::Key_SleepCover && Tools::GetInstance().GetDeviceState() == DeviceState::asleep)
-        Tools::GetInstance().WakeUp();
+    if (event->key() == KoboKey::Key_SleepCover && GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::asleep)
+        GetMy::Instance().ToolsInst()->WakeUp();
 }
 
 void MainWindow::DisplayFirstTimeMainWindowPagePopup()
 {
     if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeMainWindowPage", true).toBool() )
     {
-        Tools::GetInstance().DisplayPopup("This software is still in development, Some functions are not implemented yet.\n"
+        GetMy::Instance().ToolsInst()->DisplayPopup("This software is still in development, Some functions are not implemented yet.\n"
                                           "Sleep functionality is not supported for now.\n"
                                           "Therefore it is recommended that you close Obenkyobo between each session to save battery life.\n"
                                           "Each popup will be used only once and sparingly to introduce some mechanisms.\n"
@@ -130,7 +130,7 @@ void MainWindow::DisplayFirstTimeKanasEditPagePopup()
 {
     if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeKanasEditPage", true).toBool() )
     {
-        Tools::GetInstance().DisplayPopup("Here you can add/remove kanas to the related MCQ's guesses.\n"
+        GetMy::Instance().ToolsInst()->DisplayPopup("Here you can add/remove kanas to the related MCQ's guesses.\n"
                                           "The background color and circle gyzmo indicates their status.\n"
                                           "The number at the bottom right corner indicates its Learning Score (LS).\n"
                                           "It ranges reflects your progress, ranging from 0 to 5.\n"
@@ -141,7 +141,7 @@ void MainWindow::DisplayFirstTimeKanasEditPagePopup()
 
 void MainWindow::OnSleep() const
 {
-//    if (Tools::GetInstance().GetDeviceState() != DeviceState::busy)
+//    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::busy)
 //        return;
 
     disconnect(&timer, nullptr, nullptr, nullptr);
@@ -154,7 +154,7 @@ void MainWindow::OnSleep() const
 
 void MainWindow::OnWakeUp()
 {
-//    if (Tools::GetInstance().GetDeviceState() != DeviceState::busy)
+//    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::busy)
 //        return;
 
     connect(&timer, &QTimer::timeout, this, &MainWindow::refreshTimeAndBattery);
@@ -185,7 +185,7 @@ void MainWindow::on_refresh_hovered()
 
 void MainWindow::refreshTimeAndBattery()
 {
-    if (Tools::GetInstance().GetDeviceState() != DeviceState::awake)
+    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::awake)
         return;
 
     bool ugly = false;
@@ -297,14 +297,14 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_actionHiragana_to_Romanji_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionHiragana_to_Romanji_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().AppSettingsPageInst().IsThereEnough(QcmExerciceType::Hiragana_to_Romanji_MCQ))
+    if (GetMy::Instance().ToolsInst()->IsThereEnough(QcmExerciceType::Hiragana_to_Romanji_MCQ))
     {
         GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Hiragana_to_Romanji_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
     else
-        Tools::GetInstance().DisplayPopup(
+        GetMy::Instance().ToolsInst()->DisplayPopup(
                 "Not enough enabled Hiragana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry()) +
                 " at :\nMain->Hiragana->Edit Hiragana Set");
@@ -313,14 +313,14 @@ void MainWindow::on_actionHiragana_to_Romanji_MCQ_triggered()
 void MainWindow::on_actionRomanji_to_Hiragana_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().AppSettingsPageInst().IsThereEnough(QcmExerciceType::Romanji_to_Hiragana_MCQ))
+    if (GetMy::Instance().ToolsInst()->IsThereEnough(QcmExerciceType::Romanji_to_Hiragana_MCQ))
     {
         GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Romanji_to_Hiragana_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
     else
-        Tools::GetInstance().DisplayPopup(
+        GetMy::Instance().ToolsInst()->DisplayPopup(
                 "Not enough enabled Hiragana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry()) +
                 " at :\nMain->Hiragana->Edit Hiragana Set");
@@ -349,14 +349,14 @@ void MainWindow::on_actionEdit_Hiragana_Set_triggered()
 void MainWindow::on_actionKatakana_to_Romanji_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionKatakana_to_Romanji_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().AppSettingsPageInst().IsThereEnough(QcmExerciceType::Katakana_to_Romanji_MCQ))
+    if (GetMy::Instance().ToolsInst()->IsThereEnough(QcmExerciceType::Katakana_to_Romanji_MCQ))
     {
         GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Katakana_to_Romanji_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
     else
-        Tools::GetInstance().DisplayPopup(
+        GetMy::Instance().ToolsInst()->DisplayPopup(
                 "Not enough enabled Katakana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry()) +
                 " at :\nMain->Hiragana->Edit Hiragana Set");
@@ -365,14 +365,14 @@ void MainWindow::on_actionKatakana_to_Romanji_MCQ_triggered()
 void MainWindow::on_actionRomanji_to_Katakana_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().AppSettingsPageInst().IsThereEnough(QcmExerciceType::Romanji_to_Katakana_MCQ))
+    if (GetMy::Instance().ToolsInst()->IsThereEnough(QcmExerciceType::Romanji_to_Katakana_MCQ))
     {
         GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Romanji_to_Katakana_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
     else
-        Tools::GetInstance().DisplayPopup(
+        GetMy::Instance().ToolsInst()->DisplayPopup(
                 "Not enough enabled Katakana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry()) +
                 " at :\nMain->Hiragana->Edit Hiragana Set");
@@ -436,7 +436,7 @@ void MainWindow::on_actionVocabulary_to_Romanji_MCQ_triggered()
         AggressiveClearScreen();
     }
 //    else
-//        Tools::GetInstance().DisplayPopup(
+//        GetMy::Instance().ToolsInst()->DisplayPopup(
 //                "Not enough enabled Katakana,\nplease enable at least " +
 //                QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
 //                " at :\nMain->Hiragana->Edit Hiragana Set"
@@ -453,7 +453,7 @@ void MainWindow::on_actionRomanji_to_Vocabulary_MCQ_triggered()
         AggressiveClearScreen();
     }
 //    else
-//        Tools::GetInstance().DisplayPopup(
+//        GetMy::Instance().ToolsInst()->DisplayPopup(
 //                "Not enough enabled Katakana,\nplease enable at least " +
 //                QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
 //                " at :\nMain->Hiragana->Edit Hiragana Set"
@@ -469,7 +469,7 @@ void MainWindow::on_actionLearn_Edit_Set_triggered()
 
     if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeVocabListPage", true).toBool() )
     {
-        Tools::GetInstance().DisplayPopup("Here are displayed your \"vocab sheets\". Please check Obenkyobo's github page to learn how to create your owns.\n"
+        GetMy::Instance().ToolsInst()->DisplayPopup("Here are displayed your \"vocab sheets\". Please check Obenkyobo's github page to learn how to create your owns.\n"
                                           "Click on any one to learn/display its content.\n"
                                           "Ignore the LS and checkbox for now, those are related to unimplemented features for now.");
         GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->setValue("AppSettings/firstTimeVocabListPage", false);

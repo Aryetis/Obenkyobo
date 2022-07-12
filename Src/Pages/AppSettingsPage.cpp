@@ -2,7 +2,7 @@
 #include "Src/Pages/AppSettingsPage.h"
 #include "ui_AppSettingsPage.h"
 #include "Src/GetMy.h"
-#include "Src/tools.h"
+#include "Src/Tools.h"
 #include "Src/mainwindow.h"
 #include "Src/KanasTables.h"
 
@@ -32,7 +32,7 @@ void AppSettingsPage::ParseConfigFile()
     randomChoiceIdx = settingsSerializer->value("AppSettings/randomChoiceIdx", 1).toInt();
     hardRefreshFreqIdx = settingsSerializer->value("AppSettings/hardRefreshFreqIdx", 3).toInt();
     batteryFormatIdx = settingsSerializer->value("AppSettings/batteryFormatIdx", 0).toInt();
-    dateFormatIdx = settingsSerializer->value("AppSettings/dateFormatIdx", (Tools::GetInstance().IsLocalTimeFormatUS()) ? 1 : 0).toInt();
+    dateFormatIdx = settingsSerializer->value("AppSettings/dateFormatIdx", (GetMy::Instance().ToolsInst()->IsLocalTimeFormatUS()) ? 1 : 0).toInt();
     nbrOfRowPerVocabIdx = settingsSerializer->value("AppSettings/rowPerVocabPage", 1).toInt();
     QList<KoboDevice> badScreenList { KoboDevice::KoboTouchAB, KoboDevice::KoboTouchC, KoboDevice::KoboGlo, KoboDevice::KoboMini, KoboDevice::KoboTouch2, KoboDevice::KoboAura, KoboDevice::KoboAuraHD }; // Wild guess ... meh
     kanaHardRefresh = settingsSerializer->value("AppSettings/kanaHardRefresh", badScreenList.contains(GetMy::Instance().Descriptor().device)).toBool();
@@ -113,35 +113,6 @@ void AppSettingsPage::RemoveEnabledVocabSheets(QSet<QString> filePaths)
 AppSettingsPage::~AppSettingsPage()
 {
     delete ui;
-}
-
-bool AppSettingsPage::IsThereEnough(QcmExerciceType qcmType) const
-{
-    int minRequiredSymbol = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine() *
-                            GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
-
-    switch (qcmType)
-    {
-        case QcmExerciceType::Hiragana_to_Romanji_MCQ :
-        case QcmExerciceType::Hiragana_to_Romanji_Kbd :
-        case QcmExerciceType::Romanji_to_Hiragana_MCQ :
-        {
-            return (KanasTables::HiraganaSymbolsTableFamily.NbrOfEnabled() >= minRequiredSymbol);
-        }
-        case QcmExerciceType::Katakana_to_Romanji_MCQ :
-        case QcmExerciceType::Katakana_to_Romanji_Kbd :
-        case QcmExerciceType::Romanji_to_Katakana_MCQ :
-        {
-            return (KanasTables::KatakanaSymbolsTableFamily.NbrOfEnabled() >= minRequiredSymbol);
-        }
-        case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
-        case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
-        {
-            return true; // TODO
-        }
-    }
-
-    assert(false);
 }
 
 void AppSettingsPage::on_ResetStatsButton_clicked()

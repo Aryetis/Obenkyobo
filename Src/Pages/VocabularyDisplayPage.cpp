@@ -3,11 +3,12 @@
 #include "Src/Pages/VocabularyDisplayPage.h"
 #include "ui_VocabularyDisplayPage.h"
 #include "Src/Pages/FntSettingsPage.h"
-#include "Src/tools.h"
 #include "Src/Pages/AppSettingsPage.h"
 #include "Src/mainwindow.h"
 #include "Src/Widgets/VocabFileEntryWidget.h"
 #include "Src/VocabularyParser.h"
+#include "Src/GetMy.h"
+#include "Src/Tools.h"
 
 VocabularyDisplayPage::VocabularyDisplayPage(QWidget *parent) :
     QWidget(parent), ui(new Ui::VocabularyDisplayPage)
@@ -54,7 +55,7 @@ void VocabularyDisplayPage::InitializeGrid(VocabFileEntryWidget* vocab)
             popupMsg += QString::number(entry->GetLineNumber()) + ", " ;
         popupMsg.chop(2);
         popupMsg += '.';
-        Tools::GetInstance().DisplayPopup(popupMsg);
+        GetMy::Instance().ToolsInst()->DisplayPopup(popupMsg);
     }
 
     maxPage = std::ceil(static_cast<float>(vdf->Entries().count()) / GetMy::Instance().AppSettingsPageInst().GetNumberOfRowPerVocabPage());
@@ -96,7 +97,7 @@ void VocabularyDisplayPage::PopulateGrid(bool random /*= false*/, int turnPage /
     QList<VocabDataEntry*> vdfEntriesList = vdf->Entries().values();
     if (random)
     {
-        std::shuffle(vdfEntriesList.begin(), vdfEntriesList.end(), Tools::GetInstance().MT());
+        std::shuffle(vdfEntriesList.begin(), vdfEntriesList.end(), GetMy::Instance().ToolsInst()->MT());
         curPage = 0;
     }
     else

@@ -70,8 +70,8 @@ void VocabExplorerPage::Populate()
         VocabFileEntryWidget* bar = new VocabFileEntryWidget(fileInfo);
         vocabFileWidgets.push_back(bar);
 
-        VocabDataFile vdf(fileInfo.absoluteFilePath()); // costly on low hardware ? make it optional ?
-        bar->SetLearningScore(vdf.GetLearningScore());
+        VocabDataFile vdf(fileInfo.absoluteFilePath()); // TODO : make it optional [Full, files only, files and dirs] for perf reasons
+        bar->SetLearningScore(MAX_LEARNING_STATE_VALUE - vdf.GetLearningScore());
 
         ui->VocabularyCfgListContentVLayout->insertWidget(ui->VocabularyCfgListContentVLayout->count()-1, (bar));
     }

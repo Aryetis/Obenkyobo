@@ -12,6 +12,7 @@ class ScreenSettingsPage;
 class MainWindow;
 class VocabExplorerPage;
 class VocabularyDisplayPage;
+class Tools;
 class GetMy
 {
 public:
@@ -21,7 +22,7 @@ public:
         return instance;
     }
 
-    void SetMainWindowInst(MainWindow* mainWindow) { mainWindowInstance = mainWindow;}
+    void SetMainWindowInst(MainWindow* mainWindow) { mainWindowInstance = mainWindow; }
     MainWindow& MainWindowInst() { return *mainWindowInstance; }
 
     void SetQcmExercicePageInst(QcmExercicePage* exercice) { qcmExerciceInstance = exercice;}
@@ -30,23 +31,26 @@ public:
     void SetFntSettingsPageInst(FntSettingsPage* fntSetting) { fntSettingInstance = fntSetting;}
     FntSettingsPage& FntSettingsPageInst() { return *fntSettingInstance; }
 
-    void SetAppSettingsPageInst(AppSettingsPage* appSetting) { appSettingsInstance = appSetting;}
+    void SetAppSettingsPageInst(AppSettingsPage* appSetting) { appSettingsInstance = appSetting; }
     AppSettingsPage& AppSettingsPageInst() { return *appSettingsInstance; }
 
-    void SetKanaEditPageInst(KanaEditPage* symbolSetting) { KanaEditInstance = symbolSetting;}
+    void SetKanaEditPageInst(KanaEditPage* symbolSetting) { KanaEditInstance = symbolSetting; }
     KanaEditPage& KanaEditPageInst() { return *KanaEditInstance; }
 
     void SetScreenSettingsPageInst(ScreenSettingsPage* screenSettings) { screenSettingsInstance = screenSettings; }
     ScreenSettingsPage& ScreenSettingsPageInst() { return *screenSettingsInstance; }
 
-    void SetVocabExplorerPageInst(VocabExplorerPage* vocab) { vocabularyLearnEditSetInstance = vocab;}
+    void SetVocabExplorerPageInst(VocabExplorerPage* vocab) { vocabularyLearnEditSetInstance = vocab; }
     VocabExplorerPage* VocabExplorerPageInst() { return vocabularyLearnEditSetInstance; }
 
-    void SetVocabularyDisplayPageInst(VocabularyDisplayPage* vocab) { vocabularyDisplayInstance = vocab;}
+    void SetVocabularyDisplayPageInst(VocabularyDisplayPage* vocab) { vocabularyDisplayInstance = vocab; }
     VocabularyDisplayPage* VocabularyDisplayPageInst() { return vocabularyDisplayInstance; }
 
-    void SetSettingSerialierInst(QSettings* settingSerializer) { settingSerializerInstance = settingSerializer;}
+    void SetSettingSerialierInst(QSettings* settingSerializer) { settingSerializerInstance = settingSerializer; }
     QSettings* SettingSerializerInst() { return settingSerializerInstance; }
+
+    void SetToolsInst(Tools* tools) { toolsInstance = tools; }
+    Tools* ToolsInst() { return toolsInstance; }
 
     const KoboDeviceDescriptor& Descriptor() { return desc; }
 
@@ -58,8 +62,9 @@ private :
     AppSettingsPage*                appSettingsInstance;
     ScreenSettingsPage*             screenSettingsInstance;
     KanaEditPage*                   KanaEditInstance;
-    VocabExplorerPage*         vocabularyLearnEditSetInstance;
-    VocabularyDisplayPage*              vocabularyDisplayInstance;
+    VocabExplorerPage*              vocabularyLearnEditSetInstance;
+    VocabularyDisplayPage*          vocabularyDisplayInstance;
+    Tools*                          toolsInstance;
 
     KoboDeviceDescriptor desc =  KoboPlatformFunctions::getKoboDeviceDescriptor();
 

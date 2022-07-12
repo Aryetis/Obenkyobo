@@ -2,7 +2,7 @@
 #include "ui_qcmentryguess.h"
 #include "Src/Pages/FntSettingsPage.h"
 #include "Src/GetMy.h"
-#include "Src/tools.h"
+#include "Src/Tools.h"
 #include "Src/Pages/QcmExercicePage.h"
 
 QcmEntryGuess::QcmEntryGuess(QWidget *parent) :
@@ -45,6 +45,12 @@ void QcmEntryGuess::SetGuess(QcmDataEntry* s, QcmExerciceType qcmType, bool b)
             qcmSubType = QcmTypeEnum::RmjToKana;
             ui->EntryGuess->setFont(GetMy::Instance().FntSettingsPageInst().GetCurrentRomanjiFnt());
             ui->EntryGuess->setText(*symbol->Romanji());
+            break;
+        }
+        case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
+        case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
+        {
+            // TODO NOW
             break;
         }
     }
@@ -93,9 +99,9 @@ void QcmEntryGuess::CorrectFontSize()
 //            "(textRectHeight : "+QString::number(textRect.height())+
 //            "; EntryHeight : "+QString::number(ui->EntryGuess->height())+")\n";
 //debug += "TEXT : "+ui->EntryGuess->text();
-//Tools::GetInstance().DisplayPopup(debug, 0.5f);
+//GetMy::Instance().ToolsInst()->DisplayPopup(debug, 0.5f);
 
-        Tools::GetInstance().DisplayPopup(
+        GetMy::Instance().ToolsInst()->DisplayPopup(
                     "MCQ Answers (cf :Settings->Fonts) font size("+
                     QString::number((qcmSubType == QcmTypeEnum::RmjToKana)
                                     ? GetMy::Instance().FntSettingsPageInst().GetAnswerRmjKanaSize()

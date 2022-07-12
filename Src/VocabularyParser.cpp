@@ -1,7 +1,8 @@
 #include <QFile>
 #include <QTextStream>
 #include "Src/VocabularyParser.h"
-#include "Src/tools.h"
+#include "Src/GetMy.h"
+#include "Src/Tools.h"
 
 void VocabDataEntry::SetLearningScore(int ls)
 {
@@ -24,7 +25,7 @@ VocabDataFile::VocabDataFile(QString sheetPath) : vocabSheetPath(sheetPath), lea
         vocabFile.close();
     }
     else
-        Tools::GetInstance().DisplayPopup("Could not open file : "+sheetPath);
+        GetMy::Instance().ToolsInst()->DisplayPopup("Could not open file : "+sheetPath);
 }
 
 VocabDataFile::~VocabDataFile()
