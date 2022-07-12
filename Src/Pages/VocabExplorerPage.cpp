@@ -124,9 +124,14 @@ void VocabExplorerPage::OnValueChanged(int /*value*/) const
         GetMy::Instance().MainWindowInst().AggressiveClearScreen();
 }
 
-void VocabExplorerPage::on_pushButton_clicked()
+void VocabExplorerPage::on_homeButton_clicked()
 {
     currentVocabDirString = QString(QCoreApplication::applicationDirPath() + "/vocab/");
     currentDir = QDir(currentVocabDirString);
     Populate();
+}
+
+void VocabExplorerPage::on_resetButton_clicked()
+{
+    // TODO NOW : reset selected files LS
 }

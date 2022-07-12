@@ -69,8 +69,8 @@ void QcmEntryGuess::resizeEvent(QResizeEvent* event)
 void QcmEntryGuess::CorrectFontSize()
 {
     int newFontSize = (qcmSubType == QcmTypeEnum::RmjToKana)
-                        ? GetMy::Instance().FntSettingsPageInst().GetAnswerRmjKanaSize()
-                        : GetMy::Instance().FntSettingsPageInst().GetAnswerKanaRmjSize();
+                        ? GetMy::Instance().FntSettingsPageInst().GetKanasAnswerRmjKanaSize()
+                        : GetMy::Instance().FntSettingsPageInst().GetKanasAnswerKanaRmjSize();
     QRect textRect = ui->EntryGuess->fontMetrics().boundingRect(ui->EntryGuess->text());
     QFont correctedFont = QFont(ui->EntryGuess->fontInfo().family(), newFontSize);
     ui->EntryGuess->setFont(correctedFont);
@@ -104,14 +104,14 @@ void QcmEntryGuess::CorrectFontSize()
         GetMy::Instance().ToolsInst()->DisplayPopup(
                     "MCQ Answers (cf :Settings->Fonts) font size("+
                     QString::number((qcmSubType == QcmTypeEnum::RmjToKana)
-                                    ? GetMy::Instance().FntSettingsPageInst().GetAnswerRmjKanaSize()
-                                    : GetMy::Instance().FntSettingsPageInst().GetAnswerKanaRmjSize())+
+                                    ? GetMy::Instance().FntSettingsPageInst().GetKanasAnswerRmjKanaSize()
+                                    : GetMy::Instance().FntSettingsPageInst().GetKanasAnswerKanaRmjSize())+
                     ") is too big,\n"
                     "Resizing them to " + QString::number(newFontSize));
         if (qcmSubType == QcmTypeEnum::RmjToKana)
-            GetMy::Instance().FntSettingsPageInst().SetAnswerRmjKanaSize(newFontSize);
+            GetMy::Instance().FntSettingsPageInst().SetKanasAnswerRmjKanaSize(newFontSize);
         else
-            GetMy::Instance().FntSettingsPageInst().SetAnswerKanaRmjSize(newFontSize);
+            GetMy::Instance().FntSettingsPageInst().SetKanasAnswerKanaRmjSize(newFontSize);
     }
 }
 

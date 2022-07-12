@@ -3,8 +3,9 @@
 
 #include <QDialog>
 
-namespace Ui {
-class Popup;
+namespace Ui
+{
+    class PopupWidget;
 }
 
 class PopupWidget : public QDialog
@@ -19,7 +20,7 @@ private slots:
     void on_OkButton_clicked();
 
 private:
-    Ui::Popup *ui;
+    Ui::PopupWidget *ui;
 };
 
 #endif // POPUPWIDGET_H

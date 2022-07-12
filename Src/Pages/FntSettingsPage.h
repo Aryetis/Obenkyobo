@@ -29,22 +29,27 @@ public:
     QString GetCurrentRomanjiFamily() { return romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentRomanjiFntIdx)].family(); }
     QString GetCurrentKanjiFamily() { return kanjiFonts[static_cast<std::vector<QFont>::size_type>(currentKanjiFontIdx)].family(); }
 
-    int GetStemSize() const { return stemSize; }
-    int GetAnswerRmjKanaSize() const { return answerRmjKanaSize; }
-    int GetAnswerKanaRmjSize() const { return answerKanaRmjSize; }
-    void SetAnswerRmjKanaSize(int size);
-    void SetAnswerKanaRmjSize(int size);
+    int GetKanasStemSize() const { return stemSize; }
+    int GetKanasAnswerRmjKanaSize() const { return answerRmjKanaSize; }
+    int GetKanasAnswerKanaRmjSize() const { return answerKanaRmjSize; }
+    void SetKanasAnswerRmjKanaSize(int size);
+    void SetKanasAnswerKanaRmjSize(int size);
 
 private slots:
     void on_HiraganaFntDropdown_activated(int index);
     void on_KatakanaFntDropdown_activated(int index);
     void on_RomanjiFntDropdown_activated(int index);
-
     void on_KanjiFntDropdown_currentIndexChanged(int index);
 
-    void on_StemSlider_valueChanged(int size);
-    void on_AnswerRmjKanaSlider_valueChanged(int size);
-    void on_AnswerKanaRmjSlider_valueChanged(int size);
+    void on_KanasStemSlider_valueChanged(int value);
+    void on_KanasAnswerKanaRmjSlider_valueChanged(int value);
+    void on_KanasAnswerRmjKanaSlider_valueChanged(int value);
+    void on_KanasAutoResizeCheckbox_clicked(bool checked);
+
+    void on_VocabStemSlider_valueChanged(int value);
+    void on_VocabAnswerKanaRmjSlider_valueChanged(int value);
+    void on_VocabAnswerRmjKanaSlider_valueChanged(int value);
+    void on_VocabAutoResizeCheckbox_clicked(bool checked);
 
 private:
     Ui::FntSettingsPage *ui;

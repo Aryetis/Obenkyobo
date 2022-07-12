@@ -112,7 +112,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="BotLayout" stretch="2,8">
+    <layout class="QHBoxLayout" name="BotLayout" stretch="2,8,0">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -120,7 +120,7 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="homeButton">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -145,7 +145,14 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Select / Unselect All</string>
+        <string>(Un)Select All</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="resetButton">
+       <property name="text">
+        <string>Reset LS</string>
        </property>
       </widget>
      </item>

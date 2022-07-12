@@ -57,21 +57,21 @@ void QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
             {
                 if (newQcmRequested && (ui->SwitchButton->isVisible() || !currentQcmType.has_value()))
                     ui->SwitchButton->setVisible(false);
-                stemFont = QFont(fntSetting.GetCurrentRomanjiFamily(), fntSetting.GetStemSize());
+                stemFont = QFont(fntSetting.GetCurrentRomanjiFamily(), fntSetting.GetKanasStemSize());
                 break;
             }
             case QcmExerciceType::Romanji_to_Hiragana_MCQ :
             {
                 if (newQcmRequested && (ui->SwitchButton->isVisible() || !currentQcmType.has_value()))
                     ui->SwitchButton->setVisible(false);
-                stemFont = QFont(fntSetting.GetCurrentHiraganaFamily(), fntSetting.GetStemSize());
+                stemFont = QFont(fntSetting.GetCurrentHiraganaFamily(), fntSetting.GetKanasStemSize());
                 break;
             }
             case QcmExerciceType::Romanji_to_Katakana_MCQ :
             {
                 if (newQcmRequested && (ui->SwitchButton->isVisible() || !currentQcmType.has_value()))
                     ui->SwitchButton->setVisible(false);
-                stemFont = QFont(fntSetting.GetCurrentKatakanaFamily(), fntSetting.GetStemSize());
+                stemFont = QFont(fntSetting.GetCurrentKatakanaFamily(), fntSetting.GetKanasStemSize());
                 break;
             }
             case QcmExerciceType::Vocabulary_to_Romanji_MCQ :

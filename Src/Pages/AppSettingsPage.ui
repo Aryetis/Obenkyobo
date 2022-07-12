@@ -126,7 +126,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Hard Refresh Frequency :</string>
+          <string>Hard Refresh Freq :</string>
          </property>
         </widget>
        </item>
@@ -691,7 +691,7 @@
        <item>
         <widget class="QPushButton" name="DisableVocabSheets">
          <property name="text">
-          <string>Clear Vocab Sheets</string>
+          <string>Clear Vocab Sel.</string>
          </property>
         </widget>
        </item>

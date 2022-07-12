@@ -22,16 +22,16 @@ FntSettingsPage::~FntSettingsPage()
     delete ui;
 }
 
-void FntSettingsPage::SetAnswerRmjKanaSize(int size)
+void FntSettingsPage::SetKanasAnswerRmjKanaSize(int size)
 {
-    on_AnswerRmjKanaSlider_valueChanged(size);
-    ui->AnswerRmjKanaSlider->setValue(size);
+    on_KanasAnswerRmjKanaSlider_valueChanged(size);
+    ui->KanasAnswerRmjKanaSlider->setValue(size);
 }
 
-void FntSettingsPage::SetAnswerKanaRmjSize(int size)
+void FntSettingsPage::SetKanasAnswerKanaRmjSize(int size)
 {
-    on_AnswerKanaRmjSlider_valueChanged(size);
-    ui->AnswerKanaRmjSlider->setValue(size);
+    on_KanasAnswerKanaRmjSlider_valueChanged(size);
+    ui->KanasAnswerKanaRmjSlider->setValue(size);
 }
 
 void FntSettingsPage::RegisterFntsFromResources()
@@ -84,15 +84,15 @@ void FntSettingsPage::RegisterFntsFromResources()
     ui->RomanjiFntDropdown->setCurrentIndex(currentRomanjiFntIdx);
     ui->KanjiFntDropdown->setCurrentIndex(currentKanjiFontIdx);
 
-    stemSize =  settingsSerializer->value("FntSettings/stemSize", DEFAULT_STEM_FNT_SIZE).toInt();
-    ui->StemSlider->setValue(stemSize);
-    ui->StemValueLabel->setText(QString::number(stemSize));
+    stemSize =  settingsSerializer->value("FntSettings/KanasStemSize", DEFAULT_STEM_FNT_SIZE).toInt();
+    ui->KanasStemSlider->setValue(stemSize);
+    ui->KanasStemValueLabel->setText(QString::number(stemSize));
     answerRmjKanaSize =  settingsSerializer->value("FntSettings/answerRmjKanaSize", DEFAULT_ANSWER_RMJ_KANA_FNT_SIZE).toInt();
-    ui->AnswerRmjKanaSlider->setValue(answerRmjKanaSize);
-    ui->AnswerRmjKanaValueLabel->setText(QString::number(answerRmjKanaSize));
+    ui->KanasAnswerRmjKanaSlider->setValue(answerRmjKanaSize);
+    ui->KanasAnswerRmjKanaValueLabel->setText(QString::number(answerRmjKanaSize));
     answerKanaRmjSize =  settingsSerializer->value("FntSettings/answerKanaRmjSize", DEFAULT_ANSWER_KANA_RMJ_SIZE).toInt();
-    ui->AnswerKanaRmjSlider->setValue(answerKanaRmjSize);
-    ui->AnswerKanaRmjValueLabel->setText(QString::number(answerKanaRmjSize));
+    ui->KanasAnswerKanaRmjSlider->setValue(answerKanaRmjSize);
+    ui->KanasAnswerKanaRmjValueLabel->setText(QString::number(answerKanaRmjSize));
 }
 
 void FntSettingsPage::RegisterHiraganaFont(QString fntAddress)
@@ -155,23 +155,48 @@ void FntSettingsPage::on_KanjiFntDropdown_currentIndexChanged(int index)
                 ui->RomanjiFntDropdown->itemText(currentKanjiFontIdx));
 }
 
-void FntSettingsPage::on_StemSlider_valueChanged(int size)
+void FntSettingsPage::on_KanasStemSlider_valueChanged(int size)
 {
     stemSize = size;
-    ui->StemValueLabel->setText(QString::number(size));
-    settingsSerializer->setValue("FntSettings/stemSize", size);
+    ui->KanasStemValueLabel->setText(QString::number(size));
+    settingsSerializer->setValue("FntSettings/KanasStemSize", size); // TODO change
 }
 
-void FntSettingsPage::on_AnswerRmjKanaSlider_valueChanged(int size)
+void FntSettingsPage::on_KanasAnswerKanaRmjSlider_valueChanged(int size)
+{
+    answerKanaRmjSize = size;
+    ui->KanasAnswerKanaRmjValueLabel->setText(QString::number(size));
+    settingsSerializer->setValue("FntSettings/answerKanaRmjSize", size);
+}
+
+void FntSettingsPage::on_KanasAnswerRmjKanaSlider_valueChanged(int size)
 {
     answerRmjKanaSize = size;
-    ui->AnswerRmjKanaValueLabel->setText(QString::number(size));
+    ui->KanasAnswerRmjKanaValueLabel->setText(QString::number(size));
     settingsSerializer->setValue("FntSettings/answerRmjKanaSize", size);
 }
 
-void FntSettingsPage::on_AnswerKanaRmjSlider_valueChanged(int size)
+void FntSettingsPage::on_KanasAutoResizeCheckbox_clicked(bool checked)
 {
-    answerKanaRmjSize = size;
-    ui->AnswerKanaRmjValueLabel->setText(QString::number(size));
-    settingsSerializer->setValue("FntSettings/answerKanaRmjSize", size);
+    // TODO NOW
+}
+
+void FntSettingsPage::on_VocabStemSlider_valueChanged(int value)
+{
+    // TODO NOW
+}
+
+void FntSettingsPage::on_VocabAnswerKanaRmjSlider_valueChanged(int value)
+{
+    // TODO NOW
+}
+
+void FntSettingsPage::on_VocabAnswerRmjKanaSlider_valueChanged(int value)
+{
+    // TODO NOW
+}
+
+void FntSettingsPage::on_VocabAutoResizeCheckbox_clicked(bool checked)
+{
+    // TODO NOW
 }

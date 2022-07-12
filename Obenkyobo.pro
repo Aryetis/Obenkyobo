@@ -5,8 +5,10 @@
 #        - Vocab QCM needs a "do not resize if overflow" option in the FntSettings
 #        - Fix errorTest.oben display empty line at top and bot
 #        - Finish sleep handling properly
+#        - Add learning score vocab reset to VocabExplorerPage and VocabDisplayPage
 #-------------------------------------------------
-# TODO later : - redo the Qmenu::right-arrow
+# TODO later : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size
+#              - redo the Qmenu::right-arrow
 #              - Investigate weird hard refresh (Edit page) glitch on Kobo Glo HD under unknown circumstances
 #-------------------------------------------------
 

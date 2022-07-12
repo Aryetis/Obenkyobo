@@ -27,7 +27,8 @@ protected:
 
 private slots:
     void on_SelectAllButton_clicked();
-    void on_pushButton_clicked();
+    void on_homeButton_clicked();
+    void on_resetButton_clicked();
 
 private:
     void Populate();

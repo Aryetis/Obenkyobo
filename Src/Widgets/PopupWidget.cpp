@@ -1,11 +1,11 @@
 #include <QFontMetrics>
 #include <QRect>
 #include "Src/Widgets/PopupWidget.h"
-#include "ui_popup.h"
+#include "ui_PopupWidget.h"
 #include "Src/DefinesLand.h"
 #include "Src/GetMy.h"
 
-PopupWidget::PopupWidget(QString message, bool fullscreen, QWidget *parent/* = nullptr*/) : QDialog(parent), ui(new Ui::Popup)
+PopupWidget::PopupWidget(QString message, bool fullscreen, QWidget *parent/* = nullptr*/) : QDialog(parent), ui(new Ui::PopupWidget)
 {
     ui->setupUi(this);
     setStyleSheet(QString("QDialog{border: %1px solid black;} ").arg(POPUP_BORDER_SIZE));
