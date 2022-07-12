@@ -28,7 +28,6 @@ public:
     int GetNumberOfRowPerVocabPage() const;
     bool IsWeightedRandomEnabled() const;
     int GetBatteryFormatIdx() const { return batteryFormatIdx; }
-    int GetDateFormatIdx() const { return dateFormatIdx; } // 0 <=> 13:37, 1 <=> 1:37 pm // TODO : use bool and IsDateAmPmFormat
     int GetHardRefreshFreq() const;
     bool GetKanaHardRefresh() const { return kanaHardRefresh; }
     int GetVocabFntSize() const;

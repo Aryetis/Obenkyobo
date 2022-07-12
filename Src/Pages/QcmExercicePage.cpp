@@ -77,7 +77,8 @@ void QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
             case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
             case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
             {
-            if (newQcmRequested && (!ui->SwitchButton->isVisible() || !currentQcmType.has_value()))
+                // TODO NOW
+                if (newQcmRequested && (!ui->SwitchButton->isVisible() || !currentQcmType.has_value()))
                     ui->SwitchButton->setVisible(true);
                 break;
             }

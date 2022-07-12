@@ -5,7 +5,6 @@
 #include <QThread>
 #include <QProcess>
 #include <iostream>
-#include <signal.h>
 #include <execinfo.h>
 #include "Src/Tools.h"
 #include "Src/GetMy.h"
@@ -96,23 +95,23 @@ bool Tools::IsThereEnough(QcmExerciceType qcmType) const
 
     switch (qcmType)
     {
-    case QcmExerciceType::Hiragana_to_Romanji_MCQ :
-    case QcmExerciceType::Hiragana_to_Romanji_Kbd :
-    case QcmExerciceType::Romanji_to_Hiragana_MCQ :
-    {
-        return (KanasTables::HiraganaSymbolsTableFamily.NbrOfEnabled() >= minRequiredSymbol);
-    }
-    case QcmExerciceType::Katakana_to_Romanji_MCQ :
-    case QcmExerciceType::Katakana_to_Romanji_Kbd :
-    case QcmExerciceType::Romanji_to_Katakana_MCQ :
-    {
-        return (KanasTables::KatakanaSymbolsTableFamily.NbrOfEnabled() >= minRequiredSymbol);
-    }
-    case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
-    case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
-    {
-        return true; // TODO NOW
-    }
+        case QcmExerciceType::Hiragana_to_Romanji_MCQ :
+        case QcmExerciceType::Hiragana_to_Romanji_Kbd :
+        case QcmExerciceType::Romanji_to_Hiragana_MCQ :
+        {
+            return (KanasTables::HiraganaSymbolsTableFamily.NbrOfEnabled() >= minRequiredSymbol);
+        }
+        case QcmExerciceType::Katakana_to_Romanji_MCQ :
+        case QcmExerciceType::Katakana_to_Romanji_Kbd :
+        case QcmExerciceType::Romanji_to_Katakana_MCQ :
+        {
+            return (KanasTables::KatakanaSymbolsTableFamily.NbrOfEnabled() >= minRequiredSymbol);
+        }
+        case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
+        case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
+        {
+            return true; // TODO NOW
+        }
     }
 
     assert(false);

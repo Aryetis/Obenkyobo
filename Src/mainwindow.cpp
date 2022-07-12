@@ -79,7 +79,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::AggressiveClearScreen(bool force /*=false*/) const // TODO : move to tools ?
+void MainWindow::AggressiveClearScreen(bool force /*=false*/) const
 {
     if (GetMy::Instance().AppSettingsPageInst().GetKanaHardRefresh() || force)
     {
@@ -192,7 +192,7 @@ void MainWindow::refreshTimeAndBattery()
 
     // Handle Time
     QTime time = QTime::currentTime();
-    QString timeText = time.toString((GetMy::Instance().AppSettingsPageInst().GetDateFormatIdx() == 0) ? "hh:mm" : "hh:mm a" );
+    QString timeText = time.toString(GetMy::Instance().ToolsInst()->IsLocalTimeFormatUS()) ? "hh:mm" : "hh:mm a" );
     if (timeDisplay->text() != timeText)
     {
         timeDisplay->setText(timeText);
@@ -288,10 +288,8 @@ void MainWindow::on_actionAbout_triggered()
 void MainWindow::on_actionExit_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionExit_triggered()" << std::endl;
-    QApplication::quit(); // TODO : called when going to sleep ?
+    QApplication::quit(); // TODO : called when going to sleep ? Investigate if this is from here (probably not)
 }
-
-
 
 //===========================================================================
 void MainWindow::on_actionHiragana_to_Romanji_MCQ_triggered()

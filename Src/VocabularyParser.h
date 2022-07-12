@@ -15,7 +15,7 @@ class VocabDataFile
         QString const& GetPath() const { return vocabSheetPath; }
         QSet<VocabDataEntry*>& Entries() { return entries; }
         QSet<VocabDataEntry*>& MalformedLines() { return malformedLines; }
-        int GetLearningScore() const { return learningScore; }  // TODO : call this from VocabExplorerPage
+        int GetLearningScore() const { return learningScore; }
 
     private :
         void ParseLine(QString const& line, int lineNumber);
