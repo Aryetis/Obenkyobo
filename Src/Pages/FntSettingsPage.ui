@@ -228,10 +228,10 @@
           <enum>Qt::RightToLeft</enum>
          </property>
          <property name="text">
-          <string>Settings change on overflow</string>
+          <string>Allow silent size adaptation :</string>
          </property>
          <property name="checked">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -449,7 +449,10 @@
           <enum>Qt::RightToLeft</enum>
          </property>
          <property name="text">
-          <string>Settings change on overflow</string>
+          <string>Allow silent size adaptation :</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
          </property>
         </widget>
        </item>

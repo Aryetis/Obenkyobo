@@ -29,11 +29,19 @@ public:
     QString GetCurrentRomanjiFamily() { return romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentRomanjiFntIdx)].family(); }
     QString GetCurrentKanjiFamily() { return kanjiFonts[static_cast<std::vector<QFont>::size_type>(currentKanjiFontIdx)].family(); }
 
-    int GetKanasStemSize() const { return stemSize; }
-    int GetKanasAnswerRmjKanaSize() const { return answerRmjKanaSize; }
-    int GetKanasAnswerKanaRmjSize() const { return answerKanaRmjSize; }
+    int GetKanasStemSize() const { return kanasStemSize; }
+    int GetKanasAnswerRmjKanaSize() const { return kanasAnswerRmjKanaSize; }
+    int GetKanasAnswerKanaRmjSize() const { return kanasAnswerKanaRmjSize; }
+    bool GetKanasAllowSilentResize() const { return kanasAllowSilentResize; }
     void SetKanasAnswerRmjKanaSize(int size);
     void SetKanasAnswerKanaRmjSize(int size);
+
+    int GetVocabStemSize() const { return vocabStemSize; }
+    int GetVocabAnswerRmjKanaSize() const { return vocabAnswerRmjKanaSize; }
+    int GetVocabAnswerKanaRmjSize() const { return vocabAnswerKanaRmjSize; }
+    bool GetVocabAllowSilentResize() const { return vocabAllowSilentResize; }
+    void SetVocabAnswerRmjKanaSize(int size);
+    void SetVocabAnswerKanaRmjSize(int size);
 
 private slots:
     void on_HiraganaFntDropdown_activated(int index);
@@ -72,9 +80,15 @@ private:
     int currentRomanjiFntIdx;
     int currentKanjiFontIdx;
 
-    int stemSize;
-    int answerRmjKanaSize;
-    int answerKanaRmjSize;
+    int kanasStemSize;
+    int kanasAnswerRmjKanaSize;
+    int kanasAnswerKanaRmjSize;
+    bool kanasAllowSilentResize;
+
+    int vocabStemSize;
+    int vocabAnswerRmjKanaSize;
+    int vocabAnswerKanaRmjSize;
+    bool vocabAllowSilentResize;
 
     QSettings* settingsSerializer;
 };

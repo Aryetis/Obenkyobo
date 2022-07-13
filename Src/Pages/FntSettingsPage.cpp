@@ -34,6 +34,18 @@ void FntSettingsPage::SetKanasAnswerKanaRmjSize(int size)
     ui->KanasAnswerKanaRmjSlider->setValue(size);
 }
 
+void FntSettingsPage::SetVocabAnswerRmjKanaSize(int size)
+{
+    on_VocabAnswerRmjKanaSlider_valueChanged(size);
+    ui->VocabAnswerRmjKanaSlider->setValue(size);
+}
+
+void FntSettingsPage::SetVocabAnswerKanaRmjSize(int size)
+{
+    on_VocabAnswerKanaRmjSlider_valueChanged(size);
+    ui->VocabAnswerKanaRmjSlider->setValue(size);
+}
+
 void FntSettingsPage::RegisterFntsFromResources()
 {
     std::unique_ptr<QDirIterator> it (new QDirIterator(":/HiraganaFonts",  {"*.ttf"}, QDir::Files));
@@ -84,15 +96,29 @@ void FntSettingsPage::RegisterFntsFromResources()
     ui->RomanjiFntDropdown->setCurrentIndex(currentRomanjiFntIdx);
     ui->KanjiFntDropdown->setCurrentIndex(currentKanjiFontIdx);
 
-    stemSize =  settingsSerializer->value("FntSettings/KanasStemSize", DEFAULT_STEM_FNT_SIZE).toInt();
-    ui->KanasStemSlider->setValue(stemSize);
-    ui->KanasStemValueLabel->setText(QString::number(stemSize));
-    answerRmjKanaSize =  settingsSerializer->value("FntSettings/answerRmjKanaSize", DEFAULT_ANSWER_RMJ_KANA_FNT_SIZE).toInt();
-    ui->KanasAnswerRmjKanaSlider->setValue(answerRmjKanaSize);
-    ui->KanasAnswerRmjKanaValueLabel->setText(QString::number(answerRmjKanaSize));
-    answerKanaRmjSize =  settingsSerializer->value("FntSettings/answerKanaRmjSize", DEFAULT_ANSWER_KANA_RMJ_SIZE).toInt();
-    ui->KanasAnswerKanaRmjSlider->setValue(answerKanaRmjSize);
-    ui->KanasAnswerKanaRmjValueLabel->setText(QString::number(answerKanaRmjSize));
+    kanasStemSize =  settingsSerializer->value("FntSettings/KanasStemSize", DEFAULT_KANAS_STEM_FNT_SIZE).toInt();
+    ui->KanasStemSlider->setValue(kanasStemSize);
+    ui->KanasStemValueLabel->setText(QString::number(kanasStemSize));
+    kanasAnswerRmjKanaSize =  settingsSerializer->value("FntSettings/answerRmjKanaSize", DEFAULT_KANAS_ANSWER_RMJ_KANA_FNT_SIZE).toInt();
+    ui->KanasAnswerRmjKanaSlider->setValue(kanasAnswerRmjKanaSize);
+    ui->KanasAnswerRmjKanaValueLabel->setText(QString::number(kanasAnswerRmjKanaSize));
+    kanasAnswerKanaRmjSize =  settingsSerializer->value("FntSettings/answerKanaRmjSize", DEFAULT_KANAS_ANSWER_KANA_RMJ_SIZE).toInt();
+    ui->KanasAnswerKanaRmjSlider->setValue(kanasAnswerKanaRmjSize);
+    ui->KanasAnswerKanaRmjValueLabel->setText(QString::number(kanasAnswerKanaRmjSize));
+    kanasAllowSilentResize = settingsSerializer->value("FntSettings/KanasSilentResize", DEFAULT_KANAS_ALLOW_SILENT_RESIZE).toBool();
+    ui->KanasAutoResizeCheckbox->setChecked(kanasAllowSilentResize);
+
+    vocabStemSize =  settingsSerializer->value("FntSettings/VocabStemSize", DEFAULT_VOCAB_STEM_FNT_SIZE).toInt();
+    ui->VocabStemSlider->setValue(vocabStemSize);
+    ui->VocabStemValueLabel->setText(QString::number(vocabStemSize));
+    vocabAnswerRmjKanaSize =  settingsSerializer->value("FntSettings/answerRmjVocabSize", DEFAULT_VOCAB_ANSWER_RMJ_KANA_FNT_SIZE).toInt();
+    ui->VocabAnswerRmjKanaSlider->setValue(vocabAnswerRmjKanaSize);
+    ui->VocabAnswerRmjKanaValueLabel->setText(QString::number(vocabAnswerRmjKanaSize));
+    vocabAnswerKanaRmjSize =  settingsSerializer->value("FntSettings/answerVocabRmjSize", DEFAULT_VOCAB_ANSWER_KANA_RMJ_SIZE).toInt();
+    ui->VocabAnswerKanaRmjSlider->setValue(vocabAnswerKanaRmjSize);
+    ui->VocabAnswerKanaRmjValueLabel->setText(QString::number(vocabAnswerKanaRmjSize));
+    vocabAllowSilentResize = settingsSerializer->value("FntSettings/VocabSilentResize", DEFAULT_KANAS_ALLOW_SILENT_RESIZE).toBool();
+    ui->VocabAutoResizeCheckbox->setChecked(vocabAllowSilentResize);
 }
 
 void FntSettingsPage::RegisterHiraganaFont(QString fntAddress)
@@ -122,6 +148,8 @@ QFont FntSettingsPage::GetFont(QString fntAddress)
 
     return QFont(name);
 }
+
+//===================================================================================
 
 void FntSettingsPage::on_HiraganaFntDropdown_activated(int index)
 {
@@ -155,48 +183,61 @@ void FntSettingsPage::on_KanjiFntDropdown_currentIndexChanged(int index)
                 ui->RomanjiFntDropdown->itemText(currentKanjiFontIdx));
 }
 
+//===================================================================================
+
 void FntSettingsPage::on_KanasStemSlider_valueChanged(int size)
 {
-    stemSize = size;
+    kanasStemSize = size;
     ui->KanasStemValueLabel->setText(QString::number(size));
-    settingsSerializer->setValue("FntSettings/KanasStemSize", size); // TODO change
+    settingsSerializer->setValue("FntSettings/KanasStemSize", size);
 }
 
 void FntSettingsPage::on_KanasAnswerKanaRmjSlider_valueChanged(int size)
 {
-    answerKanaRmjSize = size;
+    kanasAnswerKanaRmjSize = size;
     ui->KanasAnswerKanaRmjValueLabel->setText(QString::number(size));
     settingsSerializer->setValue("FntSettings/answerKanaRmjSize", size);
 }
 
 void FntSettingsPage::on_KanasAnswerRmjKanaSlider_valueChanged(int size)
 {
-    answerRmjKanaSize = size;
+    kanasAnswerRmjKanaSize = size;
     ui->KanasAnswerRmjKanaValueLabel->setText(QString::number(size));
     settingsSerializer->setValue("FntSettings/answerRmjKanaSize", size);
 }
 
 void FntSettingsPage::on_KanasAutoResizeCheckbox_clicked(bool checked)
 {
-    // TODO NOW
+    kanasAllowSilentResize = checked;
+    settingsSerializer->setValue("FntSettings/KanasSilentResize", checked);
 }
 
-void FntSettingsPage::on_VocabStemSlider_valueChanged(int value)
+//===================================================================================
+
+
+void FntSettingsPage::on_VocabStemSlider_valueChanged(int size)
 {
-    // TODO NOW
+    vocabStemSize = size;
+    ui->VocabStemValueLabel->setText(QString::number(size));
+    settingsSerializer->setValue("FntSettings/VocabStemSize", size);
 }
 
-void FntSettingsPage::on_VocabAnswerKanaRmjSlider_valueChanged(int value)
+void FntSettingsPage::on_VocabAnswerKanaRmjSlider_valueChanged(int size)
 {
-    // TODO NOW
+    vocabAnswerKanaRmjSize = size;
+    ui->VocabAnswerKanaRmjValueLabel->setText(QString::number(size));
+    settingsSerializer->setValue("FntSettings/answerVocabRmjSize", size);
 }
 
-void FntSettingsPage::on_VocabAnswerRmjKanaSlider_valueChanged(int value)
+void FntSettingsPage::on_VocabAnswerRmjKanaSlider_valueChanged(int size)
 {
-    // TODO NOW
+    vocabAnswerRmjKanaSize = size;
+    ui->VocabAnswerRmjKanaValueLabel->setText(QString::number(size));
+    settingsSerializer->setValue("FntSettings/answerRmjVocabSize", size);
 }
 
 void FntSettingsPage::on_VocabAutoResizeCheckbox_clicked(bool checked)
 {
-    // TODO NOW
+    vocabAllowSilentResize = checked;
+    settingsSerializer->setValue("FntSettings/VocabSilentResize", checked);
 }
