@@ -105,7 +105,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="botButtonsLayout">
+    <layout class="QHBoxLayout" name="botButtonsLayout" stretch="2,2,4,2">
      <property name="spacing">
       <number>20</number>
      </property>
@@ -130,7 +130,14 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Previous Page</string>
+        <string>◄</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>Reset LS</string>
        </property>
       </widget>
      </item>
@@ -156,7 +163,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Next Page</string>
+        <string>►</string>
        </property>
       </widget>
      </item>

@@ -6,12 +6,12 @@
 
 void VocabDataEntry::SetLearningScore(int ls)
 {
-    // TODO later on, called during QCM
+    vocabDataFile->WriteLearningScore(GetPath(), ls, lineNumber);
 }
 
-VocabDataFile::VocabDataFile(QString sheetPath) : vocabSheetPath(sheetPath), learningScore(0)
+VocabDataFile::VocabDataFile(QString sheetPath) : vocabSheetPath(sheetPath), entries(), malformedLines(), learningScore(0)
 {
-    QFile vocabFile(sheetPath);
+    QFile vocabFile(vocabSheetPath);
     if (vocabFile.open(QIODevice::ReadOnly))
     {
         int lineNbr = 0;
@@ -19,13 +19,13 @@ VocabDataFile::VocabDataFile(QString sheetPath) : vocabSheetPath(sheetPath), lea
         in.setCodec("UTF-8");
 
         while (!in.atEnd())
-            ParseLine(in.readLine(), ++lineNbr);
+            ParseLine(in.readLine(), lineNbr++);
 
         learningScore /= entries.count();
         vocabFile.close();
     }
     else
-        GetMy::Instance().ToolsInst()->DisplayPopup("Could not open file : "+sheetPath);
+        GetMy::Instance().ToolsInst()->DisplayPopup("Could not open file : "+vocabSheetPath);
 }
 
 VocabDataFile::~VocabDataFile()
@@ -49,7 +49,7 @@ void VocabDataFile::ParseLine(const QString &line, int lineNumber_)
     QString kanji_ = "";
     QString trad_ = "";
     int learningScore_ = -1;
-    KanaFamilyEnum fontType_ = KanaFamilyEnum::dummy;
+    KanaFamilyEnum fontType_ = KanaFamilyEnum::hiragana;
 
     if ( parsedFields.count() == 6 )
     {
@@ -58,21 +58,74 @@ void VocabDataFile::ParseLine(const QString &line, int lineNumber_)
         else if (parsedFields[1] == "katakana")
             fontType_ = KanaFamilyEnum::katakana;
         else
+        {
             malformedLines.insert(new VocabDataEntry(kanas_, kanji_, trad_, learningScore_, this, lineNumber_, fontType_));
+            return;
+        }
 
         kanas_ = parsedFields[2];
         kanji_ = parsedFields[3];
         trad_ = parsedFields[4];
         learningScore_ = parsedFields[5].toInt();
         if (learningScore_ < 0 || learningScore_ > MAX_LEARNING_STATE_VALUE)
+        {
             malformedLines.insert(new VocabDataEntry(kanas_, kanji_, trad_, learningScore_, this, lineNumber_, fontType_));
+            return;
+        }
         else
             learningScore += learningScore_;
 
         entries.insert(new VocabDataEntry(kanas_, kanji_, trad_, learningScore_, this, lineNumber_, fontType_));
+        return;
     }
     else
         malformedLines.insert(new VocabDataEntry(kanas_, kanji_, trad_, learningScore_, this, lineNumber_, fontType_));
+}
+
+bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, int ls, int lineNumber /*= -1*/)
+{
+    QFile vocabFileIn{vocabSheetPath};
+    if (QFile::exists(vocabSheetPath+".tmp"))
+        QFile::remove(vocabSheetPath+".tmp");
+    QFile vocabFileOut{vocabSheetPath+".tmp"};
+    if (vocabFileIn.open(QIODevice::ReadOnly) && vocabFileOut.open(QIODevice::ReadWrite))
+    {
+        QTextStream in{&vocabFileIn};
+        in.setCodec("UTF-8");
+        QTextStream out{&vocabFileOut};
+        out.setCodec("UTF-8");
+        int lineCounter = 0;
+
+        while (!in.atEnd())
+        {
+            QString curLine = in.readLine();
+            if ((lineNumber == -1 || lineNumber == lineCounter) && (curLine.count() > 0 && curLine[0] != '#'))
+            {
+                curLine.replace(QRegularExpression("\\[learningScore=([0-9]+)\\]"), QString("[learningScore=%1]").arg(ls));
+                out << curLine << "\n";
+            }
+            else
+                out << curLine << "\n";
+
+            ++lineCounter;
+        }
+        QString inName = vocabFileIn.fileName();
+        vocabFileIn.close();
+        vocabFileIn.remove();
+        vocabFileOut.close();
+        vocabFileOut.rename(inName);
+        return true;
+    }
+    else
+        GetMy::Instance().ToolsInst()->DisplayPopup("Could not open file : "+vocabSheetPath);
+
+    return false;
+}
+
+bool VocabDataFile::ResetLearningScore(QString vocabSheetPath)
+{
+    // Reminder : LearningScore value is its weight in the qcm's pool <=> it's inversed
+    return WriteLearningScore(vocabSheetPath, MAX_LEARNING_STATE_VALUE);
 }
 
 VocabDataPool::VocabDataPool(QString sheetPath)

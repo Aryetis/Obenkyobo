@@ -112,7 +112,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="BotLayout" stretch="2,8,0">
+    <layout class="QHBoxLayout" name="BotLayout" stretch="2,8">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -146,13 +146,6 @@
        </property>
        <property name="text">
         <string>(Un)Select All</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="resetButton">
-       <property name="text">
-        <string>Reset LS</string>
        </property>
       </widget>
      </item>

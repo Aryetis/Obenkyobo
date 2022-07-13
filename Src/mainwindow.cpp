@@ -192,7 +192,7 @@ void MainWindow::refreshTimeAndBattery()
 
     // Handle Time
     QTime time = QTime::currentTime();
-    QString timeText = time.toString(GetMy::Instance().ToolsInst()->IsLocalTimeFormatUS() ? "hh:mm" : "hh:mm a" );
+    QString timeText = time.toString(GetMy::Instance().ToolsInst()->IsLocalTimeFormatUS() ? "hh:mm a" : "hh:mm" );
     if (timeDisplay->text() != timeText)
     {
         timeDisplay->setText(timeText);

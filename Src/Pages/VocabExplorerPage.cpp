@@ -6,6 +6,8 @@
 #include "Src/VocabularyParser.h"
 #include "Src/Widgets/VocabFileEntryWidget.h"
 
+#include "Src/Pages/AppSettingsPage.h"
+
 VocabExplorerPage::VocabExplorerPage(QWidget *parent) :
     QWidget(parent), ui(new Ui::VocabExplorerPage), selectAllStatus(false)
 {
@@ -71,7 +73,7 @@ void VocabExplorerPage::Populate()
         vocabFileWidgets.push_back(bar);
 
         VocabDataFile vdf(fileInfo.absoluteFilePath()); // TODO : make it optional [Full, files only, files and dirs] for perf reasons
-        bar->SetLearningScore(MAX_LEARNING_STATE_VALUE - vdf.GetLearningScore());
+        bar->SetLearningScoreText(MAX_LEARNING_STATE_VALUE - vdf.GetLearningScore());
 
         ui->VocabularyCfgListContentVLayout->insertWidget(ui->VocabularyCfgListContentVLayout->count()-1, (bar));
     }
@@ -109,8 +111,8 @@ void VocabExplorerPage::on_SelectAllButton_clicked()
 {
     selectAllStatus = !selectAllStatus;
 
-    for (VocabFileEntryWidget* vc : vocabFileWidgets)
-        vc->FakeClick(selectAllStatus);
+    for (int i = 1; i < static_cast<int>(vocabFileWidgets.size()); ++i) // skip [UP_DIR] entry // TODO handle [UP_DIR] correctly
+        vocabFileWidgets[i]->FakeClick(selectAllStatus);
 }
 
 void VocabExplorerPage::OnSliderReleased() const
@@ -128,10 +130,6 @@ void VocabExplorerPage::on_homeButton_clicked()
 {
     currentVocabDirString = QString(QCoreApplication::applicationDirPath() + "/vocab/");
     currentDir = QDir(currentVocabDirString);
+    GetMy::Instance().SettingSerializerInst()->setValue("vocab/currentDirectory", currentVocabDirString);
     Populate();
-}
-
-void VocabExplorerPage::on_resetButton_clicked()
-{
-    // TODO NOW : reset selected files LS
 }

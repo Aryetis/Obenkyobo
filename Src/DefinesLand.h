@@ -17,8 +17,7 @@
 enum KanaFamilyEnum
 {
     hiragana,
-    katakana,
-    dummy // TODO remove
+    katakana
 };
 
 enum QcmExerciceType

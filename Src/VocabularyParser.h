@@ -17,6 +17,9 @@ class VocabDataFile
         QSet<VocabDataEntry*>& MalformedLines() { return malformedLines; }
         int GetLearningScore() const { return learningScore; }
 
+        static bool WriteLearningScore(QString vocabSheetPath, int ls, int lineNumber = -1);
+        static bool ResetLearningScore(QString vocabSheetPath);
+
     private :
         void ParseLine(QString const& line, int lineNumber);
 

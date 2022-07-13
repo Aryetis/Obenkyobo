@@ -81,7 +81,7 @@ VocabFileEntryWidget::~VocabFileEntryWidget()
     delete ui;
 }
 
-void VocabFileEntryWidget::SetLearningScore(int learningScore)
+void VocabFileEntryWidget::SetLearningScoreText(int learningScore)
 {
     ui->learningScore->setText(QString::number(learningScore));
 }
@@ -135,4 +135,5 @@ void VocabFileEntryWidget::on_checkBox_clicked(bool checked)
 void VocabFileEntryWidget::FakeClick(bool checked)
 {
     ui->checkBox->setChecked(checked);
+    on_checkBox_clicked(checked);
 }

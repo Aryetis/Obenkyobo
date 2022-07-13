@@ -11,7 +11,7 @@
 #include "Src/Tools.h"
 
 VocabularyDisplayPage::VocabularyDisplayPage(QWidget *parent) :
-    QWidget(parent), ui(new Ui::VocabularyDisplayPage)
+    QWidget(parent), vdf(nullptr), ui(new Ui::VocabularyDisplayPage)
 {
     ui->setupUi(this);
 
@@ -31,7 +31,8 @@ VocabularyDisplayPage::~VocabularyDisplayPage()
     for(auto lineLabels : gridLabels)
         qDeleteAll(lineLabels);
     gridLabels.clear();
-    delete vdf;
+    if (vdf != nullptr)
+        delete vdf;
     delete ui;
 }
 
@@ -133,7 +134,7 @@ void VocabularyDisplayPage::PopulateGrid(bool random /*= false*/, int turnPage /
         gridLabels[x][2]->setText(curVDE->GetTrad());
         gridLabels[x][2]->setFont({gridLabels[x][2]->font().family(), fntSize});
 
-        gridLabels[x][3]->setText(QString::number(curVDE->GetLearningScore()));
+        gridLabels[x][3]->setText(QString::number(MAX_LEARNING_STATE_VALUE - curVDE->GetLearningScore()));
         gridLabels[x][3]->setFont({gridLabels[x][3]->font().family(), fntSize});
 
         for (int j=0; j<4; ++j)
@@ -217,4 +218,11 @@ void VocabularyDisplayPage::HideColumn(int col, bool b)
                 butt->setChecked(true); // "invisible"
         }
     }
+}
+
+void VocabularyDisplayPage::on_pushButton_clicked()
+{
+    VocabDataFile::ResetLearningScore(vdf->GetPath());
+    for (std::vector<QPushButton*> gridLine : gridLabels)
+        gridLine[3]->setText(QString::number(0));
 }

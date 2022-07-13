@@ -22,7 +22,7 @@ public:
 
     QFileInfo const& VocabFileInfo() { return vocabFileInfo; }
     QSettings const& VocabSetting() { return vocabSetting; }
-    void SetLearningScore(int learningScore);
+    void SetLearningScoreText(int learningScore);
 
     void FakeClick(bool checked);
 

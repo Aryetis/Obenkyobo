@@ -31,6 +31,7 @@ private slots:
     void on_KanjiHidePushButton_clicked();
     void on_TraductionHidePushButton_clicked();
     void on_LSHidePushButton_clicked();
+    void on_pushButton_clicked();
 
 private:
     void PopulateGrid(bool random = false, int turnPage = 0);

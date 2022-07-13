@@ -1,14 +1,17 @@
 #-------------------------------------------------
-# TODO : - Refactor QcmExercice so it can handle AppSettings::enabledSheets
-#        - Refactor VocabDisplayPage (fix UI shifting with LS, use a fontMetrics().boundingRect to determine the max lentgth of a title)
-#        - Make VocabDisplayPage tweakable (Do not display / display only for current directory .oben / display for directories too)
-#        - Vocab QCM needs a "do not resize if overflow" option in the FntSettings
-#        - Fix errorTest.oben display empty line at top and bot
-#        - Finish sleep handling properly
-#        - Add learning score vocab reset to VocabExplorerPage and VocabDisplayPage
+# WORKING ON :
+#        - Fix VocabExplorer UI shifting with new LS code
 #-------------------------------------------------
-# TODO later : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size
+# TODO : - Refactor QcmExercice so it can handle AppSettings::enabledSheets
+#        - Make VocabDisplayPage tweakable (Do not display / display only for current directory .oben / display for directories too)
+#        - Connect both "do not resize if overflow" option in the FntSettings
+#        - Connect Every Vocab MCQ FntSettings Pages sliders
+#        - Finish sleep handling properly
+#        - use a fontMetrics().boundingRect to determine max length of VocabExplorer entries text
+#-------------------------------------------------
+# TODO later : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
 #              - redo the Qmenu::right-arrow
+#              - Handle properly [UP_DIR] in VocabExplorerPage instead of adding a dummy entry
 #              - Investigate weird hard refresh (Edit page) glitch on Kobo Glo HD under unknown circumstances
 #-------------------------------------------------
 
