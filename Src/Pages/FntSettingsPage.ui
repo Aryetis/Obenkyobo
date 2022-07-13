@@ -340,7 +340,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="VocabAnswerKanaRmjValueLabel">
+          <widget class="QLabel" name="VocabAnswerKanaRmjLabel">
            <property name="text">
             <string>Answers Size
 (Kana-&gt;Rmj) : </string>
@@ -348,7 +348,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="VocabAnswerKanaRmjLabel">
+          <widget class="QLabel" name="VocabAnswerKanaRmjValueLabel">
            <property name="text">
             <string>20</string>
            </property>
@@ -388,7 +388,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="VocabAnswerRmjKanaValueLabel">
+          <widget class="QLabel" name="VocabAnswerRmjKanaLabel">
            <property name="text">
             <string>Answers Size
 (Rmj-&gt;Kana) : </string>
@@ -396,7 +396,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="VocabAnswerRmjKanaLabel">
+          <widget class="QLabel" name="VocabAnswerRmjKanaValueLabel">
            <property name="text">
             <string>20</string>
            </property>
