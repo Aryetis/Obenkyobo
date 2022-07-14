@@ -356,7 +356,7 @@ void KanasTableFamily::InitializeSerializedVals() // Can't do it in constructor 
 {
     for (SymbolsTableSection& sts : data)
         for (QcmDataEntry& s : sts.Data())
-            if (s.RegisterAndInitializeSerializedVals(name, this))
+            if (static_cast<QcmDataEntryKana&>(s).RegisterAndInitializeSerializedVals(name, this))
                 ++nbrOfEnabled;
 }
 

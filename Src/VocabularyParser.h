@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QSet>
+#include "Src/QcmDataEntry.h"
 #include "Src/DefinesLand.h"
 
 class VocabDataEntry;
@@ -29,40 +30,43 @@ class VocabDataFile
         int learningScore;
 };
 
-class VocabDataEntry
+class VocabDataEntry : public QcmDataEntry
 {
     public :
         VocabDataEntry() = delete;
-        VocabDataEntry(QString kanas_, QString kanji_, QString trad_, int ls_, VocabDataFile* vocabDataFile_, int lineNumber_, KanaFamilyEnum fontType_) :
-            kanas(kanas_), kanji(kanji_), trad(trad_), learningScore(ls_), vocabDataFile(vocabDataFile_), lineNumber(lineNumber_), fontType(fontType_) {} // TODO : don't copy, move instead
+        ~VocabDataEntry() {};
+        VocabDataEntry(QString kanas_, QString kanjis_, QString trad_, int ls_, VocabDataFile* vocabDataFile_, int lineNumber_, KanaFamilyEnum fontType_) :
+            kanas(kanas_), kanjis(kanjis_), trad(trad_), learningState(ls_), vocabDataFile(vocabDataFile_), lineNumber(lineNumber_), fontType(fontType_) {} // TODO : don't copy, move instead
 
         bool operator==(const VocabDataEntry& rhs) const
         {
-            return kanas == rhs.kanas && kanji == rhs.kanji && trad == rhs.trad && learningScore == rhs.learningScore && GetPath() == rhs.GetPath() && lineNumber == rhs.lineNumber;
+            return kanas == rhs.kanas && kanjis == rhs.kanjis && trad == rhs.trad && learningState == rhs.learningState && GetPath() == rhs.GetPath() && lineNumber == rhs.lineNumber;
         }
 
-        QString const& GetKanas() const { return kanas; }
-        QString const& GetKanji() const { return kanji; }
-        QString const& GetTrad() const { return trad; }
-        int GetLearningScore() const { return learningScore; }
-        void SetLearningScore(int ls); // TODO : Need to save ls into vocabSheetPath
+        QString const* Kanas() const { return &kanas; }
+        QString const* Kanjis() const { return &kanjis; }
+        QString const* Romanji() const { return &trad; }
+        int LearningState() const { return learningState; }
+        void LearningState(int ls); // TODO : Need to save ls into vocabSheetPath
         QString const& GetPath() const { return vocabDataFile->GetPath(); }
         int GetLineNumber() const { return lineNumber; }
         KanaFamilyEnum GetFontType() const { return fontType; }
-//        bool IsSane() { return kanas != "" && kanji != "" && trad != "" && lineNumber != -1; }
+
+        bool IsEnabled() const;
+        void Enabled(bool b);
 
     private :
         QString kanas;
-        QString kanji;
+        QString kanjis;
         QString trad;
-        int learningScore;
-        VocabDataFile* vocabDataFile; // that way we don't store the same string xxx times for each file entry
+        int learningState;
+        VocabDataFile* vocabDataFile; // not owned, only a shortcut to not have to store path again
         int lineNumber;
         KanaFamilyEnum fontType;
 };
 inline uint qHash(const VocabDataEntry &key, uint seed)
 {
-    return qHash(key.GetKanas(), seed) ^ qHash(key.GetKanji(), seed+1) ^ qHash(key.GetTrad(), seed+2) ^ qHash(key.GetPath(), seed+3);
+    return qHash(key.Kanas(), seed) ^ qHash(key.Kanjis(), seed+1) ^ qHash(key.Romanji(), seed+2) ^ qHash(key.GetPath(), seed+3);
 }
 
 class VocabDataPool
@@ -70,7 +74,7 @@ class VocabDataPool
     public :
         VocabDataPool() = delete;
         VocabDataPool(QString sheetPath);
-        VocabDataPool(QStringList sheetPaths);
+        VocabDataPool(QSet<QString> sheetPaths);
         ~VocabDataPool();
         QSet<VocabDataEntry*>& AllEntries() { return entries; }
 

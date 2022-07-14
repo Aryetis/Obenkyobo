@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QSettings>
 #include <optional>
+#include "Src/VocabularyParser.h"
 #include "Src/DefinesLand.h"
 
 namespace Ui
@@ -34,6 +35,8 @@ private:
     int refreshCounter;
     QFont curHiraganaNonSized, curKatakanaNonSized, curRomanjiNonSized, stemFont;
     QSettings* settingsSerializer;
+    bool displayKanji;
+    std::vector<QcmDataEntry*> entriesPool;
 };
 
 #endif // QCMEXERCICEPAGE_H

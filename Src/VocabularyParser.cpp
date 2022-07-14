@@ -4,9 +4,21 @@
 #include "Src/GetMy.h"
 #include "Src/Tools.h"
 
-void VocabDataEntry::SetLearningScore(int ls)
+void VocabDataEntry::LearningState(int ls)
 {
     vocabDataFile->WriteLearningScore(GetPath(), ls, lineNumber);
+}
+
+bool VocabDataEntry::IsEnabled() const
+{
+    // TODO NOW : shouldn't be pure virtual ?
+    return true;
+}
+
+void VocabDataEntry::Enabled(bool /*b*/)
+{
+    // TODO NOW : shouldn't be pure virtual ?
+    return;
 }
 
 VocabDataFile::VocabDataFile(QString sheetPath) : vocabSheetPath(sheetPath), entries(), malformedLines(), learningScore(0)
@@ -133,7 +145,7 @@ VocabDataPool::VocabDataPool(QString sheetPath)
     PopulateFromPath(sheetPath);
 }
 
-VocabDataPool::VocabDataPool(QStringList sheetPaths)
+VocabDataPool::VocabDataPool(QSet<QString> sheetPaths)
 {
     for(QString path : sheetPaths)
         PopulateFromPath(path);

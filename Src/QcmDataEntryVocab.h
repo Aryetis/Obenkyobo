@@ -2,11 +2,13 @@
 #define QCMDATAENTRYVOCAB_H
 
 #include "Src/QcmDataEntry.h"
+#include "Src/VocabularyParser.h"
 
 class QcmDataEntryVocab : public QcmDataEntry
 {
 public :
     QcmDataEntryVocab() = delete;
+    ~QcmDataEntryVocab() {};
     QcmDataEntryVocab(QString romanji_, QString kanas_, QString kanjis_)
         : romanji(romanji_), kanas(kanas_), kanjis(kanjis_) {}
 

@@ -17,9 +17,9 @@ QcmEntryGuess::~QcmEntryGuess()
     delete ui;
 }
 
-void QcmEntryGuess::SetGuess(QcmDataEntry* s, QcmExerciceType qcmType, bool b)
+void QcmEntryGuess::SetGuess(QcmDataEntry* symbol_, QcmExerciceType qcmType, bool correct, bool displayKanji)
 {
-    symbol = s;
+    symbol = symbol_;
 
     switch (qcmType)
     {
@@ -48,14 +48,36 @@ void QcmEntryGuess::SetGuess(QcmDataEntry* s, QcmExerciceType qcmType, bool b)
             break;
         }
         case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
+        {
+            qcmSubType = QcmTypeEnum::RmjToKana;
+            ui->EntryGuess->setFont(GetMy::Instance().FntSettingsPageInst().GetCurrentRomanjiFnt());
+            ui->EntryGuess->setText(*symbol->Romanji());
+            break;
+        }
         case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
         {
-            // TODO NOW
+            qcmSubType = QcmTypeEnum::RmjToKana;
+
+            if (displayKanji)
+            {
+                ui->EntryGuess->setFont(GetMy::Instance().FntSettingsPageInst().GetCurrentKanjiFnt());
+                ui->EntryGuess->setText(*symbol->Kanjis());
+            }
+            else if (static_cast<VocabDataEntry*>(symbol)->GetFontType() == KanaFamilyEnum::hiragana)
+            {
+                ui->EntryGuess->setFont(GetMy::Instance().FntSettingsPageInst().GetCurrentHiraganaFnt());
+                ui->EntryGuess->setText(*symbol->Kanas());
+            }
+            else
+            {
+                ui->EntryGuess->setFont(GetMy::Instance().FntSettingsPageInst().GetCurrentKatakanaFnt());
+                ui->EntryGuess->setText(*symbol->Kanas());
+            }
             break;
         }
     }
 
-    correctGuess = b;
+    correctGuess = correct;
 }
 
 void QcmEntryGuess::resizeEvent(QResizeEvent* event)

@@ -3,10 +3,11 @@
 
 #include "Src/QcmDataEntry.h"
 
-class QcmDataEntryKana : public QcmDataEntry // previously Symbol
+class QcmDataEntryKana : public QcmDataEntry // previously named Symbol
 {
 public :
     QcmDataEntryKana() = delete;
+    ~QcmDataEntryKana() = default;
     QcmDataEntryKana(QString romanji_, QString kanas_) : romanji(romanji_), kanas(kanas_) {}
 
     bool RegisterAndInitializeSerializedVals(QString serializedAddress, KanasTableFamily* _p);

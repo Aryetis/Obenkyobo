@@ -433,6 +433,7 @@ void MainWindow::on_actionVocabulary_to_Romanji_MCQ_triggered()
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
+    // TODO NOW
 //    else
 //        GetMy::Instance().ToolsInst()->DisplayPopup(
 //                "Not enough enabled Katakana,\nplease enable at least " +
@@ -450,6 +451,7 @@ void MainWindow::on_actionRomanji_to_Vocabulary_MCQ_triggered()
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
+    // TODO NOW
 //    else
 //        GetMy::Instance().ToolsInst()->DisplayPopup(
 //                "Not enough enabled Katakana,\nplease enable at least " +

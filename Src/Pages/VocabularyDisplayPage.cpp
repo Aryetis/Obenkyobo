@@ -121,20 +121,20 @@ void VocabularyDisplayPage::PopulateGrid(bool random /*= false*/, int turnPage /
         if ( static_cast<int>(gridLabels.size()) <= x) // reuse previous QPushButton, delete in destructor
             gridLabels.emplace_back(std::vector<QPushButton*>({new QPushButton(), new QPushButton(), new QPushButton(), new QPushButton()}));
 
-        gridLabels[x][0]->setText(curVDE->GetKanas());
+        gridLabels[x][0]->setText(*curVDE->Kanas());
         gridLabels[x][0]->setFont
         ({(curVDE->GetFontType() == KanaFamilyEnum::hiragana)
                 ? GetMy::Instance().FntSettingsPageInst().GetCurrentHiraganaFamily()
                 : GetMy::Instance().FntSettingsPageInst().GetCurrentKatakanaFamily(), fntSize}
         );
 
-        gridLabels[x][1]->setText(curVDE->GetKanji());
+        gridLabels[x][1]->setText(*curVDE->Kanjis());
         gridLabels[x][1]->setFont({GetMy::Instance().FntSettingsPageInst().GetCurrentKanjiFamily(), fntSize});
 
-        gridLabels[x][2]->setText(curVDE->GetTrad());
+        gridLabels[x][2]->setText(*curVDE->Romanji()); // Romanji <=> Trad
         gridLabels[x][2]->setFont({gridLabels[x][2]->font().family(), fntSize});
 
-        gridLabels[x][3]->setText(QString::number(MAX_LEARNING_STATE_VALUE - curVDE->GetLearningScore()));
+        gridLabels[x][3]->setText(QString::number(MAX_LEARNING_STATE_VALUE - curVDE->LearningState()));
         gridLabels[x][3]->setFont({gridLabels[x][3]->font().family(), fntSize});
 
         for (int j=0; j<4; ++j)

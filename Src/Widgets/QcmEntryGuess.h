@@ -20,7 +20,7 @@ public:
     explicit QcmEntryGuess(QWidget *parent = nullptr);
     ~QcmEntryGuess() override;
 
-    void SetGuess(QcmDataEntry* s, QcmExerciceType qcmType, bool);
+    void SetGuess(QcmDataEntry* s, QcmExerciceType qcmType, bool correct, bool displayKanji);
     void CorrectFontSize();
     void CorrectFontSizeBis();
 

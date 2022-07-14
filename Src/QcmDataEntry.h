@@ -7,7 +7,8 @@ class KanasTableFamily;
 class QcmDataEntry
 {
 public :
-    virtual bool RegisterAndInitializeSerializedVals(QString serializedAddress, KanasTableFamily* _p) = 0;
+//    virtual bool RegisterAndInitializeSerializedVals(QString serializedAddress, KanasTableFamily* _p) = 0;
+    virtual ~QcmDataEntry() = default;
 
 //    virtual bool operator==(QcmDataEntry const & rhs) const = 0;
 
