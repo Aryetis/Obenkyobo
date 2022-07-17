@@ -6,7 +6,7 @@
 
 void VocabDataEntry::LearningState(int ls)
 {
-    vocabDataFile->WriteLearningScore(GetPath(), ls, lineNumber);
+    vocabDataFileLnk->WriteLearningScore(GetPath(), ls, lineNumber);
 }
 
 bool VocabDataEntry::IsEnabled() const
@@ -21,7 +21,7 @@ void VocabDataEntry::Enabled(bool /*b*/)
     return;
 }
 
-VocabDataFile::VocabDataFile(QString sheetPath, VocabDataPool* pool_) : vocabSheetPath(sheetPath), entries(), malformedLines(), pool(pool_),  learningScore(0)
+VocabDataFile::VocabDataFile(QString sheetPath, VocabDataPool* pool_) : vocabSheetPath(sheetPath), entries(), malformedLines(), poolLnk(pool_),  learningScore(0)
 {
     QFile vocabFile(vocabSheetPath);
     if (vocabFile.open(QIODevice::ReadOnly))
@@ -42,8 +42,8 @@ VocabDataFile::VocabDataFile(QString sheetPath, VocabDataPool* pool_) : vocabShe
 
 VocabDataFile::~VocabDataFile()
 {
-    if (pool != nullptr)
-        pool->RemoveVDF(*this); // remove from pool first so it can clean its entries
+    if (poolLnk != nullptr)
+        poolLnk->RemoveVDF(*this); // remove from pool first so it can clean its entries
     qDeleteAll(entries);
     entries.clear();
     qDeleteAll(malformedLines);
@@ -160,8 +160,8 @@ VocabDataPool::~VocabDataPool()
 
 void VocabDataPool::RemoveVDF(VocabDataFile& vdf)
 {
-    entries.subtract(vdf.Entries());
-    malformedLines.subtract(vdf.Entries());
+    entriesLnks.subtract(vdf.Entries());
+    malformedLinesLnks.subtract(vdf.Entries());
     files.remove(&vdf);
 }
 
@@ -170,8 +170,8 @@ void VocabDataPool::PopulateFromPath(QString path)
     VocabDataFile* vdf = new VocabDataFile(path, this);
     files.insert(vdf);
 
-    entries = entries.unite(vdf->Entries());
-    malformedLines = malformedLines.unite(vdf->MalformedLines());
+    entriesLnks = entriesLnks.unite(vdf->Entries());
+    malformedLinesLnks = malformedLinesLnks.unite(vdf->MalformedLines());
 }
 
 void VocabDataPool::PopulateFromPaths(QSet<QString> sheetPaths)
@@ -182,10 +182,6 @@ void VocabDataPool::PopulateFromPaths(QSet<QString> sheetPaths)
 
 void VocabDataPool::Clear()
 {
-    qDeleteAll(entries);
-    entries.clear();
-    qDeleteAll(malformedLines);
-    malformedLines.clear();
-    qDeleteAll(files);
+    qDeleteAll(files); // TODO NOW : fix segfault when launching a vocabQCM for the second time
     files.clear();
 }

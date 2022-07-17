@@ -6,6 +6,8 @@
 #include "Src/QcmDataEntry.h"
 #include "Src/DefinesLand.h"
 
+// Everything marked as Lnk is a shortcut => isn't owned by this => isn't to be destroyed by this
+
 class VocabDataEntry;
 class VocabDataPool;
 class VocabDataFile
@@ -28,7 +30,7 @@ class VocabDataFile
         QString vocabSheetPath;
         QSet<VocabDataEntry*> entries;
         QSet<VocabDataEntry*> malformedLines; // nothing is guaranteed to be valid/parsed except LineNumber and VocabDataFile
-        VocabDataPool* pool; // "pool" this VocabDataFile is registred in (nothing prevents us registering VDF in multiple pool but not use for now)
+        VocabDataPool* poolLnk; // "pool" this VocabDataFile is registred in (nothing prevents us registering VDF in multiple pool but not use for now)
         int learningScore;
 };
 
@@ -38,7 +40,7 @@ class VocabDataEntry : public QcmDataEntry
         VocabDataEntry() = delete;
         ~VocabDataEntry() {};
         VocabDataEntry(QString kanas_, QString kanjis_, QString trad_, int ls_, VocabDataFile* vocabDataFile_, int lineNumber_, KanaFamilyEnum fontType_) :
-            kanas(kanas_), kanjis(kanjis_), trad(trad_), learningState(ls_), vocabDataFile(vocabDataFile_), lineNumber(lineNumber_), fontType(fontType_) {} // TODO : don't copy, move instead
+            kanas(kanas_), kanjis(kanjis_), trad(trad_), learningState(ls_), vocabDataFileLnk(vocabDataFile_), lineNumber(lineNumber_), fontType(fontType_) {} // TODO : don't copy, move instead
 
         bool operator==(const VocabDataEntry& rhs) const
         {
@@ -50,7 +52,7 @@ class VocabDataEntry : public QcmDataEntry
         QString const* Romanji() const { return &trad; }
         int LearningState() const { return learningState; }
         void LearningState(int ls); // TODO : Need to save ls into vocabSheetPath
-        QString const& GetPath() const { return vocabDataFile->GetPath(); }
+        QString const& GetPath() const { return vocabDataFileLnk->GetPath(); }
         int GetLineNumber() const { return lineNumber; }
         KanaFamilyEnum GetFontType() const { return fontType; }
 
@@ -62,7 +64,7 @@ class VocabDataEntry : public QcmDataEntry
         QString kanjis;
         QString trad;
         int learningState;
-        VocabDataFile* vocabDataFile; // not owned, only a shortcut to not have to store path again
+        VocabDataFile* vocabDataFileLnk;
         int lineNumber;
         KanaFamilyEnum fontType;
 };
@@ -79,15 +81,15 @@ class VocabDataPool
         VocabDataPool(QSet<QString> sheetPaths);
         ~VocabDataPool();
         void RemoveVDF(VocabDataFile& vdf); // don't destroy vdf
-        QSet<VocabDataEntry*>& AllEntries() { return entries; }
+        QSet<VocabDataEntry*>& AllEntries() { return entriesLnks; }
         void PopulateFromPath(QString path);
         void PopulateFromPaths(QSet<QString> sheetPaths);
         void Clear();
 
     private :
         bool DoesLineContain(VocabDataEntry vde);
-        QSet<VocabDataEntry*> entries; // can hold multiple "identical entries" if stored in seperate files (as designed for now)
-        QSet<VocabDataEntry*> malformedLines;
+        QSet<VocabDataEntry*> entriesLnks; // SHORCUTS ; can hold multiple "identical entries" if stored in seperate files (as designed for now)
+        QSet<VocabDataEntry*> malformedLinesLnks; // SHORCUTS
         QSet<VocabDataFile*> files;
 };
 
