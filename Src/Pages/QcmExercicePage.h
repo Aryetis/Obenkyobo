@@ -33,11 +33,11 @@ private:
     std::optional<QcmExerciceType> currentQcmType;
     QcmDataEntry* stem; // Answer to guess
     int refreshCounter;
-    QFont curHiraganaNonSized, curKatakanaNonSized, curRomanjiNonSized, stemFont;
+    QFont curHiraganaNonSized, curKatakanaNonSized, curRomanjiNonSized, curKanjiNonSized, stemFont;
     QSettings* settingsSerializer;
     bool displayKanji;
-    std::vector<QcmDataEntry*> entriesPool;
-    VocabDataPool* vdp;
+    std::vector<QcmDataEntry*> entriesPool; // DO NOT own its data => don't delete its content
+    VocabDataPool* vdp;                     // holds entriesPool's data for vocab QCM (kana ones being hardcoded in KanasTables)
 };
 
 #endif // QCMEXERCICEPAGE_H

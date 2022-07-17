@@ -50,6 +50,7 @@ void QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
         curHiraganaNonSized = QFont(fntSetting.GetCurrentHiraganaFamily(), labelRightPointSize);
         curKatakanaNonSized = QFont(fntSetting.GetCurrentKatakanaFamily(), labelRightPointSize);
         curRomanjiNonSized = QFont(fntSetting.GetCurrentRomanjiFamily(), labelRightPointSize);
+        curKanjiNonSized = QFont(fntSetting.GetCurrentKanjiFamily(), labelRightPointSize);
 
         switch (qcmType)
         {
@@ -106,11 +107,8 @@ void QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
     }
 
     //************************ Initialize Entries Pool ************************
-//    std::vector<QcmDataEntry*> entriesPool; why recreate the pool everytime ? store it and use newQcmRequested to clean it ?
     if (newQcmRequested)
     {
-//        qDeleteAll(entriesPool); // TODO NOW : fix SIGSEG
-                                 // doesn't really make sense to delete pool for hiragana/katakana does it
         entriesPool.clear();
         switch (qcmType)
         {
@@ -119,7 +117,7 @@ void QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
             case QcmExerciceType::Romanji_to_Hiragana_MCQ :
             {
                 for (SymbolsTableSection& SymbolSection : KanasTables::HiraganaSymbolsTableFamily.Data() )
-                    for(QcmDataEntry& symbol : SymbolSection.Data())
+                    for(QcmDataEntryKana& symbol : SymbolSection.Data())
                         if (symbol.IsEnabled())
                             entriesPool.push_back(&symbol);
                 break;
@@ -129,7 +127,7 @@ void QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
             case QcmExerciceType::Romanji_to_Katakana_MCQ :
             {
                 for (SymbolsTableSection& SymbolSection : KanasTables::KatakanaSymbolsTableFamily.Data() )
-                    for(QcmDataEntry& symbol : SymbolSection.Data())
+                    for(QcmDataEntryKana& symbol : SymbolSection.Data())
                         if (symbol.IsEnabled())
                             entriesPool.push_back(&symbol);
                 break;
@@ -169,14 +167,7 @@ void QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
 
     // overriding default Vocab's stem romanji font // TODO : refactor, move stem pick earlier
     if (qcmType == QcmExerciceType::Romanji_to_Vocabulary_MCQ)
-    {
-        if (displayKanji)
-            stemFont = QFont(fntSetting.GetCurrentKanjiFamily(), fntSetting.GetVocabStemSize());
-        else if (static_cast<VocabDataEntry*>(stem)->GetFontType() == KanaFamilyEnum::hiragana)
-            stemFont = QFont(fntSetting.GetCurrentHiraganaFamily(), fntSetting.GetVocabStemSize());
-        else
-            stemFont = QFont(fntSetting.GetCurrentKatakanaFamily(), fntSetting.GetVocabStemSize());
-    }
+        stemFont = static_cast<VocabDataEntry*>(stem)->GetFont(displayKanji);
 
     ui->GuessMe->setFont(stemFont);
     switch (qcmType)
@@ -311,12 +302,46 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
         }
         case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
         {
-            // TODO NOW
+            if (displayKanji)
+            {
+                ui->ResultLabelLeft->setFont(curKanjiNonSized);
+                ui->ResultLabelLeft->setText(*stem->Kanjis());
+            }
+            else if (static_cast<VocabDataEntry*>(stem)->GetFontType() == KanaFamilyEnum::hiragana)
+            {
+                ui->ResultLabelLeft->setFont(curHiraganaNonSized);
+                ui->ResultLabelLeft->setText(*stem->Kanas());
+            }
+            else
+            {
+                ui->ResultLabelLeft->setFont(curKatakanaNonSized);
+                ui->ResultLabelLeft->setText(*stem->Kanas());
+            }
+
+            ui->ResultLabelMiddle->setFont(curRomanjiNonSized);
+            ui->ResultLabelMiddle->setText(*stem->Romanji());
             break;
         }
         case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
         {
-            // TODO NOW
+            if (displayKanji)
+            {
+                ui->ResultLabelMiddle->setFont(curKanjiNonSized);
+                ui->ResultLabelMiddle->setText(*stem->Kanjis());
+            }
+            else if (static_cast<VocabDataEntry*>(stem)->GetFontType() == KanaFamilyEnum::hiragana)
+            {
+                ui->ResultLabelMiddle->setFont(curHiraganaNonSized);
+                ui->ResultLabelMiddle->setText(*stem->Kanas());
+            }
+            else
+            {
+                ui->ResultLabelMiddle->setFont(curKatakanaNonSized);
+                ui->ResultLabelMiddle->setText(*stem->Kanas());
+            }
+
+            ui->ResultLabelLeft->setFont(curRomanjiNonSized);
+            ui->ResultLabelLeft->setText(*stem->Romanji());
             break;
         }
     }

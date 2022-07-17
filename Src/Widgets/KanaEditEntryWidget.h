@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include "Src/DefinesLand.h"
-#include "Src/QcmDataEntry.h"
+#include "Src/QcmDataEntryKana.h"
 
 namespace Ui
 {
@@ -18,7 +18,7 @@ public:
     explicit KanaEditEntryWidget(QWidget *parent = nullptr);
     ~KanaEditEntryWidget() override;
 
-    void InitializeSymbolSettingEntry(QcmDataEntry* _kana, KanaFamilyEnum kanaFamily);
+    void InitializeSymbolSettingEntry(QcmDataEntryKana* _kana, KanaFamilyEnum kanaFamily);
     void FakeClick(bool b);
     bool IsEnabled() const { return kana->IsEnabled(); }
 
@@ -27,7 +27,7 @@ private slots:
 
 private:
     Ui::KanaEditEntryWidget *ui; // holds a KanaEditButtonWidget, TODO : simplify this and merge them
-    QcmDataEntry* kana;
+    QcmDataEntryKana* kana;
 };
 
 #endif // KANAEDITENTRYWIDGET_H

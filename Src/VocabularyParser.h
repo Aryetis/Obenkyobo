@@ -3,8 +3,11 @@
 
 #include <QString>
 #include <QSet>
+#include <QFont>
 #include "Src/QcmDataEntry.h"
 #include "Src/DefinesLand.h"
+#include "Src/GetMy.h"
+#include "Src/Pages/FntSettingsPage.h"
 
 // Everything marked as Lnk is a shortcut => isn't owned by this => isn't to be destroyed by this
 
@@ -55,9 +58,7 @@ class VocabDataEntry : public QcmDataEntry
         QString const& GetPath() const { return vocabDataFileLnk->GetPath(); }
         int GetLineNumber() const { return lineNumber; }
         KanaFamilyEnum GetFontType() const { return fontType; }
-
-        bool IsEnabled() const;
-        void Enabled(bool b);
+        QFont GetFont(bool kanji);
 
     private :
         QString kanas;
@@ -80,7 +81,7 @@ class VocabDataPool
         VocabDataPool(QString sheetPath);
         VocabDataPool(QSet<QString> sheetPaths);
         ~VocabDataPool();
-        void RemoveVDF(VocabDataFile& vdf); // don't destroy vdf
+        void RemoveVDF(VocabDataFile* vdf); // don't destroy vdf
         QSet<VocabDataEntry*>& AllEntries() { return entriesLnks; }
         void PopulateFromPath(QString path);
         void PopulateFromPaths(QSet<QString> sheetPaths);

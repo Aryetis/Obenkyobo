@@ -16,7 +16,7 @@ KanaEditEntryWidget::~KanaEditEntryWidget()
     delete ui;
 }
 
-void KanaEditEntryWidget::InitializeSymbolSettingEntry(QcmDataEntry* _kana, KanaFamilyEnum kanaFamily)
+void KanaEditEntryWidget::InitializeSymbolSettingEntry(QcmDataEntryKana* _kana, KanaFamilyEnum kanaFamily)
 {
     kana = _kana;
 

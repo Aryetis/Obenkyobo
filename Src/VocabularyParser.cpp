@@ -9,16 +9,17 @@ void VocabDataEntry::LearningState(int ls)
     vocabDataFileLnk->WriteLearningScore(GetPath(), ls, lineNumber);
 }
 
-bool VocabDataEntry::IsEnabled() const
+QFont VocabDataEntry::GetFont(bool kanji)
 {
-    // TODO NOW : shouldn't be pure virtual ?
-    return true;
-}
-
-void VocabDataEntry::Enabled(bool /*b*/)
-{
-    // TODO NOW : shouldn't be pure virtual ?
-    return;
+    if (kanji)
+        return QFont(GetMy::Instance().FntSettingsPageInst().GetCurrentKanjiFamily(),
+                     GetMy::Instance().FntSettingsPageInst().GetVocabStemSize());
+    else if (fontType == KanaFamilyEnum::hiragana)
+        return QFont(GetMy::Instance().FntSettingsPageInst().GetCurrentHiraganaFamily(),
+                     GetMy::Instance().FntSettingsPageInst().GetVocabStemSize());
+    else
+        return QFont(GetMy::Instance().FntSettingsPageInst().GetCurrentKatakanaFamily(),
+                     GetMy::Instance().FntSettingsPageInst().GetVocabStemSize());
 }
 
 VocabDataFile::VocabDataFile(QString sheetPath, VocabDataPool* pool_) : vocabSheetPath(sheetPath), entries(), malformedLines(), poolLnk(pool_),  learningScore(0)
@@ -43,7 +44,7 @@ VocabDataFile::VocabDataFile(QString sheetPath, VocabDataPool* pool_) : vocabShe
 VocabDataFile::~VocabDataFile()
 {
     if (poolLnk != nullptr)
-        poolLnk->RemoveVDF(*this); // remove from pool first so it can clean its entries
+        poolLnk->RemoveVDF(this); // remove from pool first so it can clean its entries
     qDeleteAll(entries);
     entries.clear();
     qDeleteAll(malformedLines);
@@ -158,11 +159,11 @@ VocabDataPool::~VocabDataPool()
     Clear();
 }
 
-void VocabDataPool::RemoveVDF(VocabDataFile& vdf)
+void VocabDataPool::RemoveVDF(VocabDataFile* vdf)
 {
-    entriesLnks.subtract(vdf.Entries());
-    malformedLinesLnks.subtract(vdf.Entries());
-    files.remove(&vdf);
+    entriesLnks.subtract(vdf->Entries());
+    malformedLinesLnks.subtract(vdf->Entries());
+    files.remove(vdf);
 }
 
 void VocabDataPool::PopulateFromPath(QString path)
@@ -170,8 +171,8 @@ void VocabDataPool::PopulateFromPath(QString path)
     VocabDataFile* vdf = new VocabDataFile(path, this);
     files.insert(vdf);
 
-    entriesLnks = entriesLnks.unite(vdf->Entries());
-    malformedLinesLnks = malformedLinesLnks.unite(vdf->MalformedLines());
+    entriesLnks.unite(vdf->Entries());
+    malformedLinesLnks.unite(vdf->MalformedLines());
 }
 
 void VocabDataPool::PopulateFromPaths(QSet<QString> sheetPaths)
@@ -182,6 +183,9 @@ void VocabDataPool::PopulateFromPaths(QSet<QString> sheetPaths)
 
 void VocabDataPool::Clear()
 {
-    qDeleteAll(files); // TODO NOW : fix segfault when launching a vocabQCM for the second time
-    files.clear();
+    if (!files.isEmpty())
+    {
+        qDeleteAll(files); // TODO NOW : fix segfault when launching a vocabQCM for the second time
+        files.clear();
+    }
 }
