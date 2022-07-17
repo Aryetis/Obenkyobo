@@ -16,7 +16,7 @@ QcmExercicePage::QcmExercicePage(QWidget *parent) :
     currentQcmType(),
     refreshCounter(0), curHiraganaNonSized(), curKatakanaNonSized(), curRomanjiNonSized(), stemFont(),
     settingsSerializer(GetMy::Instance().SettingSerializerInst()),
-    displayKanji(false), entriesPool({})
+    displayKanji(false), entriesPool({}), vdp(nullptr)
 {
     ui->setupUi(this);
 
@@ -28,6 +28,7 @@ QcmExercicePage::QcmExercicePage(QWidget *parent) :
 
 QcmExercicePage::~QcmExercicePage()
 {
+    delete vdp;
     qDeleteAll(guesses);
     guesses.clear();
     delete ui;
@@ -108,7 +109,7 @@ void QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
 //    std::vector<QcmDataEntry*> entriesPool; why recreate the pool everytime ? store it and use newQcmRequested to clean it ?
     if (newQcmRequested)
     {
-        qDeleteAll(entriesPool); // TODO NOW : fix SIGSEG
+//        qDeleteAll(entriesPool); // TODO NOW : fix SIGSEG
                                  // doesn't really make sense to delete pool for hiragana/katakana does it
         entriesPool.clear();
         switch (qcmType)
@@ -136,8 +137,10 @@ void QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
             case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
             case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
             {
-                VocabDataPool vdp{GetMy::Instance().AppSettingsPageInst().GetEnabledVocabSheets()};
-                entriesPool.insert(entriesPool.end(), vdp.AllEntries().values().begin(), vdp.AllEntries().values().end());
+                if (vdp != nullptr)
+                    delete vdp;
+                vdp = new VocabDataPool{GetMy::Instance().AppSettingsPageInst().GetEnabledVocabSheets()};
+                entriesPool.insert(entriesPool.end(), vdp->AllEntries().begin(), vdp->AllEntries().end());
                 break;
             }
         }

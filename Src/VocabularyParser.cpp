@@ -1,4 +1,4 @@
-#include <QFile>
+ #include <QFile>
 #include <QTextStream>
 #include "Src/VocabularyParser.h"
 #include "Src/GetMy.h"
@@ -21,7 +21,7 @@ void VocabDataEntry::Enabled(bool /*b*/)
     return;
 }
 
-VocabDataFile::VocabDataFile(QString sheetPath) : vocabSheetPath(sheetPath), entries(), malformedLines(), learningScore(0)
+VocabDataFile::VocabDataFile(QString sheetPath, VocabDataPool* pool_) : vocabSheetPath(sheetPath), entries(), malformedLines(), pool(pool_),  learningScore(0)
 {
     QFile vocabFile(vocabSheetPath);
     if (vocabFile.open(QIODevice::ReadOnly))
@@ -42,6 +42,8 @@ VocabDataFile::VocabDataFile(QString sheetPath) : vocabSheetPath(sheetPath), ent
 
 VocabDataFile::~VocabDataFile()
 {
+    if (pool != nullptr)
+        pool->RemoveVDF(*this); // remove from pool first so it can clean its entries
     qDeleteAll(entries);
     entries.clear();
     qDeleteAll(malformedLines);
@@ -153,19 +155,37 @@ VocabDataPool::VocabDataPool(QSet<QString> sheetPaths)
 
 VocabDataPool::~VocabDataPool()
 {
+    Clear();
+}
+
+void VocabDataPool::RemoveVDF(VocabDataFile& vdf)
+{
+    entries.subtract(vdf.Entries());
+    malformedLines.subtract(vdf.Entries());
+    files.remove(&vdf);
+}
+
+void VocabDataPool::PopulateFromPath(QString path)
+{
+    VocabDataFile* vdf = new VocabDataFile(path, this);
+    files.insert(vdf);
+
+    entries = entries.unite(vdf->Entries());
+    malformedLines = malformedLines.unite(vdf->MalformedLines());
+}
+
+void VocabDataPool::PopulateFromPaths(QSet<QString> sheetPaths)
+{
+    for(QString path : sheetPaths)
+        PopulateFromPath(path);
+}
+
+void VocabDataPool::Clear()
+{
     qDeleteAll(entries);
     entries.clear();
     qDeleteAll(malformedLines);
     malformedLines.clear();
     qDeleteAll(files);
     files.clear();
-}
-
-void VocabDataPool::PopulateFromPath(QString path)
-{
-    VocabDataFile* vdf = new VocabDataFile(path);
-    files.insert(vdf);
-
-    entries = entries.unite(vdf->Entries());
-    malformedLines = malformedLines.unite(vdf->MalformedLines());
 }

@@ -37,6 +37,7 @@ private:
     QSettings* settingsSerializer;
     bool displayKanji;
     std::vector<QcmDataEntry*> entriesPool;
+    VocabDataPool* vdp;
 };
 
 #endif // QCMEXERCICEPAGE_H

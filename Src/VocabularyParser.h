@@ -7,11 +7,12 @@
 #include "Src/DefinesLand.h"
 
 class VocabDataEntry;
+class VocabDataPool;
 class VocabDataFile
 {
     public :
         VocabDataFile() = default;
-        VocabDataFile(QString path_);
+        VocabDataFile(QString path_, VocabDataPool* pool_ = nullptr);
         ~VocabDataFile();
         QString const& GetPath() const { return vocabSheetPath; }
         QSet<VocabDataEntry*>& Entries() { return entries; }
@@ -27,6 +28,7 @@ class VocabDataFile
         QString vocabSheetPath;
         QSet<VocabDataEntry*> entries;
         QSet<VocabDataEntry*> malformedLines; // nothing is guaranteed to be valid/parsed except LineNumber and VocabDataFile
+        VocabDataPool* pool; // "pool" this VocabDataFile is registred in (nothing prevents us registering VDF in multiple pool but not use for now)
         int learningScore;
 };
 
@@ -72,16 +74,19 @@ inline uint qHash(const VocabDataEntry &key, uint seed)
 class VocabDataPool
 {
     public :
-        VocabDataPool() = delete;
+        VocabDataPool() = default;
         VocabDataPool(QString sheetPath);
         VocabDataPool(QSet<QString> sheetPaths);
         ~VocabDataPool();
+        void RemoveVDF(VocabDataFile& vdf); // don't destroy vdf
         QSet<VocabDataEntry*>& AllEntries() { return entries; }
+        void PopulateFromPath(QString path);
+        void PopulateFromPaths(QSet<QString> sheetPaths);
+        void Clear();
 
     private :
-        void PopulateFromPath(QString path);
         bool DoesLineContain(VocabDataEntry vde);
-        QSet<VocabDataEntry*> entries;
+        QSet<VocabDataEntry*> entries; // can hold multiple "identical entries" if stored in seperate files (as designed for now)
         QSet<VocabDataEntry*> malformedLines;
         QSet<VocabDataFile*> files;
 };

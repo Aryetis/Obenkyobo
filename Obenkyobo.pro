@@ -53,7 +53,6 @@ SOURCES += \
     Src/Pages/VocabularyDisplayPage.cpp \
     Src/Pages/WelcomePage.cpp \
     Src/QcmDataEntryKana.cpp \
-    Src/QcmDataEntryVocab.cpp \
     Src/Tools.cpp \
     Src/VocabularyParser.cpp \
     Src/Widgets/KanaEditButtonWidget.cpp \
@@ -88,7 +87,6 @@ HEADERS += \
     Src/Pages/WelcomePage.h \
     Src/QcmDataEntry.h \
     Src/QcmDataEntryKana.h \
-    Src/QcmDataEntryVocab.h \
     Src/Tools.h \
     Src/VocabularyParser.h \
     Src/Widgets/KanaEditButtonWidget.h \
