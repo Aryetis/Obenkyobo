@@ -13,6 +13,7 @@
 #              - redo the Qmenu::right-arrow
 #              - Handle properly [UP_DIR] in VocabExplorerPage instead of adding a dummy entry
 #              - Investigate weird hard refresh (Edit page) glitch on Kobo Glo HD under unknown circumstances
+#              - replace QList by QVector
 #-------------------------------------------------
 
 QT       += core gui

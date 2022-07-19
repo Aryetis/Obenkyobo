@@ -23,6 +23,7 @@ class VocabDataFile
         QSet<VocabDataEntry*>& Entries() { return entries; }
         QSet<VocabDataEntry*>& MalformedLines() { return malformedLines; }
         int GetLearningScore() const { return learningScore; }
+        QSet<VocabDataPool*> const& GetPoolLnks() { return poolLnks; }
 
         static bool WriteLearningScore(QString vocabSheetPath, int ls, int lineNumber = -1);
         static bool ResetLearningScore(QString vocabSheetPath);
@@ -33,7 +34,7 @@ class VocabDataFile
         QString vocabSheetPath;
         QSet<VocabDataEntry*> entries;
         QSet<VocabDataEntry*> malformedLines; // nothing is guaranteed to be valid/parsed except LineNumber and VocabDataFile
-        VocabDataPool* poolLnk; // "pool" this VocabDataFile is registred in (nothing prevents us registering VDF in multiple pool but not use for now)
+        QSet<VocabDataPool*> poolLnks; // "pool" "this" is registred in (can't really register to multiple pools for now, but no need for it too)
         int learningScore;
 };
 

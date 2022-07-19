@@ -22,7 +22,7 @@ QFont VocabDataEntry::GetFont(bool kanji)
                      GetMy::Instance().FntSettingsPageInst().GetVocabStemSize());
 }
 
-VocabDataFile::VocabDataFile(QString sheetPath, VocabDataPool* pool_) : vocabSheetPath(sheetPath), entries(), malformedLines(), poolLnk(pool_),  learningScore(0)
+VocabDataFile::VocabDataFile(QString sheetPath, VocabDataPool* pool_) : vocabSheetPath(sheetPath), entries(), malformedLines(), poolLnks({pool_}),  learningScore(0)
 {
     QFile vocabFile(vocabSheetPath);
     if (vocabFile.open(QIODevice::ReadOnly))
@@ -43,8 +43,9 @@ VocabDataFile::VocabDataFile(QString sheetPath, VocabDataPool* pool_) : vocabShe
 
 VocabDataFile::~VocabDataFile()
 {
-    if (poolLnk != nullptr)
-        poolLnk->RemoveVDF(this); // remove from pool first so it can clean its entries
+    for (VocabDataPool* pool : poolLnks)
+        pool->RemoveVDF(this);
+    poolLnks.clear();
     qDeleteAll(entries);
     entries.clear();
     qDeleteAll(malformedLines);
@@ -185,7 +186,25 @@ void VocabDataPool::Clear()
 {
     if (!files.isEmpty())
     {
-        qDeleteAll(files); // TODO NOW : fix segfault when launching a vocabQCM for the second time
+        QVector<VocabDataFile*> orphansVDF{}; // careful : ~VocabDataFile will unregister itself from pools, modifying their files in the process
+                                              // can't safely iterate over files while deleting its content. thus this two steps deletion
+        QSet<VocabDataFile*>::iterator it = files.begin();
+        while (it != files.end())
+        {
+            if ((*it)->GetPoolLnks().size() == 1)
+            {
+                orphansVDF.push_back(*it);
+                ++it;
+            }
+            else
+                // just because this pool is dead doesn't mean VDF isn't referenced by another pool (not happening for now but who knows)
+                files.erase(it);
+        }
+        qDeleteAll(orphansVDF);
+
         files.clear();
     }
+
+    entriesLnks.clear();
+    malformedLinesLnks.clear();
 }

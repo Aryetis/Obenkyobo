@@ -19,12 +19,14 @@ class QcmExercicePage final : public QWidget
     Q_OBJECT
 
 public:
-
     explicit QcmExercicePage(QWidget* parent = nullptr);
     ~QcmExercicePage() override;
 
     void InitializeExercice(QcmExerciceType qcmType, bool newQcmRequested = false);
     void OnGuessClicked(bool correct, QcmEntryGuess* entryGuess);
+
+private slots:
+    void on_SwitchButton_clicked();
 
 private:
     Ui::QcmExercicePage *ui;

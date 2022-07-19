@@ -353,3 +353,9 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
 
     InitializeExercice(currentQcmType.value());
 }
+
+void QcmExercicePage::on_SwitchButton_clicked() // "Switch Kana"
+{
+    displayKanji = !displayKanji;
+    // TODO NOW """"refresh QCM""""
+}
