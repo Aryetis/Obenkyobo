@@ -22,8 +22,11 @@ QFont VocabDataEntry::GetFont(bool kanji)
                      GetMy::Instance().FntSettingsPageInst().GetVocabStemSize());
 }
 
-VocabDataFile::VocabDataFile(QString sheetPath, VocabDataPool* pool_) : vocabSheetPath(sheetPath), entries(), malformedLines(), poolLnks({pool_}),  learningScore(0)
+VocabDataFile::VocabDataFile(QString sheetPath, VocabDataPool* pool_) : vocabSheetPath(sheetPath), entries(), malformedLines(), poolLnks(),  learningScore(0)
 {
+    if (pool_ != nullptr)
+        poolLnks.insert(pool_);
+
     QFile vocabFile(vocabSheetPath);
     if (vocabFile.open(QIODevice::ReadOnly))
     {
