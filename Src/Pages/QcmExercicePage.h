@@ -22,7 +22,7 @@ public:
     explicit QcmExercicePage(QWidget* parent = nullptr);
     ~QcmExercicePage() override;
 
-    void InitializeExercice(QcmExerciceType qcmType, bool newQcmRequested = false);
+    bool InitializeExercice(QcmExerciceType qcmType, bool newQcmRequested = false);
     void OnGuessClicked(bool correct, QcmEntryGuess* entryGuess);
 
 private slots:

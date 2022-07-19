@@ -195,10 +195,7 @@ void VocabDataPool::Clear()
         while (it != files.end())
         {
             if ((*it)->GetPoolLnks().size() == 1)
-            {
-                orphansVDF.push_back(*it);
-                ++it;
-            }
+                orphansVDF.push_back(*it++);
             else
                 // just because this pool is dead doesn't mean VDF isn't referenced by another pool (not happening for now but who knows)
                 files.erase(it);

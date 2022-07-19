@@ -106,7 +106,7 @@
           <enum>QFrame::NoFrame</enum>
          </property>
          <property name="text">
-          <string>v0.2.3</string>
+          <string>v0.3.0</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignHCenter|Qt::AlignTop</set>

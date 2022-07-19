@@ -88,7 +88,7 @@ void Tools::DisplayPopup(QString message, bool fullscreen)
 
 DeviceState Tools::GetDeviceState() const { return deviceState; }
 
-bool Tools::IsThereEnough(QcmExerciceType qcmType) const
+bool Tools::IsThereEnough(QcmExerciceType qcmType, int vocabPoolSize /*= 0*/) const
 {
     int minRequiredSymbol = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine() *
             GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
@@ -110,7 +110,9 @@ bool Tools::IsThereEnough(QcmExerciceType qcmType) const
         case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
         case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
         {
-            return true; // TODO NOW
+            if (vocabPoolSize == -1)
+                std::cout << "ERROR: Tools::IsThereEnough() testing Vocabulary pool without any PoolSize parameter" << std::endl;
+            return (vocabPoolSize >= minRequiredSymbol);
         }
     }
 
@@ -197,6 +199,9 @@ void Tools::WakeUp()
     deviceState = DeviceState::busy;
     std::cout << "LOG: Waking up" << std::endl;
 
+    GetMy::Instance().ScreenSettingsPageInst().OnWakeUp();  // TODO : replace with signals at some point
+    GetMy::Instance().MainWindowInst().OnWakeUp();
+
     //-------------------------------------------------------------
     QFile file("/sys/power/state-extended");
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -226,8 +231,8 @@ void Tools::WakeUp()
     file.close();
 
     //-------------------------------------------------------------
-    GetMy::Instance().ScreenSettingsPageInst().OnWakeUp();  // TODO : replace with signals at some point
-    GetMy::Instance().MainWindowInst().OnWakeUp();
+//    GetMy::Instance().ScreenSettingsPageInst().OnWakeUp();  // TODO : replace with signals at some point
+//    GetMy::Instance().MainWindowInst().OnWakeUp();
 
     if (GetMy::Instance().AppSettingsPageInst().GetWifiStatus())
         KoboPlatformFunctions::enableWiFiConnection();

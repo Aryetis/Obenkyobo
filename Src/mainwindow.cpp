@@ -295,9 +295,8 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_actionHiragana_to_Romanji_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionHiragana_to_Romanji_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().ToolsInst()->IsThereEnough(QcmExerciceType::Hiragana_to_Romanji_MCQ))
+    if (GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Hiragana_to_Romanji_MCQ, true))
     {
-        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Hiragana_to_Romanji_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
@@ -311,9 +310,8 @@ void MainWindow::on_actionHiragana_to_Romanji_MCQ_triggered()
 void MainWindow::on_actionRomanji_to_Hiragana_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionRomanji_to_Hiragana_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().ToolsInst()->IsThereEnough(QcmExerciceType::Romanji_to_Hiragana_MCQ))
+    if (GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Romanji_to_Hiragana_MCQ, true))
     {
-        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Romanji_to_Hiragana_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
@@ -347,9 +345,8 @@ void MainWindow::on_actionEdit_Hiragana_Set_triggered()
 void MainWindow::on_actionKatakana_to_Romanji_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionKatakana_to_Romanji_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().ToolsInst()->IsThereEnough(QcmExerciceType::Katakana_to_Romanji_MCQ))
+    if (GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Katakana_to_Romanji_MCQ, true))
     {
-        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Katakana_to_Romanji_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
@@ -363,9 +360,8 @@ void MainWindow::on_actionKatakana_to_Romanji_MCQ_triggered()
 void MainWindow::on_actionRomanji_to_Katakana_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionRomanji_to_Katakana_QCM_triggered()" << std::endl;
-    if (GetMy::Instance().ToolsInst()->IsThereEnough(QcmExerciceType::Romanji_to_Katakana_MCQ))
+    if (GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Romanji_to_Katakana_MCQ, true))
     {
-        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Romanji_to_Katakana_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
@@ -427,37 +423,31 @@ void MainWindow::on_actionScreen_Setting_triggered()
 void MainWindow::on_actionVocabulary_to_Romanji_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionVocabulary_to_Romanji_triggered()" << std::endl;
-//    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Vocabulary_to_Romanji_QCM)) // TODO
+    if (GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Vocabulary_to_Romanji_MCQ, true))
     {
-        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Vocabulary_to_Romanji_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
-    // TODO NOW
-//    else
-//        GetMy::Instance().ToolsInst()->DisplayPopup(
-//                "Not enough enabled Katakana,\nplease enable at least " +
-//                QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
-//                " at :\nMain->Hiragana->Edit Hiragana Set"
-//                , 0.3f);
+    else
+        GetMy::Instance().ToolsInst()->DisplayPopup(
+                "Please enable more Vocabulary Sheets at Main->Vocabulary->Learn / Edit words Set\n"
+                "At least "+QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry())+
+                " entries / Vocabulary Lines across all the Sheets/.oben files are required");
 }
 
 void MainWindow::on_actionRomanji_to_Vocabulary_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionVocabulary_to_Romanji_triggered()" << std::endl;
-//    if (GetMy::Instance().AppSettingWidget().IsThereEnough(QcmExercice::QcmExerciceType::Vocabulary_to_Romanji_QCM)) // TODO
+    if (GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Romanji_to_Vocabulary_MCQ, true))
     {
-        GetMy::Instance().QcmExercicePageInst().InitializeExercice(QcmExerciceType::Romanji_to_Vocabulary_MCQ, true);
         ui->ContentStackedWidget->setCurrentIndex(1);
         AggressiveClearScreen();
     }
-    // TODO NOW
-//    else
-//        GetMy::Instance().ToolsInst()->DisplayPopup(
-//                "Not enough enabled Katakana,\nplease enable at least " +
-//                QString::number(GetMy::Instance().AppSettingWidget().GetNumberOfEntry()) +
-//                " at :\nMain->Hiragana->Edit Hiragana Set"
-//                , 0.3f);
+    else
+        GetMy::Instance().ToolsInst()->DisplayPopup(
+                "Please enable more Vocabulary Sheets at Main->Vocabulary->Learn / Edit words Set\n"
+                "At least "+QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry())+
+                " entries / Vocabulary Lines across all the Sheets/.oben files are required");
 }
 
 void MainWindow::on_actionLearn_Edit_Set_triggered()

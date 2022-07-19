@@ -1,13 +1,15 @@
 #-------------------------------------------------
 # WORKING ON :
-#        - Refactor QcmExercice so it can handle AppSettings::enabledSheets
+#        - Connect Every Vocab MCQ FntSettings Pages sliders
+#        - rename "Settings change on overflow" .... "Lock Fonts Sizes" ? "Allow silent size adaptation" ?
+#        - Connect both "do not resize if overflow" option in the FntSettings
+#        - Resize the stem if necessary too
 #-------------------------------------------------
 # TODO : - Make VocabDisplayPage tweakable (Do not display / display only for current directory .oben / display for directories too)
-#        - Connect both "do not resize if overflow" option in the FntSettings
-#        - Connect Every Vocab MCQ FntSettings Pages sliders
 #        - Finish sleep handling properly
 #        - use a fontMetrics().boundingRect to determine max length of VocabExplorer entries text
-#        - rename "Settings change on overflow" .... "Lock Fonts Sizes" ? "Allow silent size adaptation" ?
+#        - fix the slots error on startup
+#        - handle é è à in VocabExplorer filenames
 #-------------------------------------------------
 # TODO later : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
 #              - redo the Qmenu::right-arrow

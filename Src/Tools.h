@@ -4,7 +4,6 @@
 #include <random>
 #include <signal.h>
 #include <QString>
-#include <QMap>
 #include "Src/DefinesLand.h"
 
 class Tools
@@ -21,7 +20,7 @@ public :
     const std::string GetFirmwareStr() const;
     void DisplayPopup(QString message, bool fullscreen = false);
     DeviceState GetDeviceState() const;
-    bool IsThereEnough(QcmExerciceType qcmType) const;
+    bool IsThereEnough(QcmExerciceType qcmType, int vocabPoolSize = -1) const;
 
     //======================================================================
     void Sleep();

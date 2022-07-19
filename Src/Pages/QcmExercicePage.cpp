@@ -34,13 +34,36 @@ QcmExercicePage::~QcmExercicePage()
     delete ui;
 }
 
-void QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmRequested /* = false*/)
+bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmRequested /* = false*/)
 {
     FntSettingsPage& fntSetting = GetMy::Instance().FntSettingsPageInst();
 
-    //************************ Initialize Fonts, reset counters ************************
+
+
+
+
     if (newQcmRequested)
     {
+        //************************ "Is there enough to form the pool" ************************
+        switch (qcmType)
+        {
+            case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
+            case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
+            {
+                // Can't check if there's enough data right now. will be done as soon
+                // as the VocabDataPool has been initialized
+                break;
+            }
+            default:
+            {
+                if (!GetMy::Instance().ToolsInst()->IsThereEnough(qcmType))
+                    return false;
+                break;
+            }
+        }
+
+
+        //************************ Initialize Fonts, reset counters ************************
         scoreCounter = 0;
         errorCounter = 0;
 
@@ -99,16 +122,13 @@ void QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
                 if (newQcmRequested && (!ui->SwitchButton->isVisible() || !currentQcmType.has_value()))
                     ui->SwitchButton->setVisible(true);
                 stemFont = QFont(fntSetting.GetCurrentRomanjiFamily(), fntSetting.GetVocabStemSize());
-                // if stem is hiragana/katakana/kanjis its font family will be override once stem is determined. TODO : ugly refactor later on
+                // if stem is hiragana/katakana/kanjis its font family will be override once stem is determined.
                 break;
             }
         }
         currentQcmType = qcmType;
-    }
 
-    //************************ Initialize Entries Pool ************************
-    if (newQcmRequested)
-    {
+        //************************ Initialize Entries Pool ************************
         entriesPool.clear();
         switch (qcmType)
         {
@@ -138,6 +158,8 @@ void QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
                 if (vdp != nullptr)
                     delete vdp;
                 vdp = new VocabDataPool{GetMy::Instance().AppSettingsPageInst().GetEnabledVocabSheets()};
+                if (!GetMy::Instance().ToolsInst()->IsThereEnough(qcmType, vdp->AllEntries().size()))
+                    return false;
                 entriesPool.insert(entriesPool.end(), vdp->AllEntries().begin(), vdp->AllEntries().end());
                 break;
             }
@@ -165,7 +187,7 @@ void QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
 
     assert(stem != nullptr);
 
-    // overriding default Vocab's stem romanji font // TODO : refactor, move stem pick earlier
+    // overriding default Vocab's stem romanji font
     if (qcmType == QcmExerciceType::Romanji_to_Vocabulary_MCQ)
         stemFont = static_cast<VocabDataEntry*>(stem)->GetFont(displayKanji);
 
@@ -230,6 +252,8 @@ void QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
         refreshCounter = 0;
         GetMy::Instance().MainWindowInst().AggressiveClearScreen(true);
     }
+
+    return true;
 }
 
 void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
