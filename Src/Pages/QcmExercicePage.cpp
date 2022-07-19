@@ -207,13 +207,13 @@ void QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
         QcmDataEntry* curSym = shuffledSymbols[static_cast<std::vector<QcmDataEntry>::size_type>(i)];
 
         if (i == stemSlot)
-            foo->SetGuess(stem, currentQcmType.value(), true, displayKanji);
+            foo->SetGuess(stem, currentQcmType.value(), displayKanji, true);
         else
         {
             if (curSym == stem) // avoid double entries
-                foo->SetGuess(joker, currentQcmType.value(), false, displayKanji);
+                foo->SetGuess(joker, currentQcmType.value(), displayKanji, false);
             else
-                foo->SetGuess(curSym, currentQcmType.value(), false, displayKanji);
+                foo->SetGuess(curSym, currentQcmType.value(), displayKanji, false);
         }
 
         ui->EntriesGridLayout->addWidget(foo, entryPos.rem, entryPos.quot);
@@ -357,5 +357,11 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
 void QcmExercicePage::on_SwitchButton_clicked() // "Switch Kana"
 {
     displayKanji = !displayKanji;
-    // TODO NOW """"refresh QCM""""
+    ui->SwitchButton->setText(displayKanji ? "Switch to Kanas" : "Switch to Kanjis");
+
+    if (currentQcmType == QcmExerciceType::Vocabulary_to_Romanji_MCQ)
+        for(QcmEntryGuess* guess : guesses)
+            guess->SetGuess(guess->GetSymbol(), currentQcmType.value(), displayKanji);
+    else
+        ui->GuessMe->setText((displayKanji) ? *stem->Kanjis() : *stem->Kanas());
 }

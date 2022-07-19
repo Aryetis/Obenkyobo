@@ -232,7 +232,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Switch Kana</string>
+            <string>Switch to Kanjis</string>
            </property>
           </widget>
          </item>

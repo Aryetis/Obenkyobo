@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QString>
+#include <optional>
 #include "Src/DefinesLand.h"
 #include "Src/QcmDataEntry.h"
 
@@ -20,7 +21,7 @@ public:
     explicit QcmEntryGuess(QWidget *parent = nullptr);
     ~QcmEntryGuess() override;
 
-    void SetGuess(QcmDataEntry* s, QcmExerciceType qcmType, bool correct, bool displayKanji);
+    void SetGuess(QcmDataEntry* s, QcmExerciceType qcmType, bool displayKanji, std::optional<bool> correct = std::nullopt);
     void CorrectFontSize();
     void CorrectFontSizeBis();
 

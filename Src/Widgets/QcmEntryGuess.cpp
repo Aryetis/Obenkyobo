@@ -17,7 +17,7 @@ QcmEntryGuess::~QcmEntryGuess()
     delete ui;
 }
 
-void QcmEntryGuess::SetGuess(QcmDataEntry* symbol_, QcmExerciceType qcmType, bool correct, bool displayKanji)
+void QcmEntryGuess::SetGuess(QcmDataEntry* symbol_, QcmExerciceType qcmType, bool displayKanji, std::optional<bool> correct /*= std::nullopt*/)
 {
     symbol = symbol_;
 
@@ -49,7 +49,7 @@ void QcmEntryGuess::SetGuess(QcmDataEntry* symbol_, QcmExerciceType qcmType, boo
         }
         case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
         {
-            qcmSubType = QcmTypeEnum::RmjToKana;
+            qcmSubType = QcmTypeEnum::RmjToKana; // TODO NOW rename this (stemIsRomanji, stemIsJP)
             ui->EntryGuess->setFont(GetMy::Instance().FntSettingsPageInst().GetCurrentRomanjiFnt());
             ui->EntryGuess->setText(*symbol->Romanji());
             break;
@@ -77,7 +77,8 @@ void QcmEntryGuess::SetGuess(QcmDataEntry* symbol_, QcmExerciceType qcmType, boo
         }
     }
 
-    correctGuess = correct;
+    if (correct.has_value())
+        correctGuess = correct.value();
 }
 
 void QcmEntryGuess::resizeEvent(QResizeEvent* event)
