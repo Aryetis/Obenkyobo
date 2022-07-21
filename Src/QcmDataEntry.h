@@ -13,8 +13,8 @@ public :
     virtual QString const* Kanjis() const = 0;
     virtual QString const* Romanji() const = 0;
 
-    virtual int LearningState() const = 0;
-    virtual void LearningState(int ls) = 0;
+    virtual int LearningScore() const = 0;
+    virtual void LearningScore(int ls) = 0;
 };
 
 #endif // QCMDATAENTRY_H

@@ -38,10 +38,6 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
 {
     FntSettingsPage& fntSetting = GetMy::Instance().FntSettingsPageInst();
 
-
-
-
-
     if (newQcmRequested)
     {
         //************************ "Is there enough to form the pool" ************************
@@ -177,7 +173,7 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
     {
         std::vector<int> weights;
         for (QcmDataEntry* symbol : shuffledSymbols)
-            weights.push_back(symbol->LearningState());
+            weights.push_back(symbol->LearningScore());
 
         std::discrete_distribution<size_t> distr(weights.begin(), weights.end());
         stem = shuffledSymbols[distr(GetMy::Instance().ToolsInst()->MT())];
@@ -264,20 +260,20 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
         ++scoreCounter;
         int appStatisticsScore = settingsSerializer->value("AppStatistics/score", 0).toInt();
         settingsSerializer->setValue("AppStatistics/score", ++appStatisticsScore);
-        int EntryGuessLearningState = entryGuess->GetSymbol()->LearningState();
+        int EntryGuessLearningState = entryGuess->GetSymbol()->LearningScore();
         if ( EntryGuessLearningState > 0 )
-            entryGuess->GetSymbol()->LearningState(EntryGuessLearningState-1);
+            entryGuess->GetSymbol()->LearningScore(EntryGuessLearningState-1);
     }
     else
     {
         ++errorCounter;
         int appStatisticsError = settingsSerializer->value("AppStatistics/error", 0).toInt();
         settingsSerializer->setValue("AppStatistics/error", ++appStatisticsError);
-        int EntryGuessLearningState = entryGuess->GetSymbol()->LearningState();
+        int EntryGuessLearningState = entryGuess->GetSymbol()->LearningScore();
         if ( EntryGuessLearningState < MAX_LEARNING_STATE_VALUE )
-            entryGuess->GetSymbol()->LearningState(EntryGuessLearningState+1);
-        if ( stem->LearningState() < MAX_LEARNING_STATE_VALUE )
-            stem->LearningState(stem->LearningState()+1);
+            entryGuess->GetSymbol()->LearningScore(EntryGuessLearningState+1);
+        if ( stem->LearningScore() < MAX_LEARNING_STATE_VALUE )
+            stem->LearningScore(stem->LearningScore()+1);
     }
 
 

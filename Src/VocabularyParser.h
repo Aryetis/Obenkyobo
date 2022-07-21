@@ -10,9 +10,10 @@
 #include "Src/Pages/FntSettingsPage.h"
 
 // Everything marked as Lnk is a shortcut => isn't owned by this => isn't to be destroyed by this
+// SmartPointers ? What's that ?
 
-class VocabDataEntry;
 class VocabDataPool;
+class VocabDataEntry;
 class VocabDataFile
 {
     public :
@@ -25,8 +26,8 @@ class VocabDataFile
         int GetLearningScore() const { return learningScore; }
         QSet<VocabDataPool*> const& GetPoolLnks() { return poolLnks; }
 
-        static bool WriteLearningScore(QString vocabSheetPath, int ls, int lineNumber = -1);
-        static bool ResetLearningScore(QString vocabSheetPath);
+        bool ResetLearningScore();
+        bool WriteLearningScore(QString vocabSheetPath, int ls, VocabDataEntry* vde = nullptr);
 
     private :
         void ParseLine(QString const& line, int lineNumber);
@@ -40,22 +41,26 @@ class VocabDataFile
 
 class VocabDataEntry : public QcmDataEntry
 {
+    // Necessary so Write/ResetLearningScore can update VDE fields appropiately and keep VDF::learningScore updated
+    // Regardless if modifications are coming from a VDE or a VDF
+    friend class VocabDataFile;
+
     public :
         VocabDataEntry() = delete;
         ~VocabDataEntry() {};
         VocabDataEntry(QString kanas_, QString kanjis_, QString trad_, int ls_, VocabDataFile* vocabDataFile_, int lineNumber_, KanaFamilyEnum fontType_) :
-            kanas(kanas_), kanjis(kanjis_), trad(trad_), learningState(ls_), vocabDataFileLnk(vocabDataFile_), lineNumber(lineNumber_), fontType(fontType_) {} // TODO : don't copy, move instead
+            kanas(kanas_), kanjis(kanjis_), trad(trad_), learningScore(ls_), vocabDataFileLnk(vocabDataFile_), lineNumber(lineNumber_), fontType(fontType_) {} // TODO : don't copy, move instead... not quite sure it's a good plan...
 
         bool operator==(const VocabDataEntry& rhs) const
         {
-            return kanas == rhs.kanas && kanjis == rhs.kanjis && trad == rhs.trad && learningState == rhs.learningState && GetPath() == rhs.GetPath() && lineNumber == rhs.lineNumber;
+            return kanas == rhs.kanas && kanjis == rhs.kanjis && trad == rhs.trad && learningScore == rhs.learningScore && GetPath() == rhs.GetPath() && lineNumber == rhs.lineNumber;
         }
 
         QString const* Kanas() const { return &kanas; }
         QString const* Kanjis() const { return &kanjis; }
         QString const* Romanji() const { return &trad; }
-        int LearningState() const { return learningState; }
-        void LearningState(int ls); // TODO : Need to save ls into vocabSheetPath
+        int LearningScore() const { return learningScore; }
+        void LearningScore(int ls);
         QString const& GetPath() const { return vocabDataFileLnk->GetPath(); }
         int GetLineNumber() const { return lineNumber; }
         KanaFamilyEnum GetFontType() const { return fontType; }
@@ -65,7 +70,7 @@ class VocabDataEntry : public QcmDataEntry
         QString kanas;
         QString kanjis;
         QString trad;
-        int learningState;
+        int learningScore;
         VocabDataFile* vocabDataFileLnk;
         int lineNumber;
         KanaFamilyEnum fontType;
@@ -91,7 +96,7 @@ class VocabDataPool
     private :
         bool DoesLineContain(VocabDataEntry vde);
         QSet<VocabDataEntry*> entriesLnks; // SHORCUTS ; can hold multiple "identical entries" if stored in seperate files (as designed for now)
-        QSet<VocabDataEntry*> malformedLinesLnks; // SHORCUTS
+        QSet<VocabDataEntry*> malformedLinesLnks; // TODO : not sure if it's really useful to store... might get away with storing only lineNumber
         QSet<VocabDataFile*> files;
 };
 

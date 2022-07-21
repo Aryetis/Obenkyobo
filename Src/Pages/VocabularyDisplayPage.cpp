@@ -134,7 +134,7 @@ void VocabularyDisplayPage::PopulateGrid(bool random /*= false*/, int turnPage /
         gridLabels[x][2]->setText(*curVDE->Romanji()); // Romanji <=> Trad
         gridLabels[x][2]->setFont({gridLabels[x][2]->font().family(), fntSize});
 
-        gridLabels[x][3]->setText(QString::number(MAX_LEARNING_STATE_VALUE - curVDE->LearningState()));
+        gridLabels[x][3]->setText(QString::number(MAX_LEARNING_STATE_VALUE - curVDE->LearningScore()));
         gridLabels[x][3]->setFont({gridLabels[x][3]->font().family(), fntSize});
 
         for (int j=0; j<4; ++j)
@@ -222,7 +222,7 @@ void VocabularyDisplayPage::HideColumn(int col, bool b)
 
 void VocabularyDisplayPage::on_pushButton_clicked()
 {
-    VocabDataFile::ResetLearningScore(vdf->GetPath());
+    vdf->ResetLearningScore();
     for (std::vector<QPushButton*> gridLine : gridLabels)
         gridLine[3]->setText(QString::number(0));
 }

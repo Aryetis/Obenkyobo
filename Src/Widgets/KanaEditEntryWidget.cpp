@@ -23,7 +23,7 @@ void KanaEditEntryWidget::InitializeSymbolSettingEntry(QcmDataEntryKana* _kana, 
     ui->KanaEntryButton->setSymbolFamilyEnum(kanaFamily);
     ui->KanaEntryButton->setJpText(*kana->Kanas());
     ui->KanaEntryButton->setRmjText(*kana->Romanji());
-    ui->KanaEntryButton->setLearningState(kana->LearningState());
+    ui->KanaEntryButton->setLearningState(kana->LearningScore());
     ui->KanaEntryButton->setChecked(kana->IsEnabled());
 }
 

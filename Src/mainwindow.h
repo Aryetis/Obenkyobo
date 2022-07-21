@@ -55,8 +55,6 @@ private slots:
     void refreshTimeAndBattery();
 
     //===========================================================================
-    void on_refresh_triggered();
-    void on_refresh_hovered();
 
 
 private:
@@ -64,6 +62,9 @@ private:
     void keyReleaseEvent(QKeyEvent *event) override;
     void DisplayFirstTimeMainWindowPagePopup();
     void DisplayFirstTimeKanasEditPagePopup();
+
+    void on_refresh_triggered();
+    void on_refresh_hovered();
 
     Ui::MainWindow *ui;
 

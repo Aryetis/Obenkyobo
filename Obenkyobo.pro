@@ -1,15 +1,17 @@
 #-------------------------------------------------
 # WORKING ON :
 #        - Connect Every Vocab MCQ FntSettings Pages sliders
-#        - rename "Settings change on overflow" .... "Lock Fonts Sizes" ? "Allow silent size adaptation" ?
 #        - Connect both "do not resize if overflow" option in the FntSettings
 #        - Resize the stem if necessary too
+#        - Switch Kana resize fnt for some reasons
+#        - Moving Statistic and reset button to their own Page (rename and move "Reset Weight / Learning State"  not stating its kana specific
+#        - deal with the main.cpp warning, probably have to do with GetMy::
+#        - VocabDisplay "Reset LS" button only do aeshetic change ? do not update ram data ? (change page shows up previous data)
+#        - Rework LearningScore() system so it can take a list of modification => otherwise at each VocabQCM validation we will modify copy the file twice
 #-------------------------------------------------
 # TODO : - Make VocabDisplayPage tweakable (Do not display / display only for current directory .oben / display for directories too)
 #        - Finish sleep handling properly
 #        - use a fontMetrics().boundingRect to determine max length of VocabExplorer entries text
-#        - fix the slots error on startup
-#        - handle é è à in VocabExplorer filenames
 #-------------------------------------------------
 # TODO later : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
 #              - redo the Qmenu::right-arrow

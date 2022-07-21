@@ -4,9 +4,9 @@
 #include "Src/GetMy.h"
 #include "Src/Tools.h"
 
-void VocabDataEntry::LearningState(int ls)
+void VocabDataEntry::LearningScore(int ls)
 {
-    vocabDataFileLnk->WriteLearningScore(GetPath(), ls, lineNumber);
+    vocabDataFileLnk->WriteLearningScore(GetPath(), ls, this); // will take care of updating learningScore through friendship
 }
 
 QFont VocabDataEntry::GetFont(bool kanji)
@@ -101,8 +101,9 @@ void VocabDataFile::ParseLine(const QString &line, int lineNumber_)
         malformedLines.insert(new VocabDataEntry(kanas_, kanji_, trad_, learningScore_, this, lineNumber_, fontType_));
 }
 
-bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, int ls, int lineNumber /*= -1*/)
+bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, int ls, VocabDataEntry* vde /*= nullptr*/)
 {
+    /****************** Updating File ******************/
     QFile vocabFileIn{vocabSheetPath};
     if (QFile::exists(vocabSheetPath+".tmp"))
         QFile::remove(vocabSheetPath+".tmp");
@@ -114,18 +115,18 @@ bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, int ls, int lineN
         QTextStream out{&vocabFileOut};
         out.setCodec("UTF-8");
         int lineCounter = 0;
+        int targetLineNumber = (vde != nullptr) ? vde->GetLineNumber() : -1;
 
         while (!in.atEnd())
         {
             QString curLine = in.readLine();
-            if ((lineNumber == -1 || lineNumber == lineCounter) && (curLine.count() > 0 && curLine[0] != '#'))
+            if ((targetLineNumber == -1 || targetLineNumber == lineCounter) && (curLine.count() > 0 && curLine[0] != '#'))
             {
                 curLine.replace(QRegularExpression("\\[learningScore=([0-9]+)\\]"), QString("[learningScore=%1]").arg(ls));
                 out << curLine << "\n";
             }
             else
                 out << curLine << "\n";
-
             ++lineCounter;
         }
         QString inName = vocabFileIn.fileName();
@@ -133,15 +134,31 @@ bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, int ls, int lineN
         vocabFileIn.remove();
         vocabFileOut.close();
         vocabFileOut.rename(inName);
-        return true;
     }
     else
+    {
         GetMy::Instance().ToolsInst()->DisplayPopup("Could not open file : "+vocabSheetPath);
+        return false;
+    }
 
-    return false;
+    /****************** Updating Fields ******************/
+    if (vde != nullptr)
+    {
+        learningScore = learningScore - vde->LearningScore()/entries.size() + ls/entries.size();
+        vde->learningScore = ls;
+    }
+    else
+    {
+        learningScore = ls;
+        QSet<VocabDataEntry*>::iterator it = entries.begin();
+        while (it != entries.end())
+            (*it++)->learningScore = ls;
+    }
+
+    return true;
 }
 
-bool VocabDataFile::ResetLearningScore(QString vocabSheetPath)
+bool VocabDataFile::ResetLearningScore()
 {
     // Reminder : LearningScore value is its weight in the qcm's pool <=> it's inversed
     return WriteLearningScore(vocabSheetPath, MAX_LEARNING_STATE_VALUE);

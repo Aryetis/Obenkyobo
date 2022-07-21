@@ -57,12 +57,12 @@ private slots:
     void on_DateDisplayFormatDropdown_currentIndexChanged(int index);
     void on_RowPerPageComboBox_currentIndexChanged(int index);
     void on_KanaHardRefreshCheckBox_clicked(bool checked);
-    void on_comboBox_currentIndexChanged(int index);
     void on_resetPopup_clicked();
-
     void on_DisableVocabSheets_clicked();
 
 private:
+    void on_comboBox_currentIndexChanged(int index);
+
     Ui::AppSettingsPage *ui;
     int nbrOfEntryLinesIdx;
     int randomChoiceIdx;

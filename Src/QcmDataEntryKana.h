@@ -21,8 +21,8 @@ public :
     bool IsEnabled() const { return enabled; }
     void Enabled(bool b);
 
-    int LearningState() const { return learningState; }
-    void LearningState(int ls);
+    int LearningScore() const { return learningScore; }
+    void LearningScore(int ls);
 
 private :
     QString romanji;
@@ -30,7 +30,7 @@ private :
     QString enabledSerializedAddress;
     bool enabled;
     QString learningStateSerializedAddress;
-    int learningState; // [0;1] learned, [2;4] learning, 5 unknown
+    int learningScore; // [0;1] learned, [2;4] learning, 5 unknown
     KanasTableFamily* parentedFamily;
 };
 

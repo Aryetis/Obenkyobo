@@ -9,7 +9,7 @@ bool QcmDataEntryKana::RegisterAndInitializeSerializedVals(QString serializedAdd
     enabledSerializedAddress = ("Symbols/enabled_"+serializedAddress+"_"+romanji).toUtf8();
     enabled = GetMy::Instance().SettingSerializerInst()->value(enabledSerializedAddress, true).toBool();
     learningStateSerializedAddress = ("Symbols/learningState"+serializedAddress+"_"+romanji).toUtf8();
-    learningState = GetMy::Instance().SettingSerializerInst()->value(learningStateSerializedAddress, 5).toInt();
+    learningScore = GetMy::Instance().SettingSerializerInst()->value(learningStateSerializedAddress, 5).toInt();
     return enabled;
 }
 
@@ -31,8 +31,8 @@ void QcmDataEntryKana::Enabled(bool b)
     }
 }
 
-void QcmDataEntryKana::LearningState(int ls)
+void QcmDataEntryKana::LearningScore(int ls)
 {
-    learningState = ls;
-    GetMy::Instance().SettingSerializerInst()->setValue(learningStateSerializedAddress, learningState);
+    learningScore = ls;
+    GetMy::Instance().SettingSerializerInst()->setValue(learningStateSerializedAddress, learningScore);
 }

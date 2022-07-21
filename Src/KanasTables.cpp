@@ -364,6 +364,6 @@ void KanasTableFamily::ResetWeights()
 {
     for (SymbolsTableSection& sts : data)
         for (QcmDataEntry& s : sts.Data())
-            s.LearningState(MAX_LEARNING_STATE_VALUE);
+            s.LearningScore(MAX_LEARNING_STATE_VALUE);
 }
 

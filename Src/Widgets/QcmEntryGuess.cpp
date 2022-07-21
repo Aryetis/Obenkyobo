@@ -89,7 +89,7 @@ void QcmEntryGuess::resizeEvent(QResizeEvent* event)
 }
 
 
-void QcmEntryGuess::CorrectFontSize()
+void QcmEntryGuess::CorrectFontSize() // TODO NOW : move it to Tools and make it context agnostic
 {
     int newFontSize = (qcmSubType == QcmTypeEnum::RmjToKana)
                         ? GetMy::Instance().FntSettingsPageInst().GetKanasAnswerRmjKanaSize()
