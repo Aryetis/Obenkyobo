@@ -78,10 +78,10 @@ void VocabExplorerPage::Populate()
             if (fndOben != 0)
                 bar->SetLearningScoreText(QString::number(MAX_LEARNING_STATE_VALUE - avgLS/fndOben));
             else
-                bar->SetLearningScoreText("∅");
+                bar->SetLearningScoreText("-");
         }
         else
-            bar->SetLearningScoreText("∅");
+            bar->SetLearningScoreText("-");
 
         ui->VocabularyCfgListContentVLayout->insertWidget(ui->VocabularyCfgListContentVLayout->count()-1, bar);
     }
@@ -98,7 +98,7 @@ void VocabExplorerPage::Populate()
             bar->SetLearningScoreText(QString::number(MAX_LEARNING_STATE_VALUE - vdf.GetLearningScore()));
         }
         else
-            bar->SetLearningScoreText("∅");
+            bar->SetLearningScoreText("-");
 
         ui->VocabularyCfgListContentVLayout->insertWidget(ui->VocabularyCfgListContentVLayout->count()-1, (bar));
     }
