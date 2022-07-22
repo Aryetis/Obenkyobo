@@ -1,4 +1,4 @@
- #include <QFile>
+#include <QFile>
 #include <QTextStream>
 #include "Src/VocabularyParser.h"
 #include "Src/GetMy.h"
@@ -101,7 +101,7 @@ void VocabDataFile::ParseLine(const QString &line, int lineNumber_)
         malformedLines.insert(new VocabDataEntry(kanas_, kanji_, trad_, learningScore_, this, lineNumber_, fontType_));
 }
 
-bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, int ls, VocabDataEntry* vde /*= nullptr*/)
+bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, int ls, int lineNumber /*= -1*/)
 {
     /****************** Updating File ******************/
     QFile vocabFileIn{vocabSheetPath};
@@ -115,12 +115,11 @@ bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, int ls, VocabData
         QTextStream out{&vocabFileOut};
         out.setCodec("UTF-8");
         int lineCounter = 0;
-        int targetLineNumber = (vde != nullptr) ? vde->GetLineNumber() : -1;
 
         while (!in.atEnd())
         {
             QString curLine = in.readLine();
-            if ((targetLineNumber == -1 || targetLineNumber == lineCounter) && (curLine.count() > 0 && curLine[0] != '#'))
+            if ((lineNumber == -1 || lineNumber == lineCounter) && (curLine.count() > 0 && curLine[0] != '#'))
             {
                 curLine.replace(QRegularExpression("\\[learningScore=([0-9]+)\\]"), QString("[learningScore=%1]").arg(ls));
                 out << curLine << "\n";
@@ -141,6 +140,15 @@ bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, int ls, VocabData
         return false;
     }
 
+    return true;
+}
+
+bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, int ls, VocabDataEntry* vde /*= nullptr*/)
+{
+    /****************** Updating File ******************/
+    if ( !WriteLearningScore(vocabSheetPath, ls, (vde != nullptr) ? vde->GetLineNumber() : -1) )
+        return false;
+
     /****************** Updating Fields ******************/
     if (vde != nullptr)
     {
@@ -158,10 +166,15 @@ bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, int ls, VocabData
     return true;
 }
 
+bool VocabDataFile::ResetLearningScore(QString vocabSheetPath)
+{
+    return VocabDataFile::WriteLearningScore(vocabSheetPath, MAX_LEARNING_STATE_VALUE, -1);
+}
+
 bool VocabDataFile::ResetLearningScore()
 {
     // Reminder : LearningScore value is its weight in the qcm's pool <=> it's inversed
-    return WriteLearningScore(vocabSheetPath, MAX_LEARNING_STATE_VALUE);
+    return WriteLearningScore(vocabSheetPath, MAX_LEARNING_STATE_VALUE, nullptr);
 }
 
 VocabDataPool::VocabDataPool(QString sheetPath)

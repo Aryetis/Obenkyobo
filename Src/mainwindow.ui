@@ -73,6 +73,7 @@
         <widget class="ScreenSettingsPage" name="ScreenSettingsPg"/>
         <widget class="VocabExplorerPage" name="VocabExplorerPg"/>
         <widget class="VocabularyDisplayPage" name="VocabularyDisplayPg"/>
+        <widget class="StatisticsPage" name="StatisticsPg"/>
        </widget>
       </item>
      </layout>
@@ -201,6 +202,7 @@
     <addaction name="actionApplication_Setting"/>
     <addaction name="actionFonts_Setting"/>
     <addaction name="actionScreen_Setting"/>
+    <addaction name="actionStatistics"/>
    </widget>
    <addaction name="menuMain"/>
    <addaction name="menuSettings"/>
@@ -415,6 +417,11 @@
     <string>Romanji to Vocabulary (MCQ)</string>
    </property>
   </action>
+  <action name="actionStatistics">
+   <property name="text">
+    <string>Statistics</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -470,6 +477,12 @@
    <class>WelcomePage</class>
    <extends>QWidget</extends>
    <header>Src/Pages/WelcomePage.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>StatisticsPage</class>
+   <extends>QWidget</extends>
+   <header>Src/Pages/StatisticsPage.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

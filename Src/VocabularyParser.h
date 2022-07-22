@@ -26,7 +26,9 @@ class VocabDataFile
         int GetLearningScore() const { return learningScore; }
         QSet<VocabDataPool*> const& GetPoolLnks() { return poolLnks; }
 
+        static bool ResetLearningScore(QString vocabSheetPath);
         bool ResetLearningScore();
+        static bool WriteLearningScore(QString vocabSheetPath, int ls, int lineNumber = -1);
         bool WriteLearningScore(QString vocabSheetPath, int ls, VocabDataEntry* vde = nullptr);
 
     private :

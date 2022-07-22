@@ -32,6 +32,8 @@ void VocabExplorerPage::Populate(QDir dir)
 
 void VocabExplorerPage::Populate()
 {
+    DisplayLSEnum displayLsSetting = GetMy::Instance().AppSettingsPageInst().GetDisplayLSSetting();
+
     // ************* Sanity Check current Dir *************
     if (!currentDir.exists())
     {
@@ -58,10 +60,28 @@ void VocabExplorerPage::Populate()
         ui->VocabularyCfgListContentVLayout->insertWidget(0, foo);
     }
 
-    foreach(const QFileInfo& fileInfo, currentDir.entryInfoList(QStringList() << "*", QDir::Dirs | QDir::Hidden | QDir::NoDotAndDotDot | QDir::NoSymLinks))
+    foreach(const QFileInfo& dirInfo, currentDir.entryInfoList(QStringList() << "*", QDir::Dirs | QDir::Hidden | QDir::NoDotAndDotDot | QDir::NoSymLinks))
     {
-        VocabFileEntryWidget* bar = new VocabFileEntryWidget(fileInfo);
+        VocabFileEntryWidget* bar = new VocabFileEntryWidget(dirInfo);
         vocabFileWidgets.push_back(bar);
+
+        if (displayLsSetting == DisplayLSEnum::FilesAndDirs)
+        {
+            int avgLS = 0, fndOben = 0;
+            QDirIterator it(dirInfo.absoluteFilePath(), QStringList() << "*.oben", QDir::Files, QDirIterator::Subdirectories);
+            while (it.hasNext())
+            {
+                VocabDataFile vdf(it.next());
+                avgLS += vdf.GetLearningScore();
+                ++fndOben;
+            }
+            if (fndOben != 0)
+                bar->SetLearningScoreText(QString::number(MAX_LEARNING_STATE_VALUE - avgLS/fndOben));
+            else
+                bar->SetLearningScoreText("∅");
+        }
+        else
+            bar->SetLearningScoreText("∅");
 
         ui->VocabularyCfgListContentVLayout->insertWidget(ui->VocabularyCfgListContentVLayout->count()-1, bar);
     }
@@ -72,8 +92,13 @@ void VocabExplorerPage::Populate()
         VocabFileEntryWidget* bar = new VocabFileEntryWidget(fileInfo);
         vocabFileWidgets.push_back(bar);
 
-        VocabDataFile vdf(fileInfo.absoluteFilePath()); // TODO : make it optional [Full, files only, files and dirs] for perf reasons
-        bar->SetLearningScoreText(MAX_LEARNING_STATE_VALUE - vdf.GetLearningScore());
+        if (displayLsSetting != DisplayLSEnum::None)
+        {
+            VocabDataFile vdf(fileInfo.absoluteFilePath());
+            bar->SetLearningScoreText(QString::number(MAX_LEARNING_STATE_VALUE - vdf.GetLearningScore()));
+        }
+        else
+            bar->SetLearningScoreText("∅");
 
         ui->VocabularyCfgListContentVLayout->insertWidget(ui->VocabularyCfgListContentVLayout->count()-1, (bar));
     }

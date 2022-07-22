@@ -1,17 +1,18 @@
 #-------------------------------------------------
 # WORKING ON :
 #        - Connect Every Vocab MCQ FntSettings Pages sliders
-#        - Connect both "do not resize if overflow" option in the FntSettings
+#        - Connect both "do not resize if overflow" option in the FntSettings AND change their size
 #        - Resize the stem if necessary too
 #        - Switch Kana resize fnt for some reasons
-#        - Moving Statistic and reset button to their own Page (rename and move "Reset Weight / Learning State"  not stating its kana specific
 #        - deal with the main.cpp warning, probably have to do with GetMy::
-#        - VocabDisplay "Reset LS" button only do aeshetic change ? do not update ram data ? (change page shows up previous data)
 #        - Rework LearningScore() system so it can take a list of modification => otherwise at each VocabQCM validation we will modify copy the file twice
+#        - connect AppSettings::Display LS for :
 #-------------------------------------------------
-# TODO : - Make VocabDisplayPage tweakable (Do not display / display only for current directory .oben / display for directories too)
-#        - Finish sleep handling properly
+# TODO : - Finish sleep handling properly
 #        - use a fontMetrics().boundingRect to determine max length of VocabExplorer entries text
+#        - https://discord.com/channels/809205711778480158/958419944243089479/999974500756103188
+#           - Anything below mk6 will not suspend while plugged in, yeah ;)
+#           - also disconnecting charger / connecting also desuspends the device, which i will prevent ( as an optional feature )
 #-------------------------------------------------
 # TODO later : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
 #              - redo the Qmenu::right-arrow
@@ -47,6 +48,7 @@ CONFIG += c++17 \
 QMAKE_CXXFLAGS += -g -rdynamic # for backtrace debuging
 
 SOURCES += \
+    Src/GetMy.cpp \
     Src/KanasTables.cpp \
     Src/Pages/AppSettingsPage.cpp \
     Src/Pages/FntSettingsPage.cpp \
@@ -54,6 +56,7 @@ SOURCES += \
     Src/Pages/KeyboardExercicePage.cpp \
     Src/Pages/QcmExercicePage.cpp \
     Src/Pages/ScreenSettingsPage.cpp \
+    Src/Pages/StatisticsPage.cpp \
     Src/Pages/VocabExplorerPage.cpp \
     Src/Pages/VocabularyDisplayPage.cpp \
     Src/Pages/WelcomePage.cpp \
@@ -87,6 +90,7 @@ HEADERS += \
     Src/Pages/KeyboardExercicePage.h \
     Src/Pages/QcmExercicePage.h \
     Src/Pages/ScreenSettingsPage.h \
+    Src/Pages/StatisticsPage.h \
     Src/Pages/VocabExplorerPage.h \
     Src/Pages/VocabularyDisplayPage.h \
     Src/Pages/WelcomePage.h \
@@ -112,6 +116,7 @@ FORMS += \
     Src/Pages/KeyboardExercicePage.ui \
     Src/Pages/QcmExercicePage.ui \
     Src/Pages/ScreenSettingsPage.ui \
+    Src/Pages/StatisticsPage.ui \
     Src/Pages/VocabExplorerPage.ui \
     Src/Pages/VocabularyDisplayPage.ui \
     Src/Pages/WelcomePage.ui \

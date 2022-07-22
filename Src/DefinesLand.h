@@ -48,4 +48,11 @@ enum DeviceState
     busy
 };
 
+enum DisplayLSEnum
+{
+    FilesAndDirs,
+    Files,
+    None
+};
+
 #endif // DEFINESLAND_H

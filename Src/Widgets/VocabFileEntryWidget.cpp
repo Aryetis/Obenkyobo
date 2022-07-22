@@ -42,9 +42,7 @@ VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fi, bool dirtyUpDirHack, QW
         }
 
         if  (vocabFileInfo.isFile())
-        {
-            ui->checkBox->setChecked(GetMy::Instance().AppSettingsPageInst().GetEnabledVocabSheets().contains(vocabFileInfo.absoluteFilePath()));
-        }
+            ui->checkBox->setChecked(GetMy::Instance().GetEnabledVocabSheets().contains(vocabFileInfo.absoluteFilePath()));
         else
         {
             ui->checkBox->setTristate(true);
@@ -53,7 +51,7 @@ VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fi, bool dirtyUpDirHack, QW
             bool foundOne = false, missedOne = false;
             while (it.hasNext())
             {
-                bool containsItSheet = GetMy::Instance().AppSettingsPageInst().GetEnabledVocabSheets().contains(it.next());
+                bool containsItSheet = GetMy::Instance().GetEnabledVocabSheets().contains(it.next());
 
                 foundOne = foundOne || containsItSheet;
                 missedOne = missedOne || !containsItSheet;
@@ -81,9 +79,9 @@ VocabFileEntryWidget::~VocabFileEntryWidget()
     delete ui;
 }
 
-void VocabFileEntryWidget::SetLearningScoreText(int learningScore)
+void VocabFileEntryWidget::SetLearningScoreText(QString learningScoreText)
 {
-    ui->learningScore->setText(QString::number(learningScore));
+    ui->learningScore->setText(learningScoreText);
 }
 
 void VocabFileEntryWidget::on_TitleButton_clicked()
@@ -113,9 +111,9 @@ void VocabFileEntryWidget::on_checkBox_clicked(bool checked)
     {
         ui->checkBox->setChecked(checked);
         if (checked)
-            GetMy::Instance().AppSettingsPageInst().AddEnabledVocabSheet(vocabFileInfo.absoluteFilePath());
+            GetMy::Instance().AddEnabledVocabSheet(vocabFileInfo.absoluteFilePath());
         else
-            GetMy::Instance().AppSettingsPageInst().RemoveEnabledVocabSheet(vocabFileInfo.absoluteFilePath());
+            GetMy::Instance().RemoveEnabledVocabSheet(vocabFileInfo.absoluteFilePath());
     }
     else
     {
@@ -126,9 +124,9 @@ void VocabFileEntryWidget::on_checkBox_clicked(bool checked)
             sheetSet << it.next();
 
         if (checked)
-            GetMy::Instance().AppSettingsPageInst().AddEnabledVocabSheets(sheetSet);
+            GetMy::Instance().AddEnabledVocabSheets(sheetSet);
         else
-            GetMy::Instance().AppSettingsPageInst().RemoveEnabledVocabSheets(sheetSet);
+            GetMy::Instance().RemoveEnabledVocabSheets(sheetSet);
     }
 }
 

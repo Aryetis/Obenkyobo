@@ -52,10 +52,10 @@ private slots:
     void on_actionLearn_Edit_Set_triggered();
 
     //===========================================================================
-    void refreshTimeAndBattery();
+    void on_actionStatistics_triggered();
 
     //===========================================================================
-
+    void refreshTimeAndBattery();
 
 private:
     void keyPressEvent(QKeyEvent *event) override;

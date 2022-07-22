@@ -153,7 +153,7 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
             {
                 if (vdp != nullptr)
                     delete vdp;
-                vdp = new VocabDataPool{GetMy::Instance().AppSettingsPageInst().GetEnabledVocabSheets()};
+                vdp = new VocabDataPool{GetMy::Instance().GetEnabledVocabSheets()};
                 if (!GetMy::Instance().ToolsInst()->IsThereEnough(qcmType, vdp->AllEntries().size()))
                     return false;
                 entriesPool.insert(entriesPool.end(), vdp->AllEntries().begin(), vdp->AllEntries().end());

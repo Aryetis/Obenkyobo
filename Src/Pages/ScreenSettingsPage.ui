@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,2">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,1,2,1,2">
+    <layout class="QVBoxLayout" name="ScreenSettingsContainer" stretch="1,1,2,1,2">
      <property name="sizeConstraint">
       <enum>QLayout::SetDefaultConstraint</enum>
      </property>

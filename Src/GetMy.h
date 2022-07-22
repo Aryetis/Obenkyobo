@@ -13,6 +13,7 @@ class MainWindow;
 class VocabExplorerPage;
 class VocabularyDisplayPage;
 class Tools;
+class StatisticsPage;
 class GetMy
 {
 public:
@@ -52,7 +53,18 @@ public:
     void SetToolsInst(Tools* tools) { toolsInstance = tools; }
     Tools* ToolsInst() { return toolsInstance; }
 
+    void SetStatisticsInst(StatisticsPage* stats) { statisticsInstance = stats; }
+    StatisticsPage* StatisticsInst() { return statisticsInstance; }
+
     const KoboDeviceDescriptor& Descriptor() { return desc; }
+
+    QSet<QString> const& GetEnabledVocabSheets() const { return enabledSheets; }
+    QSet<QString>& ModifyEnabledVocabSheets() { return enabledSheets; }
+    void ClearEnabledVocabSheets();
+    void AddEnabledVocabSheet(QString filePath);
+    void AddEnabledVocabSheets(QSet<QString> filePaths);
+    void RemoveEnabledVocabSheet(QString filePath);
+    void RemoveEnabledVocabSheets(QSet<QString> filePaths);
 
 private :
     GetMy() = default;
@@ -65,8 +77,11 @@ private :
     VocabExplorerPage*              vocabularyLearnEditSetInstance;
     VocabularyDisplayPage*          vocabularyDisplayInstance;
     Tools*                          toolsInstance;
+    StatisticsPage*                 statisticsInstance;
 
     KoboDeviceDescriptor desc =  KoboPlatformFunctions::getKoboDeviceDescriptor();
+
+    QSet<QString> enabledSheets;
 
     QSettings* settingSerializerInstance;
 };
