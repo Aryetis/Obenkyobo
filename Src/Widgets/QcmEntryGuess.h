@@ -36,12 +36,22 @@ private slots:
     void on_EntryGuess_clicked();
 
 private:
+    void ComputeSizeCorrection();
+
     QcmDataEntry* symbol;
     Ui::QcmEntryGuess *ui;
     bool correctGuess;
 
     static bool fntWarnDisplayed;
     QcmExerciceType qcmType;
+
+    bool sizeCorrected = false;
+    int originalFntSize;
+    QFont correctedFnt;
+    bool displayKanji;
+
+    inline static std::optional<float> vanillaWidth = std::nullopt, vanillaHeight = std::nullopt;
+    bool spawning;
 };
 
 #endif // QCMENTRYGUESS_H

@@ -213,12 +213,14 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
     guesses.clear();
 
     //************************ Setting board size ******************************
+    // Making sure no QcmEntryGuess is bigger than another
+    // TODO : lol of course it doesn't work, sometimes get sligthly bigger, because fuck qt
     int NbrOfEntriesLine = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine();
-    for (int i=0; i < NbrOfEntriesLine; ++i)
-        ui->EntriesGridLayout->setColumnStretch(i, 1/NbrOfEntriesLine);
     int NbrOfEntriesRow = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
     for (int i=0; i < NbrOfEntriesLine; ++i)
-        ui->EntriesGridLayout->setRowStretch(i, 1/NbrOfEntriesRow);
+        ui->EntriesGridLayout->setColumnStretch(i, 1);
+    for (int i=0; i < NbrOfEntriesLine; ++i)
+        ui->EntriesGridLayout->setRowStretch(i, 1);
 
     //************************ Initialize Entries board ************************
     int stemSlot = GetMy::Instance().ToolsInst()->GetRandomInt(0, (NbrOfEntriesLine*NbrOfEntriesRow)-1);
