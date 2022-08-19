@@ -66,7 +66,7 @@ class VocabDataEntry : public QcmDataEntry
         QString const& GetPath() const { return vocabDataFileLnk->GetPath(); }
         int GetLineNumber() const { return lineNumber; }
         KanaFamilyEnum GetFontType() const { return fontType; }
-        QFont GetFont(bool kanji);
+        QFont GetStemFont(bool kanji);
 
     private :
         QString kanas;

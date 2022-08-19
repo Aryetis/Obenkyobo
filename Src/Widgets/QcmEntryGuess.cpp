@@ -4,6 +4,9 @@
 #include "Src/GetMy.h"
 #include "Src/Tools.h"
 #include "Src/Pages/QcmExercicePage.h"
+// Note to self :
+// Order of execution : x*SetGuess() -> x*resizeEvent() -> x*paintEvent
+// TODO : if you want wordWrap => rewrite everything using QLabel instead of QPushButton, have fun, fuck qt
 
 QcmEntryGuess::QcmEntryGuess(QWidget *parent) :
     QWidget(parent),
@@ -17,125 +20,142 @@ QcmEntryGuess::~QcmEntryGuess()
     delete ui;
 }
 
-void QcmEntryGuess::SetGuess(QcmDataEntry* symbol_, QcmExerciceType qcmType, bool displayKanji, std::optional<bool> correct /*= std::nullopt*/)
+void QcmEntryGuess::SetGuess(QcmDataEntry* symbol_, QcmExerciceType qcmType_, bool displayKanji, std::optional<bool> correct /*= std::nullopt*/)
 {
     symbol = symbol_;
+    qcmType = qcmType_;
+    if (correct.has_value())
+        correctGuess = correct.value();
+    bool sizeCorrected = false;
+    int originalFntSize;
+    QFont correctedFnt;
 
+    // WARNING : DO NOT set text and font at this stage as will expand QcmEntryGuess =>
+    // might result in expanding too much/squishing neighboor entries => inconsistent entries size
+
+    // TODO NOW : fix that shit
+    //              => 1/ SET ENTRIES TO FIXED SIZE (at the very least width for now) !!!
+    //                 2/ move size correction after resizeEvent determined the height's dimension
+    //                 3/ enjoy ?
     switch (qcmType)
     {
         case QcmExerciceType::Hiragana_to_Romanji_MCQ :
         case QcmExerciceType::Hiragana_to_Romanji_Kbd :
         {
-            qcmSubType = QcmTypeEnum::KanaToRmj;
-            ui->EntryGuess->setFont(GetMy::Instance().FntSettingsPageInst().GetCurrentHiraganaFnt());
+            originalFntSize = GetMy::Instance().FntSettingsPageInst().GetKanasAnswerKanaRmjSize();
+            sizeCorrected = Tools::CorrectFontSize(*symbol->Kanas(),
+                                {GetMy::Instance().FntSettingsPageInst().GetCurrentHiraganaFamily(), originalFntSize},
+                                *(ui->EntryGuess), correctedFnt);
+            ui->EntryGuess->setFont(correctedFnt);
             ui->EntryGuess->setText(*symbol->Kanas());
             break;
         }
         case QcmExerciceType::Katakana_to_Romanji_MCQ :
         case QcmExerciceType::Katakana_to_Romanji_Kbd :
         {
-            qcmSubType = QcmTypeEnum::KanaToRmj;
-            ui->EntryGuess->setFont(GetMy::Instance().FntSettingsPageInst().GetCurrentKatakanaFnt());
+            originalFntSize = GetMy::Instance().FntSettingsPageInst().GetKanasAnswerKanaRmjSize();
+            sizeCorrected = Tools::CorrectFontSize(*symbol->Kanas(),
+                                {GetMy::Instance().FntSettingsPageInst().GetCurrentKatakanaFamily(), originalFntSize},
+                                *(ui->EntryGuess), correctedFnt);
+            ui->EntryGuess->setFont(correctedFnt);
             ui->EntryGuess->setText(*symbol->Kanas());
             break;
         }
         case QcmExerciceType::Romanji_to_Hiragana_MCQ :
         case QcmExerciceType::Romanji_to_Katakana_MCQ :
         {
-            qcmSubType = QcmTypeEnum::RmjToKana;
-            ui->EntryGuess->setFont(GetMy::Instance().FntSettingsPageInst().GetCurrentRomanjiFnt());
+            originalFntSize = GetMy::Instance().FntSettingsPageInst().GetKanasAnswerRmjKanaSize();
+            sizeCorrected = Tools::CorrectFontSize(*symbol->Kanas(),
+                                {GetMy::Instance().FntSettingsPageInst().GetCurrentRomanjiFamily(), originalFntSize},
+                                *(ui->EntryGuess), correctedFnt);
+            ui->EntryGuess->setFont(correctedFnt);
             ui->EntryGuess->setText(*symbol->Romanji());
             break;
         }
         case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
         {
-            qcmSubType = QcmTypeEnum::RmjToKana; // TODO NOW rename this (stemIsRomanji, stemIsJP)
-            ui->EntryGuess->setFont(GetMy::Instance().FntSettingsPageInst().GetCurrentRomanjiFnt());
+            originalFntSize = GetMy::Instance().FntSettingsPageInst().GetVocabAnswerRmjKanaSize();
+            sizeCorrected = Tools::CorrectFontSize(*symbol->Kanas(),
+                                {GetMy::Instance().FntSettingsPageInst().GetCurrentRomanjiFamily(), originalFntSize},
+                                *(ui->EntryGuess), correctedFnt);
+            ui->EntryGuess->setFont(correctedFnt);
             ui->EntryGuess->setText(*symbol->Romanji());
             break;
         }
         case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
         {
-            qcmSubType = QcmTypeEnum::RmjToKana;
-
             if (displayKanji)
             {
-                ui->EntryGuess->setFont(GetMy::Instance().FntSettingsPageInst().GetCurrentKanjiFnt());
+                originalFntSize = GetMy::Instance().FntSettingsPageInst().GetVocabAnswerKanaRmjSize();
+                sizeCorrected = Tools::CorrectFontSize(*symbol->Kanas(),
+                                    {GetMy::Instance().FntSettingsPageInst().GetCurrentKanjiFamily(), originalFntSize},
+                                    *(ui->EntryGuess), correctedFnt);
+                ui->EntryGuess->setFont(correctedFnt);
                 ui->EntryGuess->setText(*symbol->Kanjis());
             }
             else if (static_cast<VocabDataEntry*>(symbol)->GetFontType() == KanaFamilyEnum::hiragana)
             {
-                ui->EntryGuess->setFont(GetMy::Instance().FntSettingsPageInst().GetCurrentHiraganaFnt());
+                originalFntSize = GetMy::Instance().FntSettingsPageInst().GetVocabAnswerKanaRmjSize();
+                sizeCorrected = Tools::CorrectFontSize(*symbol->Kanas(),
+                                    {GetMy::Instance().FntSettingsPageInst().GetCurrentHiraganaFamily(), originalFntSize},
+                                    *(ui->EntryGuess), correctedFnt);
+                ui->EntryGuess->setFont(correctedFnt);
                 ui->EntryGuess->setText(*symbol->Kanas());
             }
             else
             {
-                ui->EntryGuess->setFont(GetMy::Instance().FntSettingsPageInst().GetCurrentKatakanaFnt());
+                originalFntSize = GetMy::Instance().FntSettingsPageInst().GetVocabAnswerKanaRmjSize();
+                sizeCorrected = Tools::CorrectFontSize(*symbol->Kanas(),
+                                    {GetMy::Instance().FntSettingsPageInst().GetCurrentKatakanaFamily(), originalFntSize},
+                                    *(ui->EntryGuess), correctedFnt);
+                ui->EntryGuess->setFont(correctedFnt);
                 ui->EntryGuess->setText(*symbol->Kanas());
             }
             break;
         }
     }
 
-    if (correct.has_value())
-        correctGuess = correct.value();
+    if (sizeCorrected)
+    {
+        if (!fntWarnDisplayed) // TODO : rethink design
+        {
+            GetMy::Instance().ToolsInst()->DisplayPopup(
+                    "MCQ Answers (cf :Settings->Fonts) font size("+QString::number(originalFntSize)+") is too big,\n"
+                    "Resizing them to " + QString::number(correctedFnt.pointSizeF()));
+            fntWarnDisplayed = true;
+        }
+        switch (qcmType)
+        {
+            case Hiragana_to_Romanji_MCQ :
+            case Katakana_to_Romanji_MCQ :
+                {
+//                    if (qcmSubType == QcmTypeEnum::RmjToKana)
+//                        GetMy::Instance().FntSettingsPageInst().SetKanasAnswerRmjKanaSize(newFontSize);
+//                    else
+//                        GetMy::Instance().FntSettingsPageInst().SetKanasAnswerKanaRmjSize(newFontSize);
+                    break;
+                }
+            case Romanji_to_Hiragana_MCQ :
+            case Romanji_to_Katakana_MCQ :
+
+            case Vocabulary_to_Romanji_MCQ :
+            case Romanji_to_Vocabulary_MCQ :
+
+            case Katakana_to_Romanji_Kbd :
+            case Hiragana_to_Romanji_Kbd :
+                { break; }
+        }
+    }
 }
 
 void QcmEntryGuess::resizeEvent(QResizeEvent* event)
 {
     QWidget::resizeEvent(event);
-
-    CorrectFontSize();
 }
 
-
-void QcmEntryGuess::CorrectFontSize() // TODO NOW : move it to Tools and make it context agnostic
+void QcmEntryGuess::paintEvent(QPaintEvent *event)
 {
-    int newFontSize = (qcmSubType == QcmTypeEnum::RmjToKana)
-                        ? GetMy::Instance().FntSettingsPageInst().GetKanasAnswerRmjKanaSize()
-                        : GetMy::Instance().FntSettingsPageInst().GetKanasAnswerKanaRmjSize();
-    QRect textRect = ui->EntryGuess->fontMetrics().boundingRect(ui->EntryGuess->text());
-    QFont correctedFont = QFont(ui->EntryGuess->fontInfo().family(), newFontSize);
-    ui->EntryGuess->setFont(correctedFont);
-    bool corrected = false;
-
-    while ( (textRect.height() > ui->EntryGuess->height() || textRect.width() > ui->EntryGuess->width()) && newFontSize > 10)
-    {
-        newFontSize -= 5;
-        QFont correctedFont = QFont(ui->EntryGuess->fontInfo().family(), newFontSize);
-        ui->EntryGuess->setFont(correctedFont);
-
-        textRect = ui->EntryGuess->fontMetrics().boundingRect(ui->EntryGuess->text());
-        corrected = true;
-    }
-    if (corrected && !fntWarnDisplayed)
-    {
-        fntWarnDisplayed = true;
-
-//QString debug;
-//if (textRect.height() <= ui->EntryGuess->height())
-//    debug += "Height too big +"
-//            "(textRectHeight : "+QString::number(textRect.height())+
-//            "; EntryHeight : "+QString::number(ui->EntryGuess->height())+")\n";
-//if (textRect.width() <= ui->EntryGuess->width())
-//    debug += "Height too big +"
-//            "(textRectHeight : "+QString::number(textRect.height())+
-//            "; EntryHeight : "+QString::number(ui->EntryGuess->height())+")\n";
-//debug += "TEXT : "+ui->EntryGuess->text();
-//GetMy::Instance().ToolsInst()->DisplayPopup(debug, 0.5f);
-
-        GetMy::Instance().ToolsInst()->DisplayPopup(
-                    "MCQ Answers (cf :Settings->Fonts) font size("+
-                    QString::number((qcmSubType == QcmTypeEnum::RmjToKana)
-                                    ? GetMy::Instance().FntSettingsPageInst().GetKanasAnswerRmjKanaSize()
-                                    : GetMy::Instance().FntSettingsPageInst().GetKanasAnswerKanaRmjSize())+
-                    ") is too big,\n"
-                    "Resizing them to " + QString::number(newFontSize));
-        if (qcmSubType == QcmTypeEnum::RmjToKana)
-            GetMy::Instance().FntSettingsPageInst().SetKanasAnswerRmjKanaSize(newFontSize);
-        else
-            GetMy::Instance().FntSettingsPageInst().SetKanasAnswerKanaRmjSize(newFontSize);
-    }
+    QWidget::paintEvent(event);
 }
 
 void QcmEntryGuess::on_EntryGuess_clicked()

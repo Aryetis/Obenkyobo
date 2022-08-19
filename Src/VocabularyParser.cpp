@@ -9,7 +9,7 @@ void VocabDataEntry::LearningScore(int ls)
     vocabDataFileLnk->WriteLearningScore(GetPath(), ls, this); // will take care of updating learningScore through friendship
 }
 
-QFont VocabDataEntry::GetFont(bool kanji)
+QFont VocabDataEntry::GetStemFont(bool kanji)
 {
     if (kanji)
         return QFont(GetMy::Instance().FntSettingsPageInst().GetCurrentKanjiFamily(),

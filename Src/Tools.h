@@ -4,8 +4,12 @@
 #include <random>
 #include <signal.h>
 #include <QString>
+#include <map>
 #include "Src/DefinesLand.h"
 
+
+class QWidget;
+class QFont;
 class Tools
 {
 public :
@@ -44,6 +48,8 @@ public :
     int GetRandomInt(int rangeStart = 0, int rangeEnd = 100);
     std::mt19937& MT() { return mt; }
     std::default_random_engine& Rng_Engine() { return rng_engine; }
+
+    static bool CorrectFontSize(QString const& text, QFont const& inFont, QWidget const& widget, QFont& correctedFnt);
 
 private :
     Tools();

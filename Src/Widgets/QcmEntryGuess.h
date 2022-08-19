@@ -22,8 +22,6 @@ public:
     ~QcmEntryGuess() override;
 
     void SetGuess(QcmDataEntry* s, QcmExerciceType qcmType, bool displayKanji, std::optional<bool> correct = std::nullopt);
-    void CorrectFontSize();
-    void CorrectFontSizeBis();
 
     QcmDataEntry* GetSymbol() const { return symbol; }
 
@@ -31,6 +29,8 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent* event) override;
+    void paintEvent(QPaintEvent *event) override;
+
 
 private slots:
     void on_EntryGuess_clicked();
@@ -41,7 +41,7 @@ private:
     bool correctGuess;
 
     static bool fntWarnDisplayed;
-    QcmTypeEnum qcmSubType;
+    QcmExerciceType qcmType;
 };
 
 #endif // QCMENTRYGUESS_H

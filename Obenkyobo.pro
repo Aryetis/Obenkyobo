@@ -6,10 +6,11 @@
 #        - Switch Kana resize fnt for some reasons
 #        - deal with the main.cpp warning, probably have to do with GetMy::
 #        - Rework LearningScore() system so it can take a list of modification => otherwise at each VocabQCM validation we will modify copy the file twice
-#        - connect AppSettings::Display LS for :
+#        - rewrite QcmEntryGuess to support WorldWrap because everything sucks in this qt world and I hate it, fgive up on pushbutton
 #-------------------------------------------------
 # TODO : - Finish sleep handling properly
 #        - use a fontMetrics().boundingRect to determine max length of VocabExplorer entries text
+#        - use custom QLabel with click signal instead of QPushButton for QCMEntryGuess.ui => we can now SetWordWrap
 #        - https://discord.com/channels/809205711778480158/958419944243089479/999974500756103188
 #           - Anything below mk6 will not suspend while plugged in, yeah ;)
 #           - also disconnecting charger / connecting also desuspends the device, which i will prevent ( as an optional feature )
@@ -19,6 +20,7 @@
 #              - Handle properly [UP_DIR] in VocabExplorerPage instead of adding a dummy entry
 #              - Investigate weird hard refresh (Edit page) glitch on Kobo Glo HD under unknown circumstances
 #              - replace QList by QVector
+#              - use qobject_cast instead of static_cast wherever it applies
 #-------------------------------------------------
 
 QT       += core gui

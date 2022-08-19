@@ -25,6 +25,9 @@ public:
     bool InitializeExercice(QcmExerciceType qcmType, bool newQcmRequested = false);
     void OnGuessClicked(bool correct, QcmEntryGuess* entryGuess);
 
+//protected:
+//    void resizeEvent(QResizeEvent* event) override;
+
 private slots:
     void on_SwitchButton_clicked();
 

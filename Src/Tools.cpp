@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QDebug>
 #include <QThread>
+#include <QLabel>
 #include <QProcess>
 #include <iostream>
 #include <execinfo.h>
@@ -248,6 +249,61 @@ int Tools::GetRandomInt(int rangeStart, int rangeEnd)
     std::uniform_int_distribution<> distr(rangeStart, rangeEnd);
     return distr(rng_engine);
 }
+
+//======================================================================
+bool Tools::CorrectFontSize(QString const& text, QFont const& inFont, QWidget const& widget, QFont& correctedFnt)
+{
+    correctedFnt = QFont(inFont);
+    if (text=="")
+        return false;
+
+    QRectF newFontSizeRect;
+    float curSize = correctedFnt.pointSizeF();
+    float step = curSize/2.0;
+
+    if (step<=CORRECTED_FONT_PRECISION)
+        step = CORRECTED_FONT_PRECISION*5.0;
+
+    float lastTestedSize = curSize;
+    float curH = 0, curW = 0;
+
+    bool firstLoop = true;
+    while(step>CORRECTED_FONT_PRECISION || (curH > widget.rect().height()) || (curW > widget.rect().width()))
+    {
+        lastTestedSize = curSize;
+
+        correctedFnt.setPointSizeF(curSize);
+        QFontMetricsF fm{correctedFnt};
+
+        QLabel const* label = qobject_cast<QLabel const*>(&widget);
+        newFontSizeRect = fm.boundingRect(widget.rect(), label != nullptr
+                                            ? (label->wordWrap() ? Qt::TextWordWrap : 0) | label->alignment() : 0,
+                                          text);
+        curH = newFontSizeRect.height();
+        curW = newFontSizeRect.width();
+
+        if ((curH > widget.rect().height()) || (curW > widget.rect().width()))
+        {
+            curSize -=step;
+            if (step>CORRECTED_FONT_PRECISION)
+                step/=2.0;
+            if (curSize<=CORRECTED_MINIMAL_FONT_SIZE)
+                break;
+        }
+        else
+        {
+            if (firstLoop) // if "first loop" && text is "too small"
+                return false; // don't want to increase the size if text is smaller, only decrease if bigger
+            else
+                curSize +=step;
+        }
+        firstLoop = false;
+    }
+
+    correctedFnt.setPointSizeF(lastTestedSize);
+    return correctedFnt.pointSizeF() != inFont.pointSizeF();
+}
+
 
 /******************************** private ********************************/
 Tools::Tools()

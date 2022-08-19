@@ -185,7 +185,7 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
 
     // overriding default Vocab's stem romanji font
     if (qcmType == QcmExerciceType::Romanji_to_Vocabulary_MCQ)
-        stemFont = static_cast<VocabDataEntry*>(stem)->GetFont(displayKanji);
+        stemFont = static_cast<VocabDataEntry*>(stem)->GetStemFont(displayKanji); // TODO : this is so dumb please fix later on
 
     ui->GuessMe->setFont(stemFont);
     switch (qcmType)
@@ -208,13 +208,19 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
         }
     }
 
-    //************************ Clearing previous board ************************
+    //************************ Clearing previous board *************************
     qDeleteAll(guesses);
     guesses.clear();
 
-    //************************ Initialize Entries board ************************
+    //************************ Setting board size ******************************
     int NbrOfEntriesLine = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine();
+    for (int i=0; i < NbrOfEntriesLine; ++i)
+        ui->EntriesGridLayout->setColumnStretch(i, 1/NbrOfEntriesLine);
     int NbrOfEntriesRow = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
+    for (int i=0; i < NbrOfEntriesLine; ++i)
+        ui->EntriesGridLayout->setRowStretch(i, 1/NbrOfEntriesRow);
+
+    //************************ Initialize Entries board ************************
     int stemSlot = GetMy::Instance().ToolsInst()->GetRandomInt(0, (NbrOfEntriesLine*NbrOfEntriesRow)-1);
     QcmDataEntry* joker = shuffledSymbols[static_cast<std::vector<QcmDataEntry>::size_type>(stemSlot)]; // Symbol replaced by stem
     for(int i= 0; i<NbrOfEntriesLine*NbrOfEntriesRow; ++i)
@@ -240,6 +246,14 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
     //************************ UI score error Counters ************************
     ui->ScoreCounter->setNum(scoreCounter);
     ui->ErrorsCounter->setNum(errorCounter);
+
+
+    //************************ Resize Stem ************************
+    // whole section is a TODO test
+//    QFont correctedFnt;
+//    Tools::CorrectFontSize(ui->GuessMe->text(), ui->GuessMe->font(), *(ui->GuessMe), correctedFnt);
+//    ui->GuessMe->setFont(correctedFnt);
+//    ui->GuessMe->repaint();
 
     //************************ Hard Refresh ************************
     int HardRefreshFreq = GetMy::Instance().AppSettingsPageInst().GetHardRefreshFreq();
@@ -373,6 +387,15 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
 
     InitializeExercice(currentQcmType.value());
 }
+
+//void QcmExercicePage::resizeEvent(QResizeEvent *event)
+//{
+//    QWidget::resizeEvent(event);
+
+//    QFont correctedFnt;
+//    Tools::CorrectFontSize(ui->GuessMe->text(), ui->GuessMe->font(), *(ui->GuessMe), correctedFnt);
+//    ui->GuessMe->setFont(correctedFnt);
+//}
 
 void QcmExercicePage::on_SwitchButton_clicked() // "Switch Kana"
 {

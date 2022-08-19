@@ -47,9 +47,6 @@
          <family>DotGothic16</family>
         </font>
        </property>
-       <property name="styleSheet">
-        <string notr="true">Text{fontSizeMode: Text.Fit}</string>
-       </property>
        <property name="text">
         <string>あああaaa</string>
        </property>

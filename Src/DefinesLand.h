@@ -16,6 +16,8 @@
 #define POPUP_MARGIN_X 0.04f
 #define POPUP_MARGIN_Y 0.02f
 #define POPUP_WIDTH 0.9f
+#define CORRECTED_FONT_PRECISION 1
+#define CORRECTED_MINIMAL_FONT_SIZE 5
 
 enum KanaFamilyEnum
 {
@@ -33,12 +35,6 @@ enum QcmExerciceType
     Katakana_to_Romanji_Kbd,
     Vocabulary_to_Romanji_MCQ,
     Romanji_to_Vocabulary_MCQ
-};
-
-enum QcmTypeEnum
-{
-    KanaToRmj,
-    RmjToKana
 };
 
 enum DeviceState
