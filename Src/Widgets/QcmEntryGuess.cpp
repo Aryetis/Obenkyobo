@@ -40,12 +40,8 @@ void QcmEntryGuess::SetGuess(QcmDataEntry* symbol_, QcmExerciceType qcmType_, bo
         // reset everything size related so we can have proper ComputeSizeCorrection()
         // because despites being told otherwise, qt does not enforce col/row stretch sometimes... fuck qt
         ui->EntryGuess->setText("");
-        this->resize(vanillaWidth.value(), vanillaHeight.value()); // should trigger ComputeSizeCorrection() and repaint()
-        // TODO NOW : Tools::CorrectFontSize could use vanillaWidth and vanillaHeight instead of this->geometry infos
-        //              it would save a useless resize
-
-        ComputeSizeCorrection();
-        repaint();
+        ui->EntryGuess->setGeometry(ui->EntryGuess->rect().topLeft().x(), ui->EntryGuess->rect().topLeft().y(),
+                                    vanillaWidth.value(), vanillaHeight.value());
     }
 }
 
@@ -60,8 +56,8 @@ void QcmEntryGuess::resizeEvent(QResizeEvent* event)
             vanillaHeight = geometry().height();
             vanillaWidth = geometry().width();
         }
-        ComputeSizeCorrection();
     }
+    ComputeSizeCorrection();
 }
 
 void QcmEntryGuess::ComputeSizeCorrection()
@@ -135,6 +131,8 @@ void QcmEntryGuess::ComputeSizeCorrection()
         if (!fntWarnDisplayed) // TODO : rethink UI design, shall I really set fnt setting or not
                                //       + popup will only be triggered once where it could be necessary to be displayed multiple times
                                //       eg : if kanji AND kanas sizes are both too big in a vocab QCM
+                               //            also modifying the setting now / at the end => other entries will
+                               //            still be using the old setting => requires a SetGuess again
         {
             GetMy::Instance().ToolsInst()->DisplayPopup(
                     "MCQ Answers (cf :Settings->Fonts) font size("+QString::number(originalFntSize)+") is too big,\n"
