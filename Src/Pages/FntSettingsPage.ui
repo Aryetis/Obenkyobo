@@ -13,12 +13,12 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="5,0,5,0,5">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="4,0,4,0,5">
    <property name="topMargin">
     <number>9</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="KanasMCQFontSizesContainer" stretch="1,1,1,1,1">
+    <layout class="QVBoxLayout" name="KanasMCQFontSizesContainer" stretch="1,1,1,1">
      <property name="topMargin">
       <number>0</number>
      </property>
@@ -204,52 +204,6 @@
        </item>
       </layout>
      </item>
-     <item>
-      <layout class="QHBoxLayout" name="KanasAutoResizeContainer">
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="KanasAutoResizeCheckbox">
-         <property name="layoutDirection">
-          <enum>Qt::RightToLeft</enum>
-         </property>
-         <property name="text">
-          <string>Allow silent size adaptation :</string>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
     </layout>
    </item>
    <item>
@@ -260,7 +214,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="VocabMCQFontSizesContainer" stretch="1,1,0,1,1">
+    <layout class="QVBoxLayout" name="VocabMCQFontSizesContainer" stretch="1,1,0,1">
      <property name="topMargin">
       <number>0</number>
      </property>
@@ -422,52 +376,6 @@
           <enum>Qt::Horizontal</enum>
          </property>
         </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="VocabAutoResizeContainer">
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="VocabAutoResizeCheckbox">
-         <property name="layoutDirection">
-          <enum>Qt::RightToLeft</enum>
-         </property>
-         <property name="text">
-          <string>Allow silent size adaptation :</string>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </item>

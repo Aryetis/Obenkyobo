@@ -1,28 +1,26 @@
 #-------------------------------------------------
 # WORKING ON :
-#        - Connect Every Vocab MCQ FntSettings Pages sliders
-#        - Connect both "do not resize if overflow" option in the FntSettings AND change their size
-#        - Resize the stem if necessary too
-#        - Switch Kana resize fnt for some reasons
-#        - deal with the main.cpp warning, probably have to do with GetMy::
+#        - Stem not resized correctly upon QCM initialization
+#        - Needs to recalculate CorrectedFntSize upon "Switch to Kanji"
 #        - Rework LearningScore() system so it can take a list of modification => otherwise at each VocabQCM validation we will modify copy the file twice
-#        - rewrite QcmEntryGuess to support WorldWrap because everything sucks in this qt world and I hate it, fgive up on pushbutton
 #        - switching to kanji change fnt, switching back to kanas deoesn't change fnt back
+#        - Upon QCM FntResize the first column is not using the updated fnt size ?!?
+#        - "Size 56 too big, changing it to 56" (until lloading a new QCM => something is not applied somewhere)
 #-------------------------------------------------
 # TODO : - Finish sleep handling properly
-#        - use a fontMetrics().boundingRect to determine max length of VocabExplorer entries text
-#        - use custom QLabel with click signal instead of QPushButton for QCMEntryGuess.ui => we can now SetWordWrap
 #        - investigate weird "stutter" hapenning sometimes when QCM entries get corrected
 #        - https://discord.com/channels/809205711778480158/958419944243089479/999974500756103188
 #           - Anything below mk6 will not suspend while plugged in, yeah ;)
 #           - also disconnecting charger / connecting also desuspends the device, which i will prevent ( as an optional feature )
 #-------------------------------------------------
-# TODO later : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
-#              - redo the Qmenu::right-arrow
-#              - Handle properly [UP_DIR] in VocabExplorerPage instead of adding a dummy entry
-#              - Investigate weird hard refresh (Edit page) glitch on Kobo Glo HD under unknown circumstances
-#              - replace QList by QVector
-#              - use qobject_cast instead of static_cast wherever it applies
+# TODO later (0.3.1) : - use a fontMetrics().boundingRect to determine max length of VocabExplorer entries text
+#                      - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
+#                      - redo the Qmenu::right-arrow
+#                      - Handle properly [UP_DIR] in VocabExplorerPage instead of adding a dummy entry
+#                      - Investigate weird hard refresh (Edit page) glitch on Kobo Glo HD under unknown circumstances
+#                      - replace QList by QVector
+#                      - use qobject_cast instead of static_cast wherever it applies
+#                      - give users option to enable WorldWrap for QCM guesses (it looks fugly tho)
 #-------------------------------------------------
 
 QT       += core gui

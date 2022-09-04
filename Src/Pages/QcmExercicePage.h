@@ -33,6 +33,8 @@ private slots:
     void on_SwitchButton_clicked();
 
 private:
+    void CheckContinuousFntResizeCounter();
+
     Ui::QcmExercicePage *ui;
     QList<QcmEntryGuess*> guesses;
     int scoreCounter, errorCounter;
@@ -46,6 +48,7 @@ private:
     VocabDataPool* vdp;                     // holds entriesPool's data for vocab QCM (kana ones being hardcoded in KanasTables)
 
     QFont correctedStemFnt;
+    static int continuousFntResizeCounter;
 };
 
 #endif // QCMEXERCICEPAGE_H

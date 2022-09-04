@@ -300,8 +300,8 @@ bool Tools::CorrectFontSize(QString const& text, QFont const& inFont, QWidget co
         firstLoop = false;
     }
 
-    correctedFnt.setPointSizeF(lastTestedSize);
-    return correctedFnt.pointSizeF() != inFont.pointSizeF();
+    correctedFnt.setPointSizeF(std::floor(lastTestedSize));
+    return correctedFnt.pointSizeF() != std::floor(inFont.pointSizeF());
 }
 
 

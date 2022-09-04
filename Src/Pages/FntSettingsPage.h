@@ -33,16 +33,16 @@ public:
     int GetKanasStemSize() const { return kanasStemSize; }
     int GetKanasAnswerRmjKanaSize() const { return kanasAnswerRmjKanaSize; }
     int GetKanasAnswerKanaRmjSize() const { return kanasAnswerKanaRmjSize; }
-    bool GetKanasAllowSilentResize() const { return kanasAllowSilentResize; }
     void SetKanasAnswerRmjKanaSize(int size);
     void SetKanasAnswerKanaRmjSize(int size);
+    void SetKanasStemSize(int size);
 
     int GetVocabStemSize() const { return vocabStemSize; }
     int GetVocabAnswerRmjKanaSize() const { return vocabAnswerRmjKanaSize; }
     int GetVocabAnswerKanaRmjSize() const { return vocabAnswerKanaRmjSize; }
-    bool GetVocabAllowSilentResize() const { return vocabAllowSilentResize; }
     void SetVocabAnswerRmjKanaSize(int size);
     void SetVocabAnswerKanaRmjSize(int size);
+    void SetVocabStemSize(int size);
 
 private slots:
     void on_HiraganaFntDropdown_activated(int index);
@@ -53,12 +53,10 @@ private slots:
     void on_KanasStemSlider_valueChanged(int value);
     void on_KanasAnswerKanaRmjSlider_valueChanged(int value);
     void on_KanasAnswerRmjKanaSlider_valueChanged(int value);
-    void on_KanasAutoResizeCheckbox_clicked(bool checked);
 
     void on_VocabStemSlider_valueChanged(int value);
     void on_VocabAnswerKanaRmjSlider_valueChanged(int value);
     void on_VocabAnswerRmjKanaSlider_valueChanged(int value);
-    void on_VocabAutoResizeCheckbox_clicked(bool checked);
 
 private:
     Ui::FntSettingsPage *ui;
@@ -84,12 +82,10 @@ private:
     int kanasStemSize;
     int kanasAnswerRmjKanaSize;
     int kanasAnswerKanaRmjSize;
-    bool kanasAllowSilentResize;
 
     int vocabStemSize;
     int vocabAnswerRmjKanaSize;
     int vocabAnswerKanaRmjSize;
-    bool vocabAllowSilentResize;
 
     QSettings* settingsSerializer;
 };

@@ -66,8 +66,6 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
         scoreCounter = 0;
         errorCounter = 0;
 
-        QcmEntryGuess::SetFontSizeWarningDisplayedState(false);
-
         int labelRightPointSize = ui->ResultLabelRight->font().pointSize();
         curHiraganaNonSized = QFont(fntSetting.GetCurrentHiraganaFamily(), labelRightPointSize);
         curKatakanaNonSized = QFont(fntSetting.GetCurrentKatakanaFamily(), labelRightPointSize);
@@ -254,8 +252,12 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
     correctedStemFnt = stemFont;
     if (!newQcmRequested) // first call needs to be delayed so everything/geometry is set up correctly
     {
-        Tools::CorrectFontSize(ui->GuessMe->text(), ui->GuessMe->font(), *(ui->GuessMe), correctedStemFnt);
+        if (Tools::CorrectFontSize(ui->GuessMe->text(), ui->GuessMe->font(), *(ui->GuessMe), correctedStemFnt))
+            ++continuousFntResizeCounter;
+        else
+            continuousFntResizeCounter = 0;
         ui->GuessMe->setFont(correctedStemFnt);
+        CheckContinuousFntResizeCounter();
     }
 
     //************************ Hard Refresh ************************
@@ -396,8 +398,12 @@ void QcmExercicePage::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
 
-    Tools::CorrectFontSize(ui->GuessMe->text(), ui->GuessMe->font(), *(ui->GuessMe), correctedStemFnt);
+    if (Tools::CorrectFontSize(ui->GuessMe->text(), ui->GuessMe->font(), *(ui->GuessMe), correctedStemFnt))
+        ++continuousFntResizeCounter;
+    else
+        continuousFntResizeCounter = 0;
     ui->GuessMe->setFont(correctedStemFnt);
+    CheckContinuousFntResizeCounter();
 }
 
 void QcmExercicePage::paintEvent(QPaintEvent *event)
@@ -417,3 +423,41 @@ void QcmExercicePage::on_SwitchButton_clicked() // "Switch Kana"
     else
         ui->GuessMe->setText((displayKanji) ? *stem->Kanjis() : *stem->Kanas());
 }
+
+void QcmExercicePage::CheckContinuousFntResizeCounter()
+{
+    if (continuousFntResizeCounter > POPUP_FNT_RESIZE_ERROR_CNT)
+    {
+        continuousFntResizeCounter = 0;
+
+        int originalSize;
+        int newSize = ui->GuessMe->font().pointSize();
+        switch (currentQcmType.value())
+        {
+            case QcmExerciceType::Hiragana_to_Romanji_MCQ :
+            case QcmExerciceType::Hiragana_to_Romanji_Kbd :
+            case QcmExerciceType::Katakana_to_Romanji_MCQ :
+            case QcmExerciceType::Katakana_to_Romanji_Kbd :
+            case QcmExerciceType::Romanji_to_Hiragana_MCQ :
+            case QcmExerciceType::Romanji_to_Katakana_MCQ :
+            {
+                originalSize = GetMy::Instance().FntSettingsPageInst().GetKanasStemSize();
+                GetMy::Instance().FntSettingsPageInst().SetKanasStemSize(newSize);
+                break;
+            }
+            case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
+            case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
+            {
+                originalSize = GetMy::Instance().FntSettingsPageInst().GetVocabStemSize();
+                GetMy::Instance().FntSettingsPageInst().SetVocabStemSize(newSize);
+                break;
+            }
+        }
+
+        GetMy::Instance().ToolsInst()->DisplayPopup(
+                "Stem size ("+QString::number(originalSize)+") seems too big (cf :Settings->Fonts),\n"
+                "Changing it to " + QString::number(newSize));
+    }
+}
+
+int QcmExercicePage::continuousFntResizeCounter = 0;

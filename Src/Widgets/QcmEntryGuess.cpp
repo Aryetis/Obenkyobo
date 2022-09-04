@@ -127,39 +127,46 @@ void QcmEntryGuess::ComputeSizeCorrection()
 
     if (sizeCorrected)
     {
-        if (!fntWarnDisplayed) // TODO : rethink UI design, shall I really set fnt setting or not
-                               //       + popup will only be triggered once where it could be necessary to be displayed multiple times
-                               //       eg : if kanji AND kanas sizes are both too big in a vocab QCM
-                               //            also modifying the setting now / at the end => other entries will
-                               //            still be using the old setting => requires a SetGuess again
+        ++continuousFntResizeCounter;
+
+        if (continuousFntResizeCounter > POPUP_FNT_RESIZE_ERROR_CNT) // <=> "let it slides silently if only a few entries are too big"
         {
+            continuousFntResizeCounter = 0;
+
             GetMy::Instance().ToolsInst()->DisplayPopup(
-                    "MCQ Answers (cf :Settings->Fonts) font size("+QString::number(originalFntSize)+") is too big,\n"
-                    "Resizing them to " + QString::number(correctedFnt.pointSizeF()));
-            fntWarnDisplayed = true;
-        }
-        switch (qcmType)
-        {
-            case Hiragana_to_Romanji_MCQ :
-            case Katakana_to_Romanji_MCQ :
+                    "MCQ Answers size ("+QString::number(originalFntSize)+") seems too big (cf :Settings->Fonts),\n"
+                    "Changing it to " + QString::number(correctedFnt.pointSizeF()));
+            switch (qcmType)
+            {
+                case QcmExerciceType::Hiragana_to_Romanji_MCQ :
+                case QcmExerciceType::Hiragana_to_Romanji_Kbd :
+                case QcmExerciceType::Katakana_to_Romanji_MCQ :
+                case QcmExerciceType::Katakana_to_Romanji_Kbd :
                 {
-//                    if (qcmSubType == QcmTypeEnum::RmjToKana)
-//                        GetMy::Instance().FntSettingsPageInst().SetKanasAnswerRmjKanaSize(newFontSize);
-//                    else
-//                        GetMy::Instance().FntSettingsPageInst().SetKanasAnswerKanaRmjSize(newFontSize);
+                    GetMy::Instance().FntSettingsPageInst().SetKanasAnswerKanaRmjSize(correctedFnt.pointSizeF());
                     break;
                 }
-            case Romanji_to_Hiragana_MCQ :
-            case Romanji_to_Katakana_MCQ :
-
-            case Vocabulary_to_Romanji_MCQ :
-            case Romanji_to_Vocabulary_MCQ :
-
-            case Katakana_to_Romanji_Kbd :
-            case Hiragana_to_Romanji_Kbd :
-                { break; }
+                case QcmExerciceType::Romanji_to_Hiragana_MCQ :
+                case QcmExerciceType::Romanji_to_Katakana_MCQ :
+                {
+                    GetMy::Instance().FntSettingsPageInst().SetKanasAnswerRmjKanaSize(correctedFnt.pointSizeF());
+                    break;
+                }
+                case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
+                {
+                    GetMy::Instance().FntSettingsPageInst().SetVocabAnswerRmjKanaSize(correctedFnt.pointSizeF());
+                    break;
+                }
+                case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
+                {
+                    GetMy::Instance().FntSettingsPageInst().SetVocabAnswerKanaRmjSize(correctedFnt.pointSizeF());
+                    break;
+                }
+            }
         }
     }
+    else
+        continuousFntResizeCounter = 0;
 }
 
 void QcmEntryGuess::paintEvent(QPaintEvent *event)
@@ -215,4 +222,4 @@ void QcmEntryGuess::on_EntryGuess_clicked()
     GetMy::Instance().QcmExercicePageInst().OnGuessClicked(correctGuess, this);
 }
 
-bool QcmEntryGuess::fntWarnDisplayed = false;
+int QcmEntryGuess::continuousFntResizeCounter = 0;

@@ -25,8 +25,6 @@ public:
 
     QcmDataEntry* GetSymbol() const { return symbol; }
 
-    static void SetFontSizeWarningDisplayedState(bool fsw) { fntWarnDisplayed = fsw; }
-
 protected:
     void resizeEvent(QResizeEvent* event) override;
     void paintEvent(QPaintEvent *event) override;
@@ -42,7 +40,6 @@ private:
     Ui::QcmEntryGuess *ui;
     bool correctGuess;
 
-    static bool fntWarnDisplayed;
     QcmExerciceType qcmType;
 
     bool sizeCorrected = false;
@@ -52,6 +49,8 @@ private:
 
     inline static std::optional<float> vanillaWidth = std::nullopt, vanillaHeight = std::nullopt;
     bool spawning;
+
+    static int continuousFntResizeCounter;
 };
 
 #endif // QCMENTRYGUESS_H
