@@ -30,7 +30,7 @@ public:
 protected:
     void resizeEvent(QResizeEvent* event) override;
     void paintEvent(QPaintEvent *event) override;
-    void mousePressEvent(QMouseEvent* event);
+    void mousePressEvent(QMouseEvent* event) override;
 
 private slots:
     void on_EntryGuess_clicked();

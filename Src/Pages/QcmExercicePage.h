@@ -25,8 +25,9 @@ public:
     bool InitializeExercice(QcmExerciceType qcmType, bool newQcmRequested = false);
     void OnGuessClicked(bool correct, QcmEntryGuess* entryGuess);
 
-//protected:
-//    void resizeEvent(QResizeEvent* event) override;
+protected:
+    void resizeEvent(QResizeEvent* event) override;
+    void paintEvent(QPaintEvent *event) override;
 
 private slots:
     void on_SwitchButton_clicked();
@@ -43,6 +44,8 @@ private:
     bool displayKanji;
     std::vector<QcmDataEntry*> entriesPool; // DO NOT own its data => don't delete its content
     VocabDataPool* vdp;                     // holds entriesPool's data for vocab QCM (kana ones being hardcoded in KanasTables)
+
+    QFont correctedStemFnt;
 };
 
 #endif // QCMEXERCICEPAGE_H

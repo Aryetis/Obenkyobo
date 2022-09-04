@@ -6,7 +6,6 @@
 #include "Src/Pages/QcmExercicePage.h"
 // Notes to self :
 // Order of execution : x*SetGuess() -> x*resizeEvent() -> x*paintEvent
-// TODO : if you want wordWrap => rewrite everything using QLabel instead of QPushButton, have fun, fuck qt
 
 QcmEntryGuess::QcmEntryGuess(QWidget *parent) :
     QWidget(parent),

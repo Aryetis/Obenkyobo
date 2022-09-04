@@ -230,7 +230,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="PlayLayout" stretch="1,9">
+    <layout class="QVBoxLayout" name="PlayLayout" stretch="3,9">
      <property name="spacing">
       <number>6</number>
      </property>
@@ -241,26 +241,33 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QLabel" name="GuessMe">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
+      <layout class="QHBoxLayout" name="GuessMeContainer">
+       <property name="topMargin">
+        <number>0</number>
        </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>25</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>azerty</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
+       <item>
+        <widget class="QLabel" name="GuessMe">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <family>Sans Serif</family>
+           <pointsize>25</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>azerty</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <layout class="QGridLayout" name="EntriesGridLayout" rowstretch="0" columnstretch="0">
@@ -279,10 +286,7 @@
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <property name="horizontalSpacing">
-        <number>0</number>
-       </property>
-       <property name="verticalSpacing">
+       <property name="spacing">
         <number>5</number>
        </property>
       </layout>

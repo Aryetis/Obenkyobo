@@ -37,7 +37,10 @@ QcmExercicePage::~QcmExercicePage()
 bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmRequested /* = false*/)
 {
     FntSettingsPage& fntSetting = GetMy::Instance().FntSettingsPageInst();
+    int NbrOfEntriesLine = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine();
+    int NbrOfEntriesRow = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
 
+    //************************ BEGINNING OF NEW QCM REQUESTED ************************
     if (newQcmRequested)
     {
         //************************ "Is there enough to form the pool" ************************
@@ -160,7 +163,15 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
                 break;
             }
         }
+
+        //************************ Setting board size ******************************
+        // Making sure no QcmEntryGuess is bigger than another
+        for (int i=0; i < NbrOfEntriesLine; ++i)
+            ui->EntriesGridLayout->setColumnStretch(i, 1);
+        for (int i=0; i < NbrOfEntriesLine; ++i)
+            ui->EntriesGridLayout->setRowStretch(i, 1);
     }
+    //************************ END OF NEW QCM REQUESTED ************************
 
     //************************ Initialize Shuffled Symbols Pool ************************
     std::vector<QcmDataEntry*> shuffledSymbols{};
@@ -213,8 +224,6 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
     guesses.clear();
 
     //************************ Initialize Entries board ************************
-    int NbrOfEntriesLine = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine();
-    int NbrOfEntriesRow = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
     int stemSlot = GetMy::Instance().ToolsInst()->GetRandomInt(0, (NbrOfEntriesLine*NbrOfEntriesRow)-1);
     QcmDataEntry* joker = shuffledSymbols[static_cast<std::vector<QcmDataEntry>::size_type>(stemSlot)]; // Symbol replaced by stem
     for(int i= 0; i<NbrOfEntriesLine*NbrOfEntriesRow; ++i)
@@ -237,26 +246,17 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
         ui->EntriesGridLayout->addWidget(foo, entryPos.rem, entryPos.quot);
     }
 
-    //************************ Setting board size ******************************
-    // Making sure no QcmEntryGuess is bigger than another
-    // TODO : lol of course it doesn't work, sometimes get sligthly bigger, because fuck qt
-    // figure out what's the OOE between Widget.sizehint, widget.stretch, layout.constraint, parent ? child ? fuck it all to hell
-    for (int i=0; i < NbrOfEntriesLine; ++i)
-        ui->EntriesGridLayout->setColumnStretch(i, 1);
-    for (int i=0; i < NbrOfEntriesLine; ++i)
-        ui->EntriesGridLayout->setRowStretch(i, 1);
-
     //************************ UI score error Counters ************************
     ui->ScoreCounter->setNum(scoreCounter);
     ui->ErrorsCounter->setNum(errorCounter);
 
-
     //************************ Resize Stem ************************
-    // whole section is a TODO test
-//    QFont correctedFnt;
-//    Tools::CorrectFontSize(ui->GuessMe->text(), ui->GuessMe->font(), *(ui->GuessMe), correctedFnt);
-//    ui->GuessMe->setFont(correctedFnt);
-//    ui->GuessMe->repaint();
+    correctedStemFnt = stemFont;
+    if (!newQcmRequested) // first call needs to be delayed so everything/geometry is set up correctly
+    {
+        Tools::CorrectFontSize(ui->GuessMe->text(), ui->GuessMe->font(), *(ui->GuessMe), correctedStemFnt);
+        ui->GuessMe->setFont(correctedStemFnt);
+    }
 
     //************************ Hard Refresh ************************
     int HardRefreshFreq = GetMy::Instance().AppSettingsPageInst().GetHardRefreshFreq();
@@ -294,7 +294,8 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
     }
 
 
-    // print feedback informing of correct / incorrect choice // TODO use the correct font for the jp part
+    // print feedback informing of correct / incorrect choice
+    // TODO use the correct font for the jp part
     ui->ResultLabelLeft->setStyleSheet("QLabel { border: none }");
     ui->ResultLabelMiddle->setStyleSheet("QLabel { border: none }");
     switch (currentQcmType.value())
@@ -391,14 +392,19 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
     InitializeExercice(currentQcmType.value());
 }
 
-//void QcmExercicePage::resizeEvent(QResizeEvent *event)
-//{
-//    QWidget::resizeEvent(event);
+void QcmExercicePage::resizeEvent(QResizeEvent *event)
+{
+    QWidget::resizeEvent(event);
 
-//    QFont correctedFnt;
-//    Tools::CorrectFontSize(ui->GuessMe->text(), ui->GuessMe->font(), *(ui->GuessMe), correctedFnt);
-//    ui->GuessMe->setFont(correctedFnt);
-//}
+    Tools::CorrectFontSize(ui->GuessMe->text(), ui->GuessMe->font(), *(ui->GuessMe), correctedStemFnt);
+    ui->GuessMe->setFont(correctedStemFnt);
+}
+
+void QcmExercicePage::paintEvent(QPaintEvent *event)
+{
+    QWidget::paintEvent(event);
+}
+
 
 void QcmExercicePage::on_SwitchButton_clicked() // "Switch Kana"
 {
