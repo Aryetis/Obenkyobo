@@ -6,6 +6,8 @@
 #        - switching to kanji change fnt, switching back to kanas deoesn't change fnt back
 #        - Upon QCM FntResize the first column is not using the updated fnt size ?!?
 #        - "Size 56 too big, changing it to 56" (until lloading a new QCM => something is not applied somewhere)
+#        - GridLayout is STILL resizing cells incorrectly, Rmj (fnt settings, 70, 45, 45) + Rmj->Hiragana => cry
+#        - Rmj to Vocab is also unusable ... but does not resize incorrectly, I'm gonna kick someone in the balls soooo hard
 #-------------------------------------------------
 # TODO : - Finish sleep handling properly
 #        - investigate weird "stutter" hapenning sometimes when QCM entries get corrected
