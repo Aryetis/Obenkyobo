@@ -1,6 +1,6 @@
 #-------------------------------------------------
 # WORKING ON :
-#        - correct glitch about some kanjis not being resize up to their maximum size ?
+#        - correct glitch about some kanjis not being resize up to their maximum size ? It's even reseting font during size correction, excuse me wtf ?
 #        - Connect Every Vocab MCQ FntSettings Pages sliders
 #        - Connect both "do not resize if overflow" option in the FntSettings AND change their size
 #        - Resize the stem if necessary too
