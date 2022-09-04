@@ -1,5 +1,5 @@
 #include "Src/Widgets/QcmEntryGuess.h"
-#include "ui_qcmentryguess.h"
+#include "ui_QcmEntryGuess.h"
 #include "Src/Pages/FntSettingsPage.h"
 #include "Src/GetMy.h"
 #include "Src/Tools.h"
@@ -203,6 +203,12 @@ void QcmEntryGuess::paintEvent(QPaintEvent *event)
     QWidget::paintEvent(event);
 
     spawning = false;
+}
+
+
+void QcmEntryGuess::mousePressEvent(QMouseEvent* /*event*/)
+{
+    emit on_EntryGuess_clicked();
 }
 
 void QcmEntryGuess::on_EntryGuess_clicked()

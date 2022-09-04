@@ -212,17 +212,9 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
     qDeleteAll(guesses);
     guesses.clear();
 
-    //************************ Setting board size ******************************
-    // Making sure no QcmEntryGuess is bigger than another
-    // TODO : lol of course it doesn't work, sometimes get sligthly bigger, because fuck qt
+    //************************ Initialize Entries board ************************
     int NbrOfEntriesLine = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine();
     int NbrOfEntriesRow = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
-    for (int i=0; i < NbrOfEntriesLine; ++i)
-        ui->EntriesGridLayout->setColumnStretch(i, 1);
-    for (int i=0; i < NbrOfEntriesLine; ++i)
-        ui->EntriesGridLayout->setRowStretch(i, 1);
-
-    //************************ Initialize Entries board ************************
     int stemSlot = GetMy::Instance().ToolsInst()->GetRandomInt(0, (NbrOfEntriesLine*NbrOfEntriesRow)-1);
     QcmDataEntry* joker = shuffledSymbols[static_cast<std::vector<QcmDataEntry>::size_type>(stemSlot)]; // Symbol replaced by stem
     for(int i= 0; i<NbrOfEntriesLine*NbrOfEntriesRow; ++i)
@@ -244,6 +236,15 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
 
         ui->EntriesGridLayout->addWidget(foo, entryPos.rem, entryPos.quot);
     }
+
+    //************************ Setting board size ******************************
+    // Making sure no QcmEntryGuess is bigger than another
+    // TODO : lol of course it doesn't work, sometimes get sligthly bigger, because fuck qt
+    // figure out what's the OOE between Widget.sizehint, widget.stretch, layout.constraint, parent ? child ? fuck it all to hell
+    for (int i=0; i < NbrOfEntriesLine; ++i)
+        ui->EntriesGridLayout->setColumnStretch(i, 1);
+    for (int i=0; i < NbrOfEntriesLine; ++i)
+        ui->EntriesGridLayout->setRowStretch(i, 1);
 
     //************************ UI score error Counters ************************
     ui->ScoreCounter->setNum(scoreCounter);
