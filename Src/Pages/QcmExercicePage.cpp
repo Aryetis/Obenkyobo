@@ -11,12 +11,14 @@
 #include "Src/KanasTables.h"
 #include "Src/DefinesLand.h"
 
+#include <QSizePolicy>
+
 QcmExercicePage::QcmExercicePage(QWidget *parent) :
     QWidget(parent), ui(new Ui::QcmExercicePage), scoreCounter(0), errorCounter(0),
     currentQcmType(),
     refreshCounter(0), curHiraganaNonSized(), curKatakanaNonSized(), curRomanjiNonSized(), stemFont(),
     settingsSerializer(GetMy::Instance().SettingSerializerInst()),
-    displayKanji(false), entriesPool({}), vdp(nullptr)
+    displayKanji(false), entriesPool({}), vdp(nullptr), curNewQcmRequested(false)
 {
     ui->setupUi(this);
 
@@ -39,6 +41,7 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
     FntSettingsPage& fntSetting = GetMy::Instance().FntSettingsPageInst();
     int NbrOfEntriesLine = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine();
     int NbrOfEntriesRow = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
+    curNewQcmRequested = newQcmRequested;
 
     //************************ BEGINNING OF NEW QCM REQUESTED ************************
     if (newQcmRequested)
@@ -247,7 +250,6 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
         div_t entryPos = div(i, NbrOfEntriesLine);
 
         QcmEntryGuess* foo = static_cast<QcmEntryGuess*>(ui->EntriesGridLayout->itemAtPosition(entryPos.rem, entryPos.quot)->widget());
-        assert(foo);
         QcmDataEntry* curSym = shuffledSymbols[static_cast<std::vector<QcmDataEntry>::size_type>(i)];
 
         if (i == stemSlot)
@@ -414,6 +416,21 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
 void QcmExercicePage::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
+
+    if(curNewQcmRequested)
+    {
+        int NbrOfEntriesLine = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine();
+        int NbrOfEntriesRow = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
+        float contentGridWidth = ui->EntriesGridLayout->contentsRect().width();
+        float contentGridHeight = ui->EntriesGridLayout->contentsRect().height();
+        int guessWidth = contentGridWidth / NbrOfEntriesRow - (NbrOfEntriesRow-1)*ui->EntriesGridLayout->spacing() - NbrOfEntriesRow*guesses[0]->GetMarginSumWidth();
+        int guessHeight = contentGridHeight / NbrOfEntriesLine - (NbrOfEntriesLine-1)*ui->EntriesGridLayout->spacing() - NbrOfEntriesLine*guesses[0]->GetMarginSumHeight();
+        for(QcmEntryGuess* guess : guesses)
+        {
+            guess->setFixedSize(guessWidth, guessHeight);
+            guess->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        }
+    }
 
     if (Tools::CorrectFontSize(ui->GuessMe->text(), ui->GuessMe->font(), *(ui->GuessMe), correctedStemFnt))
         ++continuousFntResizeCounter;

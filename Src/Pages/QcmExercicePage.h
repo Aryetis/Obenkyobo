@@ -49,6 +49,7 @@ private:
 
     QFont correctedStemFnt;
     static int continuousFntResizeCounter;
+    bool curNewQcmRequested;
 };
 
 #endif // QCMEXERCICEPAGE_H

@@ -23,6 +23,8 @@ public:
 
     void SetGuess(QcmDataEntry* s, QcmExerciceType qcmType, bool displayKanji, std::optional<bool> correct = std::nullopt);
 
+    int GetMarginSumWidth() const;
+    int GetMarginSumHeight() const;
     QcmDataEntry* GetSymbol() const { return symbol; }
 
 protected:

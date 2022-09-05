@@ -44,6 +44,18 @@ void QcmEntryGuess::SetGuess(QcmDataEntry* symbol_, QcmExerciceType qcmType_, bo
     }
 }
 
+int QcmEntryGuess::GetMarginSumWidth() const
+{
+    return layout()->contentsMargins().top()+layout()->contentsMargins().bottom()+layout()->spacing()
+            + ui->verticalLayout->contentsMargins().top()+ui->verticalLayout->contentsMargins().bottom()+ui->verticalLayout->spacing();
+}
+
+int QcmEntryGuess::GetMarginSumHeight() const
+{
+    return layout()->contentsMargins().left()+layout()->contentsMargins().right()+layout()->spacing()
+            + ui->verticalLayout->contentsMargins().left()+ui->verticalLayout->contentsMargins().right()+ui->verticalLayout->spacing();
+}
+
 void QcmEntryGuess::resizeEvent(QResizeEvent* event)
 {
     QWidget::resizeEvent(event);
