@@ -23,6 +23,17 @@ QcmExercicePage::QcmExercicePage(QWidget *parent) :
     ui->ResultLabelGroupBox->setFlat(true);
     ui->ResultLabelGroupBox->setStyleSheet("border : none; ");
 
+    guessesGrid.reserve(9);
+    guessesGrid.append(ui->Guess0);
+    guessesGrid.append(ui->Guess1);
+    guessesGrid.append(ui->Guess2);
+    guessesGrid.append(ui->Guess3);
+    guessesGrid.append(ui->Guess4);
+    guessesGrid.append(ui->Guess5);
+    guessesGrid.append(ui->Guess6);
+    guessesGrid.append(ui->Guess7);
+    guessesGrid.append(ui->Guess8);
+
     GetMy::Instance().SetQcmExercicePageInst(this);
 }
 
@@ -164,10 +175,10 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
 
         //************************ Setting board size ******************************
         // Making sure no QcmEntryGuess is bigger than another
-        for (int i=0; i < NbrOfEntriesLine; ++i)
-            ui->EntriesGridLayout->setColumnStretch(i, 1);
-        for (int i=0; i < NbrOfEntriesLine; ++i)
-            ui->EntriesGridLayout->setRowStretch(i, 1);
+//        for (int i=0; i < NbrOfEntriesLine; ++i)
+//            ui->EntriesGridLayout->setColumnStretch(i, 1);
+//        for (int i=0; i < NbrOfEntriesLine; ++i)
+//            ui->EntriesGridLayout->setRowStretch(i, 1);
     }
     //************************ END OF NEW QCM REQUESTED ************************
 
@@ -241,7 +252,8 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
                 foo->SetGuess(curSym, currentQcmType.value(), displayKanji, false);
         }
 
-        ui->EntriesGridLayout->addWidget(foo, entryPos.rem, entryPos.quot);
+//        ui->EntriesGridLayout->addWidget(foo, entryPos.rem, entryPos.quot);
+        guessesGrid[i]->addWidget(foo);
     }
 
     //************************ UI score error Counters ************************
@@ -397,6 +409,13 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
 void QcmExercicePage::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
+
+    if (widthTamere< 0)
+    {
+        widthTamere = ui->GuessMe->geometry().width() - 5*2;
+    }
+    for (int i=0; i < 9; ++i)
+        guessesGrid[i]->widget()->setFixedWidth(widthTamere/3);
 
     if (Tools::CorrectFontSize(ui->GuessMe->text(), ui->GuessMe->font(), *(ui->GuessMe), correctedStemFnt))
         ++continuousFntResizeCounter;

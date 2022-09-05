@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QSettings>
 #include <optional>
+#include <QBoxLayout>
 #include "Src/VocabularyParser.h"
 #include "Src/DefinesLand.h"
 
@@ -49,6 +50,9 @@ private:
 
     QFont correctedStemFnt;
     static int continuousFntResizeCounter;
+
+    QVector<QBoxLayout*> guessesGrid;
+    float widthTamere = -1.f;
 };
 
 #endif // QCMEXERCICEPAGE_H
