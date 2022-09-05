@@ -161,13 +161,35 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
                 break;
             }
         }
+        //************ Clearing previous board and making new entries **************
+        int nbrOfGuesses = NbrOfEntriesLine*NbrOfEntriesRow;
+        if (guesses.count() > nbrOfGuesses)
+        {
+            for (int i=guesses.count()-1; i >= nbrOfGuesses ; --i)
+            {
+                delete guesses[i];
+                guesses.removeLast();
+            }
+        }
+        else if (guesses.count() < nbrOfGuesses)
+        {
+            for(int i=guesses.count(); i < NbrOfEntriesLine*NbrOfEntriesRow; ++i)
+            {
+                div_t entryPos = div(i, NbrOfEntriesLine);
+
+                QcmEntryGuess* foo = new QcmEntryGuess(this);
+                guesses.append(foo);
+                ui->EntriesGridLayout->addWidget(foo, entryPos.rem, entryPos.quot);
+            }
+        }
 
         //************************ Setting board size ******************************
         // Making sure no QcmEntryGuess is bigger than another
         for (int i=0; i < NbrOfEntriesLine; ++i)
             ui->EntriesGridLayout->setColumnStretch(i, 1);
-        for (int i=0; i < NbrOfEntriesLine; ++i)
+        for (int i=0; i < NbrOfEntriesRow; ++i)
             ui->EntriesGridLayout->setRowStretch(i, 1);
+
     }
     //************************ END OF NEW QCM REQUESTED ************************
 
@@ -217,18 +239,15 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
         }
     }
 
-    //************************ Clearing previous board *************************
-    qDeleteAll(guesses);
-    guesses.clear();
-
     //************************ Initialize Entries board ************************
     int stemSlot = GetMy::Instance().ToolsInst()->GetRandomInt(0, (NbrOfEntriesLine*NbrOfEntriesRow)-1);
     QcmDataEntry* joker = shuffledSymbols[static_cast<std::vector<QcmDataEntry>::size_type>(stemSlot)]; // Symbol replaced by stem
     for(int i= 0; i<NbrOfEntriesLine*NbrOfEntriesRow; ++i)
     {
         div_t entryPos = div(i, NbrOfEntriesLine);
-        QcmEntryGuess* foo = new QcmEntryGuess(this); // TODO : don't new, reuse previous ones a la VocabularyDisplayPage (be careful with qcmSize setting too)
-        guesses.append(foo);
+
+        QcmEntryGuess* foo = static_cast<QcmEntryGuess*>(ui->EntriesGridLayout->itemAtPosition(entryPos.rem, entryPos.quot)->widget());
+        assert(foo);
         QcmDataEntry* curSym = shuffledSymbols[static_cast<std::vector<QcmDataEntry>::size_type>(i)];
 
         if (i == stemSlot)
@@ -240,8 +259,6 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
             else
                 foo->SetGuess(curSym, currentQcmType.value(), displayKanji, false);
         }
-
-        ui->EntriesGridLayout->addWidget(foo, entryPos.rem, entryPos.quot);
     }
 
     //************************ UI score error Counters ************************
