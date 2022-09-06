@@ -56,6 +56,11 @@ int QcmEntryGuess::GetMarginSumHeight() const
             + ui->verticalLayout->contentsMargins().left()+ui->verticalLayout->contentsMargins().right()+ui->verticalLayout->spacing();
 }
 
+QLabel* QcmEntryGuess::GetLabel() const
+{
+    return ui->EntryGuess;
+}
+
 void QcmEntryGuess::resizeEvent(QResizeEvent* event)
 {
     QWidget::resizeEvent(event);

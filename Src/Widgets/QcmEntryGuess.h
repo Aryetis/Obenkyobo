@@ -7,6 +7,8 @@
 #include "Src/DefinesLand.h"
 #include "Src/QcmDataEntry.h"
 
+#include <QLabel>
+
 namespace Ui
 {
     class QcmEntryGuess;
@@ -26,6 +28,7 @@ public:
     int GetMarginSumWidth() const;
     int GetMarginSumHeight() const;
     QcmDataEntry* GetSymbol() const { return symbol; }
+    QLabel* GetLabel() const;
 
 protected:
     void resizeEvent(QResizeEvent* event) override;

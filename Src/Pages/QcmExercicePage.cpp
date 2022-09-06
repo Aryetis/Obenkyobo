@@ -18,7 +18,8 @@ QcmExercicePage::QcmExercicePage(QWidget *parent) :
     currentQcmType(),
     refreshCounter(0), curHiraganaNonSized(), curKatakanaNonSized(), curRomanjiNonSized(), stemFont(),
     settingsSerializer(GetMy::Instance().SettingSerializerInst()),
-    displayKanji(false), entriesPool({}), vdp(nullptr), curNewQcmRequested(false)
+    displayKanji(false), entriesPool({}), vdp(nullptr), curNewQcmRequested(false),
+    contentGridWidth(-1), contentGridHeight(-1)
 {
     ui->setupUi(this);
 
@@ -170,6 +171,7 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
         {
             for (int i=guesses.count()-1; i >= nbrOfGuesses ; --i)
             {
+                ui->EntriesGridLayout->removeWidget(guesses[i]);
                 delete guesses[i];
                 guesses.removeLast();
             }
@@ -178,11 +180,11 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
         {
             for(int i=guesses.count(); i < NbrOfEntriesLine*NbrOfEntriesRow; ++i)
             {
-                div_t entryPos = div(i, NbrOfEntriesLine);
+                div_t entryPos = div(i, NbrOfEntriesRow);
 
                 QcmEntryGuess* foo = new QcmEntryGuess(this);
                 guesses.append(foo);
-                ui->EntriesGridLayout->addWidget(foo, entryPos.rem, entryPos.quot);
+                ui->EntriesGridLayout->addWidget(foo, entryPos.quot, entryPos.rem);
             }
         }
 
@@ -247,9 +249,9 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
     QcmDataEntry* joker = shuffledSymbols[static_cast<std::vector<QcmDataEntry>::size_type>(stemSlot)]; // Symbol replaced by stem
     for(int i= 0; i<NbrOfEntriesLine*NbrOfEntriesRow; ++i)
     {
-        div_t entryPos = div(i, NbrOfEntriesLine);
+        div_t entryPos = div(i, NbrOfEntriesRow);
 
-        QcmEntryGuess* foo = static_cast<QcmEntryGuess*>(ui->EntriesGridLayout->itemAtPosition(entryPos.rem, entryPos.quot)->widget());
+        QcmEntryGuess* foo = static_cast<QcmEntryGuess*>(ui->EntriesGridLayout->itemAtPosition(entryPos.quot, entryPos.rem)->widget());
         QcmDataEntry* curSym = shuffledSymbols[static_cast<std::vector<QcmDataEntry>::size_type>(i)];
 
         if (i == stemSlot)
@@ -277,6 +279,8 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
             continuousFntResizeCounter = 0;
         ui->GuessMe->setFont(correctedStemFnt);
         CheckContinuousFntResizeCounter();
+
+CorrectGuessesFontSize();
     }
 
     //************************ Hard Refresh ************************
@@ -417,27 +421,35 @@ void QcmExercicePage::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
 
-    if(curNewQcmRequested)
-    {
-        int NbrOfEntriesLine = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine();
-        int NbrOfEntriesRow = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
-        float contentGridWidth = ui->EntriesGridLayout->contentsRect().width();
-        float contentGridHeight = ui->EntriesGridLayout->contentsRect().height();
-        int guessWidth = contentGridWidth / NbrOfEntriesRow - (NbrOfEntriesRow-1)*ui->EntriesGridLayout->spacing() - NbrOfEntriesRow*guesses[0]->GetMarginSumWidth();
-        int guessHeight = contentGridHeight / NbrOfEntriesLine - (NbrOfEntriesLine-1)*ui->EntriesGridLayout->spacing() - NbrOfEntriesLine*guesses[0]->GetMarginSumHeight();
-        for(QcmEntryGuess* guess : guesses)
-        {
-            guess->setFixedSize(guessWidth, guessHeight);
-            guess->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        }
-    }
-
     if (Tools::CorrectFontSize(ui->GuessMe->text(), ui->GuessMe->font(), *(ui->GuessMe), correctedStemFnt))
-        ++continuousFntResizeCounter;
+        ++continuousFntResizeCounter; // TODO MG : seperate stemCnt and guessesCnt
     else
         continuousFntResizeCounter = 0;
     ui->GuessMe->setFont(correctedStemFnt);
     CheckContinuousFntResizeCounter();
+
+CorrectGuessesFontSize();
+}
+
+void QcmExercicePage::CorrectGuessesFontSize()
+{
+    int NbrOfEntriesLine = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine();
+    int NbrOfEntriesRow = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
+    if (contentGridWidth < 0)
+    {
+        contentGridWidth = ui->EntriesGridLayout->contentsRect().width();
+        contentGridHeight = ui->EntriesGridLayout->contentsRect().height();
+    }
+    int guessWidth = contentGridWidth / NbrOfEntriesRow - (NbrOfEntriesRow-1)*ui->EntriesGridLayout->spacing() - NbrOfEntriesRow*guesses[0]->GetMarginSumWidth();
+    int guessHeight = contentGridHeight / NbrOfEntriesLine - (NbrOfEntriesLine-1)*ui->EntriesGridLayout->spacing() - NbrOfEntriesLine*guesses[0]->GetMarginSumHeight();
+    for(QcmEntryGuess* guess : guesses)
+    {
+        guess->setFixedSize(guessWidth, guessHeight);
+        guess->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        QFont correctedFont = guess->font();
+        if (Tools::CorrectFontSize(guess->GetLabel()->text(), guess->GetLabel()->font(), *(guess->GetLabel()), correctedStemFnt))
+            guess->GetLabel()->setFont(correctedFont);
+    }
 }
 
 void QcmExercicePage::paintEvent(QPaintEvent *event)

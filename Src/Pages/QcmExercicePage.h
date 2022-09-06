@@ -34,6 +34,7 @@ private slots:
 
 private:
     void CheckContinuousFntResizeCounter();
+    void CorrectGuessesFontSize();
 
     Ui::QcmExercicePage *ui;
     QList<QcmEntryGuess*> guesses;
@@ -50,6 +51,8 @@ private:
     QFont correctedStemFnt;
     static int continuousFntResizeCounter;
     bool curNewQcmRequested;
+float contentGridWidth;
+float contentGridHeight;
 };
 
 #endif // QCMEXERCICEPAGE_H
