@@ -11,8 +11,7 @@ QcmEntryGuess::QcmEntryGuess(QWidget *parent) :
     QWidget(parent),
     symbol(nullptr),
     ui(new Ui::QcmEntryGuess),
-    sizeCorrected(false),
-    spawning(true)
+    sizeCorrected(false)
 {
     ui->setupUi(this);
 }
@@ -33,15 +32,8 @@ void QcmEntryGuess::SetGuess(QcmDataEntry* symbol_, QcmExerciceType qcmType_, bo
         correctGuess = correct.value();
     displayKanji = displayKanji_;
 
+    // TODO MG check following :
     // recompute size everytime we set next guess OR switch to Kanji/Kanas <=> everytime we're not spawning
-    if (!spawning)
-    {
-        // reset everything size related so we can have proper ComputeSizeCorrection()
-        // because despites being told otherwise, qt does not enforce col/row stretch sometimes... fuck qt
-        ui->EntryGuess->setText("");
-        ui->EntryGuess->setGeometry(ui->EntryGuess->rect().topLeft().x(), ui->EntryGuess->rect().topLeft().y(),
-                                    vanillaWidth.value(), vanillaHeight.value());
-    }
 }
 
 int QcmEntryGuess::GetMarginSumWidth() const
@@ -56,28 +48,11 @@ int QcmEntryGuess::GetMarginSumHeight() const
             + ui->verticalLayout->contentsMargins().left()+ui->verticalLayout->contentsMargins().right()+ui->verticalLayout->spacing();
 }
 
-QLabel* QcmEntryGuess::GetLabel() const
-{
-    return ui->EntryGuess;
-}
+bool QcmEntryGuess::ComputeSizeCorrection(int guessWidth, int guessHeight)
+{    
+    ui->EntryGuess->setFixedSize(guessWidth, guessHeight);
+    ui->EntryGuess->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-void QcmEntryGuess::resizeEvent(QResizeEvent* event)
-{
-    QWidget::resizeEvent(event);
-    if (spawning)
-    {
-        if (!vanillaHeight.has_value() || !vanillaWidth.has_value())
-        {
-            // Keeping in memory a proper size before any sizeCorrection shenanigans
-            vanillaHeight = geometry().height();
-            vanillaWidth = geometry().width();
-        }
-    }
-    ComputeSizeCorrection();
-}
-
-void QcmEntryGuess::ComputeSizeCorrection()
-{
     switch (qcmType)
     {
         case QcmExerciceType::Hiragana_to_Romanji_MCQ :
@@ -184,10 +159,7 @@ void QcmEntryGuess::ComputeSizeCorrection()
     }
     else
         continuousFntResizeCounter = 0;
-}
 
-void QcmEntryGuess::paintEvent(QPaintEvent *event)
-{
     switch (qcmType)
     {
         case QcmExerciceType::Hiragana_to_Romanji_MCQ :
@@ -223,11 +195,8 @@ void QcmEntryGuess::paintEvent(QPaintEvent *event)
         }
     }
 
-    QWidget::paintEvent(event);
-
-    spawning = false;
+    return sizeCorrected;
 }
-
 
 void QcmEntryGuess::mousePressEvent(QMouseEvent* /*event*/)
 {

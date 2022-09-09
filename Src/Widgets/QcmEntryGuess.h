@@ -28,19 +28,16 @@ public:
     int GetMarginSumWidth() const;
     int GetMarginSumHeight() const;
     QcmDataEntry* GetSymbol() const { return symbol; }
-    QLabel* GetLabel() const;
+
+    bool ComputeSizeCorrection(int guessWidth, int guessHeight);
 
 protected:
-    void resizeEvent(QResizeEvent* event) override;
-    void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent* event) override;
 
 private slots:
     void on_EntryGuess_clicked();
 
 private:
-    void ComputeSizeCorrection();
-
     QcmDataEntry* symbol;
     Ui::QcmEntryGuess *ui;
     bool correctGuess;
@@ -51,9 +48,6 @@ private:
     int originalFntSize;
     QFont correctedFnt;
     bool displayKanji;
-
-    inline static std::optional<float> vanillaWidth = std::nullopt, vanillaHeight = std::nullopt;
-    bool spawning;
 
     static int continuousFntResizeCounter;
 };

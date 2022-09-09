@@ -33,7 +33,7 @@ private slots:
     void on_SwitchButton_clicked();
 
 private:
-    void CheckContinuousFntResizeCounter();
+    void CorrectStemFontSize();
     void CorrectGuessesFontSize();
 
     Ui::QcmExercicePage *ui;
@@ -49,7 +49,8 @@ private:
     VocabDataPool* vdp;                     // holds entriesPool's data for vocab QCM (kana ones being hardcoded in KanasTables)
 
     QFont correctedStemFnt;
-    static int continuousFntResizeCounter;
+    static int continuousStemFntResizeCoRunter;
+    static int continuousGuessFntResizeCoRunter;
     bool curNewQcmRequested;
 float contentGridWidth;
 float contentGridHeight;
