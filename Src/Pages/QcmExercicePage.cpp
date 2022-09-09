@@ -18,8 +18,7 @@ QcmExercicePage::QcmExercicePage(QWidget *parent) :
     currentQcmType(),
     refreshCounter(0), curHiraganaNonSized(), curKatakanaNonSized(), curRomanjiNonSized(), stemFont(),
     settingsSerializer(GetMy::Instance().SettingSerializerInst()),
-    displayKanji(false), entriesPool({}), vdp(nullptr), curNewQcmRequested(false),
-    contentGridWidth(-1), contentGridHeight(-1)
+    displayKanji(false), entriesPool({}), vdp(nullptr), curNewQcmRequested(false)
 {
     ui->setupUi(this);
 
@@ -424,11 +423,10 @@ void QcmExercicePage::CorrectGuessesFontSize()
 {
     int NbrOfEntriesLine = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine();
     int NbrOfEntriesRow = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
-    if (contentGridWidth < 0)
-    {
-        contentGridWidth = ui->EntriesGridLayout->contentsRect().width();
-        contentGridHeight = ui->EntriesGridLayout->contentsRect().height();
-    }
+    // Keep in mind that the Stem size can vary and therefore change the whole playground's height
+    // TODO MG : check those cases
+    int contentGridWidth = ui->EntriesGridLayout->contentsRect().width();
+    int contentGridHeight = ui->EntriesGridLayout->contentsRect().height();
     int guessWidth = contentGridWidth / NbrOfEntriesRow - (NbrOfEntriesRow-1)*ui->EntriesGridLayout->spacing() - NbrOfEntriesRow*guesses[0]->GetMarginSumWidth();
     int guessHeight = contentGridHeight / NbrOfEntriesLine - (NbrOfEntriesLine-1)*ui->EntriesGridLayout->spacing() - NbrOfEntriesLine*guesses[0]->GetMarginSumHeight();
     for(QcmEntryGuess* guess : guesses)
@@ -441,11 +439,6 @@ void QcmExercicePage::CorrectGuessesFontSize()
 
     // TODO MG
     // Guess Fnt Resize Popup
-}
-
-void QcmExercicePage::paintEvent(QPaintEvent *event)
-{
-    QWidget::paintEvent(event);
 }
 
 

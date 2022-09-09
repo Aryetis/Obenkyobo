@@ -27,7 +27,6 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent* event) override;
-    void paintEvent(QPaintEvent *event) override;
 
 private slots:
     void on_SwitchButton_clicked();
@@ -52,8 +51,6 @@ private:
     static int continuousStemFntResizeCoRunter;
     static int continuousGuessFntResizeCoRunter;
     bool curNewQcmRequested;
-float contentGridWidth;
-float contentGridHeight;
 };
 
 #endif // QCMEXERCICEPAGE_H
