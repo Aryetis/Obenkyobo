@@ -21,7 +21,7 @@ QcmEntryGuess::~QcmEntryGuess()
     delete ui;
 }
 
-void QcmEntryGuess::SetGuess(QcmDataEntry* symbol_, QcmExerciceType qcmType_, bool displayKanji_, std::optional<bool> correct /*= std::nullopt*/)
+void QcmEntryGuess::SetGuessData(QcmDataEntry* symbol_, QcmExerciceType qcmType_, bool displayKanji_, std::optional<bool> correct /*= std::nullopt*/)
 {
     // WARNING : DO NOT set text and font at this stage as it will expand QcmEntryGuess's layout =>
     // might result in expanding too much/squishing neighboor entries => inconsistent entries size
@@ -48,11 +48,13 @@ int QcmEntryGuess::GetMarginSumHeight() const
             + ui->verticalLayout->contentsMargins().left()+ui->verticalLayout->contentsMargins().right()+ui->verticalLayout->spacing();
 }
 
-bool QcmEntryGuess::ComputeSizeCorrection(int guessWidth, int guessHeight)
+bool QcmEntryGuess::ApplyGuessTextAndCorrection(int guessWidth, int guessHeight)
 {    
+    //************************ Set Fixed Size ************************
     ui->EntryGuess->setFixedSize(guessWidth, guessHeight);
     ui->EntryGuess->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
+    //************************ Tools::CorrectFontSize, Apply corrected Fnt and Text ************************
     switch (qcmType)
     {
         case QcmExerciceType::Hiragana_to_Romanji_MCQ :
@@ -62,6 +64,8 @@ bool QcmEntryGuess::ComputeSizeCorrection(int guessWidth, int guessHeight)
             sizeCorrected = Tools::CorrectFontSize(*symbol->Kanas(),
                                 {GetMy::Instance().FntSettingsPageInst().GetCurrentHiraganaFamily(), originalFntSize},
                                 *(ui->EntryGuess), correctedFnt);
+            ui->EntryGuess->setFont(correctedFnt);
+            ui->EntryGuess->setText(*symbol->Kanas());
             break;
         }
         case QcmExerciceType::Katakana_to_Romanji_MCQ :
@@ -71,6 +75,8 @@ bool QcmEntryGuess::ComputeSizeCorrection(int guessWidth, int guessHeight)
             sizeCorrected = Tools::CorrectFontSize(*symbol->Kanas(),
                                 {GetMy::Instance().FntSettingsPageInst().GetCurrentKatakanaFamily(), originalFntSize},
                                 *(ui->EntryGuess), correctedFnt);
+            ui->EntryGuess->setFont(correctedFnt);
+            ui->EntryGuess->setText(*symbol->Kanas());
             break;
         }
         case QcmExerciceType::Romanji_to_Hiragana_MCQ :
@@ -80,6 +86,8 @@ bool QcmEntryGuess::ComputeSizeCorrection(int guessWidth, int guessHeight)
             sizeCorrected = Tools::CorrectFontSize(*symbol->Kanas(),
                                 {GetMy::Instance().FntSettingsPageInst().GetCurrentRomanjiFamily(), originalFntSize},
                                 *(ui->EntryGuess), correctedFnt);
+            ui->EntryGuess->setFont(correctedFnt);
+            ui->EntryGuess->setText(*symbol->Romanji());
             break;
         }
         case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
@@ -88,6 +96,8 @@ bool QcmEntryGuess::ComputeSizeCorrection(int guessWidth, int guessHeight)
             sizeCorrected = Tools::CorrectFontSize(*symbol->Kanas(),
                                 {GetMy::Instance().FntSettingsPageInst().GetCurrentRomanjiFamily(), originalFntSize},
                                 *(ui->EntryGuess), correctedFnt);
+            ui->EntryGuess->setFont(correctedFnt);
+            ui->EntryGuess->setText(*symbol->Romanji());
             break;
         }
         case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
@@ -98,6 +108,8 @@ bool QcmEntryGuess::ComputeSizeCorrection(int guessWidth, int guessHeight)
                 sizeCorrected = Tools::CorrectFontSize(*symbol->Kanas(),
                                     {GetMy::Instance().FntSettingsPageInst().GetCurrentKanjiFamily(), originalFntSize},
                                     *(ui->EntryGuess), correctedFnt);
+                ui->EntryGuess->setFont(correctedFnt);
+                ui->EntryGuess->setText(*symbol->Kanjis());
             }
             else if (static_cast<VocabDataEntry*>(symbol)->GetFontType() == KanaFamilyEnum::hiragana)
             {
@@ -105,6 +117,8 @@ bool QcmEntryGuess::ComputeSizeCorrection(int guessWidth, int guessHeight)
                 sizeCorrected = Tools::CorrectFontSize(*symbol->Kanas(),
                                     {GetMy::Instance().FntSettingsPageInst().GetCurrentHiraganaFamily(), originalFntSize},
                                     *(ui->EntryGuess), correctedFnt);
+                ui->EntryGuess->setFont(correctedFnt);
+                ui->EntryGuess->setText(*symbol->Kanas());
             }
             else
             {
@@ -112,11 +126,14 @@ bool QcmEntryGuess::ComputeSizeCorrection(int guessWidth, int guessHeight)
                 sizeCorrected = Tools::CorrectFontSize(*symbol->Kanas(),
                                     {GetMy::Instance().FntSettingsPageInst().GetCurrentKatakanaFamily(), originalFntSize},
                                     *(ui->EntryGuess), correctedFnt);
+                ui->EntryGuess->setFont(correctedFnt);
+                ui->EntryGuess->setText(*symbol->Kanas());
             }
             break;
         }
     }
 
+    //************************ Guess Fnt Resize Popup ************************
     if (sizeCorrected)
     {
         ++continuousFntResizeCounter;
@@ -159,41 +176,6 @@ bool QcmEntryGuess::ComputeSizeCorrection(int guessWidth, int guessHeight)
     }
     else
         continuousFntResizeCounter = 0;
-
-    switch (qcmType)
-    {
-        case QcmExerciceType::Hiragana_to_Romanji_MCQ :
-        case QcmExerciceType::Hiragana_to_Romanji_Kbd :
-        case QcmExerciceType::Katakana_to_Romanji_MCQ :
-        case QcmExerciceType::Katakana_to_Romanji_Kbd :
-        {
-            ui->EntryGuess->setFont(correctedFnt);
-            ui->EntryGuess->setText(*symbol->Kanas());
-            break;
-        }
-        case QcmExerciceType::Romanji_to_Hiragana_MCQ :
-        case QcmExerciceType::Romanji_to_Katakana_MCQ :
-        case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
-        {
-            ui->EntryGuess->setFont(correctedFnt);
-            ui->EntryGuess->setText(*symbol->Romanji());
-            break;
-        }
-        case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
-        {
-            if (displayKanji)
-            {
-                ui->EntryGuess->setFont(correctedFnt);
-                ui->EntryGuess->setText(*symbol->Kanjis());
-            }
-            else
-            {
-                ui->EntryGuess->setFont(correctedFnt);
-                ui->EntryGuess->setText(*symbol->Kanas());
-            }
-            break;
-        }
-    }
 
     return sizeCorrected;
 }

@@ -23,13 +23,13 @@ public:
     explicit QcmEntryGuess(QWidget *parent = nullptr);
     ~QcmEntryGuess() override;
 
-    void SetGuess(QcmDataEntry* s, QcmExerciceType qcmType, bool displayKanji, std::optional<bool> correct = std::nullopt);
+    void SetGuessData(QcmDataEntry* s, QcmExerciceType qcmType, bool displayKanji, std::optional<bool> correct = std::nullopt);
 
     int GetMarginSumWidth() const;
     int GetMarginSumHeight() const;
     QcmDataEntry* GetSymbol() const { return symbol; }
 
-    bool ComputeSizeCorrection(int guessWidth, int guessHeight);
+    bool ApplyGuessTextAndCorrection(int guessWidth, int guessHeight);
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;

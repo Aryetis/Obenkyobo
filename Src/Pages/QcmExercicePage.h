@@ -33,7 +33,7 @@ private slots:
 
 private:
     void CorrectStemFontSize();
-    void CorrectGuessesFontSize();
+    void ApplyGuessesTextAndCorrection();
 
     Ui::QcmExercicePage *ui;
     QList<QcmEntryGuess*> guesses;
@@ -51,6 +51,8 @@ private:
     static int continuousStemFntResizeCoRunter;
     static int continuousGuessFntResizeCoRunter;
     bool curNewQcmRequested;
+    bool stemSizeCorrected;
+    bool newQcpTypeRequested;
 };
 
 #endif // QCMEXERCICEPAGE_H
