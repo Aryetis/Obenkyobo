@@ -1,10 +1,10 @@
 #-------------------------------------------------
 # WORKING ON :
+#        - give up stem's "dynamic" size => FIXED SIZE too let's go, fuck qt fuck qt fuck qt
 #        - Check guesses resizing when stem is resized (<=> when switching from one qcm with a low fnt stem to a
 #               high fnt stem qcm)
-#        - FIX ROMANJI FNT GUESSES FNT RESIZE !!!!
 #        - fix qcm 1x3, 2x3, 3x3 switch
-#        - give up stem's "dynamic" size => FIXED SIZE too let's go, fuck qt fuck qt fuck qt
+#        - fix "switch to kana" button in Vocab->Romanji QCM
 #        - Needs to recalculate CorrectedFntSize upon "Switch to Kanji"
 #        - Rework LearningScore() system so it can take a list of modification => otherwise at each VocabQCM validation we will modify copy the file twice
 #        - switching to kanji change fnt, switching back to kanas deoesn't change fnt back

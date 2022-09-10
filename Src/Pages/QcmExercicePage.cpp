@@ -67,6 +67,14 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
             }
         }
 
+        //************************ Setting stem Size ************************
+        if (!newQcmRequested || newQcpTypeRequested)
+        {
+            int stemWidth = ui->PlayLayout->contentsRect().width();
+            int stemHeight = ui->PlayLayout->contentsRect().height() / (NbrOfEntriesLine+1);
+            ui->Stem->setFixedSize(stemWidth, stemHeight);
+            ui->Stem->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        }
 
         //************************ Initialize Fonts, reset counters ************************
         scoreCounter = 0;
@@ -129,7 +137,6 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
                 break;
             }
         }
-//        currentQcmType = qcmType;
 
         //************************ Initialize Entries Pool ************************
         entriesPool.clear();
@@ -217,7 +224,7 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
     if (qcmType == QcmExerciceType::Romanji_to_Vocabulary_MCQ)
         stemFont = static_cast<VocabDataEntry*>(stem)->GetStemFont(displayKanji); // TODO : this is so dumb please fix later on
 
-    ui->GuessMe->setFont(stemFont);
+    ui->Stem->setFont(stemFont);
     switch (qcmType)
     {
         case QcmExerciceType::Hiragana_to_Romanji_MCQ :
@@ -226,14 +233,14 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
         case QcmExerciceType::Katakana_to_Romanji_Kbd :
         case QcmExerciceType::Vocabulary_to_Romanji_MCQ :
         {
-            ui->GuessMe->setText(*stem->Romanji());
+            ui->Stem->setText(*stem->Romanji());
             break;
         }
         case QcmExerciceType::Romanji_to_Hiragana_MCQ :
         case QcmExerciceType::Romanji_to_Katakana_MCQ :
         case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
         {
-            ui->GuessMe->setText((displayKanji) ? *stem->Kanjis() : *stem->Kanas());
+            ui->Stem->setText((displayKanji) ? *stem->Kanjis() : *stem->Kanas());
             break;
         }
     }
@@ -409,6 +416,13 @@ void QcmExercicePage::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
 
+    //************************ Setting stem Size ************************
+    int stemWidth = ui->PlayLayout->contentsRect().width();
+    int stemHeight = ui->PlayLayout->contentsRect().height()
+            / (GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine()+1);
+    ui->Stem->setFixedSize(stemWidth, stemHeight);
+    ui->Stem->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
     // TODO MG : """"should"""" be now only once at spawning
     if (stemSizeCorrected)
     {
@@ -427,10 +441,10 @@ void QcmExercicePage::ApplyGuessesTextAndCorrection()
     int NbrOfEntriesRow = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
     // Keep in mind that the Stem size can vary and therefore change the whole playground's height
     // TODO MG : check those cases
-    int contentGridWidth = ui->EntriesGridLayout->contentsRect().width();
-    int contentGridHeight = ui->EntriesGridLayout->contentsRect().height();
-    int guessWidth = contentGridWidth / NbrOfEntriesRow - (NbrOfEntriesRow-1)*ui->EntriesGridLayout->spacing() - NbrOfEntriesRow*guesses[0]->GetMarginSumWidth();
-    int guessHeight = contentGridHeight / NbrOfEntriesLine - (NbrOfEntriesLine-1)*ui->EntriesGridLayout->spacing() - NbrOfEntriesLine*guesses[0]->GetMarginSumHeight();
+    int contentGridWidth = ui->PlayLayout->contentsRect().width();
+    int contentGridHeight = ui->PlayLayout->contentsRect().height();
+    int guessWidth = contentGridWidth / (NbrOfEntriesRow+1) - (NbrOfEntriesRow-1)*ui->EntriesGridLayout->spacing() - ui->PlayLayout->spacing();
+    int guessHeight = contentGridHeight / (NbrOfEntriesLine+1) - (NbrOfEntriesLine-1)*ui->EntriesGridLayout->spacing() - ui->PlayLayout->spacing();
     for(QcmEntryGuess* guess : guesses)
         guess->ApplyGuessTextAndCorrection(guessWidth, guessHeight); // Guess Fnt Resize Popup handled on QcmEntryGuess's side
 }
@@ -445,12 +459,12 @@ void QcmExercicePage::on_SwitchButton_clicked() // "Switch Kana"
         for(QcmEntryGuess* guess : guesses)
             guess->SetGuessData(guess->GetSymbol(), currentQcmType.value(), displayKanji);
     else
-        ui->GuessMe->setText((displayKanji) ? *stem->Kanjis() : *stem->Kanas());
+        ui->Stem->setText((displayKanji) ? *stem->Kanjis() : *stem->Kanas());
 }
 
 void QcmExercicePage::CorrectStemFontSize()
 {
-    stemSizeCorrected = Tools::CorrectFontSize(ui->GuessMe->text(), ui->GuessMe->font(), *(ui->GuessMe), correctedStemFnt);
+    stemSizeCorrected = Tools::CorrectFontSize(ui->Stem->text(), ui->Stem->font(), *(ui->Stem), correctedStemFnt);
     if (stemSizeCorrected)
     {
         ++continuousStemFntResizeCoRunter;
@@ -458,7 +472,7 @@ this->resize(this->geometry().width(), this->geometry().height());
     }
     else
         continuousStemFntResizeCoRunter = 0;
-    ui->GuessMe->setFont(correctedStemFnt);
+    ui->Stem->setFont(correctedStemFnt);
 
     // Stem Fnt Resize Popup
     if (continuousStemFntResizeCoRunter > POPUP_FNT_RESIZE_ERROR_CNT)
@@ -466,7 +480,7 @@ this->resize(this->geometry().width(), this->geometry().height());
         continuousStemFntResizeCoRunter = 0;
 
         int originalSize;
-        int newSize = ui->GuessMe->font().pointSize();
+        int newSize = ui->Stem->font().pointSize();
         switch (currentQcmType.value())
         {
             case QcmExerciceType::Hiragana_to_Romanji_MCQ :

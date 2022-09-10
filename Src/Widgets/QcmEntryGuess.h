@@ -25,8 +25,6 @@ public:
 
     void SetGuessData(QcmDataEntry* s, QcmExerciceType qcmType, bool displayKanji, std::optional<bool> correct = std::nullopt);
 
-    int GetMarginSumWidth() const;
-    int GetMarginSumHeight() const;
     QcmDataEntry* GetSymbol() const { return symbol; }
 
     bool ApplyGuessTextAndCorrection(int guessWidth, int guessHeight);
