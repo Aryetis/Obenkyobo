@@ -93,7 +93,7 @@ bool QcmEntryGuess::ApplyGuessTextAndCorrection(int guessWidth, int guessHeight)
         case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
         {
             originalFntSize = GetMy::Instance().FntSettingsPageInst().GetVocabAnswerRmjKanaSize();
-            sizeCorrected = Tools::CorrectFontSize(*symbol->Kanas(),
+            sizeCorrected = Tools::CorrectFontSize(*symbol->Romanji(),
                                 {GetMy::Instance().FntSettingsPageInst().GetCurrentRomanjiFamily(), originalFntSize},
                                 *(ui->EntryGuess), correctedFnt);
             ui->EntryGuess->setFont(correctedFnt);

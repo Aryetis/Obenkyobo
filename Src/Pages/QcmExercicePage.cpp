@@ -270,10 +270,6 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
         CorrectStemFontSize();
         ApplyGuessesTextAndCorrection();
     }
-//    if(newQcpTypeRequested)
-//    {
-//        this->resize(this->geometry().width(), this->geometry().height());
-//    }
 
     //************************ Hard Refresh ************************
     int HardRefreshFreq = GetMy::Instance().AppSettingsPageInst().GetHardRefreshFreq();
