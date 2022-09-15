@@ -259,6 +259,9 @@
            <pointsize>25</pointsize>
           </font>
          </property>
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
          <property name="text">
           <string>azerty</string>
          </property>

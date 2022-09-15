@@ -423,16 +423,32 @@ void QcmExercicePage::resizeEvent(QResizeEvent *event)
     ui->Stem->setFixedSize(stemWidth, stemHeight);
     ui->Stem->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    // TODO MG : """"should"""" be now only once at spawning
-    if (stemSizeCorrected)
-    {
-        ApplyGuessesTextAndCorrection();
-    }
-    else // first time spawning... TODO MG : needs to pass there when switching from qcm to qcm too ?
-    {
+ui->ScoreCounter->setFixedHeight(contentsRect().height()/10);
+ui->ScoreCounter->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+ui->ScoreText->setFixedHeight(contentsRect().height()/10);
+ui->ScoreText->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+
+ui->ErrorsCounter->setFixedHeight(contentsRect().height()/10);
+ui->ErrorsCounter->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+ui->ErrorsText->setFixedHeight(contentsRect().height()/10);
+ui->ErrorsText->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+
+ui->SwitchButton->setVisible(displayKanji);
+ui->SwitchButton->setFixedHeight(contentsRect().height()/10);
+ui->SwitchButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+ui->ResultLabelGroupBox->setFixedHeight(contentsRect().height()/10);
+ui->ResultLabelGroupBox->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+
+//    // TODO MG : """"should"""" be now only once at spawning
+//    if (stemSizeCorrected)
+//    {
+//        ApplyGuessesTextAndCorrection();
+//    }
+//    else // first time spawning... TODO MG : needs to pass there when switching from qcm to qcm too ?
+//    {
         CorrectStemFontSize();
         ApplyGuessesTextAndCorrection();
-    }
+//    }
 }
 
 void QcmExercicePage::ApplyGuessesTextAndCorrection()
