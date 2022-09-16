@@ -433,12 +433,13 @@ void QcmExercicePage::on_SwitchButton_clicked() // "Switch Kana"
     }
     else
     {
-        // TODO MG : set correct size, don't recycle old one (kanji's /kana's)
-        std::cout << "[BEFORE] stemSize : " << ui->Stem->font().pointSize() << std::endl;
+//        std::cout << "[BEFORE] stemSize : " << stemFont.pointSize() << std::endl;
         ui->Stem->setText((stemDisplayKanji) ? *stem->Kanjis() : *stem->Kanas());
         InitializeStemFont();
+//        std::cout << "[MIDDLE] stemSize : " << stemFont.pointSize() << std::endl;
         ApplyCorrectStemFontSize();
-        std::cout << "[AFTER] stemSize : " << ui->Stem->font().pointSize() << std::endl;
+//        std::cout << "[AFTER] stemSize : " << stemFont.pointSize() << std::endl;
+//        std::cout << "============================" << std::endl;
     }
 }
 
@@ -497,6 +498,7 @@ void QcmExercicePage::ApplyCorrectStemFontSize()
         ++continuousStemFntResizeCoRunter;
     else
         continuousStemFntResizeCoRunter = 0;
+    stemFont = correctedFont;
     ui->Stem->setFont(correctedFont);
 
     // Stem Fnt Resize Popup
