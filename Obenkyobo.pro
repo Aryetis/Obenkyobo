@@ -1,19 +1,9 @@
 #-------------------------------------------------
 # WORKING ON :
-#        - get rid of QcmExercicePage::currentQcmType
 #        - "switch to ***" does not set guesses/stem to correct size and instead use the previous size
-#        - give up stem's "dynamic" size => FIXED SIZE too let's go, fuck qt fuck qt fuck qt
-#        - Check guesses resizing when stem is resized (<=> when switching from one qcm with a low fnt stem to a
-#               high fnt stem qcm)
-#        - fix qcm 1x3, 2x3, 3x3 switch
-#        - fix "switch to kana" button in Vocab->Romanji QCM
-#        - Needs to recalculate CorrectedFntSize upon "Switch to Kanji"
+#        - add proper margins/spacing to qcm
+#        - fix qcm 1x3, 2x3, 3x3 switch incorrect height
 #        - Rework LearningScore() system so it can take a list of modification => otherwise at each VocabQCM validation we will modify copy the file twice
-#        - switching to kanji change fnt, switching back to kanas deoesn't change fnt back
-#        - Upon QCM FntResize the first column is not using the updated fnt size ?!?
-#        - "Size 56 too big, changing it to 56" (until lloading a new QCM => something is not applied somewhere)
-#        - GridLayout is STILL resizing cells incorrectly, Rmj (fnt settings, 70, 45, 45) + Rmj->Hiragana => cry
-#        - Rmj to Vocab is also unusable ... but does not resize incorrectly, I'm gonna kick someone in the balls soooo hard
 #        - restore correct value for POPUP_FNT_RESIZE_ERROR_CNT ( 3 )
 #-------------------------------------------------
 # TODO : - Finish sleep handling properly
