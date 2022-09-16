@@ -39,7 +39,7 @@ private:
     Ui::QcmExercicePage *ui;
     QList<QcmEntryGuess*> guesses;
     int scoreCounter, errorCounter;
-    std::optional<QcmExerciceType> currentQcmType; // TODO : Get rid of me
+    std::optional<QcmExerciceType> currentQcmType;
     QcmDataEntry* stem; // Answer to guess
     int refreshCounter;
     QFont curHiraganaNonSized, curKatakanaNonSized, curRomanjiNonSized, curKanjiNonSized, stemFont;

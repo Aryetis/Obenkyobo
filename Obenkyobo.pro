@@ -1,7 +1,6 @@
 #-------------------------------------------------
 # WORKING ON :
 #        - get rid of QcmExercicePage::currentQcmType
-#        - "switch to ***" button does not show up
 #        - "switch to ***" does not set guesses/stem to correct size and instead use the previous size
 #        - give up stem's "dynamic" size => FIXED SIZE too let's go, fuck qt fuck qt fuck qt
 #        - Check guesses resizing when stem is resized (<=> when switching from one qcm with a low fnt stem to a

@@ -177,7 +177,7 @@ void QcmEntryGuess::mousePressEvent(QMouseEvent* /*event*/)
 
 void QcmEntryGuess::On_EntryGuess_clicked()
 {
-//    GetMy::Instance().QcmExercicePageInst().OnGuessClicked(correctGuess, this);
+    GetMy::Instance().QcmExercicePageInst().OnGuessClicked(correctGuess, this);
 }
 
 int QcmEntryGuess::continuousFntResizeCounter = 0;

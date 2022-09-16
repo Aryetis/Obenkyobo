@@ -41,7 +41,7 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
     FntSettingsPage& fntSetting = GetMy::Instance().FntSettingsPageInst();
     int NbrOfEntriesLine = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine();
     int NbrOfEntriesRow = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
-    bool newQcpTypeRequested = (currentQcmType.has_value() && currentQcmType.value() != qcmType);
+    bool newQcpTypeRequested = (currentQcmType.has_value() && currentQcmType.value() != qcmType); // takes into accont firstQcm case
     currentQcmType = qcmType;
 
     //************************ BEGINNING OF NEW QCM REQUESTED ************************
@@ -490,11 +490,12 @@ void QcmExercicePage::InitializeStemFont()
 
 void QcmExercicePage::ApplyCorrectStemFontSize()
 {
-    if (Tools::CorrectFontSize(ui->Stem->text(), ui->Stem->font(), *(ui->Stem), stemFont))
+    QFont correctedFont;
+    if (Tools::CorrectFontSize(ui->Stem->text(), stemFont, *(ui->Stem), correctedFont))
         ++continuousStemFntResizeCoRunter;
     else
         continuousStemFntResizeCoRunter = 0;
-    ui->Stem->setFont(stemFont);
+    ui->Stem->setFont(correctedFont);
 
     // Stem Fnt Resize Popup
     if (continuousStemFntResizeCoRunter > POPUP_FNT_RESIZE_ERROR_CNT)
