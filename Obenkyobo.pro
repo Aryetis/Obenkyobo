@@ -1,5 +1,6 @@
 #-------------------------------------------------
 # WORKING ON :
+#        - if first qcm is "Vocab -> Romanji to Vocab", Changing Stem size takes one qcm validation to apply
 #        - "switch to ***" does not set guesses/stem to correct size and instead use the previous size
 #        - add proper margins/spacing to qcm
 #        - fix qcm 1x3, 2x3, 3x3 switch incorrect height

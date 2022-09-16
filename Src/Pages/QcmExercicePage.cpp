@@ -388,7 +388,6 @@ ui->ErrorsCounter->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 ui->ErrorsText->setFixedHeight(contentRectheight*0.075f);
 ui->ErrorsText->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
-ui->SwitchButton->setVisible(stemDisplayKanji);
 ui->SwitchButton->setFixedHeight(contentRectheight*0.070f); // hacky margin
 ui->SwitchButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 ui->ResultLabelGroupBox->setFixedHeight(contentRectheight*0.075f);
@@ -435,8 +434,11 @@ void QcmExercicePage::on_SwitchButton_clicked() // "Switch Kana"
     else
     {
         // TODO MG : set correct size, don't recycle old one (kanji's /kana's)
+        std::cout << "[BEFORE] stemSize : " << ui->Stem->font().pointSize() << std::endl;
         ui->Stem->setText((stemDisplayKanji) ? *stem->Kanjis() : *stem->Kanas());
+        InitializeStemFont();
         ApplyCorrectStemFontSize();
+        std::cout << "[AFTER] stemSize : " << ui->Stem->font().pointSize() << std::endl;
     }
 }
 

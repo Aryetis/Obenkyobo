@@ -49,7 +49,6 @@ private:
     VocabDataPool* vdp;                     // holds entriesPool's data for vocab QCM (kana ones being hardcoded in KanasTables)
 
     static int continuousStemFntResizeCoRunter;
-    static int continuousGuessFntResizeCoRunter;
 };
 
 #endif // QCMEXERCICEPAGE_H

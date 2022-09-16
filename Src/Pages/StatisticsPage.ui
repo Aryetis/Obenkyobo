@@ -271,7 +271,7 @@
        <item>
         <widget class="QPushButton" name="ResetVocabSheets">
          <property name="text">
-          <string>Reset all Sheets</string>
+          <string>Reset all Sheets's LS</string>
          </property>
         </widget>
        </item>

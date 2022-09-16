@@ -25,17 +25,12 @@ QcmEntryGuess::~QcmEntryGuess()
 
 void QcmEntryGuess::SetGuessData(QcmDataEntry* symbol_, QcmExerciceType qcmType_, bool displayKanji_, std::optional<bool> correct /*= std::nullopt*/)
 {
-    // WARNING : DO NOT set text and font at this stage as it will expand QcmEntryGuess's layout =>
-    // might result in expanding too much/squishing neighboor entries => inconsistent entries size
-
+    // WARNING : SetGuessData will NOT apply the text as it requires geometry information not necessarly available at time of the call
     symbol = symbol_;
     qcmType = qcmType_;
     if (correct.has_value())
         correctGuess = correct.value();
     displayKanji = displayKanji_;
-
-    // TODO MG check following :
-    // recompute size everytime we set next guess OR switch to Kanji/Kanas <=> everytime we're not spawning
 }
 
 bool QcmEntryGuess::ApplyGuessTextAndCorrection(int guessWidth, int guessHeight)
