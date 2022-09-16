@@ -23,6 +23,11 @@ QcmEntryGuess::~QcmEntryGuess()
     delete ui;
 }
 
+const QLabel *QcmEntryGuess::GetLabel() const
+{
+    return ui->EntryGuess;
+}
+
 void QcmEntryGuess::SetGuessData(QcmDataEntry* symbol_, QcmExerciceType qcmType_, bool displayKanji_, std::optional<bool> correct /*= std::nullopt*/)
 {
     // WARNING : SetGuessData will NOT apply the text as it requires geometry information not necessarly available at time of the call
@@ -90,7 +95,7 @@ bool QcmEntryGuess::ApplyGuessTextAndCorrection(int guessWidth, int guessHeight)
             if (displayKanji)
             {
                 originalFntSize = GetMy::Instance().FntSettingsPageInst().GetVocabAnswerKanaRmjSize();
-                sizeCorrected = Tools::CorrectFontSize(*symbol->Kanas(),
+                sizeCorrected = Tools::CorrectFontSize(*symbol->Kanjis(),
                                     {GetMy::Instance().FntSettingsPageInst().GetCurrentKanjiFamily(), originalFntSize},
                                     *(ui->EntryGuess), correctedFnt);
                 ui->EntryGuess->setFont(correctedFnt);

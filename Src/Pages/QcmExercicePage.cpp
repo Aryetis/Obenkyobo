@@ -425,21 +425,14 @@ void QcmExercicePage::on_SwitchButton_clicked() // "Switch Kana"
     if (currentQcmType == QcmExerciceType::Vocabulary_to_Romanji_MCQ)
     {
         for(QcmEntryGuess* guess : guesses)
-        {
-            // TODO MG : set correct size, don't recycle old one (kanji's /kana's)
             guess->SetGuessData(guess->GetSymbol(), currentQcmType.value(), stemDisplayKanji);
-        }
         ApplyGuessesTextAndCorrection();
     }
     else
     {
-//        std::cout << "[BEFORE] stemSize : " << stemFont.pointSize() << std::endl;
         ui->Stem->setText((stemDisplayKanji) ? *stem->Kanjis() : *stem->Kanas());
         InitializeStemFont();
-//        std::cout << "[MIDDLE] stemSize : " << stemFont.pointSize() << std::endl;
         ApplyCorrectStemFontSize();
-//        std::cout << "[AFTER] stemSize : " << stemFont.pointSize() << std::endl;
-//        std::cout << "============================" << std::endl;
     }
 }
 

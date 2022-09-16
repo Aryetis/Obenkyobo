@@ -22,6 +22,7 @@ public:
     QcmEntryGuess() = delete;
     explicit QcmEntryGuess(QWidget *parent = nullptr);
     ~QcmEntryGuess() override;
+    QLabel const* GetLabel() const;
 
     void SetGuessData(QcmDataEntry* s, QcmExerciceType qcmType, bool displayKanji, std::optional<bool> correct = std::nullopt);
 
