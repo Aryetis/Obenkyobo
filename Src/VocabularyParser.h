@@ -4,6 +4,7 @@
 #include <QString>
 #include <QSet>
 #include <QFont>
+#include <optional>
 #include "Src/QcmDataEntry.h"
 #include "Src/DefinesLand.h"
 #include "Src/GetMy.h"
@@ -66,7 +67,6 @@ class VocabDataEntry : public QcmDataEntry
         QString const& GetPath() const { return vocabDataFileLnk->GetPath(); }
         int GetLineNumber() const { return lineNumber; }
         KanaFamilyEnum GetFontType() const { return fontType; }
-        QFont GetStemFont(bool kanji);
 
     private :
         QString kanas;

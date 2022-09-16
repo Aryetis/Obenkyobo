@@ -26,6 +26,14 @@ enum KanaFamilyEnum
     katakana
 };
 
+enum StemTypeEnum
+{
+    hiraganaStem,
+    katakanaStem,
+    romanjiStem,
+    kanjiStem
+};
+
 enum QcmExerciceType
 {
     Hiragana_to_Romanji_MCQ,

@@ -50,7 +50,7 @@ private slots:
     void on_DateDisplayFormatDropdown_currentIndexChanged(int index);
     void on_RowPerPageComboBox_currentIndexChanged(int index);
     void on_KanaHardRefreshCheckBox_clicked(bool checked);
-    void on_comboBox_currentIndexChanged(int index);
+    void on_VocabFntSizeCombox_currentIndexChanged(int index);
     void on_DisplayLSDropdown_currentIndexChanged(int index);
 
 private:

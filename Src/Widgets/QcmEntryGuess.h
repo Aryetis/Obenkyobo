@@ -32,8 +32,11 @@ public:
 protected:
     void mousePressEvent(QMouseEvent* event) override;
 
+signals :
+    void EntryGuessClickedSignal();
+
 private slots:
-    void on_EntryGuess_clicked();
+    void On_EntryGuess_clicked();
 
 private:
     QcmDataEntry* symbol;

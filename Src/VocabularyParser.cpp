@@ -9,19 +9,6 @@ void VocabDataEntry::LearningScore(int ls)
     vocabDataFileLnk->WriteLearningScore(GetPath(), ls, this); // will take care of updating learningScore through friendship
 }
 
-QFont VocabDataEntry::GetStemFont(bool kanji)
-{
-    if (kanji)
-        return QFont(GetMy::Instance().FntSettingsPageInst().GetCurrentKanjiFamily(),
-                     GetMy::Instance().FntSettingsPageInst().GetVocabStemSize());
-    else if (fontType == KanaFamilyEnum::hiragana)
-        return QFont(GetMy::Instance().FntSettingsPageInst().GetCurrentHiraganaFamily(),
-                     GetMy::Instance().FntSettingsPageInst().GetVocabStemSize());
-    else
-        return QFont(GetMy::Instance().FntSettingsPageInst().GetCurrentKatakanaFamily(),
-                     GetMy::Instance().FntSettingsPageInst().GetVocabStemSize());
-}
-
 VocabDataFile::VocabDataFile(QString sheetPath, VocabDataPool* pool_) : vocabSheetPath(sheetPath), entries(), malformedLines(), poolLnks(),  learningScore(0)
 {
     if (pool_ != nullptr)

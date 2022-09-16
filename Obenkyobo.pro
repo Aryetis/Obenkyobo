@@ -1,5 +1,8 @@
 #-------------------------------------------------
 # WORKING ON :
+#        - get rid of QcmExercicePage::currentQcmType
+#        - "switch to ***" button does not show up
+#        - "switch to ***" does not set guesses/stem to correct size and instead use the previous size
 #        - give up stem's "dynamic" size => FIXED SIZE too let's go, fuck qt fuck qt fuck qt
 #        - Check guesses resizing when stem is resized (<=> when switching from one qcm with a low fnt stem to a
 #               high fnt stem qcm)
@@ -12,9 +15,9 @@
 #        - "Size 56 too big, changing it to 56" (until lloading a new QCM => something is not applied somewhere)
 #        - GridLayout is STILL resizing cells incorrectly, Rmj (fnt settings, 70, 45, 45) + Rmj->Hiragana => cry
 #        - Rmj to Vocab is also unusable ... but does not resize incorrectly, I'm gonna kick someone in the balls soooo hard
+#        - restore correct value for POPUP_FNT_RESIZE_ERROR_CNT ( 3 )
 #-------------------------------------------------
 # TODO : - Finish sleep handling properly
-#        - investigate weird "stutter" hapenning sometimes when QCM entries get corrected
 #        - https://discord.com/channels/809205711778480158/958419944243089479/999974500756103188
 #           - Anything below mk6 will not suspend while plugged in, yeah ;)
 #           - also disconnecting charger / connecting also desuspends the device, which i will prevent ( as an optional feature )

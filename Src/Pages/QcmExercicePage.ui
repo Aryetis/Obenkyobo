@@ -16,22 +16,31 @@
   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,9">
    <item>
     <layout class="QHBoxLayout" name="ScoringHorizontalLayout" stretch="1,1">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item>
       <layout class="QVBoxLayout" name="ScoringVerticalLayout" stretch="1,1">
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <property name="leftMargin">
-        <number>10</number>
+        <number>0</number>
        </property>
        <property name="topMargin">
-        <number>10</number>
+        <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>10</number>
+        <number>0</number>
        </property>
        <property name="bottomMargin">
-        <number>10</number>
+        <number>0</number>
        </property>
        <item>
         <layout class="QHBoxLayout" name="ScoreHorizontalLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
          <item>
           <widget class="QLabel" name="ScoreText">
            <property name="text">
@@ -50,6 +59,9 @@
        </item>
        <item>
         <layout class="QHBoxLayout" name="ErrorHorizontalLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
          <item>
           <widget class="QLabel" name="ErrorsText">
            <property name="lineWidth">
@@ -73,17 +85,20 @@
      </item>
      <item>
       <layout class="QVBoxLayout" name="ResultLabelVerticalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <property name="leftMargin">
-        <number>10</number>
+        <number>0</number>
        </property>
        <property name="topMargin">
-        <number>10</number>
+        <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>10</number>
+        <number>0</number>
        </property>
        <property name="bottomMargin">
-        <number>10</number>
+        <number>0</number>
        </property>
        <item>
         <spacer name="verticalSpacer">
@@ -100,6 +115,9 @@
        </item>
        <item>
         <layout class="QHBoxLayout" name="ResultLabelHorizontalLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
          <item>
           <spacer name="horizontalSpacer">
            <property name="orientation">
@@ -122,6 +140,21 @@
             <bool>true</bool>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
             <item>
              <widget class="QLabel" name="ResultLabelLeft">
               <property name="font">
@@ -189,7 +222,7 @@
        <item>
         <layout class="QHBoxLayout" name="SwitchLayout">
          <property name="spacing">
-          <number>6</number>
+          <number>0</number>
          </property>
          <property name="topMargin">
           <number>0</number>

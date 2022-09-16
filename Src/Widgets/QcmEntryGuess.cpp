@@ -14,6 +14,8 @@ QcmEntryGuess::QcmEntryGuess(QWidget *parent) :
     sizeCorrected(false)
 {
     ui->setupUi(this);
+
+    connect(this, SIGNAL(EntryGuessClickedSignal()), this, SLOT(On_EntryGuess_clicked()));
 }
 
 QcmEntryGuess::~QcmEntryGuess()
@@ -170,12 +172,12 @@ bool QcmEntryGuess::ApplyGuessTextAndCorrection(int guessWidth, int guessHeight)
 
 void QcmEntryGuess::mousePressEvent(QMouseEvent* /*event*/)
 {
-    emit on_EntryGuess_clicked();
+    emit EntryGuessClickedSignal();
 }
 
-void QcmEntryGuess::on_EntryGuess_clicked()
+void QcmEntryGuess::On_EntryGuess_clicked()
 {
-    GetMy::Instance().QcmExercicePageInst().OnGuessClicked(correctGuess, this);
+//    GetMy::Instance().QcmExercicePageInst().OnGuessClicked(correctGuess, this);
 }
 
 int QcmEntryGuess::continuousFntResizeCounter = 0;

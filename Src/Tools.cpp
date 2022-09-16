@@ -267,8 +267,6 @@ bool Tools::CorrectFontSize(QString const& text, QFont const& inFont, QWidget co
     float lastTestedSize = curSize;
     float curH = 0, curW = 0;
 
-    std::cout << "[CorrectFontSize] widget.rect().width() : " << widget.rect().width() <<  " widget.rect().height() : " << widget.rect().height() << std::endl;
-
     bool firstLoop = true;
     while(step>CORRECTED_FONT_PRECISION || (curH > widget.rect().height()) || (curW > widget.rect().width()))
     {

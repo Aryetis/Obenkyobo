@@ -136,7 +136,7 @@ void AppSettingsPage::on_KanaHardRefreshCheckBox_clicked(bool checked)
     settingsSerializer->setValue("AppSettings/kanaHardRefresh", checked);
 }
 
-void AppSettingsPage::on_comboBox_currentIndexChanged(int index)
+void AppSettingsPage::on_VocabFntSizeCombox_currentIndexChanged(int index)
 {
     vocabFntSizeIdx = index;
     settingsSerializer->setValue("AppSettings/vocabFntSizeIdx", index);

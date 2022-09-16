@@ -32,27 +32,24 @@ private slots:
     void on_SwitchButton_clicked();
 
 private:
-    void CorrectStemFontSize();
+    void InitializeStemFont();
+    void ApplyCorrectStemFontSize();
     void ApplyGuessesTextAndCorrection();
 
     Ui::QcmExercicePage *ui;
     QList<QcmEntryGuess*> guesses;
     int scoreCounter, errorCounter;
-    std::optional<QcmExerciceType> currentQcmType;
+    std::optional<QcmExerciceType> currentQcmType; // TODO : Get rid of me
     QcmDataEntry* stem; // Answer to guess
     int refreshCounter;
     QFont curHiraganaNonSized, curKatakanaNonSized, curRomanjiNonSized, curKanjiNonSized, stemFont;
     QSettings* settingsSerializer;
-    bool displayKanji;
+    bool stemDisplayKanji;
     std::vector<QcmDataEntry*> entriesPool; // DO NOT own its data => don't delete its content
     VocabDataPool* vdp;                     // holds entriesPool's data for vocab QCM (kana ones being hardcoded in KanasTables)
 
-    QFont correctedStemFnt;
     static int continuousStemFntResizeCoRunter;
     static int continuousGuessFntResizeCoRunter;
-    bool curNewQcmRequested;
-    bool stemSizeCorrected;
-    bool newQcpTypeRequested;
 };
 
 #endif // QCMEXERCICEPAGE_H
