@@ -83,6 +83,7 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
             case QcmExerciceType::Romanji_to_Hiragana_MCQ :
             case QcmExerciceType::Romanji_to_Katakana_MCQ :
             {
+                stemDisplayKanji = false;
                 ui->SwitchButton->setVisible(false);
                 break;
             }
@@ -364,7 +365,7 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
     ui->ResultLabelGroupBox->setStyleSheet((correct) ? "QGroupBox { border : none }"
                                                      : "QGroupBox { border : 5px solid black }");
 
-    InitializeExercice(currentQcmType());
+    InitializeExercice(currentQcmType);
 }
 
 void QcmExercicePage::resizeEvent(QResizeEvent *event)
@@ -412,7 +413,7 @@ void QcmExercicePage::ApplyGuessesTextAndCorrection()
     int contentGridWidth = ui->PlayLayout->contentsRect().width();
     int contentGridHeight = ui->PlayLayout->contentsRect().height();
 
-    int guessWidth = contentGridWidth / (NbrOfEntriesRow);
+    int guessWidth = 300; //contentGridWidth / (NbrOfEntriesRow);
     int guessHeight = contentGridHeight / (NbrOfEntriesLine+1);
 
     for(QcmEntryGuess* guess : guesses)

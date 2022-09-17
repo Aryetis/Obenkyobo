@@ -1,6 +1,6 @@
 #-------------------------------------------------
 # WORKING ON :
-#        - if first qcm is "Vocab -> Romanji to Vocab", Changing Stem size takes one qcm validation to apply
+#        - fixing dya/dyu/dyo etc fnt corrected too large and remove guessWidth = 300 for testing this
 #        - fix qcm 1x3, 2x3, 3x3 switch incorrect height
 #        - add proper margins/spacing to qcm
 #        - Rework LearningScore() system so it can take a list of modification => otherwise at each VocabQCM validation we will modify copy the file twice

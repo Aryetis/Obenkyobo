@@ -277,8 +277,7 @@ bool Tools::CorrectFontSize(QString const& text, QFont const& inFont, QWidget co
 
         QLabel const* label = qobject_cast<QLabel const*>(&widget);
         newFontSizeRect = fm.boundingRect(widget.rect(), label != nullptr
-                                            ? (label->wordWrap() ? Qt::TextWordWrap : 0) | label->alignment() : 0,
-                                          text);
+                                ? (label->wordWrap() ? Qt::TextWordWrap : 0) | label->alignment() : 0, text);
         curH = newFontSizeRect.height();
         curW = newFontSizeRect.width();
 
