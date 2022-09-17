@@ -1,12 +1,12 @@
 #-------------------------------------------------
 # WORKING ON :
-#        - fixing dya/dyu/dyo etc fnt corrected too large and remove guessWidth = 300 for testing this
 #        - fix qcm 1x3, 2x3, 3x3 switch incorrect height
 #        - add proper margins/spacing to qcm
 #        - Rework LearningScore() system so it can take a list of modification => otherwise at each VocabQCM validation we will modify copy the file twice
-#        - restore correct value for POPUP_FNT_RESIZE_ERROR_CNT ( 3 )
 #-------------------------------------------------
-# TODO : - Finish sleep handling properly
+# TODO : - restore correct value for POPUP_FNT_RESIZE_ERROR_CNT ( 3 )
+#        - remove stem's border
+#        - Finish sleep handling properly
 #        - https://discord.com/channels/809205711778480158/958419944243089479/999974500756103188
 #           - Anything below mk6 will not suspend while plugged in, yeah ;)
 #           - also disconnecting charger / connecting also desuspends the device, which i will prevent ( as an optional feature )

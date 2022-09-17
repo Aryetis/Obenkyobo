@@ -413,7 +413,7 @@ void QcmExercicePage::ApplyGuessesTextAndCorrection()
     int contentGridWidth = ui->PlayLayout->contentsRect().width();
     int contentGridHeight = ui->PlayLayout->contentsRect().height();
 
-    int guessWidth = 300; //contentGridWidth / (NbrOfEntriesRow);
+    int guessWidth = contentGridWidth / (NbrOfEntriesRow);
     int guessHeight = contentGridHeight / (NbrOfEntriesLine+1);
 
     for(QcmEntryGuess* guess : guesses)
