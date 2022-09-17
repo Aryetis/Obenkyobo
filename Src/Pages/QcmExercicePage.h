@@ -39,7 +39,7 @@ private:
     Ui::QcmExercicePage *ui;
     QList<QcmEntryGuess*> guesses;
     int scoreCounter, errorCounter;
-    std::optional<QcmExerciceType> currentQcmType;
+    QcmExerciceType currentQcmType;
     QcmDataEntry* stem; // Answer to guess
     int refreshCounter;
     QFont curHiraganaNonSized, curKatakanaNonSized, curRomanjiNonSized, curKanjiNonSized, stemFont;
@@ -48,6 +48,7 @@ private:
     std::vector<QcmDataEntry*> entriesPool; // DO NOT own its data => don't delete its content
     VocabDataPool* vdp;                     // holds entriesPool's data for vocab QCM (kana ones being hardcoded in KanasTables)
 
+    bool initialPaintDone;
     static int continuousStemFntResizeCoRunter;
 };
 

@@ -15,10 +15,10 @@
 
 QcmExercicePage::QcmExercicePage(QWidget *parent) :
     QWidget(parent), ui(new Ui::QcmExercicePage), scoreCounter(0), errorCounter(0),
-    currentQcmType(),
+    currentQcmType(QcmExerciceType::Vocabulary_to_Romanji_MCQ),
     refreshCounter(0), curHiraganaNonSized(), curKatakanaNonSized(), curRomanjiNonSized(), stemFont(),
     settingsSerializer(GetMy::Instance().SettingSerializerInst()),
-    stemDisplayKanji(false), entriesPool({}), vdp(nullptr)
+    stemDisplayKanji(false), entriesPool({}), vdp(nullptr), initialPaintDone(false)
 {
     ui->setupUi(this);
 
@@ -41,7 +41,6 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
     FntSettingsPage& fntSetting = GetMy::Instance().FntSettingsPageInst();
     int NbrOfEntriesLine = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine();
     int NbrOfEntriesRow = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
-    bool newQcpTypeRequested = (currentQcmType.has_value() && currentQcmType.value() != qcmType); // takes into accont firstQcm case
     currentQcmType = qcmType;
 
     //************************ BEGINNING OF NEW QCM REQUESTED ************************
@@ -212,13 +211,13 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
         QcmDataEntry* curSym = shuffledSymbols[static_cast<std::vector<QcmDataEntry>::size_type>(i)];
 
         if (i == stemSlot)
-            foo->SetGuessData(stem, currentQcmType.value(), stemDisplayKanji, true);
+            foo->SetGuessData(stem, currentQcmType, stemDisplayKanji, true);
         else
         {
             if (curSym == stem) // avoid double entries
-                foo->SetGuessData(joker, currentQcmType.value(), stemDisplayKanji, false);
+                foo->SetGuessData(joker, currentQcmType, stemDisplayKanji, false);
             else
-                foo->SetGuessData(curSym, currentQcmType.value(), stemDisplayKanji, false);
+                foo->SetGuessData(curSym, currentQcmType, stemDisplayKanji, false);
         }
     }
 
@@ -227,7 +226,8 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
     ui->ErrorsCounter->setNum(errorCounter);
 
     //************************ Fonts Size Corrections ************************
-    if (!newQcmRequested || newQcpTypeRequested) // first call needs to be delayed so everything/geometry is set up correctly
+    // first call needs to be delayed so everything geometry related is set up correctly
+    if (initialPaintDone)
     {
         ApplyCorrectStemFontSize();
         ApplyGuessesTextAndCorrection();
@@ -273,7 +273,7 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
     // TODO use the correct font for the jp part
     ui->ResultLabelLeft->setStyleSheet("QLabel { border: none }");
     ui->ResultLabelMiddle->setStyleSheet("QLabel { border: none }");
-    switch (currentQcmType.value())
+    switch (currentQcmType)
     {
         case QcmExerciceType::Hiragana_to_Romanji_MCQ :
         case QcmExerciceType::Hiragana_to_Romanji_Kbd :
@@ -364,7 +364,7 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
     ui->ResultLabelGroupBox->setStyleSheet((correct) ? "QGroupBox { border : none }"
                                                      : "QGroupBox { border : 5px solid black }");
 
-    InitializeExercice(currentQcmType.value());
+    InitializeExercice(currentQcmType());
 }
 
 void QcmExercicePage::resizeEvent(QResizeEvent *event)
@@ -400,6 +400,8 @@ ui->Stem->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     ApplyCorrectStemFontSize();
     ApplyGuessesTextAndCorrection(); // Also setFixedSize for guesses
+
+initialPaintDone = true;
 }
 
 void QcmExercicePage::ApplyGuessesTextAndCorrection()
@@ -425,7 +427,7 @@ void QcmExercicePage::on_SwitchButton_clicked() // "Switch Kana"
     if (currentQcmType == QcmExerciceType::Vocabulary_to_Romanji_MCQ)
     {
         for(QcmEntryGuess* guess : guesses)
-            guess->SetGuessData(guess->GetSymbol(), currentQcmType.value(), stemDisplayKanji);
+            guess->SetGuessData(guess->GetSymbol(), currentQcmType, stemDisplayKanji);
         ApplyGuessesTextAndCorrection();
     }
     else
@@ -440,7 +442,7 @@ void QcmExercicePage::InitializeStemFont()
 {
     FntSettingsPage& fntSetting = GetMy::Instance().FntSettingsPageInst();
 
-    switch (currentQcmType.value())
+    switch (currentQcmType)
     {
         case QcmExerciceType::Hiragana_to_Romanji_MCQ :
         case QcmExerciceType::Hiragana_to_Romanji_Kbd :
@@ -501,7 +503,7 @@ void QcmExercicePage::ApplyCorrectStemFontSize()
 
         int originalSize;
         int newSize = ui->Stem->font().pointSize();
-        switch (currentQcmType.value())
+        switch (currentQcmType)
         {
             case QcmExerciceType::Hiragana_to_Romanji_MCQ :
             case QcmExerciceType::Hiragana_to_Romanji_Kbd :
