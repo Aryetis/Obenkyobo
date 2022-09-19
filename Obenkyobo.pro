@@ -1,8 +1,14 @@
 #-------------------------------------------------
 # WORKING ON :
+#        - Rework LearningScore() => Create QcmPool interface so LearningScore Transaction Update System can be used for both Kanas and Vocab
+#        - qcm guesses not updating size if :
+#           - Boot up
+#           - Settings -> Applications -> MCQ Configuration : 1x3
+#           - Hiragana To Romanji
+#           - Settings -> Applications -> MCQ Configuration : 3x3
+#           - Romanji To Hiragana
 #        - fix qcm 1x3, 2x3, 3x3 switch incorrect height
 #        - add proper margins/spacing to qcm
-#        - Rework LearningScore() system so it can take a list of modification => otherwise at each VocabQCM validation we will modify copy the file twice
 #-------------------------------------------------
 # TODO : - restore correct value for POPUP_FNT_RESIZE_ERROR_CNT ( 3 )
 #        - remove stem's border
@@ -61,6 +67,7 @@ SOURCES += \
     Src/Pages/VocabularyDisplayPage.cpp \
     Src/Pages/WelcomePage.cpp \
     Src/QcmDataEntryKana.cpp \
+    Src/QcmPool.cpp \
     Src/Tools.cpp \
     Src/VocabularyParser.cpp \
     Src/Widgets/KanaEditButtonWidget.cpp \
@@ -96,6 +103,7 @@ HEADERS += \
     Src/Pages/WelcomePage.h \
     Src/QcmDataEntry.h \
     Src/QcmDataEntryKana.h \
+    Src/QcmPool.h \
     Src/Tools.h \
     Src/VocabularyParser.h \
     Src/Widgets/KanaEditButtonWidget.h \

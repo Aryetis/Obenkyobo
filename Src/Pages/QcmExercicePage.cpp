@@ -263,6 +263,9 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
         int appStatisticsError = settingsSerializer->value("AppStatistics/error", 0).toInt();
         settingsSerializer->setValue("AppStatistics/error", ++appStatisticsError);
         int EntryGuessLearningState = entryGuess->GetSymbol()->LearningScore();
+        // TODO MG : rethink hard .... VDE::LearningScore CANNOT do transaction => need multiple file rewrite
+        // => .... need interface for GuessPool .... I'm gonna unalive myself
+        std::vector<std::pair<int, >> transaction;
         if ( EntryGuessLearningState < MAX_LEARNING_STATE_VALUE )
             entryGuess->GetSymbol()->LearningScore(EntryGuessLearningState+1);
         if ( stem->LearningScore() < MAX_LEARNING_STATE_VALUE )

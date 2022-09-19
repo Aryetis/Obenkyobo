@@ -29,8 +29,9 @@ class VocabDataFile
 
         static bool ResetLearningScore(QString vocabSheetPath);
         bool ResetLearningScore();
-        static bool WriteLearningScore(QString vocabSheetPath, int ls, int lineNumber = -1);
-        bool WriteLearningScore(QString vocabSheetPath, int ls, VocabDataEntry* vde = nullptr);
+        static bool WriteLearningScore(QString vocabSheetPath, std::vector<std::pair<int, int>> transaction);
+//        bool WriteLearningScore(QString vocabSheetPath, int ls, VocabDataEntry* vde = nullptr);
+        bool WriteLearningScore(QString vocabSheetPath, std::vector<std::pair<int, VocabDataEntry*>> transaction);
 
     private :
         void ParseLine(QString const& line, int lineNumber);

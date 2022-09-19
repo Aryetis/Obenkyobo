@@ -4,9 +4,14 @@
 #include "Src/GetMy.h"
 #include "Src/Tools.h"
 
-void VocabDataEntry::LearningScore(int ls)
+
+
+#include <regex>
+#include <unistd.h>
+
+void VocabDataEntry::LearningScore(int ls) // TODO MG ... this kinda loose its purpose ...
 {
-    vocabDataFileLnk->WriteLearningScore(GetPath(), ls, this); // will take care of updating learningScore through friendship
+    vocabDataFileLnk->WriteLearningScore(GetPath(), {{ls, this}}); // will take care of updating learningScore through friendship
 }
 
 VocabDataFile::VocabDataFile(QString sheetPath, VocabDataPool* pool_) : vocabSheetPath(sheetPath), entries(), malformedLines(), poolLnks(),  learningScore(0)
@@ -49,7 +54,7 @@ void VocabDataFile::ParseLine(const QString &line, int lineNumber_)
 
     //[fontType=hiragana][jp=sanity][kanji=kan][trad=check][learningScore=5]
     QRegExp rx("\\[fontType=([a-zA-Z]+)\\]\\[jp=([^\\]]+)\\]\\[kanji=([^\\]]+)\\]\\[trad=([^\\]]+)\\]\\[learningScore=([0-5])\\]");
-    rx.indexIn(line);
+    rx.indexIn(line); // TODO Replace with pas du tout du
     QStringList parsedFields = rx.capturedTexts(); // first one is matched line, not fields
     QString kanas_ = "";
     QString kanji_ = "";
@@ -88,66 +93,110 @@ void VocabDataFile::ParseLine(const QString &line, int lineNumber_)
         malformedLines.insert(new VocabDataEntry(kanas_, kanji_, trad_, learningScore_, this, lineNumber_, fontType_));
 }
 
-bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, int ls, int lineNumber /*= -1*/)
-{
-    /****************** Updating File ******************/
-    QFile vocabFileIn{vocabSheetPath};
-    if (QFile::exists(vocabSheetPath+".tmp"))
-        QFile::remove(vocabSheetPath+".tmp");
-    QFile vocabFileOut{vocabSheetPath+".tmp"};
-    if (vocabFileIn.open(QIODevice::ReadOnly) && vocabFileOut.open(QIODevice::ReadWrite))
+bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, std::vector<std::pair<int, int>> transaction)
+{   // transaction : <ls, lineNumber>, yes it's ugly, no I don't mind
+    QFile vocabFile{vocabSheetPath};
+    bool ret = true;
+    if (vocabFile.open(QIODevice::ReadWrite))
     {
-        QTextStream in{&vocabFileIn};
-        in.setCodec("UTF-8");
-        QTextStream out{&vocabFileOut};
-        out.setCodec("UTF-8");
-        int lineCounter = 0;
+        /************** Read vocabSheetPath **************/
+        QTextStream fileStream{&vocabFile};
+        fileStream.setCodec("UTF-8");
+        QStringList fileContent;
+        while (!fileStream.atEnd())
+            fileContent.append(fileStream.readLine());
 
-        while (!in.atEnd())
-        {
-            QString curLine = in.readLine();
-            if ((lineNumber == -1 || lineNumber == lineCounter) && (curLine.count() > 0 && curLine[0] != '#'))
+        /************** Compute content **************/
+        for (std::pair<int,int> const& trans : transaction)
+        {   // <ls, lineNumber>
+            if (trans.second>fileContent.size())
             {
-                curLine.replace(QRegularExpression("\\[learningScore=([0-9]+)\\]"), QString("[learningScore=%1]").arg(ls));
-                out << curLine << "\n";
+                std::cerr << "Can't access line " << trans.second << " from file " << vocabSheetPath.toStdString().c_str() << std::endl;
+                return false;
             }
-            else
-                out << curLine << "\n";
-            ++lineCounter;
-        }
-        QString inName = vocabFileIn.fileName();
-        vocabFileIn.close();
-        vocabFileIn.remove();
-        vocabFileOut.close();
-        vocabFileOut.rename(inName);
+
+            if (trans.second < 0) // rewrite every matching line
+            {
+                for (QString& curLine : fileContent)
+                {
+                    if (curLine.size() <= 0 || curLine[0] == '#')
+                        continue;
+
+                    QRegularExpression rx("\\[learningScore=([0-9]{1})\\]");
+                    QRegularExpressionMatch match = rx.match(curLine);
+                    if (match.capturedTexts().size() != 2)
+                    {
+                        std::cerr << "[WriteLearningScore] : incorrect number of [learningScore] group in " << vocabSheetPath.toStdString().c_str() << "'s line :" << curLine.toStdString().c_str() << std::endl;
+                        ret = false;
+                        continue;
+                    }
+                    else
+                    {
+                        int pos = match.capturedStart(1);
+                        curLine[pos] = static_cast<char>('0'+trans.first);
+                    }
+                }
+            }
+            else // normal transaction, just rewrite corresponding lineNumber
+            {
+                QString targetLine = fileContent[trans.second]; // assuming lineNumber is pointing to a sane line
+                if (targetLine.size() > 0 && targetLine[0] != '#')
+                {
+                    QRegularExpression rx("\\[learningScore=([0-9]{1})\\]");
+                    QRegularExpressionMatch match = rx.match(targetLine);
+                    QString& curLine = fileContent[trans.second];
+                    if (match.capturedTexts().size() != 2)
+                    {
+                        std::cerr << "[WriteLearningScore] : incorrect number of [learningScore] group in " << vocabSheetPath.toStdString().c_str() << "'s line :" << curLine.toStdString().c_str() << std::endl;
+                        ret = false;
+                        continue;
+                    }
+                    else
+                    {
+                        int pos = match.capturedStart(1);
+                        curLine[pos] = static_cast<char>('0'+trans.first);
+                    }
+                }
+            }
+        } // for transaction
+
+        /************** Rewrite vocabSheetPath **************/
+        vocabFile.resize(0);
+        fileStream.reset();
+        for (QString const& curLine : fileContent)
+            fileStream << curLine << "\r\n";
+        vocabFile.close();
     }
     else
     {
-        GetMy::Instance().ToolsInst()->DisplayPopup("Could not open file : "+vocabSheetPath);
+        std::cerr << "Could not open file" << std::endl;
         return false;
     }
 
-    return true;
+    return ret;
 }
 
-bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, int ls, VocabDataEntry* vde /*= nullptr*/)
-{
+bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, std::vector<std::pair<int, VocabDataEntry*>> transaction)
+{   // transaction : <ls, vde>, yes it's ugly, no I don't mind
     /****************** Updating File ******************/
-    if ( !WriteLearningScore(vocabSheetPath, ls, (vde != nullptr) ? vde->GetLineNumber() : -1) )
+    if ( !WriteLearningScore(vocabSheetPath, transaction) )
         return false;
 
     /****************** Updating Fields ******************/
-    if (vde != nullptr)
+    for (std::pair<int, VocabDataEntry*> const& trans : transaction)
     {
-        learningScore = learningScore - vde->LearningScore()/entries.size() + ls/entries.size();
-        vde->learningScore = ls;
-    }
-    else
-    {
-        learningScore = ls;
-        QSet<VocabDataEntry*>::iterator it = entries.begin();
-        while (it != entries.end())
-            (*it++)->learningScore = ls;
+        if (trans.second != nullptr)
+        {
+            learningScore = learningScore - trans.second->LearningScore()/entries.size() + trans.first/entries.size();
+            trans.second->learningScore = trans.first;
+        }
+        else
+        {
+            learningScore = trans.first;
+            QSet<VocabDataEntry*>::iterator it = entries.begin();
+            while (it != entries.end())
+                (*it++)->learningScore = trans.first;
+        }
     }
 
     return true;
@@ -155,13 +204,13 @@ bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, int ls, VocabData
 
 bool VocabDataFile::ResetLearningScore(QString vocabSheetPath)
 {
-    return VocabDataFile::WriteLearningScore(vocabSheetPath, MAX_LEARNING_STATE_VALUE, -1);
+    return VocabDataFile::WriteLearningScore(vocabSheetPath, {{MAX_LEARNING_STATE_VALUE, -1}});
 }
 
 bool VocabDataFile::ResetLearningScore()
 {
     // Reminder : LearningScore value is its weight in the qcm's pool <=> it's inversed
-    return WriteLearningScore(vocabSheetPath, MAX_LEARNING_STATE_VALUE, nullptr);
+    return WriteLearningScore(vocabSheetPath, {{MAX_LEARNING_STATE_VALUE, nullptr}});
 }
 
 VocabDataPool::VocabDataPool(QString sheetPath)
