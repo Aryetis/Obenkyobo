@@ -254,21 +254,21 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
         ++scoreCounter;
         int appStatisticsScore = settingsSerializer->value("AppStatistics/score", 0).toInt();
         settingsSerializer->setValue("AppStatistics/score", ++appStatisticsScore);
-        int EntryGuessLearningState = entryGuess->GetSymbol()->LearningScore();
+        int EntryGuessLearningState = entryGuess->GetDataEntry()->LearningScore();
         if ( EntryGuessLearningState > 0 )
-            entryGuess->GetSymbol()->LearningScore(EntryGuessLearningState-1);
+            entryGuess->GetDataEntry()->LearningScore(EntryGuessLearningState-1);
     }
     else
     {
         ++errorCounter;
         int appStatisticsError = settingsSerializer->value("AppStatistics/error", 0).toInt();
         settingsSerializer->setValue("AppStatistics/error", ++appStatisticsError);
-        int EntryGuessLearningState = entryGuess->GetSymbol()->LearningScore();
+        int EntryGuessLearningState = entryGuess->GetDataEntry()->LearningScore();
         std::vector<std::pair<int, QcmDataEntry*> > transaction;
         if ( EntryGuessLearningState < MAX_LEARNING_STATE_VALUE )
-            transaction.emplace_back(std::make_pair(EntryGuessLearningState+1, entryGuess));
+            transaction.emplace_back(EntryGuessLearningState+1, entryGuess->GetDataEntry());
         if ( stem->LearningScore() < MAX_LEARNING_STATE_VALUE )
-            transaction.emplace_back(std::make_pair(EntryGuessLearningState+1, stem));
+            transaction.emplace_back(EntryGuessLearningState+1, stem);
         LearningScoreTransaction(transaction);
     }
 
@@ -431,7 +431,7 @@ void QcmExercicePage::on_SwitchButton_clicked() // "Switch Kana"
     if (currentQcmType == QcmExerciceType::Vocabulary_to_Romanji_MCQ)
     {
         for(QcmEntryGuess* guess : guesses)
-            guess->SetGuessData(guess->GetSymbol(), currentQcmType, stemDisplayKanji);
+            guess->SetGuessData(guess->GetDataEntry(), currentQcmType, stemDisplayKanji);
         ApplyGuessesTextAndCorrection();
     }
     else
@@ -545,12 +545,12 @@ bool QcmExercicePage::LearningScoreTransaction(std::vector<std::pair<int, QcmDat
     {
         VocabDataEntry* vde = static_cast<VocabDataEntry*>(trans.second);
         if (vde != nullptr)
-            VocabTransactions[vde->GetVocabDataFile()].emplace_back(trans.first, trans.second);
+            VocabTransactions[vde->GetVocabDataFile()].emplace_back(trans.first, vde);
         else
         {
             QcmDataEntryKana* qde = static_cast<QcmDataEntryKana*>(trans.second);
             if (qde != nullptr)
-                KanaTransactions.emplace_back(trans.first, trans.second);
+                KanaTransactions.emplace_back(trans.first, qde);
             else
                 std::cerr << "[WriteLearningScoreTransaction] Unknown QcmDataEntry format for Transaction" << std::endl;
         }

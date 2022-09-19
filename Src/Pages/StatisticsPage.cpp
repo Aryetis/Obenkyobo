@@ -60,7 +60,10 @@ void StatisticsPage::on_ResetVocabSheets_clicked()
 {
     QSet<QString>::iterator it = GetMy::Instance().ModifyEnabledVocabSheets().begin();
     while (it != GetMy::Instance().GetEnabledVocabSheets().end())
-        VocabDataFile::ResetLearningScore(*it++);
+    {
+        VocabDataFile vdf{*it};
+        vdf.ResetLearningScore();
+    }
 }
 
 void StatisticsPage::ParseConfigFile()

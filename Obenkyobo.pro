@@ -1,6 +1,6 @@
 #-------------------------------------------------
 # WORKING ON :
-#        - Check if I didn't mess up LearningScore functionality
+#        - Check if I didn't mess up LearningScore functionality (including both reset score buttons)
 #        - qcm guesses not updating size if :
 #           - Boot up
 #           - Settings -> Applications -> MCQ Configuration : 1x3
