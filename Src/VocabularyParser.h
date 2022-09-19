@@ -26,14 +26,11 @@ class VocabDataFile
         QSet<VocabDataEntry*>& MalformedLines() { return malformedLines; }
         int GetLearningScore() const { return learningScore; }
         QSet<VocabDataPool*> const& GetPoolLnks() { return poolLnks; }
-
-        static bool ResetLearningScore(QString vocabSheetPath);
         bool ResetLearningScore();
-        static bool WriteLearningScore(QString vocabSheetPath, std::vector<std::pair<int, int>> transaction);
-//        bool WriteLearningScore(QString vocabSheetPath, int ls, VocabDataEntry* vde = nullptr);
-        bool WriteLearningScore(QString vocabSheetPath, std::vector<std::pair<int, VocabDataEntry*>> transaction);
+        bool WriteLearningScore(std::vector<std::pair<int, VocabDataEntry*>> transaction);
 
     private :
+        bool WriteLearningScoreInt(std::vector<std::pair<int, int>> transaction);
         void ParseLine(QString const& line, int lineNumber);
 
         QString vocabSheetPath;
@@ -53,7 +50,7 @@ class VocabDataEntry : public QcmDataEntry
         VocabDataEntry() = delete;
         ~VocabDataEntry() {};
         VocabDataEntry(QString kanas_, QString kanjis_, QString trad_, int ls_, VocabDataFile* vocabDataFile_, int lineNumber_, KanaFamilyEnum fontType_) :
-            kanas(kanas_), kanjis(kanjis_), trad(trad_), learningScore(ls_), vocabDataFileLnk(vocabDataFile_), lineNumber(lineNumber_), fontType(fontType_) {} // TODO : don't copy, move instead... not quite sure it's a good plan...
+            kanas(kanas_), kanjis(kanjis_), trad(trad_), learningScore(ls_), vocabDataFileLnk(vocabDataFile_), lineNumber(lineNumber_), fontType(fontType_) {} // TODO : don't copy, move instead... not quite sure if it's a good plan... will do for now
 
         bool operator==(const VocabDataEntry& rhs) const
         {
@@ -66,6 +63,7 @@ class VocabDataEntry : public QcmDataEntry
         int LearningScore() const { return learningScore; }
         void LearningScore(int ls);
         QString const& GetPath() const { return vocabDataFileLnk->GetPath(); }
+        VocabDataFile* GetVocabDataFile() const { return vocabDataFileLnk; }
         int GetLineNumber() const { return lineNumber; }
         KanaFamilyEnum GetFontType() const { return fontType; }
 

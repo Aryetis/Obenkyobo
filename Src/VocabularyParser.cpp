@@ -9,9 +9,9 @@
 #include <regex>
 #include <unistd.h>
 
-void VocabDataEntry::LearningScore(int ls) // TODO MG ... this kinda loose its purpose ...
+void VocabDataEntry::LearningScore(int ls)
 {
-    vocabDataFileLnk->WriteLearningScore(GetPath(), {{ls, this}}); // will take care of updating learningScore through friendship
+    vocabDataFileLnk->WriteLearningScore({{ls, this}}); // will take care of updating learningScore through friendship
 }
 
 VocabDataFile::VocabDataFile(QString sheetPath, VocabDataPool* pool_) : vocabSheetPath(sheetPath), entries(), malformedLines(), poolLnks(),  learningScore(0)
@@ -54,7 +54,7 @@ void VocabDataFile::ParseLine(const QString &line, int lineNumber_)
 
     //[fontType=hiragana][jp=sanity][kanji=kan][trad=check][learningScore=5]
     QRegExp rx("\\[fontType=([a-zA-Z]+)\\]\\[jp=([^\\]]+)\\]\\[kanji=([^\\]]+)\\]\\[trad=([^\\]]+)\\]\\[learningScore=([0-5])\\]");
-    rx.indexIn(line); // TODO Replace with pas du tout du
+    rx.indexIn(line); // TODO Replace with QRegularExpression for better perfs
     QStringList parsedFields = rx.capturedTexts(); // first one is matched line, not fields
     QString kanas_ = "";
     QString kanji_ = "";
@@ -93,7 +93,7 @@ void VocabDataFile::ParseLine(const QString &line, int lineNumber_)
         malformedLines.insert(new VocabDataEntry(kanas_, kanji_, trad_, learningScore_, this, lineNumber_, fontType_));
 }
 
-bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, std::vector<std::pair<int, int>> transaction)
+bool VocabDataFile::WriteLearningScoreInt(std::vector<std::pair<int, int>> transaction)
 {   // transaction : <ls, lineNumber>, yes it's ugly, no I don't mind
     QFile vocabFile{vocabSheetPath};
     bool ret = true;
@@ -176,10 +176,13 @@ bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, std::vector<std::
     return ret;
 }
 
-bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, std::vector<std::pair<int, VocabDataEntry*>> transaction)
+bool VocabDataFile::WriteLearningScore(std::vector<std::pair<int, VocabDataEntry*>> transaction)
 {   // transaction : <ls, vde>, yes it's ugly, no I don't mind
     /****************** Updating File ******************/
-    if ( !WriteLearningScore(vocabSheetPath, transaction) )
+    std::vector<std::pair<int, int>> transactionInt;
+    for(std::pair<int,VocabDataEntry*> const& trans : transaction)
+        transactionInt.emplace_back(trans.first, trans.second == nullptr ? -1 : trans.second->GetLineNumber());
+    if ( !WriteLearningScoreInt(transactionInt) )
         return false;
 
     /****************** Updating Fields ******************/
@@ -202,15 +205,10 @@ bool VocabDataFile::WriteLearningScore(QString vocabSheetPath, std::vector<std::
     return true;
 }
 
-bool VocabDataFile::ResetLearningScore(QString vocabSheetPath)
-{
-    return VocabDataFile::WriteLearningScore(vocabSheetPath, {{MAX_LEARNING_STATE_VALUE, -1}});
-}
-
 bool VocabDataFile::ResetLearningScore()
 {
     // Reminder : LearningScore value is its weight in the qcm's pool <=> it's inversed
-    return WriteLearningScore(vocabSheetPath, {{MAX_LEARNING_STATE_VALUE, nullptr}});
+    return WriteLearningScore({{MAX_LEARNING_STATE_VALUE, nullptr}});
 }
 
 VocabDataPool::VocabDataPool(QString sheetPath)
