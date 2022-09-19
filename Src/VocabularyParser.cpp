@@ -4,11 +4,6 @@
 #include "Src/GetMy.h"
 #include "Src/Tools.h"
 
-
-
-#include <regex>
-#include <unistd.h>
-
 void VocabDataEntry::LearningScore(int ls)
 {
     vocabDataFileLnk->WriteLearningScore({{ls, this}}); // will take care of updating learningScore through friendship

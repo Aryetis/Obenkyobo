@@ -248,6 +248,7 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
 void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
 {
     std::cout << "LOG : QcmExercice::OnGuessClicked()" << std::endl;
+    // Reminder : LearningScore<=>0 : learned ; learningScore<=>MAX_LEARNING_STATE_VALUE : git gud
     if ( correct )
     {
         ++scoreCounter;
@@ -263,13 +264,12 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
         int appStatisticsError = settingsSerializer->value("AppStatistics/error", 0).toInt();
         settingsSerializer->setValue("AppStatistics/error", ++appStatisticsError);
         int EntryGuessLearningState = entryGuess->GetSymbol()->LearningScore();
-        // TODO MG : rethink hard .... VDE::LearningScore CANNOT do transaction => need multiple file rewrite
-        // => .... need interface for GuessPool .... I'm gonna unalive myself
-        std::vector<std::pair<int, >> transaction;
+        std::vector<std::pair<int, QcmDataEntry*> > transaction;
         if ( EntryGuessLearningState < MAX_LEARNING_STATE_VALUE )
-            entryGuess->GetSymbol()->LearningScore(EntryGuessLearningState+1);
+            transaction.emplace_back(std::make_pair(EntryGuessLearningState+1, entryGuess));
         if ( stem->LearningScore() < MAX_LEARNING_STATE_VALUE )
-            stem->LearningScore(stem->LearningScore()+1);
+            transaction.emplace_back(std::make_pair(EntryGuessLearningState+1, stem));
+        LearningScoreTransaction(transaction);
     }
 
 
@@ -533,6 +533,36 @@ void QcmExercicePage::ApplyCorrectStemFontSize()
                 "Stem size ("+QString::number(originalSize)+") seems too big (cf :Settings->Fonts),\n"
                 "Changing it to " + QString::number(newSize));
     }
+}
+
+bool QcmExercicePage::LearningScoreTransaction(std::vector<std::pair<int, QcmDataEntry*> > transaction)
+{
+    bool ret = true;
+    std::vector<std::pair<int, QcmDataEntryKana*>> KanaTransactions;
+    std::map<VocabDataFile*, std::vector<std::pair<int, VocabDataEntry*>>> VocabTransactions; // One vector of Transaction per VocabDataFile
+
+    for(std::pair<int, QcmDataEntry *>& trans : transaction)
+    {
+        VocabDataEntry* vde = static_cast<VocabDataEntry*>(trans.second);
+        if (vde != nullptr)
+            VocabTransactions[vde->GetVocabDataFile()].emplace_back(trans.first, trans.second);
+        else
+        {
+            QcmDataEntryKana* qde = static_cast<QcmDataEntryKana*>(trans.second);
+            if (qde != nullptr)
+                KanaTransactions.emplace_back(trans.first, trans.second);
+            else
+                std::cerr << "[WriteLearningScoreTransaction] Unknown QcmDataEntry format for Transaction" << std::endl;
+        }
+    }
+
+    for(std::pair<int, QcmDataEntryKana*>& trans : KanaTransactions)
+        trans.second->LearningScore(trans.first); // don't care it's all in ram
+
+    for(const auto& [key, value] : VocabTransactions)
+        ret = ret && key->WriteLearningScore(value);
+
+    return ret;
 }
 
 int QcmExercicePage::continuousStemFntResizeCoRunter = 0;

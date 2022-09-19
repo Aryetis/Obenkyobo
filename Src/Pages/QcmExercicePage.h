@@ -6,7 +6,6 @@
 #include <optional>
 #include "Src/VocabularyParser.h"
 #include "Src/DefinesLand.h"
-#include "Src/QcmPool.h"
 
 namespace Ui
 {
@@ -36,6 +35,7 @@ private:
     void InitializeStemFont();
     void ApplyCorrectStemFontSize();
     void ApplyGuessesTextAndCorrection();
+    bool LearningScoreTransaction(std::vector<std::pair<int, QcmDataEntry*> > transaction);
 
     Ui::QcmExercicePage *ui;
     QList<QcmEntryGuess*> guesses;
@@ -46,9 +46,8 @@ private:
     QFont curHiraganaNonSized, curKatakanaNonSized, curRomanjiNonSized, curKanjiNonSized, stemFont;
     QSettings* settingsSerializer;
     bool stemDisplayKanji;
-//    std::vector<QcmDataEntry*> entriesPool; // DO NOT own its data => don't delete its content
-//    VocabDataPool* vdp;                     // holds entriesPool's data for vocab QCM (kana ones being hardcoded in KanasTables)
-    QcmPool qp; // DO NOT own its data => don't delete its content
+    std::vector<QcmDataEntry*> entriesPool; // DO NOT own its data => don't delete its content
+    VocabDataPool* vdp;                     // holds entriesPool's data for vocab QCM (kana ones being hardcoded in KanasTables)
 
     bool initialPaintDone;
     static int continuousStemFntResizeCoRunter;

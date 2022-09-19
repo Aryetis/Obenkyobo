@@ -1,6 +1,6 @@
 #-------------------------------------------------
 # WORKING ON :
-#        - Rework LearningScore() => Create QcmPool interface so LearningScore Transaction Update System can be used for both Kanas and Vocab
+#        - Check if I didn't mess up LearningScore functionality
 #        - qcm guesses not updating size if :
 #           - Boot up
 #           - Settings -> Applications -> MCQ Configuration : 1x3
@@ -67,7 +67,6 @@ SOURCES += \
     Src/Pages/VocabularyDisplayPage.cpp \
     Src/Pages/WelcomePage.cpp \
     Src/QcmDataEntryKana.cpp \
-    Src/QcmPool.cpp \
     Src/Tools.cpp \
     Src/VocabularyParser.cpp \
     Src/Widgets/KanaEditButtonWidget.cpp \
@@ -103,7 +102,6 @@ HEADERS += \
     Src/Pages/WelcomePage.h \
     Src/QcmDataEntry.h \
     Src/QcmDataEntryKana.h \
-    Src/QcmPool.h \
     Src/Tools.h \
     Src/VocabularyParser.h \
     Src/Widgets/KanaEditButtonWidget.h \
