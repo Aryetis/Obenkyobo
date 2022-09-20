@@ -1,6 +1,5 @@
 #-------------------------------------------------
 # WORKING ON :
-#        - Check if I didn't mess up LearningScore functionality (including both reset score buttons)
 #        - qcm guesses not updating size if :
 #           - Boot up
 #           - Settings -> Applications -> MCQ Configuration : 1x3
@@ -11,13 +10,15 @@
 #        - add proper margins/spacing to qcm
 #-------------------------------------------------
 # TODO : - restore correct value for POPUP_FNT_RESIZE_ERROR_CNT ( 3 )
+#        - check popup texts, check LearningScore, check fnt resize, check popups
 #        - remove stem's border
 #        - Finish sleep handling properly
 #        - https://discord.com/channels/809205711778480158/958419944243089479/999974500756103188
 #           - Anything below mk6 will not suspend while plugged in, yeah ;)
 #           - also disconnecting charger / connecting also desuspends the device, which i will prevent ( as an optional feature )
 #-------------------------------------------------
-# TODO later (0.3.1) : - use a fontMetrics().boundingRect to determine max length of VocabExplorer entries text
+# TODO later (0.3.1) : - Show last error's log in a popup on startup
+#                      - use a fontMetrics().boundingRect to determine max length of VocabExplorer entries text
 #                      - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
 #                      - redo the Qmenu::right-arrow
 #                      - Handle properly [UP_DIR] in VocabExplorerPage instead of adding a dummy entry

@@ -543,12 +543,12 @@ bool QcmExercicePage::LearningScoreTransaction(std::vector<std::pair<int, QcmDat
 
     for(std::pair<int, QcmDataEntry *>& trans : transaction)
     {
-        VocabDataEntry* vde = static_cast<VocabDataEntry*>(trans.second);
+        VocabDataEntry* vde = dynamic_cast<VocabDataEntry*>(trans.second);
         if (vde != nullptr)
             VocabTransactions[vde->GetVocabDataFile()].emplace_back(trans.first, vde);
         else
         {
-            QcmDataEntryKana* qde = static_cast<QcmDataEntryKana*>(trans.second);
+            QcmDataEntryKana* qde = dynamic_cast<QcmDataEntryKana*>(trans.second);
             if (qde != nullptr)
                 KanaTransactions.emplace_back(trans.first, qde);
             else
