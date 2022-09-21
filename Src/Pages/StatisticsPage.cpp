@@ -58,10 +58,10 @@ void StatisticsPage::on_DisableVocabSheets_clicked()
 
 void StatisticsPage::on_ResetVocabSheets_clicked()
 {
-    QSet<QString>::iterator it = GetMy::Instance().ModifyEnabledVocabSheets().begin();
-    while (it != GetMy::Instance().GetEnabledVocabSheets().end())
+    QMutableSetIterator<QString> it(GetMy::Instance().ModifyEnabledVocabSheets());
+    while (it.hasNext())
     {
-        VocabDataFile vdf{*it};
+        VocabDataFile vdf{it.next()};
         vdf.ResetLearningScore();
     }
 }

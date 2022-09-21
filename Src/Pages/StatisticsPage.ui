@@ -251,7 +251,8 @@
        <item>
         <widget class="QPushButton" name="DisableVocabSheets">
          <property name="text">
-          <string>Unselect all Sheets</string>
+          <string>Unselect all
+Sheets</string>
          </property>
         </widget>
        </item>
@@ -271,7 +272,8 @@
        <item>
         <widget class="QPushButton" name="ResetVocabSheets">
          <property name="text">
-          <string>Reset all Sheets's LS</string>
+          <string>Reset every selected
+Sheet's LS</string>
          </property>
         </widget>
        </item>

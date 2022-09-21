@@ -1,7 +1,5 @@
 #-------------------------------------------------
 # WORKING ON : - adding left right margin for qcm's feedback. Also maybe anchor it to top right corner
-#              - Reset all sheet button
-#              - what about empty .oben ? dispplay them in explore, yes, show a dummy entry in display ?
 #-------------------------------------------------
 # TODO : - restore correct value for POPUP_FNT_RESIZE_ERROR_CNT ( 3 ), split into guesses and stem counter, reset on new QCM (as it could use dif fonts)
 #        - check popup texts, check LearningScore, check fnt resize, check popups
