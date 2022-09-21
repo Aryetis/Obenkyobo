@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# WORKING ON : - add proper margins/spacing to qcm
+# WORKING ON : - adding left right margin for qcm's feedback. Also maybe anchor it to top right corner
 #-------------------------------------------------
 # TODO : - restore correct value for POPUP_FNT_RESIZE_ERROR_CNT ( 3 )
 #        - check popup texts, check LearningScore, check fnt resize, check popups
