@@ -54,6 +54,9 @@ private:
     bool initialPaintDone;
     bool qcmConfigChanged; // switching 1x3, 2x3, 3x3 => needs to refix elements's sizes
     static int continuousStemFntResizeCoRunter;
+
+    int contentRectWidth;
+    int contentRectHeight;
 };
 
 #endif // QCMEXERCICEPAGE_H

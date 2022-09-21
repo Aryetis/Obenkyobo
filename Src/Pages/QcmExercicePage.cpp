@@ -386,39 +386,43 @@ void QcmExercicePage::resizeEvent(QResizeEvent *event)
     ApplyCorrectStemFontSize();
     ApplyGuessesTextAndCorrection(); // Also setFixedSize for guesses
 
-initialPaintDone = true;
+    initialPaintDone = true;
 }
 
 void QcmExercicePage::FixElementsSizes()
 {
-    std::cout << "[QcmExercicePage::FixElementsSizes] resizing" << std::endl;
+    std::cout << "LOG: QcmExercicePage::FixElementsSizes()" << std::endl;
 
-    int contentRectWidth = ui->PlayLayout->contentsRect().width();
-    int contentRectheight = ui->PlayLayout->contentsRect().height();
+    contentRectWidth = layout()->contentsRect().width();
+    contentRectHeight = layout()->contentsRect().height();
 
     // NOTES : all margins, spacing, etc are set to 0 in .ui file EXCEPT FOR THE ROOT LAYOUT
     //this->layout()->margin() != 0; => ADAPT FOLLOWING SIZE ACCORDING TO THIS OR SET IT TO 0 AND BUILD THE MARGIN INTO IT
 
-    //************************ Setting Score Layout Size ************************
-    ui->ScoreCounter->setFixedHeight(contentRectheight*0.075f);
+    //************************ Setting Score Layout Size (15%) ************************
+    // 7,5% (each line)
+    ui->ScoreCounter->setFixedHeight(contentRectHeight*0.075f);
     ui->ScoreCounter->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    ui->ScoreText->setFixedHeight(contentRectheight*0.075f);
+    ui->ScoreText->setFixedHeight(contentRectHeight*0.075f);
     ui->ScoreText->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
-    ui->ErrorsCounter->setFixedHeight(contentRectheight*0.075f);
+    ui->ErrorsCounter->setFixedHeight(contentRectHeight*0.075f);
     ui->ErrorsCounter->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    ui->ErrorsText->setFixedHeight(contentRectheight*0.075f);
+    ui->ErrorsText->setFixedHeight(contentRectHeight*0.075f);
     ui->ErrorsText->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
-    ui->SwitchButton->setFixedHeight(contentRectheight*0.070f); // hacky margin
+    ui->SwitchButton->setFixedHeight(contentRectHeight*0.070f); // hacky margin
     ui->SwitchButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
-    ui->ResultLabelGroupBox->setFixedHeight(contentRectheight*0.075f);
+    ui->ResultLabelGroupBox->setFixedHeight(contentRectHeight*0.075f);
     ui->ResultLabelGroupBox->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 
-    //************************ Setting stem Size ************************
-    int stemHeight = contentRectheight / (GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine()+1);
+    //************************ Setting stem Size (25%) ************************
+    int stemHeight = contentRectHeight*0.25f;
     ui->Stem->setFixedSize(contentRectWidth, stemHeight);
     ui->Stem->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
+    //************************ Guesses Size (60%) ************************
+    // fixed in ApplyGuessesTextAndCorrection()
 
     qcmConfigChanged = false;
 }
@@ -426,17 +430,16 @@ void QcmExercicePage::FixElementsSizes()
 // WARNING : needs ui->PlayLayout->contentsRect() to be initialized / """resized""" once before calling
 void QcmExercicePage::ApplyGuessesTextAndCorrection()
 {
+    //************************ Guesses Size (60%) ************************
     int NbrOfEntriesLine = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine();
     int NbrOfEntriesRow = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
 
-    int contentGridWidth = ui->PlayLayout->contentsRect().width();
-    int contentGridHeight = ui->PlayLayout->contentsRect().height();
-
-    int guessWidth = contentGridWidth / (NbrOfEntriesRow);
-    int guessHeight = contentGridHeight / (NbrOfEntriesLine+1);
+    // 3px "margin" for sunken effect
+    int guessWidth = contentRectWidth / NbrOfEntriesRow - 3;
+    int guessHeight = (contentRectHeight*0.6f) / NbrOfEntriesLine - 3;
 
     for(QcmEntryGuess* guess : guesses)
-        guess->ApplyGuessTextAndCorrection(guessWidth, guessHeight); // Guess Fnt Resize Popup handled on QcmEntryGuess's side
+        guess->ApplyGuessTextAndCorrection(guessWidth, guessHeight);
 }
 
 void QcmExercicePage::on_SwitchButton_clicked() // "Switch Kana"
