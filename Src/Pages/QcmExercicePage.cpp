@@ -230,6 +230,8 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
     // first call needs to be delayed so everything geometry related is set up correctly
     if (initialPaintDone)
     {
+        if (qcmConfigChanged)
+            FixElementsSizes();
         ApplyCorrectStemFontSize();
         ApplyGuessesTextAndCorrection();
     }
@@ -371,43 +373,57 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
     InitializeExercice(currentQcmType);
 }
 
+void QcmExercicePage::SetQcmConfigChanged(bool b)
+{
+    qcmConfigChanged = b;
+}
+
 void QcmExercicePage::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
 
-int contentRectWidth = ui->PlayLayout->contentsRect().width();
-int contentRectheight = ui->PlayLayout->contentsRect().height();
-
-// NOTES : all margins, spacing, etc are set to 0 in .ui file EXCEPT FOR THE ROOT LAYOUT
-//this->layout()->margin() != 0; => ADAPT FOLLOWING SIZE ACCORDING TO THIS OR SET IT TO 0 AND BUILD THE MARGIN INTO IT
-
-//************************ Setting Score Layout Size ************************
-ui->ScoreCounter->setFixedHeight(contentRectheight*0.075f);
-ui->ScoreCounter->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-ui->ScoreText->setFixedHeight(contentRectheight*0.075f);
-ui->ScoreText->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-
-ui->ErrorsCounter->setFixedHeight(contentRectheight*0.075f);
-ui->ErrorsCounter->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-ui->ErrorsText->setFixedHeight(contentRectheight*0.075f);
-ui->ErrorsText->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-
-ui->SwitchButton->setFixedHeight(contentRectheight*0.070f); // hacky margin
-ui->SwitchButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
-ui->ResultLabelGroupBox->setFixedHeight(contentRectheight*0.075f);
-ui->ResultLabelGroupBox->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
-
-//************************ Setting stem Size ************************
-int stemHeight = contentRectheight / (GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine()+1);
-ui->Stem->setFixedSize(contentRectWidth, stemHeight);
-ui->Stem->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-
+    FixElementsSizes();
     ApplyCorrectStemFontSize();
     ApplyGuessesTextAndCorrection(); // Also setFixedSize for guesses
 
 initialPaintDone = true;
 }
 
+void QcmExercicePage::FixElementsSizes()
+{
+    std::cout << "[QcmExercicePage::FixElementsSizes] resizing" << std::endl;
+
+    int contentRectWidth = ui->PlayLayout->contentsRect().width();
+    int contentRectheight = ui->PlayLayout->contentsRect().height();
+
+    // NOTES : all margins, spacing, etc are set to 0 in .ui file EXCEPT FOR THE ROOT LAYOUT
+    //this->layout()->margin() != 0; => ADAPT FOLLOWING SIZE ACCORDING TO THIS OR SET IT TO 0 AND BUILD THE MARGIN INTO IT
+
+    //************************ Setting Score Layout Size ************************
+    ui->ScoreCounter->setFixedHeight(contentRectheight*0.075f);
+    ui->ScoreCounter->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    ui->ScoreText->setFixedHeight(contentRectheight*0.075f);
+    ui->ScoreText->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+
+    ui->ErrorsCounter->setFixedHeight(contentRectheight*0.075f);
+    ui->ErrorsCounter->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    ui->ErrorsText->setFixedHeight(contentRectheight*0.075f);
+    ui->ErrorsText->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+
+    ui->SwitchButton->setFixedHeight(contentRectheight*0.070f); // hacky margin
+    ui->SwitchButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+    ui->ResultLabelGroupBox->setFixedHeight(contentRectheight*0.075f);
+    ui->ResultLabelGroupBox->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+
+    //************************ Setting stem Size ************************
+    int stemHeight = contentRectheight / (GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine()+1);
+    ui->Stem->setFixedSize(contentRectWidth, stemHeight);
+    ui->Stem->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
+    qcmConfigChanged = false;
+}
+
+// WARNING : needs ui->PlayLayout->contentsRect() to be initialized / """resized""" once before calling
 void QcmExercicePage::ApplyGuessesTextAndCorrection()
 {
     int NbrOfEntriesLine = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine();

@@ -1,5 +1,6 @@
 #include <QAbstractItemView>
 #include "Src/Pages/AppSettingsPage.h"
+#include "Src/Pages/QcmExercicePage.h"
 #include "ui_AppSettingsPage.h"
 #include "Src/GetMy.h"
 #include "Src/Tools.h"
@@ -79,6 +80,7 @@ void AppSettingsPage::on_nbrOfEntryLinesDropdown_activated(int index)
 {
     nbrOfEntryLinesIdx = index;
     settingsSerializer->setValue("AppSettings/entriesPerLineIdx", index);
+    GetMy::Instance().QcmExercicePageInst().SetQcmConfigChanged(true);
 }
 
 void AppSettingsPage::on_RandomnessDropdown_currentIndexChanged(int index)

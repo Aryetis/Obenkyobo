@@ -24,6 +24,7 @@ public:
 
     bool InitializeExercice(QcmExerciceType qcmType, bool newQcmRequested = false);
     void OnGuessClicked(bool correct, QcmEntryGuess* entryGuess);
+    void SetQcmConfigChanged(bool b);
 
 protected:
     void resizeEvent(QResizeEvent* event) override;
@@ -35,6 +36,7 @@ private:
     void InitializeStemFont();
     void ApplyCorrectStemFontSize();
     void ApplyGuessesTextAndCorrection();
+    void FixElementsSizes();
     bool LearningScoreTransaction(std::vector<std::pair<int, QcmDataEntry*> > transaction);
 
     Ui::QcmExercicePage *ui;
@@ -50,6 +52,7 @@ private:
     VocabDataPool* vdp;                     // holds entriesPool's data for vocab QCM (kana ones being hardcoded in KanasTables)
 
     bool initialPaintDone;
+    bool qcmConfigChanged; // switching 1x3, 2x3, 3x3 => needs to refix elements's sizes
     static int continuousStemFntResizeCoRunter;
 };
 

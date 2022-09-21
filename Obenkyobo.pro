@@ -1,13 +1,5 @@
 #-------------------------------------------------
-# WORKING ON :
-#        - qcm guesses not updating size if :
-#           - Boot up
-#           - Settings -> Applications -> MCQ Configuration : 1x3
-#           - Hiragana To Romanji
-#           - Settings -> Applications -> MCQ Configuration : 3x3
-#           - Romanji To Hiragana
-#        - fix qcm 1x3, 2x3, 3x3 switch incorrect height
-#        - add proper margins/spacing to qcm
+# WORKING ON : - add proper margins/spacing to qcm
 #-------------------------------------------------
 # TODO : - restore correct value for POPUP_FNT_RESIZE_ERROR_CNT ( 3 )
 #        - check popup texts, check LearningScore, check fnt resize, check popups
