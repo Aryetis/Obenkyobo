@@ -78,7 +78,7 @@
           </sizepolicy>
          </property>
          <property name="minimum">
-          <number>10</number>
+          <number>5</number>
          </property>
          <property name="maximum">
           <number>120</number>
@@ -132,7 +132,7 @@
           </sizepolicy>
          </property>
          <property name="minimum">
-          <number>10</number>
+          <number>5</number>
          </property>
          <property name="maximum">
           <number>120</number>
@@ -189,7 +189,7 @@
           </sizepolicy>
          </property>
          <property name="minimum">
-          <number>10</number>
+          <number>5</number>
          </property>
          <property name="maximum">
           <number>120</number>
@@ -268,7 +268,7 @@
        <item>
         <widget class="QSlider" name="VocabStemSlider">
          <property name="minimum">
-          <number>10</number>
+          <number>5</number>
          </property>
          <property name="maximum">
           <number>120</number>
@@ -316,7 +316,7 @@
        <item>
         <widget class="QSlider" name="VocabAnswerKanaRmjSlider">
          <property name="minimum">
-          <number>10</number>
+          <number>5</number>
          </property>
          <property name="maximum">
           <number>120</number>
@@ -364,7 +364,7 @@
        <item>
         <widget class="QSlider" name="VocabAnswerRmjKanaSlider">
          <property name="minimum">
-          <number>10</number>
+          <number>5</number>
          </property>
          <property name="maximum">
           <number>120</number>

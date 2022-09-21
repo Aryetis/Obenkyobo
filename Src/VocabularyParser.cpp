@@ -24,7 +24,8 @@ VocabDataFile::VocabDataFile(QString sheetPath, VocabDataPool* pool_) : vocabShe
         while (!in.atEnd())
             ParseLine(in.readLine(), lineNbr++);
 
-        learningScore /= entries.count();
+        if (entries.size() > 0)
+            learningScore /= entries.count();
         vocabFile.close();
     }
     else

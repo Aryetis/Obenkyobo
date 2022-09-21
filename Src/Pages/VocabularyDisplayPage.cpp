@@ -58,6 +58,9 @@ void VocabularyDisplayPage::InitializeGrid(VocabFileEntryWidget* vocab)
         popupMsg += '.';
         GetMy::Instance().ToolsInst()->DisplayPopup(popupMsg);
     }
+    if (vdf->Entries().size() == 0)
+        vdf->Entries().insert(new VocabDataEntry("EMPTY",".OBEN","FILE  :(", MAX_LEARNING_STATE_VALUE,  nullptr, -1, KanaFamilyEnum::hiragana));
+
 
     maxPage = std::ceil(static_cast<float>(vdf->Entries().count()) / GetMy::Instance().AppSettingsPageInst().GetNumberOfRowPerVocabPage());
 
