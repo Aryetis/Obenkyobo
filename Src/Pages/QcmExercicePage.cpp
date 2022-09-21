@@ -382,6 +382,9 @@ void QcmExercicePage::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
 
+    contentRectWidth = layout()->contentsRect().width();
+    contentRectHeight = layout()->contentsRect().height();
+
     FixElementsSizes();
     ApplyCorrectStemFontSize();
     ApplyGuessesTextAndCorrection(); // Also setFixedSize for guesses
@@ -392,9 +395,6 @@ void QcmExercicePage::resizeEvent(QResizeEvent *event)
 void QcmExercicePage::FixElementsSizes()
 {
     std::cout << "LOG: QcmExercicePage::FixElementsSizes()" << std::endl;
-
-    contentRectWidth = layout()->contentsRect().width();
-    contentRectHeight = layout()->contentsRect().height();
 
     // NOTES : all margins, spacing, etc are set to 0 in .ui file EXCEPT FOR THE ROOT LAYOUT
     //this->layout()->margin() != 0; => ADAPT FOLLOWING SIZE ACCORDING TO THIS OR SET IT TO 0 AND BUILD THE MARGIN INTO IT
