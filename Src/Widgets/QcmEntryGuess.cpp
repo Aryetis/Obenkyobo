@@ -38,6 +38,11 @@ void QcmEntryGuess::SetGuessData(QcmDataEntry* symbol_, QcmExerciceType qcmType_
     displayKanji = displayKanji_;
 }
 
+void QcmEntryGuess::SetContinuousFntResizeCounter(int i)
+{
+    continuousFntResizeCounter = i;
+}
+
 bool QcmEntryGuess::ApplyGuessTextAndCorrection(int guessWidth, int guessHeight)
 {    
     //************************ Set Fixed Size ************************
@@ -128,7 +133,7 @@ bool QcmEntryGuess::ApplyGuessTextAndCorrection(int guessWidth, int guessHeight)
     {
         ++continuousFntResizeCounter;
 
-        if (continuousFntResizeCounter > POPUP_FNT_RESIZE_ERROR_CNT) // <=> "let it slides silently if only a few entries are too big"
+        if (continuousFntResizeCounter > POPUP_FNT_GUESSES_RESIZE_ERROR_CNT) // <=> "let it slides silently if only a few entries are too big"
         {
             continuousFntResizeCounter = 0;
 

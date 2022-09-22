@@ -29,7 +29,7 @@ void KanaEditEntryWidget::InitializeSymbolSettingEntry(QcmDataEntryKana* _kana, 
 
 void KanaEditEntryWidget::on_KanaEntryButton_clicked(bool checked)
 {
-    std::cout << "LOG : SymbolSettingEntry::on_SymbolSettingEntryButton_clicked()" << std::endl;
+    std::cout << "LOG: SymbolSettingEntry::on_SymbolSettingEntryButton_clicked()" << std::endl;
     kana->Enabled(checked);
     KanaEditSectionWidget* symbolSettingSectionParent = static_cast<KanaEditSectionWidget*>(parent());
     if (symbolSettingSectionParent)

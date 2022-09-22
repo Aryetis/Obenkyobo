@@ -41,7 +41,7 @@ void Tools::ParseKoboEreaderConf()
     inputFile.open(QIODevice::ReadOnly);
     if (!inputFile.isOpen())
     {
-        std::cerr << "ERROR: Couldn't open Kobo eReader.conf" << std::endl;
+        std::cerr << "ERROR: Couldn't open /mnt/onboard/.kobo/Kobo/Kobo eReader.conf" << std::endl;
         return;
     }
 
@@ -63,12 +63,25 @@ void Tools::ParseKoboEreaderConf()
                 else
                     GetMy::Instance().ToolsInst()->isLocalTimeFormatUS = false;
             }
-            else if(prefix.compare("EarliestChangeLog") == 0)
-            {
-                GetMy::Instance().ToolsInst()->firmwareStr = parsed[1].toStdString();
-            }
         }
     }
+    inputFile.close();
+
+    inputFile.setFileName("/mnt/onboard/.kobo/version");
+    // content : N87309B115301,4.1.15,4.33.19759,4.1.15,4.1.15,00000000-0000-0000-0000-000000000384
+    // [model], [qt-version?], [firmware], [qt-version?], [qt-version?], [?]
+    inputFile.open(QIODevice::ReadOnly);
+    if (!inputFile.isOpen())
+    {
+        std::cerr << "ERROR: Couldn't open /mnt/onboard/.kobo/version" << std::endl;
+        return;
+    }
+    stream.setDevice(&inputFile);
+    QString fileContent = stream.readAll();
+    QStringList elements = fileContent.split(',');
+    if (elements.size() >= 3)
+        GetMy::Instance().ToolsInst()->firmwareStr = elements[2].toStdString();
+    inputFile.close();
 }
 
 bool Tools::IsLocalTimeFormatUS() const
@@ -112,7 +125,7 @@ bool Tools::IsThereEnough(QcmExerciceType qcmType, int vocabPoolSize /*= 0*/) co
         case QcmExerciceType::Romanji_to_Vocabulary_MCQ :
         {
             if (vocabPoolSize == -1)
-                std::cout << "ERROR: Tools::IsThereEnough() testing Vocabulary pool without any PoolSize parameter" << std::endl;
+                std::cerr << "ERROR: Tools::IsThereEnough() testing Vocabulary pool without any PoolSize parameter" << std::endl;
             return (vocabPoolSize >= minRequiredSymbol);
         }
     }
@@ -143,7 +156,7 @@ void Tools::Sleep() // needs to turn off wifi, stop printing stuff on screen (li
     QFile stateExtendedFile("/sys/power/state-extended");
     if (!stateExtendedFile.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        std::cout << "ERROR: Couldn't open /sys/power/state-extended (1st stage)" << std::endl;
+        std::cerr << "ERROR: Couldn't open /sys/power/state-extended (1st stage)" << std::endl;
         return;
     }
     else
@@ -162,12 +175,12 @@ void Tools::Sleep() // needs to turn off wifi, stop printing stuff on screen (li
     QFile stateFile("/sys/power/state");
     if (!stateFile.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        std::cout << "ERROR: Couldn't open /sys/power/state" << std::endl;
+        std::cerr << "ERROR: Couldn't open /sys/power/state" << std::endl;
 
         QFile stateExtendedFile2("/sys/power/state-extended");
         if (!stateExtendedFile2.open(QIODevice::WriteOnly | QIODevice::Text))
         {
-            std::cout << "ERROR: Couldn't open /sys/power/state-extended (2nd stage)" << std::endl;
+            std::cerr << "ERROR: Couldn't open /sys/power/state-extended (2nd stage)" << std::endl;
             return;
         }
         else
@@ -207,7 +220,7 @@ void Tools::WakeUp()
     QFile file("/sys/power/state-extended");
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        std::cout << "ERROR: Couldn't open /sys/power/state-extended" << std::endl;
+        std::cerr << "ERROR: Couldn't open /sys/power/state-extended" << std::endl;
         return;
     }
     else

@@ -1,15 +1,12 @@
 #-------------------------------------------------
-# WORKING ON : - adding left right margin for qcm's feedback. Also maybe anchor it to top right corner
+# WORKING ON : - licensing files on git for fonts and everything
+#              - wifi popup "turning on / off"
 #-------------------------------------------------
-# TODO : - restore correct value for POPUP_FNT_RESIZE_ERROR_CNT ( 3 ), split into guesses and stem counter, reset on new QCM (as it could use dif fonts)
-#        - check popup texts, check LearningScore, check fnt resize, check popups
-#        - remove stem's border
+# TODO : - check everything
 #        - Finish sleep handling properly
 #        - https://discord.com/channels/809205711778480158/958419944243089479/999974500756103188
 #           - Anything below mk6 will not suspend while plugged in, yeah ;)
 #           - also disconnecting charger / connecting also desuspends the device, which i will prevent ( as an optional feature )
-#        - licensing files on git for fonts and everything
-#        - wifi popup "turning on / off"
 #-------------------------------------------------
 # TODO later (0.3.1) : - Show last error's log in a popup on startup
 #                      - use a fontMetrics().boundingRect to determine max length of VocabExplorer entries text

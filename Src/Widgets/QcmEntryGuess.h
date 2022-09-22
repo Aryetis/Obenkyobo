@@ -22,11 +22,12 @@ public:
     QcmEntryGuess() = delete;
     explicit QcmEntryGuess(QWidget *parent = nullptr);
     ~QcmEntryGuess() override;
+
     QLabel const* GetLabel() const;
+    QcmDataEntry* GetDataEntry() const { return symbol; }
 
     void SetGuessData(QcmDataEntry* s, QcmExerciceType qcmType, bool displayKanji, std::optional<bool> correct = std::nullopt);
-
-    QcmDataEntry* GetDataEntry() const { return symbol; }
+    static void SetContinuousFntResizeCounter(int i);
 
     bool ApplyGuessTextAndCorrection(int guessWidth, int guessHeight);
 

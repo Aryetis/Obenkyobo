@@ -134,7 +134,7 @@ void MainWindow::DisplayFirstTimeKanasEditPagePopup()
                                           "The background color and circle gyzmo indicates their status.\n"
                                           "The number at the bottom right corner indicates its Learning Score (LS).\n"
                                           "It ranges reflects your progress, ranging from 0 to 5.\n"
-                                          "You can use the checkboxes to quickly toggle whole kanas section.");
+                                          "You can use the checkboxes to quickly toggle whole section.");
         GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->setValue("AppSettings/firstTimeKanasEditPage", false);
     }
 }
@@ -459,8 +459,7 @@ void MainWindow::on_actionLearn_Edit_Set_triggered()
     if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeVocabListPage", true).toBool() )
     {
         GetMy::Instance().ToolsInst()->DisplayPopup("Here are displayed your \"vocab sheets\". Please check Obenkyobo's github page to learn how to create your owns.\n"
-                                          "Click on any one to learn/display its content.\n"
-                                          "Ignore the LS and checkbox for now, those are related to unimplemented features for now.");
+                                          "Click on any one to learn/display its content.\n");
         GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->setValue("AppSettings/firstTimeVocabListPage", false);
     }
 }

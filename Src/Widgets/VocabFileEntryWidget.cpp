@@ -99,7 +99,7 @@ void VocabFileEntryWidget::on_TitleButton_clicked()
         {
             GetMy::Instance().ToolsInst()->DisplayPopup("You can click the top row buttons to hide/show the associated column.\n"
                                               "Each cell is also independently clickable.\n"
-                                              "Combine that with the \"Randomize\" button to enhance your learning session");
+                                              "Combine those with the \"Randomize\" button to memorize faster");
             GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->setValue("AppSettings/firstTimeVocabDisplayPage", false);
         }
     }

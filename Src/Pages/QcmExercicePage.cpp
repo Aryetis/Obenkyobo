@@ -67,6 +67,8 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
         //********** Initialize Fonts, reset counters, displaySwitchButton **********
         scoreCounter = 0;
         errorCounter = 0;
+        continuousStemFntResizeCoRunter = 0;
+        QcmEntryGuess::SetContinuousFntResizeCounter(0);
 
         int labelRightPointSize = ui->ResultLabelRight->font().pointSize();
         curHiraganaNonSized = QFont(fntSetting.GetCurrentHiraganaFamily(), labelRightPointSize);
@@ -249,7 +251,7 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
 
 void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
 {
-    std::cout << "LOG : QcmExercice::OnGuessClicked()" << std::endl;
+    std::cout << "LOG: QcmExercice::OnGuessClicked()" << std::endl;
     // Reminder : LearningScore<=>0 : learned ; learningScore<=>MAX_LEARNING_STATE_VALUE : git gud
     if ( correct )
     {
@@ -520,7 +522,7 @@ void QcmExercicePage::ApplyCorrectStemFontSize()
     ui->Stem->setFont(correctedFont);
 
     // Stem Fnt Resize Popup
-    if (continuousStemFntResizeCoRunter > POPUP_FNT_RESIZE_ERROR_CNT)
+    if (continuousStemFntResizeCoRunter > POPUP_FNT_STEM_RESIZE_ERROR_CNT)
     {
         continuousStemFntResizeCoRunter = 0;
 
