@@ -95,10 +95,7 @@ Thank you for actually reading a readme file.
 
 And big big thanks to <a href="https://github.com/Rain92/">@Rain92/OfficerAction</a> , <a href="https://github.com/NiLuJe">@NiLuJe</a> and <a href="https://github.com/tux-linux">@NiMa</a> for putting up with me on Discord helping me setup my environment, walking me throught some Qt Kobo specific minefields and creating all those nice tools that allowed me to develop this app.
 
-## Resources licensing (fonts, icons, pictures)
-
-Everything used in this software is "free-to-use and share in a way" (tldr version). Still, credit is given where credit is due. You can find the details about who made what in the following file 
-<a href="https://github.com/Aryetis/Obenkyobo/tree/master/Resources">Resources Licenses and Details</a>
+## For developpers, dummies, and future me. How to compile it ?
 
 ## For developpers, dummies, and future me. How to compile it ?
 

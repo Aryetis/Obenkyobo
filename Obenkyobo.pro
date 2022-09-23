@@ -1,6 +1,8 @@
 #-------------------------------------------------
 # WORKING ON : - licensing files on git for fonts and everything#
 #              - wifi popup "turning on / off"
+#              - battery "icons and text" -> "icon" -> "text" -> "icons and text" !! icon doesn't show up
+#              - date formats change doesn't work
 #-------------------------------------------------
 # TODO : - check everything
 #        - Finish sleep handling properly
@@ -19,6 +21,7 @@
 #                      - give users option to enable WorldWrap for QCM guesses (it looks fugly tho)
 #                      - investigate the size fixing bug if POPUP_FNT_GUESSES_RESIZE_ERROR_CNT is lower than 9
 #                        (it's because of popup somehow)
+#                      - charging ascii symbol ⚡ expand the top bar => sizing is not fucked up but still ...
 #-------------------------------------------------
 
 QT       += core gui
