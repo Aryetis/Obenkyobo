@@ -6,6 +6,7 @@
 #include "Src/Tools.h"
 #include "Src/mainwindow.h"
 #include "Src/KanasTables.h"
+#include "Src/Widgets/PopupWidget.h"
 
 AppSettingsPage::AppSettingsPage(QWidget *parent) :
     QWidget(parent),
@@ -101,9 +102,17 @@ void AppSettingsPage::on_WifiCheckBox_clicked(bool checked)
 
     // TODO rewrite the whole wifi script... it's a mess
     if (wifiStatus)
-        KoboPlatformFunctions::enableWiFiConnection();
+    {
+        GetMy::Instance().ToolsInst()->DisplayPopup("Enabling wifi, please wait...", false, false);
+        KoboPlatformFunctions::enableWiFiConnection(); // blocking code ! => warn user with popup
+        GetMy::Instance().ToolsInst()->GetPopupInstance()->accept();
+    }
     else
-        KoboPlatformFunctions::disableWiFiConnection();
+    {
+        GetMy::Instance().ToolsInst()->DisplayPopup("Disabling wifi, please wait...", false, false);
+        KoboPlatformFunctions::disableWiFiConnection(); // blocking code ! => warn user with popup
+        GetMy::Instance().ToolsInst()->GetPopupInstance()->accept();
+    }
 }
 
 void AppSettingsPage::on_HardRefreshDropdown_currentIndexChanged(int index)

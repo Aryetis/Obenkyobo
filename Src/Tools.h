@@ -6,6 +6,7 @@
 #include <QString>
 #include <map>
 #include "Src/DefinesLand.h"
+#include "Src/Widgets/PopupWidget.h"
 
 
 class QWidget;
@@ -22,7 +23,8 @@ public :
     static void ParseKoboEreaderConf();
     bool IsLocalTimeFormatUS() const;
     const std::string GetFirmwareStr() const;
-    void DisplayPopup(QString message, bool fullscreen = false);
+    void DisplayPopup(QString message, bool fullscreen = false, bool validateButton = true);
+    PopupWidget* GetPopupInstance();
     DeviceState GetDeviceState() const;
     bool IsThereEnough(QcmExerciceType qcmType, int vocabPoolSize = -1) const;
 
@@ -53,6 +55,7 @@ public :
 
 private :
     Tools();
+    ~Tools();
 
     std::random_device rd_device;
     std::mt19937 mt;
@@ -64,6 +67,7 @@ private :
     DeviceState deviceState;
     bool isLocalTimeFormatUS;
     std::string firmwareStr;
+    PopupWidget* popup;
 };
 
 #endif // TOOLS_H

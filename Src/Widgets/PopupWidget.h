@@ -13,7 +13,8 @@ class PopupWidget : public QDialog
     Q_OBJECT
 
 public:
-    PopupWidget(QString message, bool fullscreen, QWidget *parent = nullptr);
+    PopupWidget() = delete;
+    PopupWidget(QString message, bool fullscreen, bool validateButton = true, QWidget *parent = nullptr);
     ~PopupWidget();
 
 private slots:

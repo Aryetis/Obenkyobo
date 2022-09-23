@@ -7,12 +7,12 @@
 #include <QProcess>
 #include <iostream>
 #include <execinfo.h>
+#include <QApplication>
 #include "Src/Tools.h"
 #include "Src/GetMy.h"
 #include "Src/Pages/ScreenSettingsPage.h"
 #include "Src/mainwindow.h"
 #include "Src/Pages/AppSettingsPage.h"
-#include "Src/Widgets/PopupWidget.h"
 #include "Src/KanasTables.h"
 
 void Tools::RegisterHandlers()
@@ -94,10 +94,21 @@ const std::string Tools::GetFirmwareStr() const
     return firmwareStr;
 }
 
-void Tools::DisplayPopup(QString message, bool fullscreen)
+void Tools::DisplayPopup(QString message, bool fullscreen /*= false*/, bool validateButton /*= true*/)
 {
-    PopupWidget pop(message, fullscreen);
-    pop.exec();
+    popup = new PopupWidget(message, fullscreen, validateButton);
+    if (validateButton)
+        popup->exec();
+    else
+    {
+        popup->show();
+        QApplication::processEvents();
+    }
+}
+
+PopupWidget *Tools::GetPopupInstance()
+{
+    return popup;
 }
 
 DeviceState Tools::GetDeviceState() const { return deviceState; }
@@ -325,4 +336,11 @@ Tools::Tools()
     deviceState = DeviceState::awake;
     isLocalTimeFormatUS = false;
     firmwareStr = "";
+    popup = nullptr;
+}
+
+Tools::~Tools()
+{
+    if (popup != nullptr)
+        delete popup;
 }

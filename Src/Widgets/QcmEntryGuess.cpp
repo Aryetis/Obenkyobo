@@ -15,7 +15,7 @@ QcmEntryGuess::QcmEntryGuess(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(this, SIGNAL(EntryGuessClickedSignal()), this, SLOT(On_EntryGuess_clicked()));
+    connect(this, &QcmEntryGuess::EntryGuessClickedSignal, this, &QcmEntryGuess::On_EntryGuess_clicked);
 }
 
 QcmEntryGuess::~QcmEntryGuess()

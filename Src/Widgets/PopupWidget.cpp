@@ -5,10 +5,12 @@
 #include "Src/DefinesLand.h"
 #include "Src/GetMy.h"
 
-PopupWidget::PopupWidget(QString message, bool fullscreen, QWidget *parent/* = nullptr*/) : QDialog(parent), ui(new Ui::PopupWidget)
+PopupWidget::PopupWidget(QString message, bool fullscreen, bool validateButton /*= true*/, QWidget *parent/* = nullptr*/) : QDialog(parent), ui(new Ui::PopupWidget)
 {
     ui->setupUi(this);
     setStyleSheet(QString("QDialog{border: %1px solid black;} ").arg(POPUP_BORDER_SIZE));
+
+    ui->OkButton->setVisible(validateButton);
 
     float test = GetMy::Instance().Descriptor().height*POPUP_MARGIN_Y;
     layout()->setContentsMargins(0, test,0, test);

@@ -1,10 +1,10 @@
 #-------------------------------------------------
-# WORKING ON : - wifi popup "turning on / off"
+# WORKING ON : - Finish sleep handling properly
+#              - https://discord.com/channels/809205711778480158/958419944243089479/999974500756103188
+#                    - Anything below mk6 will not suspend while plugged in, yeah ;)
+#                    - also disconnecting charger / connecting also desuspends the device, which i will prevent ( as an optional feature )
 #-------------------------------------------------
-# TODO : - Finish sleep handling properly
-#        - https://discord.com/channels/809205711778480158/958419944243089479/999974500756103188
-#           - Anything below mk6 will not suspend while plugged in, yeah ;)
-#           - also disconnecting charger / connecting also desuspends the device, which i will prevent ( as an optional feature )
+# TODO (0.3.0)  : - test, test, test !!!
 #-------------------------------------------------
 # TODO later (0.3.1) : - Show last error's log in a popup on startup
 #                      - use a fontMetrics().boundingRect to determine max length of VocabExplorer entries text
