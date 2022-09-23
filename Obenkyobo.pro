@@ -1,11 +1,8 @@
 #-------------------------------------------------
-# WORKING ON : - licensing files on git for fonts and everything#
-#              - wifi popup "turning on / off"
+# WORKING ON : - wifi popup "turning on / off"
 #              - battery "icons and text" -> "icon" -> "text" -> "icons and text" !! icon doesn't show up
-#              - date formats change doesn't work
 #-------------------------------------------------
-# TODO : - check everything
-#        - Finish sleep handling properly
+# TODO : - Finish sleep handling properly
 #        - https://discord.com/channels/809205711778480158/958419944243089479/999974500756103188
 #           - Anything below mk6 will not suspend while plugged in, yeah ;)
 #           - also disconnecting charger / connecting also desuspends the device, which i will prevent ( as an optional feature )

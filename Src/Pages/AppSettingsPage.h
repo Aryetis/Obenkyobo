@@ -34,6 +34,7 @@ public:
     int GetVocabFntSize() const;
     bool GetWifiStatus() const { return wifiStatus; }
     DisplayLSEnum GetDisplayLSSetting() const { return displayLS; }
+    bool IsDateAmPmFormat() const { return dateFormatIdx == 1; }
 
     QSettings* GetSettingsSerializer() const { return settingsSerializer; }
 
