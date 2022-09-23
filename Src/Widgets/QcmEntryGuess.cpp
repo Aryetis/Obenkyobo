@@ -45,6 +45,7 @@ void QcmEntryGuess::SetContinuousFntResizeCounter(int i)
 
 bool QcmEntryGuess::ApplyGuessTextAndCorrection(int guessWidth, int guessHeight)
 {    
+    std::cout << "LOG: ApplyGuessTextAndCorrection(" << guessWidth << ", " << guessHeight << ")" << std::endl;
     //************************ Set Fixed Size ************************
     ui->EntryGuess->setFixedSize(guessWidth, guessHeight);
     ui->EntryGuess->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);

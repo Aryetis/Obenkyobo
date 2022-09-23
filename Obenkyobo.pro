@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# WORKING ON : - licensing files on git for fonts and everything
+# WORKING ON : - licensing files on git for fonts and everything#
 #              - wifi popup "turning on / off"
 #-------------------------------------------------
 # TODO : - check everything
@@ -17,6 +17,8 @@
 #                      - replace QList by QVector
 #                      - use qobject_cast instead of static_cast wherever it applies
 #                      - give users option to enable WorldWrap for QCM guesses (it looks fugly tho)
+#                      - investigate the size fixing bug if POPUP_FNT_GUESSES_RESIZE_ERROR_CNT is lower than 9
+#                        (it's because of popup somehow)
 #-------------------------------------------------
 
 QT       += core gui

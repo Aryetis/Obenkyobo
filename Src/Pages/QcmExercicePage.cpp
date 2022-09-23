@@ -18,7 +18,7 @@ QcmExercicePage::QcmExercicePage(QWidget *parent) :
     currentQcmType(QcmExerciceType::Vocabulary_to_Romanji_MCQ),
     refreshCounter(0), curHiraganaNonSized(), curKatakanaNonSized(), curRomanjiNonSized(), stemFont(),
     settingsSerializer(GetMy::Instance().SettingSerializerInst()),
-    stemDisplayKanji(false), entriesPool({}), vdp(nullptr), initialPaintDone(false)
+    stemDisplayKanji(false), entriesPool({}), vdp(nullptr), initialPaintDone(false), qcmConfigChanged(false)
 {
     ui->setupUi(this);
 
@@ -382,6 +382,7 @@ void QcmExercicePage::SetQcmConfigChanged(bool b)
 
 void QcmExercicePage::resizeEvent(QResizeEvent *event)
 {
+    std::cout << "LOG: QcmExercicePage::resizeEvent() BEGIN" << std::endl;
     QWidget::resizeEvent(event);
 
     contentRectWidth = layout()->contentsRect().width();
@@ -392,6 +393,7 @@ void QcmExercicePage::resizeEvent(QResizeEvent *event)
     ApplyGuessesTextAndCorrection(); // Also setFixedSize for guesses
 
     initialPaintDone = true;
+    std::cout << "LOG: QcmExercicePage::resizeEvent() END" << std::endl;
 }
 
 void QcmExercicePage::FixElementsSizes()
@@ -432,6 +434,8 @@ void QcmExercicePage::FixElementsSizes()
 // WARNING : needs ui->PlayLayout->contentsRect() to be initialized / """resized""" once before calling
 void QcmExercicePage::ApplyGuessesTextAndCorrection()
 {
+    std::cout << "LOG: QcmExercicePage::ApplyGuessesTextAndCorrection()" << std::endl;
+
     //************************ Guesses Size (60%) ************************
     int NbrOfEntriesLine = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine();
     int NbrOfEntriesRow = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryRow();
@@ -513,6 +517,8 @@ void QcmExercicePage::InitializeStemFont()
 
 void QcmExercicePage::ApplyCorrectStemFontSize()
 {
+    std::cout << "LOG: QcmExercicePage::ApplyCorrectStemFontSize()" << std::endl;
+
     QFont correctedFont;
     if (Tools::CorrectFontSize(ui->Stem->text(), stemFont, *(ui->Stem), correctedFont))
         ++continuousStemFntResizeCoRunter;

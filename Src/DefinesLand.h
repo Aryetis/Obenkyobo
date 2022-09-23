@@ -18,7 +18,8 @@
 #define POPUP_WIDTH 0.9f
 #define CORRECTED_FONT_PRECISION 1
 #define CORRECTED_MINIMAL_FONT_SIZE 5
-#define POPUP_FNT_GUESSES_RESIZE_ERROR_CNT 4
+#define POPUP_FNT_GUESSES_RESIZE_ERROR_CNT 9 // if lower than 9, popup can be triggered during initial paint
+                                             // and somehow it f**s up the whole sizing thing. TODO : investigate
 #define POPUP_FNT_STEM_RESIZE_ERROR_CNT 3
 
 enum KanaFamilyEnum
