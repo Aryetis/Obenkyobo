@@ -1,6 +1,5 @@
 #-------------------------------------------------
 # WORKING ON : - wifi popup "turning on / off"
-#              - battery "icons and text" -> "icon" -> "text" -> "icons and text" !! icon doesn't show up
 #-------------------------------------------------
 # TODO : - Finish sleep handling properly
 #        - https://discord.com/channels/809205711778480158/958419944243089479/999974500756103188

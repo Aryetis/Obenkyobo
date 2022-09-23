@@ -19,12 +19,6 @@ public:
     explicit FntSettingsPage(QWidget *parent = nullptr);
     ~FntSettingsPage() override;
 
-    // Size not applied => not sure if it's really useful... Might as well only store FntFamily instead of QFont then ? TODO
-//    QFont const& GetCurrentHiraganaFnt() { return hiraganaFonts[static_cast<std::vector<QFont>::size_type>(currentHiraganFntIdx)]; }
-//    QFont const& GetCurrentKatakanaFnt() { return katakanaFonts[static_cast<std::vector<QFont>::size_type>(currentKatakanaFntIdx)]; }
-//    QFont const& GetCurrentRomanjiFnt() { return romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentRomanjiFntIdx)]; }
-//    QFont const& GetCurrentKanjiFnt() { return kanjiFonts[static_cast<std::vector<QFont>::size_type>(currentKanjiFontIdx)]; }
-
     QString GetCurrentHiraganaFamily() { return hiraganaFonts[static_cast<std::vector<QFont>::size_type>(currentHiraganFntIdx)].family(); }
     QString GetCurrentKatakanaFamily() { return katakanaFonts[static_cast<std::vector<QFont>::size_type>(currentKatakanaFntIdx)].family(); }
     QString GetCurrentRomanjiFamily() { return romanjiFonts[static_cast<std::vector<QFont>::size_type>(currentRomanjiFntIdx)].family(); }

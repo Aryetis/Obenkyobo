@@ -49,9 +49,10 @@ void VocabDataFile::ParseLine(const QString &line, int lineNumber_)
         return;
 
     //[fontType=hiragana][jp=sanity][kanji=kan][trad=check][learningScore=5]
-    QRegExp rx("\\[fontType=([a-zA-Z]+)\\]\\[jp=([^\\]]+)\\]\\[kanji=([^\\]]+)\\]\\[trad=([^\\]]+)\\]\\[learningScore=([0-5])\\]");
-    rx.indexIn(line); // TODO Replace with QRegularExpression for better perfs
-    QStringList parsedFields = rx.capturedTexts(); // first one is matched line, not fields
+    QRegularExpression rx("\\[fontType=([a-zA-Z]+)\\]\\[jp=([^\\]]+)\\]\\[kanji=([^\\]]+)\\]\\[trad=([^\\]]+)\\]\\[learningScore=([0-5])\\]");
+    QRegularExpressionMatch match = rx.match(line);
+    QStringList parsedFields = match.capturedTexts();
+
     QString kanas_ = "";
     QString kanji_ = "";
     QString trad_ = "";
