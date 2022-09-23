@@ -230,9 +230,9 @@ void MainWindow::refreshTimeAndBattery()
             else if(batteryLvl > 10)
                 newBatteryIconStr = ":/pictures/Battery/battery1.png";
             else
-                newBatteryIconStr = ":/pictures/Battery/batteryEmpty.png";
+                curBatteryIconStr = ":/pictures/Battery/batteryEmpty.png";
 
-            if (curBatteryIconStr != newBatteryIconStr)
+            if (batteryDisplayFormat != wasBatteryDisplayFormat || curBatteryIconStr != newBatteryIconStr)
             {
                 curBatteryIconStr = newBatteryIconStr;
                 actionBatteryIcon->setIcon(QIcon(curBatteryIconStr));
