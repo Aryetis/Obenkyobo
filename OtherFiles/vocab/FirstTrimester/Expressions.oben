@@ -4,7 +4,7 @@
 # LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo
 
 [fontType=hiragana][jp=おはよう][kanji=お早う][trad="Bon matin"][learningScore=5]
-[fontType=hiragana][jp=こんにちは][kanji=こんいちは][trad=Bonjour][learningScore=5]
+[fontType=hiragana][jp=こんにちは][kanji=こんいちは][trad=Bonjour][learningScore=4]
 [fontType=hiragana][jp=こんばんは][kanji=今晩は][trad=Bonsoir][learningScore=5]
 [fontType=hiragana][jp=さようなら][kanji=さよなら][trad=au revoir][learningScore=5]
 [fontType=hiragana][jp=いらっしゃい][kanji=いらっしゃい][trad="bienvenue" (magasin)][learningScore=5]

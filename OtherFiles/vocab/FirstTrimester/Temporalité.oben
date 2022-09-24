@@ -3,7 +3,7 @@
 # fontType possible values : hiragana/katakana, will determine what fonts will be used in Obenkyobo to display this entry
 # LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo
 
-[fontType=hiragana][jp=こんど][kanji=今度][trad=ce [xxx] (temporel)][learningScore=5]
+[fontType=hiragana][jp=こんど][kanji=今度][trad=ce `xxx` (tempo.)][learningScore=5]
 
 [fontType=hiragana][jp=おととい][kanji=一昨日][trad=avant-hier][learningScore=5]
 [fontType=hiragana][jp=きのう][kanji=昨日][trad=hier][learningScore=5]
