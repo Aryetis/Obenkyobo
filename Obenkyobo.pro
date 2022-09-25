@@ -11,6 +11,7 @@
 #                      - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
 #                      - redo the Qmenu::right-arrow
 #                      - Handle properly [UP_DIR] in VocabExplorerPage instead of adding a dummy entry
+#                      - Make [UP_DIR] checkbox tick everything in current dir
 #                      - Investigate weird hard refresh (Edit page) glitch on Kobo Glo HD under unknown circumstances
 #                      - replace QList by QVector
 #                      - use qobject_cast instead of static_cast wherever it applies

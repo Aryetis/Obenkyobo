@@ -151,11 +151,13 @@ void Tools::Sleep() // needs to turn off wifi, stop printing stuff on screen (li
     if (deviceState != DeviceState::awake)
         return;
 
+    std::cout << "LOG: going to sleep" << std::endl;
+
+//    GetMy::Instance().ToolsInst()->DisplayPopup("Going to sleep", true, false);
     deviceState = DeviceState::busy;
 
     qApp->processEvents();
 
-    std::cout << "LOG: going to sleep" << std::endl;
     GetMy::Instance().ScreenSettingsPageInst().OnSleep(); // TODO : replace with signals at some point
     GetMy::Instance().MainWindowInst().OnSleep();
 
@@ -221,8 +223,12 @@ void Tools::WakeUp()
     if (deviceState != DeviceState::asleep)
         return;
 
-    deviceState = DeviceState::busy;
     std::cout << "LOG: Waking up" << std::endl;
+
+//    GetMy::Instance().ToolsInst()->DisplayPopup("Waking Up", true, false);
+    deviceState = DeviceState::busy;
+
+    qApp->processEvents();
 
     GetMy::Instance().ScreenSettingsPageInst().OnWakeUp();  // TODO : replace with signals at some point
     GetMy::Instance().MainWindowInst().OnWakeUp();
@@ -263,6 +269,7 @@ void Tools::WakeUp()
         KoboPlatformFunctions::enableWiFiConnection();
 
     std::cout << "LOG: Woken up, ready to go" << std::endl;
+//    GetMy::Instance().ToolsInst()->GetPopupInstance()->close();
     deviceState = DeviceState::awake;
 }
 
