@@ -41,6 +41,7 @@ public :
     //======================================================================
     void Sleep();
     void WakeUp();
+    bool IsSleepAuthorized();
     void IgnoreAllInputs(bool enable); // TODO make private
     QTouchEventFilter* touchEventFilter = nullptr;
 

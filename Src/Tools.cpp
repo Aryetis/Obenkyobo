@@ -162,35 +162,51 @@ void Tools::Sleep() // needs to turn off wifi, stop printing stuff on screen (li
     if (deviceState != DeviceState::awake)
         return;
 
+    // Fake Sleep for old devices while charging
+    if (!IsSleepAuthorized())
+    {
+        GetMy::Instance().ToolsInst()->DisplayPopup("Sorry, your device does not support \"Sleep and Charge\" functionality. Turning off light and wifi for you");
+
+        std::cout << "LOG: Faking sleep" << std::endl;
+        KoboPlatformFunctions::disableWiFiConnection();
+        GetMy::Instance().ScreenSettingsPageInst().OnSleep();
+        GetMy::Instance().MainWindowInst().OnSleep();
+        return;
+    }
+
     IgnoreAllInputs(true);
     std::cout << "LOG: going to sleep" << std::endl;
 
-    GetMy::Instance().ToolsInst()->DisplayPopup("Going to sleep", true, false);
+    GetMy::Instance().ToolsInst()->DisplayPopup("Sleeping", true, false);
     qApp->processEvents();
     deviceState = DeviceState::busy;
 
-    GetMy::Instance().ScreenSettingsPageInst().OnSleep(); // TODO : replace with signals at some point
+    GetMy::Instance().ScreenSettingsPageInst().OnSleep();
     GetMy::Instance().MainWindowInst().OnSleep();
 
     std::cout << "LOG: disabling WiFi" << std::endl;
     KoboPlatformFunctions::disableWiFiConnection();
 
-    GetMy::Instance().ToolsInst()->GetPopupInstance()->accept();
-
     qApp->processEvents();
 
+    bool error = false;
     //-------------------------------------------------------------
     std::cout << "LOG: /sys/power/stateExtendedFile << 1 (1st stage)" << std::endl;
     QFile stateExtendedFile("/sys/power/state-extended");
     if (!stateExtendedFile.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         std::cerr << "ERROR: Couldn't open /sys/power/state-extended (1st stage)" << std::endl;
-        return;
+        error = true;
     }
     else
     {
         QTextStream out(&stateExtendedFile);
         out << "1\n";
+        if (out.status() != QTextStream::Ok)
+        {
+            std::cerr << "ERROR: Couldn't write to /sys/power/state-extended (1st stage)" << std::endl;
+            error = true;
+        }
     }
     stateExtendedFile.close();
 
@@ -209,13 +225,19 @@ void Tools::Sleep() // needs to turn off wifi, stop printing stuff on screen (li
         if (!stateExtendedFile2.open(QIODevice::WriteOnly | QIODevice::Text))
         {
             std::cerr << "ERROR: Couldn't open /sys/power/state-extended (2nd stage)" << std::endl;
-            return;
+            GetMy::Instance().ToolsInst()->DisplayPopup("ERROR : couldn't go to sleep, please report the error and provide log.txt");
+            error = true;
         }
         else
         {
             std::cout << "LOG: /sys/power/state-extended << 0 (2nd stage)" << std::endl;
             QTextStream out(&stateExtendedFile2);
             out << "0\n";
+            if (out.status() != QTextStream::Ok)
+            {
+                std::cerr << "ERROR: Couldn't write to /sys/power/state-extended (2nd stage)" << std::endl;
+                error = true;
+            }
         }
         stateExtendedFile2.close();
     }
@@ -224,13 +246,25 @@ void Tools::Sleep() // needs to turn off wifi, stop printing stuff on screen (li
         std::cout << "LOG: /sys/power/state << mem (2nd stage)" << std::endl;
         QTextStream out(&stateFile);
         out << "mem\n";
+        if (out.status() != QTextStream::Ok)
+        {
+            std::cerr << "ERROR: Couldn't write to /sys/power/state << mem (2nd stage)" << std::endl;
+            error = true;
+        }
     }
     stateFile.close();
 
     //-------------------------------------------------------------
+    if (error)
+    {
+        GetMy::Instance().ToolsInst()->DisplayPopup("ERROR : Couldn't go to sleep, please report the error on Obenkyobo's github page and provide log.txt if possible");
+        return;
+    }
 
-    std::cout << "LOG: sleeping" << std::endl;
+    //-------------------------------------------------------------
+    // Everything below here will be reached when waking up
     deviceState = DeviceState::asleep; // probably useless...
+    GetMy::Instance().ToolsInst()->GetPopupInstance()->accept();
 }
 
 //======================================================================
@@ -241,35 +275,36 @@ void Tools::WakeUp()
     if (deviceState != DeviceState::asleep)
         return;
 
-//    qApp->sendPostedEvents();
     std::cout << "LOG: Waking up" << std::endl;
 
     GetMy::Instance().ToolsInst()->DisplayPopup("Waking Up", true, false);
     deviceState = DeviceState::busy;
 
-//    qApp->processEvents();
-//    qApp->sendPostedEvents();
-
     GetMy::Instance().ScreenSettingsPageInst().OnWakeUp();  // TODO : replace with signals at some point
     GetMy::Instance().MainWindowInst().OnWakeUp();
 
+    bool error = false;
     //-------------------------------------------------------------
     QFile file("/sys/power/state-extended");
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         std::cerr << "ERROR: Couldn't open /sys/power/state-extended" << std::endl;
-        return;
+        error = true;
     }
     else
     {
         QTextStream out(&file);
         out << "2\n";
+        if (out.status() != QTextStream::Ok)
+        {
+            std::cerr << "ERROR: Couldn't write to /sys/power/state-extended" << std::endl;
+            error = true;
+        }
     }
     file.close();
 
     //-------------------------------------------------------------
     QThread::msleep(100);
-//    QThread::sleep(2);
 
     //-------------------------------------------------------------
     file.setFileName("/sys/devices/virtual/input/input1/neocmd");
@@ -279,24 +314,51 @@ void Tools::WakeUp()
     {
         QTextStream out(&file);
         out << "2\n";
+        if (out.status() != QTextStream::Ok)
+        {
+            std::cerr << "ERROR: Couldn't write to /sys/devices/virtual/input/input1/neocmd" << std::endl;
+            error = true;
+        }
     }
     file.close();
 
     //-------------------------------------------------------------
-//    GetMy::Instance().ScreenSettingsPageInst().OnWakeUp();  // TODO : replace with signals at some point
-//    GetMy::Instance().MainWindowInst().OnWakeUp();
-
     if (GetMy::Instance().AppSettingsPageInst().GetWifiStatus())
         KoboPlatformFunctions::enableWiFiConnection();
-
 
     qApp->processEvents();
     qApp->sendPostedEvents();
     IgnoreAllInputs(false);
 
+
+    //-------------------------------------------------------------
+    if (error)
+    {
+        GetMy::Instance().ToolsInst()->DisplayPopup("ERROR : Couldn't wake up properly, please report the error on Obenkyobo's github page and provide log.txt if possible");
+        return;
+    }
+
+    //-------------------------------------------------------------
     std::cout << "LOG: Woken up, ready to go" << std::endl;
     GetMy::Instance().ToolsInst()->GetPopupInstance()->close();
     deviceState = DeviceState::awake;
+}
+
+bool Tools::IsSleepAuthorized()
+{
+    QList<KoboDevice> NoChargeSleepList
+    {
+        KoboDevice::KoboTouchAB,
+        KoboDevice::KoboTouchC,
+        KoboDevice::KoboMini,
+        KoboDevice::KoboGlo,
+        KoboDevice::KoboAura,
+        KoboDevice::KoboAuraHD,
+        KoboDevice::KoboAuraH2O
+    }; // Informed guess ... https://discord.com/channels/809205711778480158/958419944243089479/999974500756103188
+       // to be confirmed as my glo can go to sleep and charge ?
+
+    return !(KoboPlatformFunctions::isBatteryCharging() && NoChargeSleepList.contains(GetMy::Instance().Descriptor().device));
 }
 
 //======================================================================
