@@ -12,18 +12,18 @@ Obenkyobo is an application for kyobo ereaders designed to help you memorize Hir
 
 ## How does it look ?
 <p align="center">
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/about.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/hiragana1.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/hiragana2.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/katakana2.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/hiraganaEdit.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/hiraganaEdit2.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/VocabDir.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/vocabLearn1.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/vocabLearn2.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/SettingsApplication.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/SettingsFonts.png" width="252" height="320" >
-  <img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/SettingsScreen.png" width="252" height="320" >
+  <img src="Screenshots/about.png" width="252" height="320" >
+  <img src="Screenshots/hiragana1.png" width="252" height="320" >
+  <img src="Screenshots/hiragana2.png" width="252" height="320" >
+  <img src="Screenshots/katakana2.png" width="252" height="320" >
+  <img src="Screenshots/hiraganaEdit.png" width="252" height="320" >
+  <img src="Screenshots/hiraganaEdit2.png" width="252" height="320" >
+  <img src="Screenshots/VocabDir.png" width="252" height="320" >
+  <img src="Screenshots/vocabLearn1.png" width="252" height="320" >
+  <img src="Screenshots/vocabLearn2.png" width="252" height="320" >
+  <img src="Screenshots/SettingsApplication.png" width="252" height="320" >
+  <img src="Screenshots/SettingsFonts.png" width="252" height="320" >
+  <img src="Screenshots/SettingsScreen.png" width="252" height="320" >
 </p>
 More screenshots : <a href="https://imgur.com/a/8ehpdbf">here (imgur gallery)</a>
 
@@ -60,7 +60,7 @@ Once you're done installing at least one of those you can :
 
 If you're only updating Obenkyobo, you can install the "light" version of the archive instead.  <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_Light_Release_V*.*.*.zip</a>.  This version is stripped from qt packages you already installed with the previous version and should work fine for updating except if told otherwise.
 
-<img src="https://git.hijackedbrain.com/hijackedbrain/Obenkyobo/raw/branch/master/Screenshots/NickelMenu.png" width="303" height="184" align="left"/>
+<img src="Screenshots/NickelMenu.png" width="303" height="184" align="left"/>
 <br/>
 <br/>
 <br/>
@@ -93,7 +93,7 @@ If you encounter any issues, please report them by either :
 
 Thank you for actually reading a readme file.
 
-And big big thanks to <a href="https://github.com/Rain92/">@Rain92/OfficerAction</a> , <a href="https://github.com/NiLuJe">@NiLuJe</a> and <a href="https://github.com/tux-linux">@NiMa</a> for putting up with me on Discord helping me setup my environment, walking me throught some Qt Kobo specific minefields and creating all those nice tools that allowed me to develop this app.
+And big big thanks to <a href="https://github.com/Rain92/">@Rain92/OfficerAction</a> , <a href="https://github.com/NiLuJe">@NiLuJe</a>, <a href="https://github.com/tux-linux">@NiMa</a> and <a href="https://github.com/Szybet">@Szybet</a> for putting up with me on Discord helping me setup my environment, walking me throught some Qt Kobo specific minefields and creating all those nice tools like QPA allowing me to develop this app.
 
 ## Resources licensing (fonts, icons, pictures)
 
