@@ -72,8 +72,8 @@ bool ScreenSettingsPage::AreSettingsAvailablePopup() const
 
 void ScreenSettingsPage::OnSleep() const
 {
-//    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::busy)
-//        return;
+    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::busy)
+        return;
 
     if(settingAvailable)
         KoboPlatformFunctions::setFrontlightLevel(desc.frontlightSettings.naturalLightMin, tint);
@@ -81,8 +81,8 @@ void ScreenSettingsPage::OnSleep() const
 
 void ScreenSettingsPage::OnWakeUp() const
 {
-//    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::busy)
-//        return;
+    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::busy)
+        return;
 
     if(settingAvailable)
         KoboPlatformFunctions::setFrontlightLevel(luminosity, tint);

@@ -145,8 +145,8 @@ void MainWindow::DisplayFirstTimeKanasEditPagePopup()
 
 void MainWindow::OnSleep() const
 {
-//    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::busy)
-//        return;
+    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::busy)
+        return;
 
     disconnect(&timer, nullptr, nullptr, nullptr);
     actionBatteryIcon->setIcon(QIcon());
@@ -158,8 +158,8 @@ void MainWindow::OnSleep() const
 
 void MainWindow::OnWakeUp()
 {
-//    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::busy)
-//        return;
+    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::busy)
+        return;
 
     connect(&timer, &QTimer::timeout, this, &MainWindow::refreshTimeAndBattery);
     // reinitializing icons format

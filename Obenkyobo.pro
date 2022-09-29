@@ -1,8 +1,5 @@
 #-------------------------------------------------
-# WORKING ON : - Finish sleep handling properly
-#              - https://discord.com/channels/809205711778480158/958419944243089479/999974500756103188
-#                    - Anything below mk6 will not suspend while plugged in, yeah ;)
-#                    - also disconnecting charger / connecting also desuspends the device, which i will prevent ( as an optional feature )
+# WORKING ON : - Correct bug when spamming power button during sleeping process
 #-------------------------------------------------
 # TODO (0.3.0)  : - test, test, test !!!
 #-------------------------------------------------
