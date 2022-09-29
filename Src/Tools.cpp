@@ -15,12 +15,18 @@
 #include "Src/Pages/AppSettingsPage.h"
 #include "Src/KanasTables.h"
 
+#include <QKeyEvent>
+
+//======================================================================
+//======================================================================
+//======================================================================
 void Tools::RegisterHandlers()
 {
     for(const auto& sig : GetMy::Instance().ToolsInst()->handledErrors)
         signal(sig.first, Handler);
 }
 
+//======================================================================
 void Tools::Handler(int sig)
 {
     void *array[32];
@@ -34,7 +40,6 @@ void Tools::Handler(int sig)
 }
 
 //======================================================================
-
 void Tools::ParseKoboEreaderConf()
 {
     QFile inputFile("/mnt/onboard/.kobo/Kobo/Kobo eReader.conf");
@@ -84,11 +89,13 @@ void Tools::ParseKoboEreaderConf()
     inputFile.close();
 }
 
+//======================================================================
 bool Tools::IsLocalTimeFormatUS() const
 {
     return isLocalTimeFormatUS;
 }
 
+//======================================================================
 const std::string Tools::GetFirmwareStr() const
 {
     return firmwareStr;
@@ -106,13 +113,16 @@ void Tools::DisplayPopup(QString message, bool fullscreen /*= false*/, bool vali
     }
 }
 
+//======================================================================
 PopupWidget *Tools::GetPopupInstance()
 {
     return popup;
 }
 
+//======================================================================
 DeviceState Tools::GetDeviceState() const { return deviceState; }
 
+//======================================================================
 bool Tools::IsThereEnough(QcmExerciceType qcmType, int vocabPoolSize /*= 0*/) const
 {
     int minRequiredSymbol = GetMy::Instance().AppSettingsPageInst().GetNumberOfEntryLine() *
@@ -145,24 +155,29 @@ bool Tools::IsThereEnough(QcmExerciceType qcmType, int vocabPoolSize /*= 0*/) co
 }
 
 //======================================================================
-
 void Tools::Sleep() // needs to turn off wifi, stop printing stuff on screen (like clock, battery level, etc), etc
 {
+    std::cout << "LOG: Sleep requested" << std::endl;
+
     if (deviceState != DeviceState::awake)
         return;
 
+    IgnoreAllInputs(true);
     std::cout << "LOG: going to sleep" << std::endl;
 
-//    GetMy::Instance().ToolsInst()->DisplayPopup("Going to sleep", true, false);
-    deviceState = DeviceState::busy;
-
+    GetMy::Instance().ToolsInst()->DisplayPopup("Going to sleep", true, false);
     qApp->processEvents();
+    deviceState = DeviceState::busy;
 
     GetMy::Instance().ScreenSettingsPageInst().OnSleep(); // TODO : replace with signals at some point
     GetMy::Instance().MainWindowInst().OnSleep();
 
     std::cout << "LOG: disabling WiFi" << std::endl;
     KoboPlatformFunctions::disableWiFiConnection();
+
+    GetMy::Instance().ToolsInst()->GetPopupInstance()->accept();
+
+    qApp->processEvents();
 
     //-------------------------------------------------------------
     std::cout << "LOG: /sys/power/stateExtendedFile << 1 (1st stage)" << std::endl;
@@ -214,21 +229,26 @@ void Tools::Sleep() // needs to turn off wifi, stop printing stuff on screen (li
 
     //-------------------------------------------------------------
 
-    std::cout << "sleeping" << std::endl;
+    std::cout << "LOG: sleeping" << std::endl;
     deviceState = DeviceState::asleep; // probably useless...
 }
 
+//======================================================================
 void Tools::WakeUp()
 {
+    std::cout << "LOG: Wake Up requested" << std::endl;
+
     if (deviceState != DeviceState::asleep)
         return;
 
+//    qApp->sendPostedEvents();
     std::cout << "LOG: Waking up" << std::endl;
 
-//    GetMy::Instance().ToolsInst()->DisplayPopup("Waking Up", true, false);
+    GetMy::Instance().ToolsInst()->DisplayPopup("Waking Up", true, false);
     deviceState = DeviceState::busy;
 
-    qApp->processEvents();
+//    qApp->processEvents();
+//    qApp->sendPostedEvents();
 
     GetMy::Instance().ScreenSettingsPageInst().OnWakeUp();  // TODO : replace with signals at some point
     GetMy::Instance().MainWindowInst().OnWakeUp();
@@ -249,6 +269,7 @@ void Tools::WakeUp()
 
     //-------------------------------------------------------------
     QThread::msleep(100);
+//    QThread::sleep(2);
 
     //-------------------------------------------------------------
     file.setFileName("/sys/devices/virtual/input/input1/neocmd");
@@ -268,9 +289,27 @@ void Tools::WakeUp()
     if (GetMy::Instance().AppSettingsPageInst().GetWifiStatus())
         KoboPlatformFunctions::enableWiFiConnection();
 
+
+    qApp->processEvents();
+    qApp->sendPostedEvents();
+    IgnoreAllInputs(false);
+
     std::cout << "LOG: Woken up, ready to go" << std::endl;
-//    GetMy::Instance().ToolsInst()->GetPopupInstance()->close();
+    GetMy::Instance().ToolsInst()->GetPopupInstance()->close();
     deviceState = DeviceState::awake;
+}
+
+//======================================================================
+void Tools::IgnoreAllInputs(bool enable)
+{
+    if (enable)
+    {
+        if (touchEventFilter == nullptr)
+            touchEventFilter =  new QTouchEventFilter();
+        QApplication::instance()->installEventFilter(touchEventFilter);
+    }
+    else if (touchEventFilter != nullptr)
+        QApplication::instance()->removeEventFilter(touchEventFilter);
 }
 
 //======================================================================
@@ -346,8 +385,45 @@ Tools::Tools()
     popup = nullptr;
 }
 
+//======================================================================
 Tools::~Tools()
 {
     if (popup != nullptr)
         delete popup;
+    if (touchEventFilter != nullptr)
+        delete touchEventFilter;
+}
+
+//======================================================================
+//======================================================================
+//======================================================================
+QTouchEventFilter::QTouchEventFilter(QObject *parent) : QObject(parent) {}
+
+//======================================================================
+QTouchEventFilter::~QTouchEventFilter() {}
+
+//======================================================================
+bool QTouchEventFilter::eventFilter(QObject */*p_obj*/, QEvent *p_event)
+{
+    if (p_event->type() == QEvent::TouchBegin ||
+            p_event->type() == QEvent::TouchUpdate ||
+            p_event->type() == QEvent::TouchEnd ||
+            p_event->type() == QEvent::TouchCancel ||
+            p_event->type() == QEvent::MouseButtonPress ||
+            p_event->type() == QEvent::MouseButtonRelease ||
+            p_event->type() == QEvent::MouseButtonDblClick ||
+            p_event->type() == QEvent::MouseMove ||
+            (p_event->type() == QEvent::KeyPress &&
+                (static_cast<QKeyEvent*>(p_event)->key() != KoboKey::Key_Power &&
+                static_cast<QKeyEvent*>(p_event)->key() != KoboKey::Key_SleepCover)) ||
+            (p_event->type() == QEvent::KeyRelease &&
+                (static_cast<QKeyEvent*>(p_event)->key() != KoboKey::Key_Power &&
+                static_cast<QKeyEvent*>(p_event)->key() != KoboKey::Key_SleepCover))
+            )
+    {
+        p_event->ignore();
+        return true;
+    }
+    else
+        return false;
 }

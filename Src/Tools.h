@@ -9,6 +9,16 @@
 #include "Src/Widgets/PopupWidget.h"
 
 
+class QTouchEventFilter: public QObject
+{
+    Q_OBJECT
+public:
+    QTouchEventFilter(QObject *parent = 0);
+    virtual ~QTouchEventFilter();
+protected:
+    bool eventFilter(QObject * p_obj, QEvent * p_event);
+};
+
 class QWidget;
 class QFont;
 class Tools
@@ -31,6 +41,8 @@ public :
     //======================================================================
     void Sleep();
     void WakeUp();
+    void IgnoreAllInputs(bool enable); // TODO make private
+    QTouchEventFilter* touchEventFilter = nullptr;
 
     //======================================================================
     template<typename Iter, typename RandomGenerator>

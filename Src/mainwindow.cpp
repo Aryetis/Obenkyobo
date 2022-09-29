@@ -93,6 +93,8 @@ void MainWindow::AggressiveClearScreen(bool force /*=false*/) const
 // TODO handle sleep (irl too, ahahahah ...)
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
+    std::cout << "LOG: MainWindow::keyPressEvent()" << std::endl;
+
     if (event->key() == KoboKey::Key_Power)
     {        
         if (GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::asleep)
@@ -108,6 +110,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::keyReleaseEvent(QKeyEvent *event)
 {
+    std::cout << "LOG: MainWindow::keyReleaseEvent()" << std::endl;
+
     if (event->key() == KoboKey::Key_SleepCover && GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::asleep)
         GetMy::Instance().ToolsInst()->WakeUp();
 }
