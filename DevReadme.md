@@ -81,7 +81,7 @@ Install <a href="https://www.mobileread.com/forums/showthread.php?t=254214">Nilu
 
 ### Miscellaneous
 
-How to read the backtrace logs : convert address to line using `addr2line -e [NonStrippedProgramBinary] [HexAddress
+How to read the backtrace logs : convert address to line using `addr2line -e [NonStrippedProgramBinary] [HexAddress]`
 
 ### How to serial connect to Kobo ereader in WSL2 
 
