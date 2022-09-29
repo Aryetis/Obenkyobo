@@ -187,7 +187,7 @@ void Tools::Sleep() // needs to turn off wifi, stop printing stuff on screen (li
     std::cout << "LOG: disabling WiFi" << std::endl;
     KoboPlatformFunctions::disableWiFiConnection();
 
-    qApp->processEvents();
+//    qApp->processEvents();
 
     bool error = false;
     //-------------------------------------------------------------
@@ -327,9 +327,7 @@ void Tools::WakeUp()
         KoboPlatformFunctions::enableWiFiConnection();
 
     qApp->processEvents();
-    qApp->sendPostedEvents();
     IgnoreAllInputs(false);
-
 
     //-------------------------------------------------------------
     if (error)
