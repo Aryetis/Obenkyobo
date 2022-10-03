@@ -162,41 +162,42 @@ void Tools::Sleep() // needs to turn off wifi, stop printing stuff on screen (li
     if (deviceState != DeviceState::awake)
         return;
 
+    std::cout << "!!! DEVICE STATE = BUSY" << std::endl;
     deviceState = DeviceState::busy;
 
     // Fake Sleep for old devices while charging
-    if (!IsSleepAuthorized())
-    {
-        GetMy::Instance().ToolsInst()->DisplayPopup("Sorry, your device does not support \"Sleep and Charge\" functionality. Turning off light and wifi for you");
+//    if (!IsSleepAuthorized())
+//    {
+//        GetMy::Instance().ToolsInst()->DisplayPopup("Sorry, your device does not support \"Sleep and Charge\" functionality. Turning off light and wifi for you");
 
-        std::cout << "LOG: Faking sleep" << std::endl;
-        KoboPlatformFunctions::disableWiFiConnection();
-        GetMy::Instance().ScreenSettingsPageInst().OnSleep();
-        GetMy::Instance().MainWindowInst().OnSleep();
-        deviceState = DeviceState::asleep; // to indicate to WakeUp() that slept went ""well""
-        return;
-    }
+//        std::cout << "LOG: Faking sleep" << std::endl;
+//        KoboPlatformFunctions::disableWiFiConnection();
+//        GetMy::Instance().ScreenSettingsPageInst().OnSleep();
+//        GetMy::Instance().MainWindowInst().OnSleep();
+//        deviceState = DeviceState::asleep; // to indicate to WakeUp() that slept went ""well""
+//        return;
+//    }
 
-    IgnoreAllInputs(true);
+//    IgnoreAllInputs(true);
     std::cout << "LOG: going to sleep" << std::endl;
 
-    GetMy::Instance().ToolsInst()->DisplayPopup("Sleeping", true, false);
-    qApp->processEvents();
+//    GetMy::Instance().ToolsInst()->DisplayPopup("Sleeping", true, false);
+//    qApp->processEvents();
 
     GetMy::Instance().ScreenSettingsPageInst().OnSleep();
     GetMy::Instance().MainWindowInst().OnSleep();
 
     std::cout << "LOG: disabling WiFi" << std::endl;
-    KoboPlatformFunctions::disableWiFiConnection();
+    KoboPlatformFunctions::disableWiFiConnection(); // MANDATORY !!!!!
+//    QThread::sleep(1); // wifi delay might have been necessary after all ?
 
-    bool error = false;
     //-------------------------------------------------------------
     std::cout << "LOG: /sys/power/stateExtendedFile << 1 (1st stage)" << std::endl;
     QFile stateExtendedFile("/sys/power/state-extended");
     if (!stateExtendedFile.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         std::cerr << "ERROR: Couldn't open /sys/power/state-extended (1st stage)" << std::endl;
-        error = true;
+        sleepError = true;
     }
     else
     {
@@ -205,14 +206,14 @@ void Tools::Sleep() // needs to turn off wifi, stop printing stuff on screen (li
         if (out.status() != QTextStream::Ok)
         {
             std::cerr << "ERROR: Couldn't write to /sys/power/state-extended (1st stage)" << std::endl;
-            error = true;
+            sleepError = true;
         }
     }
     stateExtendedFile.close();
 
     //-------------------------------------------------------------
     std::cout << "LOG: sync" << std::endl;
-    QThread::sleep(2);
+    QThread::sleep(5);
     QProcess::execute("sync", {});
 
     //-------------------------------------------------------------
@@ -226,7 +227,7 @@ void Tools::Sleep() // needs to turn off wifi, stop printing stuff on screen (li
         {
             std::cerr << "ERROR: Couldn't open /sys/power/state-extended (2nd stage)" << std::endl;
             GetMy::Instance().ToolsInst()->DisplayPopup("ERROR : couldn't go to sleep, please report the error and provide log.txt");
-            error = true;
+            sleepError = true;
         }
         else
         {
@@ -236,7 +237,7 @@ void Tools::Sleep() // needs to turn off wifi, stop printing stuff on screen (li
             if (out.status() != QTextStream::Ok)
             {
                 std::cerr << "ERROR: Couldn't write to /sys/power/state-extended (2nd stage)" << std::endl;
-                error = true;
+                sleepError = true;
             }
         }
         stateExtendedFile2.close();
@@ -249,22 +250,22 @@ void Tools::Sleep() // needs to turn off wifi, stop printing stuff on screen (li
         if (out.status() != QTextStream::Ok)
         {
             std::cerr << "ERROR: Couldn't write to /sys/power/state << mem (2nd stage)" << std::endl;
-            error = true;
+            sleepError = true;
         }
     }
     stateFile.close();
 
     //-------------------------------------------------------------
-    if (error)
-    {
-        GetMy::Instance().ToolsInst()->DisplayPopup("ERROR : Couldn't go to sleep, please report the error on Obenkyobo's github page and provide log.txt if possible");
-        return;
-    }
-
+    // Everything below here will be reached when waking up,
+    // WakeUp is triggered by system upon next PowerButton press regardless of Obenkyobo
     //-------------------------------------------------------------
-    // Everything below here will be reached when waking up
+    std::cout << "!!! DEVICE STATE = ASLEEP" << std::endl;
+//qApp->processEvents();
     deviceState = DeviceState::asleep; // to indicate to WakeUp() that slept went well
-    GetMy::Instance().ToolsInst()->GetPopupInstance()->accept();
+//    GetMy::Instance().ToolsInst()->GetPopupInstance()->accept();
+//qApp->processEvents();
+//IgnoreAllInputs(false); // so the Press can be detected to trigger WakeUp() function
+//qApp->processEvents();
 }
 
 //======================================================================
@@ -275,21 +276,25 @@ void Tools::WakeUp()
     if (deviceState != DeviceState::asleep)
         return;
 
+//IgnoreAllInputs(true); // ignore everything during busy process
+
     std::cout << "LOG: Waking up" << std::endl;
 
-    GetMy::Instance().ToolsInst()->DisplayPopup("Waking Up", true, false);
+//    GetMy::Instance().ToolsInst()->DisplayPopup("Waking Up", true, false);
+    std::cout << "!!! DEVICE STATE = BUSY" << std::endl;
     deviceState = DeviceState::busy;
+
+    QThread::sleep(2);
 
     GetMy::Instance().ScreenSettingsPageInst().OnWakeUp();  // TODO : replace with signals at some point
     GetMy::Instance().MainWindowInst().OnWakeUp();
 
-    bool error = false;
     //-------------------------------------------------------------
     QFile file("/sys/power/state-extended");
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         std::cerr << "ERROR: Couldn't open /sys/power/state-extended" << std::endl;
-        error = true;
+        sleepError = true;
     }
     else
     {
@@ -298,7 +303,7 @@ void Tools::WakeUp()
         if (out.status() != QTextStream::Ok)
         {
             std::cerr << "ERROR: Couldn't write to /sys/power/state-extended" << std::endl;
-            error = true;
+            sleepError = true;
         }
     }
     file.close();
@@ -309,7 +314,7 @@ void Tools::WakeUp()
     //-------------------------------------------------------------
     file.setFileName("/sys/devices/virtual/input/input1/neocmd");
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-        std::cout << "LOG: Couldn't open /sys/devices/virtual/input/input1/neocmd" << std::endl;
+        std::cout << "LOG: Couldn't open /sys/devices/virtual/input/input1/neocmd (not necessarly an error)" << std::endl;
     else
     {
         QTextStream out(&file);
@@ -317,28 +322,30 @@ void Tools::WakeUp()
         if (out.status() != QTextStream::Ok)
         {
             std::cerr << "ERROR: Couldn't write to /sys/devices/virtual/input/input1/neocmd" << std::endl;
-            error = true;
+            sleepError = true;
         }
     }
     file.close();
 
     //-------------------------------------------------------------
-    if (GetMy::Instance().AppSettingsPageInst().GetWifiStatus())
-        KoboPlatformFunctions::enableWiFiConnection();
+//    if (GetMy::Instance().AppSettingsPageInst().GetWifiStatus())
+//        KoboPlatformFunctions::enableWiFiConnection();
 
     qApp->processEvents();
-    IgnoreAllInputs(false);
+//    IgnoreAllInputs(false);
 
     //-------------------------------------------------------------
-    if (error)
-    {
-        GetMy::Instance().ToolsInst()->DisplayPopup("ERROR : Couldn't wake up properly, please report the error on Obenkyobo's github page and provide log.txt if possible");
-        return;
-    }
+//    if (sleepError)
+//    {
+//        GetMy::Instance().ToolsInst()->DisplayPopup("ERROR : Couldn't sleep/wake up properly, please report the error on Obenkyobo's github page and provide log.txt if possible");
+//        return;
+//    }
 
     //-------------------------------------------------------------
     std::cout << "LOG: Woken up, ready to go" << std::endl;
-    GetMy::Instance().ToolsInst()->GetPopupInstance()->close();
+    sleepError = false;
+//    GetMy::Instance().ToolsInst()->GetPopupInstance()->close();
+    std::cout << "!!! DEVICE STATE = AWAKE" << std::endl;
     deviceState = DeviceState::awake;
 }
 
@@ -362,6 +369,7 @@ bool Tools::IsSleepAuthorized()
 //======================================================================
 void Tools::IgnoreAllInputs(bool enable)
 {
+    std::cout << "LOG: IgnoreAllInputs(" << (enable?"true)":"false)") << std::endl;
     if (enable)
     {
         if (touchEventFilter == nullptr)
@@ -475,24 +483,25 @@ bool QTouchEventFilter::eventFilter(QObject */*p_obj*/, QEvent *p_event)
             p_event->type() == QEvent::MouseMove ||                 // ignore standard touch mouse input
             (
                 p_event->type() == QEvent::KeyPress &&
-                (static_cast<QKeyEvent*>(p_event)->key() != KoboKey::Key_Power &&
-                static_cast<QKeyEvent*>(p_event)->key() != KoboKey::Key_SleepCover) /*&&
-                GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::busy*/
-            ) ||
-            (
-                p_event->type() == QEvent::KeyRelease &&
-                (static_cast<QKeyEvent*>(p_event)->key() != KoboKey::Key_Power &&
-                static_cast<QKeyEvent*>(p_event)->key() != KoboKey::Key_SleepCover) /*&&
-                GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::busy*/
-            )
+                (static_cast<QKeyEvent*>(p_event)->key() == KoboKey::Key_Power ||
+                static_cast<QKeyEvent*>(p_event)->key() == KoboKey::Key_SleepCover) &&
+                GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::busy
+            ) //||
+//            (
+//                p_event->type() == QEvent::KeyRelease &&
+//                (static_cast<QKeyEvent*>(p_event)->key() == KoboKey::Key_Power ||
+//                static_cast<QKeyEvent*>(p_event)->key() == KoboKey::Key_SleepCover) /*&&
+//                GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::busy*/
+//            )
         )
     {
-        p_event->ignore();
+        std::cout << "!!! Event filtered" << std::endl;
+        p_event->accept(); // I acept it, I take care of it. Don't propagate it
         return true;
     }
     else if (p_event->type() == QEvent::KeyPress)
 {
-       std::cout << "excuse me wtf (asleep,awake,busy) :" << GetMy::Instance().ToolsInst()->GetDeviceState() << std::endl;
+       std::cout << "!!! unfiltered KeyPress : " << static_cast<QKeyEvent*>(p_event)->key() << " while (asleep,awake,busy) :" << GetMy::Instance().ToolsInst()->GetDeviceState() << std::endl;
        return false;
 }
     else

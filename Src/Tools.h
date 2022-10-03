@@ -43,6 +43,7 @@ public :
     void WakeUp();
     bool IsSleepAuthorized();
     void IgnoreAllInputs(bool enable); // TODO make private
+    bool sleepError = false;
     QTouchEventFilter* touchEventFilter = nullptr;
 
     //======================================================================
