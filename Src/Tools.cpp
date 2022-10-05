@@ -165,14 +165,14 @@ void Tools::RequestSleep() // needs to turn off wifi, stop printing stuff on scr
 {
     std::cout << "LOG: Sleep requested" << std::endl;
 
-    if (deviceState != DeviceState::awake /*|| QDateTime::currentSecsSinceEpoch() < lastWakeUpDateInS + HACKY_SLEEP_COOLDOWN*/)
+    if (deviceState != DeviceState::awake)
     {
         std::cout << "LOG: Sleep request denied" << std::endl;
         return;
     }
 
-    std::cout << "!!! DEVICE STATE = BUSY" << std::endl;
     deviceState = DeviceState::busy;
+    std::cout << "!!! DEVICE STATE = BUSY" << std::endl;
 
     sleepTimer.start(POWER_REQUEST_TIMER);
 }
@@ -185,8 +185,8 @@ void Tools::RequestWakeUp()
     if (deviceState != DeviceState::asleep)
         return;
 
-    std::cout << "!!! DEVICE STATE = BUSY" << std::endl;
     deviceState = DeviceState::busy;
+    std::cout << "!!! DEVICE STATE = BUSY" << std::endl;
 
     wakeUpTimer.start(POWER_REQUEST_TIMER);
 }
@@ -495,7 +495,7 @@ bool QTouchEventFilter::eventFilter(QObject */*p_obj*/, QEvent *p_event)
         p_event->type() == QEvent::MouseButtonRelease ||
         p_event->type() == QEvent::MouseButtonDblClick ||
         p_event->type() == QEvent::MouseMove
-        ) && GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::busy)
+        ) && (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::awake))
     {
         std::cout << "!!! Touch||Mouse Event filtered during Busy state" << std::endl;
         return true; // I took care of it. Don't propagate it

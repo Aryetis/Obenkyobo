@@ -21,7 +21,6 @@
 #define POPUP_FNT_GUESSES_RESIZE_ERROR_CNT 9 // if lower than 9, popup can be triggered during initial paint
                                              // and somehow it f**s up the whole sizing thing. TODO : investigate
 #define POPUP_FNT_STEM_RESIZE_ERROR_CNT 3
-#define HACKY_SLEEP_COOLDOWN 2 // TODO : remove
 #define POWER_REQUEST_TIMER 500
 
 enum KanaFamilyEnum
