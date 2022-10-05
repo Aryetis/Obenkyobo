@@ -82,6 +82,7 @@ private :
     bool isLocalTimeFormatUS;
     std::string firmwareStr;
     PopupWidget* popup;
+    qint64 lastWakeUpDateInS;
 };
 
 #endif // TOOLS_H
