@@ -164,7 +164,7 @@ bool Tools::IsThereEnough(QcmExerciceType qcmType, int vocabPoolSize /*= 0*/) co
 void Tools::RequestSleep() // needs to turn off wifi, stop printing stuff on screen (like clock, battery level, etc), etc
 {
 
-    std::cout << "LOG: Sleep requested @" << QTime::currentTime().toString("hh:mm").toStdString() << std::endl;
+    std::cout << "LOG: Sleep requested @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
     if (deviceState != DeviceState::awake)
     {
@@ -173,7 +173,7 @@ void Tools::RequestSleep() // needs to turn off wifi, stop printing stuff on scr
     }
 
     deviceState = DeviceState::busy;
-    std::cout << "!!! DEVICE STATE = BUSY @" << QTime::currentTime().toString("hh:mm").toStdString() << std::endl;
+    std::cout << "!!! DEVICE STATE = BUSY @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
     sleepTimer.start(POWER_REQUEST_TIMER);
 }
@@ -181,13 +181,13 @@ void Tools::RequestSleep() // needs to turn off wifi, stop printing stuff on scr
 //======================================================================
 void Tools::RequestWakeUp()
 {
-    std::cout << "LOG: Wake Up requested @" << QTime::currentTime().toString("hh:mm").toStdString() << std::endl;
+    std::cout << "LOG: Wake Up requested @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
     if (deviceState != DeviceState::asleep)
         return;
 
     deviceState = DeviceState::busy;
-    std::cout << "!!! DEVICE STATE = BUSY @" << QTime::currentTime().toString("hh:mm").toStdString() << std::endl;
+    std::cout << "!!! DEVICE STATE = BUSY @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
     wakeUpTimer.start(POWER_REQUEST_TIMER);
 }
@@ -240,7 +240,7 @@ void Tools::Sleep()
 //    }
 
 //    IgnoreAllInputs(true);
-    std::cout << "LOG: going to sleep  @" << QTime::currentTime().toString("hh:mm").toStdString() << std::endl;
+    std::cout << "LOG: going to sleep  @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
     GetMy::Instance().ToolsInst()->DisplayPopup("Sleeping", true, false);
     qApp->processEvents();
@@ -319,7 +319,7 @@ void Tools::Sleep()
     // Everything below here will be reached when waking up,
     // WakeUp is triggered by system upon next PowerButton press regardless of Obenkyobo
     //-------------------------------------------------------------
-    std::cout << "!!! DEVICE STATE = ASLEEP @" << QTime::currentTime().toString("hh:mm").toStdString() << std::endl;
+    std::cout << "!!! DEVICE STATE = ASLEEP @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
     deviceState = DeviceState::asleep; // to indicate to WakeUp() that slept went well
     GetMy::Instance().ToolsInst()->GetPopupInstance()->accept();
 }
@@ -327,7 +327,7 @@ void Tools::Sleep()
 //======================================================================
 void Tools::WakeUp()
 {
-    std::cout << "LOG: Waking up @" << QTime::currentTime().toString("hh:mm").toStdString() << std::endl;
+    std::cout << "LOG: Waking up @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
     GetMy::Instance().ToolsInst()->DisplayPopup("Waking Up", true, false);
     GetMy::Instance().ScreenSettingsPageInst().OnWakeUp();  // TODO : replace with signals at some point
@@ -387,7 +387,7 @@ void Tools::WakeUp()
     std::cout << "LOG: Woken up, ready to go" << std::endl;
     sleepError = false;
     GetMy::Instance().ToolsInst()->GetPopupInstance()->close();
-    std::cout << "!!! DEVICE STATE = AWAKE @" << QTime::currentTime().toString("hh:mm").toStdString() << std::endl;
+    std::cout << "!!! DEVICE STATE = AWAKE @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
     lastWakeUpDateInS = QDateTime::currentSecsSinceEpoch();
     deviceState = DeviceState::awake;
 }
