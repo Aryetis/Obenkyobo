@@ -109,6 +109,11 @@ void Tools::DisplayPopup(QString message, bool fullscreen /*= false*/, bool vali
         popup->exec();
     else
     {
+        if (GetDeviceState() == DeviceState::asleep)
+        {
+            std::cout << "ERROR: Requesting DisplayPopup while asleep" << std::endl;
+            return;
+        }
         popup->show();
         QApplication::processEvents();
     }
@@ -156,11 +161,11 @@ bool Tools::IsThereEnough(QcmExerciceType qcmType, int vocabPoolSize /*= 0*/) co
 }
 
 //======================================================================
-void Tools::Sleep() // needs to turn off wifi, stop printing stuff on screen (like clock, battery level, etc), etc
+void Tools::RequestSleep() // needs to turn off wifi, stop printing stuff on screen (like clock, battery level, etc), etc
 {
     std::cout << "LOG: Sleep requested" << std::endl;
 
-    if (deviceState != DeviceState::awake || QDateTime::currentSecsSinceEpoch() < lastWakeUpDateInS + HACKY_SLEEP_COOLDOWN)
+    if (deviceState != DeviceState::awake /*|| QDateTime::currentSecsSinceEpoch() < lastWakeUpDateInS + HACKY_SLEEP_COOLDOWN*/)
     {
         std::cout << "LOG: Sleep request denied" << std::endl;
         return;
@@ -169,7 +174,58 @@ void Tools::Sleep() // needs to turn off wifi, stop printing stuff on screen (li
     std::cout << "!!! DEVICE STATE = BUSY" << std::endl;
     deviceState = DeviceState::busy;
 
-    // Fake Sleep for old devices while charging
+    sleepTimer.start(POWER_REQUEST_TIMER);
+}
+
+//======================================================================
+void Tools::RequestWakeUp()
+{
+    std::cout << "LOG: Wake Up requested" << std::endl;
+
+    if (deviceState != DeviceState::asleep)
+        return;
+
+    std::cout << "!!! DEVICE STATE = BUSY" << std::endl;
+    deviceState = DeviceState::busy;
+
+    wakeUpTimer.start(POWER_REQUEST_TIMER);
+}
+
+bool Tools::IsSleepAuthorized()
+{
+    QList<KoboDevice> NoChargeSleepList
+    {
+        KoboDevice::KoboTouchAB,
+        KoboDevice::KoboTouchC,
+        KoboDevice::KoboMini,
+        KoboDevice::KoboGlo,
+        KoboDevice::KoboAura,
+        KoboDevice::KoboAuraHD,
+        KoboDevice::KoboAuraH2O
+    }; // Informed guess ... https://discord.com/channels/809205711778480158/958419944243089479/999974500756103188
+       // to be confirmed as my glo can go to sleep and charge ?
+
+    return !(KoboPlatformFunctions::isBatteryCharging() && NoChargeSleepList.contains(GetMy::Instance().Descriptor().device));
+}
+
+//======================================================================
+void Tools::InstallGlobalEventFilter(bool enable)
+{
+    std::cout << "LOG: InstallGlobalEventFilter(" << (enable?"true)":"false)") << std::endl;
+    if (enable)
+    {
+        if (touchEventFilter == nullptr)
+            touchEventFilter =  new QTouchEventFilter();
+        QApplication::instance()->installEventFilter(touchEventFilter);
+    }
+    else if (touchEventFilter != nullptr)
+        QApplication::instance()->removeEventFilter(touchEventFilter);
+}
+
+//======================================================================
+void Tools::Sleep()
+{
+// Fake Sleep for old devices while charging
 //    if (!IsSleepAuthorized())
 //    {
 //        GetMy::Instance().ToolsInst()->DisplayPopup("Sorry, your device does not support \"Sleep and Charge\" functionality. Turning off light and wifi for you");
@@ -182,7 +238,7 @@ void Tools::Sleep() // needs to turn off wifi, stop printing stuff on screen (li
 //        return;
 //    }
 
-    IgnoreAllInputs(true);
+//    IgnoreAllInputs(true);
     std::cout << "LOG: going to sleep" << std::endl;
 
     GetMy::Instance().ToolsInst()->DisplayPopup("Sleeping", true, false);
@@ -264,28 +320,15 @@ void Tools::Sleep() // needs to turn off wifi, stop printing stuff on screen (li
     //-------------------------------------------------------------
     std::cout << "!!! DEVICE STATE = ASLEEP" << std::endl;
     deviceState = DeviceState::asleep; // to indicate to WakeUp() that slept went well
-//    IgnoreAllInputs(false); // so the Press can be detected to trigger WakeUp() function
-    WakeUp();
+    GetMy::Instance().ToolsInst()->GetPopupInstance()->accept();
 }
 
 //======================================================================
 void Tools::WakeUp()
 {
-    std::cout << "LOG: Wake Up requested" << std::endl;
-
-    if (deviceState != DeviceState::asleep)
-        return;
-
-//    IgnoreAllInputs(true); // ignore everything during busy process
     std::cout << "LOG: Waking up" << std::endl;
 
-    GetMy::Instance().ToolsInst()->GetPopupInstance()->accept();
     GetMy::Instance().ToolsInst()->DisplayPopup("Waking Up", true, false);
-    std::cout << "!!! DEVICE STATE = BUSY" << std::endl;
-    deviceState = DeviceState::busy;
-
-    QThread::sleep(2);
-
     GetMy::Instance().ScreenSettingsPageInst().OnWakeUp();  // TODO : replace with signals at some point
     GetMy::Instance().MainWindowInst().OnWakeUp();
 
@@ -332,8 +375,6 @@ void Tools::WakeUp()
         KoboPlatformFunctions::enableWiFiConnection();
 
     qApp->processEvents();
-    IgnoreAllInputs(false);
-
     //-------------------------------------------------------------
     if (sleepError)
     {
@@ -350,39 +391,7 @@ void Tools::WakeUp()
     deviceState = DeviceState::awake;
 }
 
-bool Tools::IsSleepAuthorized()
-{
-    QList<KoboDevice> NoChargeSleepList
-    {
-        KoboDevice::KoboTouchAB,
-        KoboDevice::KoboTouchC,
-        KoboDevice::KoboMini,
-        KoboDevice::KoboGlo,
-        KoboDevice::KoboAura,
-        KoboDevice::KoboAuraHD,
-        KoboDevice::KoboAuraH2O
-    }; // Informed guess ... https://discord.com/channels/809205711778480158/958419944243089479/999974500756103188
-       // to be confirmed as my glo can go to sleep and charge ?
-
-    return !(KoboPlatformFunctions::isBatteryCharging() && NoChargeSleepList.contains(GetMy::Instance().Descriptor().device));
-}
-
 //======================================================================
-void Tools::IgnoreAllInputs(bool enable)
-{
-    std::cout << "LOG: IgnoreAllInputs(" << (enable?"true)":"false)") << std::endl;
-    if (enable)
-    {
-        if (touchEventFilter == nullptr)
-            touchEventFilter =  new QTouchEventFilter();
-        QApplication::instance()->installEventFilter(touchEventFilter);
-    }
-    else if (touchEventFilter != nullptr)
-        QApplication::instance()->removeEventFilter(touchEventFilter);
-}
-
-//======================================================================
-
 int Tools::GetRandomInt(int rangeStart, int rangeEnd)
 {
     std::uniform_int_distribution<> distr(rangeStart, rangeEnd);
@@ -448,11 +457,14 @@ Tools::Tools()
 {
     mt = std::mt19937(rd_device());
     rng_engine = std::default_random_engine{};
-    deviceState = DeviceState::awake;
     isLocalTimeFormatUS = false;
     firmwareStr = "";
     popup = nullptr;
-    lastWakeUpDateInS = QDateTime::currentSecsSinceEpoch();
+    InstallGlobalEventFilter(true);
+    wakeUpTimer.setSingleShot(true);
+    sleepTimer.setSingleShot(true);
+    QObject::connect(&wakeUpTimer, &QTimer::timeout, &Tools::WakeUp);
+    QObject::connect(&sleepTimer, &QTimer::timeout, &Tools::Sleep);
 }
 
 //======================================================================
@@ -475,37 +487,68 @@ QTouchEventFilter::~QTouchEventFilter() {}
 //======================================================================
 bool QTouchEventFilter::eventFilter(QObject */*p_obj*/, QEvent *p_event)
 {
-    if (p_event->type() == QEvent::TouchBegin ||
-            p_event->type() == QEvent::TouchUpdate ||
-            p_event->type() == QEvent::TouchEnd ||
-            p_event->type() == QEvent::TouchCancel ||
-            p_event->type() == QEvent::MouseButtonPress ||
-            p_event->type() == QEvent::MouseButtonRelease ||
-            p_event->type() == QEvent::MouseButtonDblClick ||
-            p_event->type() == QEvent::MouseMove ||                 // ignore standard touch mouse input
-            (
-                p_event->type() == QEvent::KeyPress &&
-                (static_cast<QKeyEvent*>(p_event)->key() == KoboKey::Key_Power ||
-                static_cast<QKeyEvent*>(p_event)->key() == KoboKey::Key_SleepCover) &&
-                GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::busy
-            ) ||
-            (
-                p_event->type() == QEvent::KeyRelease &&
-                (static_cast<QKeyEvent*>(p_event)->key() == KoboKey::Key_Power ||
-                static_cast<QKeyEvent*>(p_event)->key() == KoboKey::Key_SleepCover) &&
-                GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::busy
-            )
-        )
+    if ((p_event->type() == QEvent::TouchBegin ||
+        p_event->type() == QEvent::TouchUpdate ||
+        p_event->type() == QEvent::TouchEnd ||
+        p_event->type() == QEvent::TouchCancel ||
+        p_event->type() == QEvent::MouseButtonPress ||
+        p_event->type() == QEvent::MouseButtonRelease ||
+        p_event->type() == QEvent::MouseButtonDblClick ||
+        p_event->type() == QEvent::MouseMove
+        ) && GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::busy)
     {
-        std::cout << "!!! Event filtered during Busy state" << std::endl;
-        p_event->accept(); // I acept it, I take care of it. Don't propagate it
-        return true;
+        std::cout << "!!! Touch||Mouse Event filtered during Busy state" << std::endl;
+        return true; // I took care of it. Don't propagate it
     }
     else if (p_event->type() == QEvent::KeyPress)
-{
-       std::cout << "!!! unfiltered KeyPress : " << static_cast<QKeyEvent*>(p_event)->key() << " while (asleep,awake,busy) :" << GetMy::Instance().ToolsInst()->GetDeviceState() << std::endl;
-       return false;
+    {
+        QKeyEvent* p_keyPressEvent = static_cast<QKeyEvent*>(p_event);
+        switch(GetMy::Instance().ToolsInst()->GetDeviceState())
+        {
+            case DeviceState::awake:
+            {
+                if (p_keyPressEvent->key() == KoboKey::Key_Power || p_keyPressEvent->key() == KoboKey::Key_SleepCover)
+                {
+                    GetMy::Instance().ToolsInst()->RequestSleep();
+                    return true;
+                }
+                else if (p_keyPressEvent->key() == KoboKey::Key_Light)
+                {
+                    GetMy::Instance().ScreenSettingsPageInst().ToggleLight();
+                    return true;
+                }
+                break;
+            }
+            case DeviceState::asleep:
+            {
+                if (p_keyPressEvent->key() == KoboKey::Key_Power)
+                {
+                    GetMy::Instance().ToolsInst()->RequestWakeUp();
+                    return true;
+                }
+                break;
+            }
+            case DeviceState::busy:
+            {
+                std::cout << "!!! KeyPress Event filtered during Busy state" << std::endl;
+                return true;
+            }
+        }
+    }
+    else if (p_event->type() == QEvent::KeyRelease)
+    {
+        QKeyEvent* p_keyPressEvent = static_cast<QKeyEvent*>(p_event);
+        if (p_keyPressEvent->key() == KoboKey::Key_SleepCover && GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::asleep)
+        {
+            GetMy::Instance().ToolsInst()->RequestWakeUp();
+            return true;
+        }
+    }
+
+    // else .... pass it to someone else, let it live
+    return false;
 }
-    else
-        return false;
-}
+
+DeviceState Tools::deviceState = DeviceState::awake;
+bool Tools::sleepError = false;
+qint64 Tools::lastWakeUpDateInS = QDateTime::currentSecsSinceEpoch();

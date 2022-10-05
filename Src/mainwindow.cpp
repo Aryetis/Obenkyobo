@@ -90,32 +90,6 @@ void MainWindow::AggressiveClearScreen(bool force /*=false*/) const
     }
 }
 
-// TODO handle sleep (irl too, ahahahah ...)
-void MainWindow::keyPressEvent(QKeyEvent *event)
-{
-    std::cout << "LOG: MainWindow::keyPressEvent(), timestamp : " << event->timestamp() << std::endl;
-
-    if (event->key() == KoboKey::Key_Power)
-    {        
-        if (GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::asleep)
-            GetMy::Instance().ToolsInst()->WakeUp();
-        else if (GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::awake)
-            GetMy::Instance().ToolsInst()->Sleep();
-    }
-//    else if (event->key() == KoboKey::Key_SleepCover && GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::awake)
-//        GetMy::Instance().ToolsInst()->Sleep();
-//    else if (event->key() == KoboKey::Key_Light)
-//        GetMy::Instance().ScreenSettingsPageInst().ToggleLight();
-}
-
-void MainWindow::keyReleaseEvent(QKeyEvent *event)
-{
-    std::cout << "LOG: MainWindow::keyReleaseEvent()" << std::endl;
-
-//    if (event->key() == KoboKey::Key_SleepCover && GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::asleep)
-//        GetMy::Instance().ToolsInst()->WakeUp();
-}
-
 void MainWindow::DisplayFirstTimeMainWindowPagePopup()
 {
     if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeMainWindowPage", true).toBool() )
@@ -150,9 +124,9 @@ void MainWindow::OnSleep() const
 
     std::cout << "LOG: MainWindow::OnSleep()" << std::endl;
     disconnect(&timer, nullptr, nullptr, nullptr);
-//    actionBatteryIcon->setIcon(QIcon());
-//    actionBatteryTxt->setText("");
-//    timeDisplay->setText("ZZZzzzz... ");
+    actionBatteryIcon->setIcon(QIcon());
+    actionBatteryTxt->setText("");
+    timeDisplay->setText("ZZZzzzz... ");
 
     UpdateStatusBarGeometry();
 }

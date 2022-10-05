@@ -58,8 +58,6 @@ private slots:
     void refreshTimeAndBattery();
 
 private:
-    void keyPressEvent(QKeyEvent *event) override;
-    void keyReleaseEvent(QKeyEvent *event) override;
     void DisplayFirstTimeMainWindowPagePopup();
     void DisplayFirstTimeKanasEditPagePopup();
 

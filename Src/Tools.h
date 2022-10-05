@@ -5,6 +5,7 @@
 #include <signal.h>
 #include <QString>
 #include <map>
+#include <QTimer>
 #include "Src/DefinesLand.h"
 #include "Src/Widgets/PopupWidget.h"
 
@@ -39,11 +40,9 @@ public :
     bool IsThereEnough(QcmExerciceType qcmType, int vocabPoolSize = -1) const;
 
     //======================================================================
-    void Sleep();
-    void WakeUp();
+    void RequestSleep();
+    void RequestWakeUp();
     bool IsSleepAuthorized();
-    void IgnoreAllInputs(bool enable); // TODO make private
-    bool sleepError = false;
     QTouchEventFilter* touchEventFilter = nullptr;
 
     //======================================================================
@@ -71,6 +70,12 @@ private :
     Tools();
     ~Tools();
 
+    //======================================================================
+    void InstallGlobalEventFilter(bool enable);
+    static void Sleep();
+    static void WakeUp();
+
+    //======================================================================
     std::random_device rd_device;
     std::mt19937 mt;
     std::default_random_engine rng_engine;
@@ -78,11 +83,15 @@ private :
     std::map<int, std::string> handledErrors = { {SIGINT, "SIGINT"}, {SIGALRM, "SIGALRM"}, {SIGSEGV, "SIGSEGV"}, {SIGILL, "SIGILL"},
                                                  {SIGFPE, "SIGFPE"}, {SIGABRT, "SIGABRT"}, {SIGBUS, "SIGBUS"}, {SIGUSR1, "SIGUSR1"},
                                                  {SIGUSR2, "SIGUSR2"}, {SIGSYS, "SIGSYS"}};
-    DeviceState deviceState;
     bool isLocalTimeFormatUS;
     std::string firmwareStr;
     PopupWidget* popup;
-    qint64 lastWakeUpDateInS;
+    QTimer wakeUpTimer;
+    QTimer sleepTimer;
+
+    static DeviceState deviceState;
+    static qint64 lastWakeUpDateInS;
+    static bool sleepError;
 };
 
 #endif // TOOLS_H
