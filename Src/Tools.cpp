@@ -163,7 +163,8 @@ bool Tools::IsThereEnough(QcmExerciceType qcmType, int vocabPoolSize /*= 0*/) co
 //======================================================================
 void Tools::RequestSleep() // needs to turn off wifi, stop printing stuff on screen (like clock, battery level, etc), etc
 {
-    std::cout << "LOG: Sleep requested" << std::endl;
+
+    std::cout << "LOG: Sleep requested @" << QTime::currentTime().toString("hh:mm").toStdString() << std::endl;
 
     if (deviceState != DeviceState::awake)
     {
@@ -180,7 +181,7 @@ void Tools::RequestSleep() // needs to turn off wifi, stop printing stuff on scr
 //======================================================================
 void Tools::RequestWakeUp()
 {
-    std::cout << "LOG: Wake Up requested" << std::endl;
+    std::cout << "LOG: Wake Up requested @" << QTime::currentTime().toString("hh:mm").toStdString() << std::endl;
 
     if (deviceState != DeviceState::asleep)
         return;
@@ -239,7 +240,7 @@ void Tools::Sleep()
 //    }
 
 //    IgnoreAllInputs(true);
-    std::cout << "LOG: going to sleep" << std::endl;
+    std::cout << "LOG: going to sleep  @" << QTime::currentTime().toString("hh:mm").toStdString() << std::endl;
 
     GetMy::Instance().ToolsInst()->DisplayPopup("Sleeping", true, false);
     qApp->processEvents();
@@ -326,7 +327,7 @@ void Tools::Sleep()
 //======================================================================
 void Tools::WakeUp()
 {
-    std::cout << "LOG: Waking up" << std::endl;
+    std::cout << "LOG: Waking up @" << QTime::currentTime().toString("hh:mm").toStdString() << std::endl;
 
     GetMy::Instance().ToolsInst()->DisplayPopup("Waking Up", true, false);
     GetMy::Instance().ScreenSettingsPageInst().OnWakeUp();  // TODO : replace with signals at some point

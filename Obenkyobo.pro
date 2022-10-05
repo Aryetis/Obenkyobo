@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# WORKING ON : - Correct bug when spamming power button during sleeping process
+# WORKING ON : - sleep not working correctly on h2o ... and maybe glo HD didn't even test it yet
 #-------------------------------------------------
 # TODO (0.3.0)  : - test, test, test !!!
 #-------------------------------------------------
