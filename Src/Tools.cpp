@@ -173,7 +173,7 @@ void Tools::RequestSleep() // needs to turn off wifi, stop printing stuff on scr
     }
 
     deviceState = DeviceState::busy;
-    std::cout << "!!! DEVICE STATE = BUSY" << std::endl;
+    std::cout << "!!! DEVICE STATE = BUSY @" << QTime::currentTime().toString("hh:mm").toStdString() << std::endl;
 
     sleepTimer.start(POWER_REQUEST_TIMER);
 }
@@ -187,7 +187,7 @@ void Tools::RequestWakeUp()
         return;
 
     deviceState = DeviceState::busy;
-    std::cout << "!!! DEVICE STATE = BUSY" << std::endl;
+    std::cout << "!!! DEVICE STATE = BUSY @" << QTime::currentTime().toString("hh:mm").toStdString() << std::endl;
 
     wakeUpTimer.start(POWER_REQUEST_TIMER);
 }
@@ -319,7 +319,7 @@ void Tools::Sleep()
     // Everything below here will be reached when waking up,
     // WakeUp is triggered by system upon next PowerButton press regardless of Obenkyobo
     //-------------------------------------------------------------
-    std::cout << "!!! DEVICE STATE = ASLEEP" << std::endl;
+    std::cout << "!!! DEVICE STATE = ASLEEP @" << QTime::currentTime().toString("hh:mm").toStdString() << std::endl;
     deviceState = DeviceState::asleep; // to indicate to WakeUp() that slept went well
     GetMy::Instance().ToolsInst()->GetPopupInstance()->accept();
 }
@@ -387,7 +387,7 @@ void Tools::WakeUp()
     std::cout << "LOG: Woken up, ready to go" << std::endl;
     sleepError = false;
     GetMy::Instance().ToolsInst()->GetPopupInstance()->close();
-    std::cout << "!!! DEVICE STATE = AWAKE" << std::endl;
+    std::cout << "!!! DEVICE STATE = AWAKE @" << QTime::currentTime().toString("hh:mm").toStdString() << std::endl;
     lastWakeUpDateInS = QDateTime::currentSecsSinceEpoch();
     deviceState = DeviceState::awake;
 }
