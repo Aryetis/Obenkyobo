@@ -192,22 +192,22 @@ void Tools::RequestWakeUp()
     wakeUpTimer.start(POWER_REQUEST_TIMER);
 }
 
-bool Tools::IsSleepAuthorized()
-{
-    QList<KoboDevice> NoChargeSleepList
-    {
-        KoboDevice::KoboTouchAB,
-        KoboDevice::KoboTouchC,
-        KoboDevice::KoboMini,
-        KoboDevice::KoboGlo,
-        KoboDevice::KoboAura,
-        KoboDevice::KoboAuraHD,
-        KoboDevice::KoboAuraH2O
-    }; // Informed guess ... https://discord.com/channels/809205711778480158/958419944243089479/999974500756103188
-       // to be confirmed as my glo can go to sleep and charge ?
+//bool Tools::IsSleepAuthorized()
+//{
+//    QList<KoboDevice> NoChargeSleepList
+//    {
+//        KoboDevice::KoboTouchAB,
+//        KoboDevice::KoboTouchC,
+//        KoboDevice::KoboMini,
+//        KoboDevice::KoboGlo,
+//        KoboDevice::KoboAura,
+//        KoboDevice::KoboAuraHD,
+//        KoboDevice::KoboAuraH2O
+//    }; // Informed guess ... https://discord.com/channels/809205711778480158/958419944243089479/999974500756103188
+//       // to be confirmed as my glo can go to sleep and charge ?
 
-    return !(KoboPlatformFunctions::isBatteryCharging() && NoChargeSleepList.contains(GetMy::Instance().Descriptor().device));
-}
+//    return !(KoboPlatformFunctions::isBatteryCharging() && NoChargeSleepList.contains(GetMy::Instance().Descriptor().device));
+//}
 
 //======================================================================
 void Tools::InstallGlobalEventFilter(bool enable)
@@ -238,8 +238,6 @@ void Tools::Sleep()
 //        deviceState = DeviceState::asleep; // to indicate to WakeUp() that slept went ""well""
 //        return;
 //    }
-
-//    IgnoreAllInputs(true);
     std::cout << "LOG: going to sleep  @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
     GetMy::Instance().ToolsInst()->DisplayPopup("Sleeping", true, false);
@@ -316,12 +314,11 @@ void Tools::Sleep()
     stateFile.close();
 
     //-------------------------------------------------------------
-    // Everything below here will be reached when waking up,
-    // WakeUp is triggered by system upon next PowerButton press regardless of Obenkyobo
+    // Everything below here will be reached when waking up on Kobo Glo
+    // But not on Libra h2o/gloHD because fuck qt and fuck kobo :D. Libra h2o/gloHD does the following section before shutting down
     //-------------------------------------------------------------
-    std::cout << "!!! DEVICE STATE = ASLEEP @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
+    std::cout << "!!! DEVICE STATE = ASLEEP-ish @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
     deviceState = DeviceState::asleep; // to indicate to WakeUp() that slept went well
-    GetMy::Instance().ToolsInst()->GetPopupInstance()->accept();
 }
 
 //======================================================================
@@ -329,6 +326,7 @@ void Tools::WakeUp()
 {
     std::cout << "LOG: Waking up @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
+    GetMy::Instance().ToolsInst()->GetPopupInstance()->accept();
     GetMy::Instance().ToolsInst()->DisplayPopup("Waking Up", true, false);
     GetMy::Instance().ScreenSettingsPageInst().OnWakeUp();  // TODO : replace with signals at some point
     GetMy::Instance().MainWindowInst().OnWakeUp();
@@ -388,7 +386,6 @@ void Tools::WakeUp()
     sleepError = false;
     GetMy::Instance().ToolsInst()->GetPopupInstance()->close();
     std::cout << "!!! DEVICE STATE = AWAKE @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
-    lastWakeUpDateInS = QDateTime::currentSecsSinceEpoch();
     deviceState = DeviceState::awake;
 }
 
@@ -498,7 +495,7 @@ bool QTouchEventFilter::eventFilter(QObject */*p_obj*/, QEvent *p_event)
         p_event->type() == QEvent::MouseMove
         ) && (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::awake))
     {
-        std::cout << "!!! Touch||Mouse Event filtered during Busy state" << std::endl;
+//        std::cout << "!!! Touch||Mouse Event filtered during Busy state" << std::endl;
         return true; // I took care of it. Don't propagate it
     }
     else if (p_event->type() == QEvent::KeyPress)
@@ -552,4 +549,3 @@ bool QTouchEventFilter::eventFilter(QObject */*p_obj*/, QEvent *p_event)
 
 DeviceState Tools::deviceState = DeviceState::awake;
 bool Tools::sleepError = false;
-qint64 Tools::lastWakeUpDateInS = QDateTime::currentSecsSinceEpoch();

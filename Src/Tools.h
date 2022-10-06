@@ -42,7 +42,6 @@ public :
     //======================================================================
     void RequestSleep();
     void RequestWakeUp();
-    bool IsSleepAuthorized();
     QTouchEventFilter* touchEventFilter = nullptr;
 
     //======================================================================
@@ -74,6 +73,7 @@ private :
     void InstallGlobalEventFilter(bool enable);
     static void Sleep();
     static void WakeUp();
+//    bool IsSleepAuthorized();
 
     //======================================================================
     std::random_device rd_device;
@@ -90,7 +90,6 @@ private :
     QTimer sleepTimer;
 
     static DeviceState deviceState;
-    static qint64 lastWakeUpDateInS;
     static bool sleepError;
 };
 
