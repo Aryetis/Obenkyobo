@@ -249,6 +249,8 @@ void Tools::Sleep()
     std::cout << "LOG: disabling WiFi" << std::endl;
     KoboPlatformFunctions::disableWiFiConnection(); // MANDATORY !!!!!
 
+    QThread::sleep(60);  // MANDATORY !!!!! <= this is it.... without this there's some bullshit background kobo/ntx stuff preventing the device from actually going to sleep (cf: battery consumption for confirmation) => need to split sleep() into fakeSleep() and Sleep() or something alike...
+
     //-------------------------------------------------------------
     std::cout << "LOG: /sys/power/stateExtendedFile << 1 (1st stage)" << std::endl;
     QFile stateExtendedFile("/sys/power/state-extended");
