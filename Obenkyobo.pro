@@ -1,21 +1,19 @@
 #-------------------------------------------------
-# WORKING ON : - flush inputs entered during the post wake up wifi process
+# WORKING ON : - test, test test !!! Shoot a proper video showcase, recheck popup and readme (including dev's) one last time
 #-------------------------------------------------
-# TODO (0.3.0)  : - test, test, test !!!
-#-------------------------------------------------
-# TODO later (0.3.1) : - Show last error's log in a popup on startup
-#                      - use a fontMetrics().boundingRect to determine max length of VocabExplorer entries text
-#                      - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
-#                      - redo the Qmenu::right-arrow
-#                      - Handle properly [UP_DIR] in VocabExplorerPage instead of adding a dummy entry
-#                      - Make [UP_DIR] checkbox tick everything in current dir
-#                      - Investigate weird hard refresh (Edit page) glitch on Kobo Glo HD under unknown circumstances
-#                      - replace QList by QVector
-#                      - use qobject_cast instead of static_cast wherever it applies
-#                      - give users option to enable WorldWrap for QCM guesses (it looks fugly tho)
-#                      - investigate the size fixing bug if POPUP_FNT_GUESSES_RESIZE_ERROR_CNT is lower than 9
-#                        (it's because of popup somehow)
-#                      - charging ascii symbol ⚡ expand the top bar => sizing is not fucked up but still ...
+# TODO (0.3.1) : - Show last error's log in a popup on startup
+#                - use a fontMetrics().boundingRect to determine max length of VocabExplorer entries text
+#                - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
+#                - redo the Qmenu::right-arrow
+#                - Handle properly [UP_DIR] in VocabExplorerPage instead of adding a dummy entry
+#                - Make [UP_DIR] checkbox tick everything in current dir
+#                - Investigate weird hard refresh (Edit page) glitch on Kobo Glo HD under unknown circumstances
+#                - replace QList by QVector
+#                - use qobject_cast instead of static_cast wherever it applies
+#                - give users option to enable WorldWrap for QCM guesses (it looks fugly tho)
+#                - investigate the size fixing bug if POPUP_FNT_GUESSES_RESIZE_ERROR_CNT is lower than 9
+#                  (it's because of popup somehow)
+#                - charging ascii symbol ⚡ expand the top bar => sizing is not fucked up but still ...
 #-------------------------------------------------
 
 QT       += core gui

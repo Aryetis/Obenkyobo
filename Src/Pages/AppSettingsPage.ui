@@ -626,7 +626,7 @@
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>2</number>
          </property>
          <item>
           <property name="text">
@@ -640,7 +640,7 @@
          </item>
          <item>
           <property name="text">
-           <string>On (Exc Vocab)</string>
+           <string>On (Except Vocab)</string>
           </property>
          </item>
         </widget>

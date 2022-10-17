@@ -143,7 +143,7 @@ void MainWindow::OnWakeUp()
     wasBatteryDisplayFormat = -1;
     wasBatteryCharging = -1;
     curBatteryIconStr = "";
-    timeDisplay->setText("Waking up !");
+    timeDisplay->setText("Waking up ! ");
 
     UpdateStatusBarGeometry();
 }
