@@ -23,6 +23,7 @@ public:
     void AggressiveClearScreen(bool force = false) const;
     void OnSleep() const;
     void OnWakeUp();
+    int GetStackedWidgetIdx() const;
 
 private slots:
     //===========================================================================

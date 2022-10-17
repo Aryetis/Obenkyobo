@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="4,0,4,0,5">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="4,0,4,0,6">
    <property name="spacing">
     <number>6</number>
    </property>
@@ -435,8 +435,11 @@
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="GlobalSettings" stretch="1,1,1,1,1">
+    <layout class="QVBoxLayout" name="GlobalSettings" stretch="1,1,1,1,1,1">
      <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
       <number>0</number>
      </property>
      <item>
@@ -573,7 +576,7 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="WifiLayout" stretch="1,1">
+      <layout class="QHBoxLayout" name="WifiLayout" stretch="0,0">
        <property name="topMargin">
         <number>0</number>
        </property>
@@ -598,6 +601,48 @@
          <property name="text">
           <string/>
          </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="ScreenSaverLayout">
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="ScreenSaverLabel">
+         <property name="text">
+          <string>ScreenSaver :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="ScreenSaverDropdown">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <item>
+          <property name="text">
+           <string>Off</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>On (Everywhere)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>On (Exc Vocab)</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>

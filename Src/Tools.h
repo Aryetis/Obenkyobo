@@ -71,8 +71,10 @@ private :
 
     //======================================================================
     void InstallGlobalEventFilter(bool enable);
+    static void PreSleep();
     static void Sleep();
     static void WakeUp();
+    static bool IsScreenSaverNeeded();
 //    bool IsSleepAuthorized();
 
     //======================================================================
@@ -87,10 +89,12 @@ private :
     std::string firmwareStr;
     PopupWidget* popup;
     QTimer wakeUpTimer;
-    QTimer sleepTimer;
+    QTimer preSleepTimer;
 
-    static DeviceState deviceState;
-    static bool sleepError;
+    inline static QTimer sleepTimer = QTimer();
+    inline static bool sleepReached = false;
+    inline static DeviceState deviceState = DeviceState::awake;
+    inline static bool sleepError = false;
 };
 
 #endif // TOOLS_H

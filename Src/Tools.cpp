@@ -109,7 +109,7 @@ void Tools::DisplayPopup(QString message, bool fullscreen /*= false*/, bool vali
         popup->exec();
     else
     {
-        if (GetDeviceState() == DeviceState::asleep)
+        if (GetDeviceState() == DeviceState::asleep) // too early
         {
             std::cout << "ERROR: Requesting DisplayPopup while asleep" << std::endl;
             return;
@@ -163,7 +163,6 @@ bool Tools::IsThereEnough(QcmExerciceType qcmType, int vocabPoolSize /*= 0*/) co
 //======================================================================
 void Tools::RequestSleep() // needs to turn off wifi, stop printing stuff on screen (like clock, battery level, etc), etc
 {
-
     std::cout << "LOG: Sleep requested @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
     if (deviceState != DeviceState::awake)
@@ -172,10 +171,10 @@ void Tools::RequestSleep() // needs to turn off wifi, stop printing stuff on scr
         return;
     }
 
-    deviceState = DeviceState::busy;
-    std::cout << "!!! DEVICE STATE = BUSY @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
+    deviceState = DeviceState::fakeSleeping;
+    std::cout << "!!! DEVICE STATE = FAKE SLEEPING @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
-    sleepTimer.start(POWER_REQUEST_TIMER);
+    preSleepTimer.start(POWER_REQUEST_TIMER);
 }
 
 //======================================================================
@@ -183,8 +182,14 @@ void Tools::RequestWakeUp()
 {
     std::cout << "LOG: Wake Up requested @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
-    if (deviceState != DeviceState::asleep)
+    if (deviceState == DeviceState::awake || deviceState == DeviceState::busy)
         return;
+
+    if (deviceState == fakeSleeping) // cancel sleep
+    {
+        std::cout << "LOG: Canceling FakeSleep @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
+        sleepTimer.stop();
+    }
 
     deviceState = DeviceState::busy;
     std::cout << "!!! DEVICE STATE = BUSY @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
@@ -224,24 +229,15 @@ void Tools::InstallGlobalEventFilter(bool enable)
 }
 
 //======================================================================
-void Tools::Sleep()
+void Tools::PreSleep()
 {
-// Fake Sleep for old devices while charging
-//    if (!IsSleepAuthorized())
-//    {
-//        GetMy::Instance().ToolsInst()->DisplayPopup("Sorry, your device does not support \"Sleep and Charge\" functionality. Turning off light and wifi for you");
+    std::cout << "LOG: going to PreSleep  @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
-//        std::cout << "LOG: Faking sleep" << std::endl;
-//        KoboPlatformFunctions::disableWiFiConnection();
-//        GetMy::Instance().ScreenSettingsPageInst().OnSleep();
-//        GetMy::Instance().MainWindowInst().OnSleep();
-//        deviceState = DeviceState::asleep; // to indicate to WakeUp() that slept went ""well""
-//        return;
-//    }
-    std::cout << "LOG: going to sleep  @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
-
-    GetMy::Instance().ToolsInst()->DisplayPopup("Sleeping", true, false);
-    qApp->processEvents();
+    if(IsScreenSaverNeeded())
+    {
+        GetMy::Instance().ToolsInst()->DisplayPopup("Sleeping", true, false);
+        qApp->processEvents();
+    }
 
     GetMy::Instance().ScreenSettingsPageInst().OnSleep();
     GetMy::Instance().MainWindowInst().OnSleep();
@@ -249,9 +245,16 @@ void Tools::Sleep()
     std::cout << "LOG: disabling WiFi" << std::endl;
     KoboPlatformFunctions::disableWiFiConnection(); // MANDATORY !!!!!
 
-    QThread::sleep(60);  // MANDATORY !!!!! <= this is it.... without this there's some bullshit background kobo/ntx stuff preventing the device from actually going to sleep (cf: battery consumption for confirmation) => need to split sleep() into fakeSleep() and Sleep() or something alike...
+    sleepTimer.start(PRESLEEP_DURATION);  // MANDATORY !!!!! <= this is it.... without this there's some bullshit background kobo/ntx stuff preventing the device from actually going to sleep (cf: battery consumption for confirmation) => need to split sleep() into fakeSleep() and Sleep() or something alike...
+}
 
-    //-------------------------------------------------------------
+//======================================================================
+void Tools::Sleep()
+{
+    sleepReached = true;
+    deviceState = DeviceState::busy;
+    std::cout << "!!! DEVICE STATE = BUSY @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
+
     std::cout << "LOG: /sys/power/stateExtendedFile << 1 (1st stage)" << std::endl;
     QFile stateExtendedFile("/sys/power/state-extended");
     if (!stateExtendedFile.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -316,8 +319,7 @@ void Tools::Sleep()
     stateFile.close();
 
     //-------------------------------------------------------------
-    // Everything below here will be reached when waking up on Kobo Glo
-    // But not on Libra h2o/gloHD because fuck qt and fuck kobo :D. Libra h2o/gloHD does the following section before shutting down
+    // Everything below here will be reached when waking up
     //-------------------------------------------------------------
     std::cout << "!!! DEVICE STATE = ASLEEP-ish @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
     deviceState = DeviceState::asleep; // to indicate to WakeUp() that slept went well
@@ -328,48 +330,56 @@ void Tools::WakeUp()
 {
     std::cout << "LOG: Waking up @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
-    GetMy::Instance().ToolsInst()->GetPopupInstance()->accept();
-    GetMy::Instance().ToolsInst()->DisplayPopup("Waking Up", true, false);
+    if (IsScreenSaverNeeded())
+    {
+        GetMy::Instance().ToolsInst()->GetPopupInstance()->accept();
+        GetMy::Instance().ToolsInst()->DisplayPopup("Waking Up", true, false);
+    }
     GetMy::Instance().ScreenSettingsPageInst().OnWakeUp();  // TODO : replace with signals at some point
     GetMy::Instance().MainWindowInst().OnWakeUp();
 
-    //-------------------------------------------------------------
-    QFile file("/sys/power/state-extended");
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    if (sleepReached)
     {
-        std::cerr << "ERROR: Couldn't open /sys/power/state-extended" << std::endl;
-        sleepError = true;
-    }
-    else
-    {
-        QTextStream out(&file);
-        out << "2\n";
-        if (out.status() != QTextStream::Ok)
+        //-------------------------------------------------------------
+        QFile file("/sys/power/state-extended");
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
         {
-            std::cerr << "ERROR: Couldn't write to /sys/power/state-extended" << std::endl;
+            std::cerr << "ERROR: Couldn't open /sys/power/state-extended" << std::endl;
             sleepError = true;
         }
-    }
-    file.close();
-
-    //-------------------------------------------------------------
-    QThread::msleep(100);
-
-    //-------------------------------------------------------------
-    file.setFileName("/sys/devices/virtual/input/input1/neocmd");
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-        std::cout << "LOG: Couldn't open /sys/devices/virtual/input/input1/neocmd (not necessarly an error)" << std::endl;
-    else
-    {
-        QTextStream out(&file);
-        out << "2\n";
-        if (out.status() != QTextStream::Ok)
+        else
         {
-            std::cerr << "ERROR: Couldn't write to /sys/devices/virtual/input/input1/neocmd" << std::endl;
-            sleepError = true;
+            QTextStream out(&file);
+            out << "2\n";
+            if (out.status() != QTextStream::Ok)
+            {
+                std::cerr << "ERROR: Couldn't write to /sys/power/state-extended" << std::endl;
+                sleepError = true;
+            }
         }
+        file.close();
+
+        //-------------------------------------------------------------
+        QThread::msleep(100);
+
+        //-------------------------------------------------------------
+        file.setFileName("/sys/devices/virtual/input/input1/neocmd");
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+            std::cout << "LOG: Couldn't open /sys/devices/virtual/input/input1/neocmd (not necessarly an error)" << std::endl;
+        else
+        {
+            QTextStream out(&file);
+            out << "2\n";
+            if (out.status() != QTextStream::Ok)
+            {
+                std::cerr << "ERROR: Couldn't write to /sys/devices/virtual/input/input1/neocmd" << std::endl;
+                sleepError = true;
+            }
+        }
+        file.close();
+
+        sleepReached = false;
     }
-    file.close();
 
     //-------------------------------------------------------------
     if (GetMy::Instance().AppSettingsPageInst().GetWifiStatus())
@@ -389,6 +399,15 @@ void Tools::WakeUp()
     GetMy::Instance().ToolsInst()->GetPopupInstance()->close();
     std::cout << "!!! DEVICE STATE = AWAKE @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
     deviceState = DeviceState::awake;
+}
+
+//======================================================================
+bool Tools::IsScreenSaverNeeded()
+{
+    return (GetMy::Instance().AppSettingsPageInst().GetScreenSaverSetting() == ScreenSaverSetting::OnEverywhere
+       || (GetMy::Instance().AppSettingsPageInst().GetScreenSaverSetting() == ScreenSaverSetting::OnExceptVocab &&
+           GetMy::Instance().MainWindowInst().GetStackedWidgetIdx() != 8 // VocabDisplayPage
+      ));
 }
 
 //======================================================================
@@ -463,7 +482,9 @@ Tools::Tools()
     InstallGlobalEventFilter(true);
     wakeUpTimer.setSingleShot(true);
     sleepTimer.setSingleShot(true);
+    preSleepTimer.setSingleShot(true);
     QObject::connect(&wakeUpTimer, &QTimer::timeout, &Tools::WakeUp);
+    QObject::connect(&preSleepTimer, &QTimer::timeout, &Tools::PreSleep);
     QObject::connect(&sleepTimer, &QTimer::timeout, &Tools::Sleep);
 }
 
@@ -519,6 +540,7 @@ bool QTouchEventFilter::eventFilter(QObject */*p_obj*/, QEvent *p_event)
                 }
                 break;
             }
+            case DeviceState::fakeSleeping:
             case DeviceState::asleep:
             {
                 if (p_keyPressEvent->key() == KoboKey::Key_Power)
@@ -538,7 +560,9 @@ bool QTouchEventFilter::eventFilter(QObject */*p_obj*/, QEvent *p_event)
     else if (p_event->type() == QEvent::KeyRelease)
     {
         QKeyEvent* p_keyPressEvent = static_cast<QKeyEvent*>(p_event);
-        if (p_keyPressEvent->key() == KoboKey::Key_SleepCover && GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::asleep)
+        if (p_keyPressEvent->key() == KoboKey::Key_SleepCover &&
+            (  GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::asleep
+            || GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::fakeSleeping))
         {
             GetMy::Instance().ToolsInst()->RequestWakeUp();
             return true;
@@ -548,6 +572,3 @@ bool QTouchEventFilter::eventFilter(QObject */*p_obj*/, QEvent *p_event)
     // else .... pass it to someone else, let it live
     return false;
 }
-
-DeviceState Tools::deviceState = DeviceState::awake;
-bool Tools::sleepError = false;

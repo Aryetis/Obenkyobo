@@ -21,7 +21,8 @@
 #define POPUP_FNT_GUESSES_RESIZE_ERROR_CNT 9 // if lower than 9, popup can be triggered during initial paint
                                              // and somehow it f**s up the whole sizing thing. TODO : investigate
 #define POPUP_FNT_STEM_RESIZE_ERROR_CNT 3
-#define POWER_REQUEST_TIMER 500
+#define POWER_REQUEST_TIMER 500 // ms
+#define PRESLEEP_DURATION 60000 // ms
 
 enum KanaFamilyEnum
 {
@@ -51,8 +52,9 @@ enum QcmExerciceType
 
 enum DeviceState
 {
-    asleep,
     awake,
+    fakeSleeping,
+    asleep, // actually it's more like "awaking" cause asleep is set "as soon as possible when waking up/before doing anything"
     busy
 };
 
@@ -61,6 +63,13 @@ enum DisplayLSEnum
     FilesAndDirs,
     Files,
     None
+};
+
+enum ScreenSaverSetting
+{
+    Off,
+    OnEverywhere,
+    OnExceptVocab
 };
 
 #endif // DEFINESLAND_H

@@ -72,7 +72,7 @@ bool ScreenSettingsPage::AreSettingsAvailablePopup() const
 
 void ScreenSettingsPage::OnSleep() const
 {
-    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::busy)
+    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::fakeSleeping)
         return;
 
     if(settingAvailable)

@@ -119,7 +119,7 @@ void MainWindow::DisplayFirstTimeKanasEditPagePopup()
 
 void MainWindow::OnSleep() const
 {
-    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::busy)
+    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::fakeSleeping)
         return;
 
     std::cout << "LOG: MainWindow::OnSleep()" << std::endl;
@@ -146,6 +146,11 @@ void MainWindow::OnWakeUp()
     timeDisplay->setText("Waking up !");
 
     UpdateStatusBarGeometry();
+}
+
+int MainWindow::GetStackedWidgetIdx() const
+{
+    return ui->ContentStackedWidget->currentIndex();
 }
 
 void MainWindow::on_refresh_triggered()

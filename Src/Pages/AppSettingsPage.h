@@ -35,6 +35,7 @@ public:
     bool GetWifiStatus() const { return wifiStatus; }
     DisplayLSEnum GetDisplayLSSetting() const { return displayLS; }
     bool IsDateAmPmFormat() const { return dateFormatIdx == 1; }
+    ScreenSaverSetting GetScreenSaverSetting() const { return static_cast<ScreenSaverSetting>(screenSaverIdx); }
 
     QSettings* GetSettingsSerializer() const { return settingsSerializer; }
 
@@ -53,6 +54,7 @@ private slots:
     void on_KanaHardRefreshCheckBox_clicked(bool checked);
     void on_VocabFntSizeCombox_currentIndexChanged(int index);
     void on_DisplayLSDropdown_currentIndexChanged(int index);
+    void on_ScreenSaverDropdown_currentIndexChanged(int index);
 
 private:
     Ui::AppSettingsPage *ui;
@@ -62,6 +64,7 @@ private:
     int hardRefreshFreqIdx;
     int batteryFormatIdx;
     int dateFormatIdx;
+    int screenSaverIdx;
     int nbrOfRowPerVocabIdx;
     bool kanaHardRefresh;
     int vocabFntSizeIdx;

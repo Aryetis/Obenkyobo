@@ -40,6 +40,7 @@ void AppSettingsPage::ParseConfigFile()
     kanaHardRefresh = settingsSerializer->value("AppSettings/kanaHardRefresh", badScreenList.contains(GetMy::Instance().Descriptor().device)).toBool();
     vocabFntSizeIdx = settingsSerializer->value("AppSettings/vocabFntSizeIdx", 4).toInt();
     displayLS = static_cast<DisplayLSEnum>(settingsSerializer->value("AppSettings/displayLSIdx", 0).toInt());
+    screenSaverIdx = settingsSerializer->value("AppSettings/screenSaverIdx", 2).toInt();
 
 #ifdef QT_NO_DEBUG // App doesn't like loosing contact with QtCreator debugger btw
     wifiStatus = settingsSerializer->value("AppSettings/wifi", false).toBool();
@@ -65,11 +66,11 @@ void AppSettingsPage::InitializeUIValues() const
     ui->DateDisplayFormatDropdown->blockSignals(true); // preventing UpdateStatusBarGeometry() cause we don't know MainWidget status
     ui->DateDisplayFormatDropdown->setCurrentIndex(dateFormatIdx);
     ui->DateDisplayFormatDropdown->blockSignals(false);
-
     ui->RowPerPageComboBox->setCurrentIndex(nbrOfRowPerVocabIdx);
     ui->KanaHardRefreshCheckBox->setChecked(kanaHardRefresh);
     ui->VocabFntSizeCombox->setCurrentIndex(vocabFntSizeIdx);
     ui->DisplayLSDropdown->setCurrentIndex(displayLS);
+    ui->ScreenSaverDropdown->setCurrentIndex(screenSaverIdx);
 }
 
 AppSettingsPage::~AppSettingsPage()
@@ -181,4 +182,10 @@ int AppSettingsPage::GetVocabFntSize() const
     int num = ui->VocabFntSizeCombox->currentText().toInt(&parsed);
 
     return (parsed) ? num : -1;
+}
+
+void AppSettingsPage::on_ScreenSaverDropdown_currentIndexChanged(int index)
+{
+    screenSaverIdx = index;
+    settingsSerializer->setValue("AppSettings/screenSaverIdx", index);
 }
