@@ -174,6 +174,10 @@ void Tools::RequestSleep() // needs to turn off wifi, stop printing stuff on scr
     deviceState = DeviceState::fakeSleeping;
     std::cout << "!!! DEVICE STATE = FAKE SLEEPING @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
+    // Moved here so the screen is updated immediately and not frozen by wifi process
+    GetMy::Instance().ScreenSettingsPageInst().OnSleep();
+    GetMy::Instance().MainWindowInst().OnSleep();
+
     preSleepTimer.start(POWER_REQUEST_TIMER);
 }
 
@@ -235,9 +239,6 @@ void Tools::PreSleep()
 
     if(IsScreenSaverNeeded())
         GetMy::Instance().ToolsInst()->DisplayPopup("Sleeping", true, false);
-
-    GetMy::Instance().ScreenSettingsPageInst().OnSleep();
-    GetMy::Instance().MainWindowInst().OnSleep();
 
     std::cout << "LOG: disabling WiFi" << std::endl;
     KoboPlatformFunctions::disableWiFiConnection(); // MANDATORY !!!!!
@@ -394,6 +395,9 @@ void Tools::PostWakeUp()
 {
     if (GetMy::Instance().AppSettingsPageInst().GetWifiStatus())
         KoboPlatformFunctions::enableWiFiConnection();
+
+    // TODO MG
+//    QApplication::processEvents(); // flush inputs sent during wifi wakeup freeze => !!!! crash !!!!
 
     //-------------------------------------------------------------
     std::cout << "LOG: Woken up, ready to go" << std::endl;

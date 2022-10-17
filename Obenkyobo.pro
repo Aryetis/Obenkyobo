@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# WORKING ON : - fix sleep not working on h2o/gloHD
+# WORKING ON : - flush inputs entered during the post wake up wifi process
 #-------------------------------------------------
 # TODO (0.3.0)  : - test, test, test !!!
 #-------------------------------------------------
