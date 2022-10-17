@@ -74,6 +74,7 @@ private :
     static void PreSleep();
     static void Sleep();
     static void WakeUp();
+    static void PostWakeUp();
     static bool IsScreenSaverNeeded();
 //    bool IsSleepAuthorized();
 
@@ -92,6 +93,7 @@ private :
     QTimer preSleepTimer;
 
     inline static QTimer sleepTimer = QTimer();
+    inline static QTimer postWakeUpTimer = QTimer();
     inline static bool sleepReached = false;
     inline static DeviceState deviceState = DeviceState::awake;
     inline static bool sleepError = false;

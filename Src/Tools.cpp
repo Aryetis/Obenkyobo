@@ -234,10 +234,7 @@ void Tools::PreSleep()
     std::cout << "LOG: going to PreSleep  @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
     if(IsScreenSaverNeeded())
-    {
         GetMy::Instance().ToolsInst()->DisplayPopup("Sleeping", true, false);
-        qApp->processEvents();
-    }
 
     GetMy::Instance().ScreenSettingsPageInst().OnSleep();
     GetMy::Instance().MainWindowInst().OnSleep();
@@ -382,16 +379,21 @@ void Tools::WakeUp()
     }
 
     //-------------------------------------------------------------
-    if (GetMy::Instance().AppSettingsPageInst().GetWifiStatus())
-        KoboPlatformFunctions::enableWiFiConnection();
+    // Delaying to make Sure "Waking Up!" message is shown up before wifi wake-up freeze even in "non screensaver mode"
+    postWakeUpTimer.start(POST_WAKEUP_WIFI_DELAY);
 
-    qApp->processEvents();
     //-------------------------------------------------------------
     if (sleepError)
     {
         GetMy::Instance().ToolsInst()->DisplayPopup("ERROR : Couldn't sleep/wake up properly, please report the error on Obenkyobo's github page and provide log.txt if possible");
         return;
     }
+}
+
+void Tools::PostWakeUp()
+{
+    if (GetMy::Instance().AppSettingsPageInst().GetWifiStatus())
+        KoboPlatformFunctions::enableWiFiConnection();
 
     //-------------------------------------------------------------
     std::cout << "LOG: Woken up, ready to go" << std::endl;
@@ -483,9 +485,11 @@ Tools::Tools()
     wakeUpTimer.setSingleShot(true);
     sleepTimer.setSingleShot(true);
     preSleepTimer.setSingleShot(true);
+    postWakeUpTimer.setSingleShot(true);
     QObject::connect(&wakeUpTimer, &QTimer::timeout, &Tools::WakeUp);
     QObject::connect(&preSleepTimer, &QTimer::timeout, &Tools::PreSleep);
     QObject::connect(&sleepTimer, &QTimer::timeout, &Tools::Sleep);
+    QObject::connect(&postWakeUpTimer, &QTimer::timeout, &Tools::PostWakeUp);
 }
 
 //======================================================================

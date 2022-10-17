@@ -22,6 +22,7 @@
                                              // and somehow it f**s up the whole sizing thing. TODO : investigate
 #define POPUP_FNT_STEM_RESIZE_ERROR_CNT 3
 #define POWER_REQUEST_TIMER 500 // ms
+#define POST_WAKEUP_WIFI_DELAY 100 // ms
 #define PRESLEEP_DURATION 60000 // ms
 
 enum KanaFamilyEnum
