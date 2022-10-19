@@ -112,7 +112,7 @@ kernel=C:\\Users\\aramir\\wsl_kernel
 
 ### Which serial port should I solder onto ?
 
-This <a href="gethighstayhigh"> blog entry</a> references a lot of Kobo internal layout. Thanks !
+This <a href="http://gethighstayhigh.co.uk/kobo-self-build/">gethighstayhigh blog entry</a> references a lot of Kobo internal layout. Thanks !
 
 ### Some Power Consumption measurements (needs to be redone with a proper methodology later on !!!)
 ```
