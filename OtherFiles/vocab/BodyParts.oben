@@ -1,0 +1,25 @@
+# Welcome to vocabulary .oben files
+# Here's a template line [fontType=hiragana][jp=いぬ][kanji=犬][trad=chien][learningScore=5]
+# fontType possible values : hiragana/katakana/kanji , will determine what fonts will be used in Obenkyobo to display this entry
+# LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo
+
+[fontType=hiragana][jp=あたま][kanji=頭][trad=head][learningScore=5]
+[fontType=hiragana][jp=うで][kanji=腕][trad=arm][learningScore=5]
+[fontType=hiragana][jp=あし][kanji=足][trad=leg][learningScore=5]
+[fontType=hiragana][jp=かみ][kanji=髪][trad=hair][learningScore=5]
+[fontType=hiragana][jp=みみ][kanji=耳][trad=ear][learningScore=5]
+[fontType=hiragana][jp=はな][kanji=鼻][trad=nose][learningScore=5]
+[fontType=hiragana][jp=まゆ][kanji=眉][trad=eyebrow][learningScore=5]
+[fontType=hiragana][jp=め][kanji=目][trad=eye][learningScore=5]
+[fontType=hiragana][jp=は][kanji=歯][trad=teeth][learningScore=5]
+[fontType=hiragana][jp=くち][kanji=口][trad=mouth][learningScore=5]
+[fontType=hiragana][jp=かた][kanji=肩][trad=shoulder][learningScore=5]
+[fontType=hiragana][jp=ひじ][kanji=肘][trad=elbow][learningScore=5]
+[fontType=hiragana][jp=むね][kanji=胸][trad=chest][learningScore=5]
+[fontType=hiragana][jp=て][kanji=手][trad=hand][learningScore=5]
+[fontType=hiragana][jp=ゆび][kanji=指][trad=finger][learningScore=5]
+[fontType=hiragana][jp=ひげ][kanji=髭][trad=facial hair][learningScore=5]
+[fontType=hiragana][jp=くび][kanji=首][trad=neck][learningScore=5]
+[fontType=hiragana][jp=おなか][kanji=お腹][trad=stomach][learningScore=5]
+[fontType=hiragana][jp=もも][kanji=股][trad=thigh][learningScore=5]
+[fontType=hiragana][jp=ひざ][kanji=膝][trad=knee][learningScore=5]
