@@ -4,11 +4,11 @@ You can setup a very basic Kobo dev environment by following either
 - the <a href="https://github.com/koreader/koxtoolchain">koxtoolchain instructions</a> and work your way from here by cross-compiling qt for ARM and the QTPA kobo platform plugin. To validate your arm gcc, run your first non graphical "hello world" throught an ssh-server or use koreader "run command" option.
 - Or you can go the "easy" route and use @Rain92's <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> to setup everything "libs, Qt binaries, deployment scripts".
 
-Once you've got your arm QtBinaries, copy its folder (with necessaries additional libs) to `OtherFiles/Dependencies`
+Once you've got your arm QtBinaries, copy its folder (with necessaries additional libs) to `OtherFiles/Dependencies` (if you're trying to compile Obenkyobo)
 
-For Obenkyobo to work you'll also have to compile <a href="https://github.com/Aryetis/qt5-kobo-platform-plugin">qt5-kobo-platform-plugin</a> (for now use my fork of it as it includes a correct fbink build and a fix for sleepcover button) and have its folder next to Obenkyobo's folder. That way the packager.sh script will be able to grab the libkobo.so or libkobo.so.debug (you'll have to rename it) if you wish to build in debug mode.
+For Obenkyobo to work you'll also have to get and compile <a href="https://github.com/Aryetis/qt5-kobo-platform-plugin">qt5-kobo-platform-plugin</a> if you wish to debug any QPA specific stuff.
 
-You'll probably run along some troubles, so to save you some time here's the tldr version from the <a href="https://discord.com/channels/793941135419506728/796445063127236648/897503681275129876">discord discussion</a>
+You'll probably run along some troubles, so to save you some time here's the tldr version from my <a href="https://discord.com/channels/793941135419506728/796445063127236648/897503681275129876">discord discussion with devs who actually know their stuff</a>
 
 To compile the problematic brotli library, tldr switch to the 3.0.0 branch by :
 1. comment previous and following libs related content and prevent any git checkout/clean from install_libs.sh
@@ -38,8 +38,6 @@ INCLUDEPATH += $$PWD/libs/qt5-kobo-platform-plugin/src # should link to the libk
 INSTALLS += target everything thumbnail # use only this for full deploy, to save time set it to += target afterwards  
 ```
 
-
-
 ### Setup QtCreator
 
 For a better workflow and one click build+deploy+launch from within QtCreator : 
@@ -49,6 +47,7 @@ Command : %{sourceDir}/OtherFiles/packager.sh.
 Arguments : %{ActiveProject:BuildConfig:Type} %{sourceDir} %{ActiveProject:BuildConfig:Path} %{ActiveProject:Name}
 Working Directory : %{sourceDir}
 
+Projects->Kobo(Kit)->Run->Deployment-> Upload files via SFTP instead of rsync
 Projects->Kobo(Kit)->Run->Deployment-> Add Run custom remote command (in both Release and debug) with :  
 /mnt/onboard/.adds/Obenkyobo/debugEnv.sh
 
@@ -57,7 +56,7 @@ LD_LIBRARY_PATH = /mnt/onboard/.adds/qt-linux-5.15-kde-kobo/lib:lib:
 QT_QPA_PLATFORM = kobo_obenkyobo (keep an eye on https://github.com/Rain92/qt5-kobo-platform-plugin to switch back to official qpa plugin once issues are resolved over here)
 ```
 
-NEVER modify any of the .sh scripts under windows... Windows end of line will mess things up when ran on linux
+NEVER modify any of the .sh scripts under windows... Windows end of line will mess things up when ran on linux, or at the very least use `win2unix` afterwards to fix line endings issues.
 
 ### Setup gdb
 
@@ -110,3 +109,23 @@ kernel=C:\\Users\\aramir\\wsl_kernel
 10. in powershell/cmd `wsl --shutdown` (just to be sure)
 11. relaunch your WSL2 and check out your new kernel with : `uname -a` 
 12. connect to your kobo with the usual `sudo minicom -D /dev/ttyUSB0` and voila !
+
+### Which serial port should I solder onto ?
+
+This <a href="gethighstayhigh"> blog entry</a> references a lot of Kobo internal layout. Thanks !
+
+### Some Power Consumption measurements (needs to be redone with a proper methodology later on !!!)
+```
+Consumption at sleep and 100% battery (numbers read after a minute of stabilized consumption at most... Needs to redo tests with stricter methodology) : 
+============= Kobo Glo HD =============
+Nickel : 0.0129 A (takes a little longer to stabilize)
+Obenkyobo : 0.0129 A (after the minute of Fake Sleep)
+============== Kobo Glo ===============
+Nickel : 0.0100 A (stable)
+Obenkyobo : 0.0101 A ( (after the minute of Fake Sleep))
+Inkbox OS : 0.0101 A (after enabling "sleep while charging" in experimental settings)
+=========== Kobo Libra h2o ============
+Nickel : 0.0102 A (takes longer to stabilize) 
+Obenkyobo : 0.0101 A ( (after the minute of Fake Sleep)) 
+UMR : 0.0425 -> 0.0429 A (oscillation for long time) then 0.0103 A
+```
