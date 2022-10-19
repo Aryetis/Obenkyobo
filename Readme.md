@@ -1,11 +1,6 @@
 
 # Obenkyobo
 
-```diff
-- Please be aware, this application is still early in its life cycle.
-- Turning off your device will not put it to sleep, it will only turn off the light.
-```
-
 ## What is it ?
 
 Obenkyobo is an application for kyobo ereaders designed to help you memorize Hiraganas, Katakanas and vocabulary. 
@@ -30,23 +25,24 @@ More screenshots : <a href="https://imgur.com/a/8ehpdbf">here (imgur gallery)</a
 ## Features ?
 
 Here's what available currently :
-- Hiragana/Katakana <-> Romanji customizable MCQ
-- Vocabulary sheet system (create your owns sheets, hide columns, hide cells, randomize content, change number of row per page, etc)
-- Weighted random / "learning state" for each Hiragana/Katakana to keep MCQ more entertaining (of course, progress is stored in between each session)
-- Quality of Life features such a; multiple fonts, font settings, screen options (Luminosity/Tint) support, physical buttons support, etc
-- Wifi support (kind of)
+- Hiragana/Katakana/Vocabulary <-> Romanji customizable MCQ
+- Vocabulary sheet system (create your owns sheets, read them, randomize them, hide columns/items, etc)
+- Learning Score (LS) System (Weighted random) for each Hiragana/Katakana to keep MCQ more entertaining
+- Quality of Life features such as; multiple fonts, font settings, screen options (Luminosity/Tint) support, physical buttons support, fully customizable MCQ, etc
+- Wifi support
+- Sleep support (sleep cover supported) 
 
-Tested on : 
+Tested and working on : 
 - Libra h2o
 - Forma
-- Mini (might have minor scaling issues)
+- Mini (might have minor UI scaling issues)
 - Glo
 - Glo HD
-- More incoming, please report if it works for your model too
+- Please report if it works for your model too
 
 ## How to install ?
 
-Firstly, this application is designed to be compatible with most (except some new models) Kobo devices with a recent firmware (probably 4.6+). Do not try to install it for other ereader, it will not work ! This application is provided "as is". Don't come to me if somehow your device catch on fire.
+Firstly, this application is designed to be compatible with most (except some new models) Kobo devices with a recent firmware (probably 4.6+). Do not try to install it for other ereader, it will not work ! This application is provided "as is". Don't come to me if somehow your device catch on fire after installing this.
 
 Secondly, you'll need to install a "launcher" beforehand. Common options are : 
 - <a href="https://github.com/pgaskin/NickelMenu">NickelMenu (NM)</a>, recommended option
@@ -58,7 +54,7 @@ Once you're done installing at least one of those you can :
 
  It should work "as is" assuming you're using NickelMenu. If you're using KfMon you'll have to uncomment the associated entry file (`.adds/kfmon/config/Obenkyobo.ini`) by removing one of the `;` located at the start of each line. And you might want to delete the useless NickelMenu entry too `.adds/nm/Obenkyobo`
 
-If you're only updating Obenkyobo, you can install the "light" version of the archive instead.  <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_Light_Release_V*.*.*.zip</a>.  This version is stripped from qt packages you already installed with the previous version and should work fine for updating except if told otherwise.
+If you're only updating Obenkyobo, you can try to install the "light" version of the archive instead.  <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_Light_Release_V*.*.*.zip</a>.  This version is stripped from qt packages you already installed with the previous AIO version and should work fine for updating except if told otherwise.
 
 <img src="Screenshots/NickelMenu.png" width="303" height="184" align="left"/>
 <br/>
@@ -69,23 +65,23 @@ And voilà ! You should now have a NickelMenu entry at the bottom right corner o
 
 ## How to create my vocabulary sheets ?
 
-Each ****.oben file  in `Obenkyobo/vocab` is a Vocabulary sheet.<br/> (default ones are in french, I encourage you to write your owns)
-To make your own, create a file and follow the same template as the default ones.
+Each ****.oben file  in `.adds/Obenkyobo/vocab` is a Vocabulary sheet.<br/>. I encourage you to write your owns, searching for new words and writing sheets is also part of the learning process.
+To make your own sheet, create a file and follow the same template as the default ones.
 
-Each line should follow this format : `[fontType=hiragana][jp=いぬ][kanji=犬][trad=chien][learningScore=5]`
+Each line should follow this format : `[fontType=hiragana][jp=いぬ][kanji=犬][trad=dog][learningScore=5]`
 
 You can insert commentary line by having it start with a `#`.
 
-Possible values for fontType are `hiragana, katakana`, it will determine what fonts is used in Obenkyobo to display this entry.
+Possible values for fontType are `hiragana, katakana`, it will determine what font is used in Obenkyobo to display this entry's `jp` value.
 
-LearningScore value range [0;5], please note that the value is actually inversed from what is displayed in Obenkyobo. And the LearniningScore attribute of vocabulary sheets will be used when I'm done implementing vocabulary MCQ.
+LearningScore (LS)'s value ranges from 0 to 5, please note that the value is actually registered in the file is inversed from what is displayed in Obenkyobo. Therefore you should probably put 5 for each new Entry.
 
 If your file is misinterpreted in Obenkyobo, please make sure your text editor (notepad++, sublimeText, etc) is saving the file in UTF-8 format.
 
 ## Issues ? 
 
 If you encounter any issues, please report them by either : 
-- Creating a new Ticket on Github <a href="https://github.com/Aryetis/Obenkyobo/issues">here</a> describing your issue as precisely as possible, include the type of ereader your using and the log.txt at `/.adds/Obenkyobo/log.txt` (it erases itself at each launch, so don't restart Obenkyobo right after a crash)
+- Creating a new Ticket on Github <a href="https://github.com/Aryetis/Obenkyobo/issues">here</a> describing your issue as precisely as possible, include the type of ereader your using and the log.txt at `/.adds/Obenkyobo/log.txt` (it erases itself at each launch, so don't restart Obenkyobo right after a crash ! Save the `log.txt` beforehand, thanks.)
 - Respond in Obenkyobo's MobileRead thread <a href="https://www.mobileread.com/forums/showthread.php?p=4162746">MobileRead thread</a> in the same way.
 
 
@@ -93,14 +89,14 @@ If you encounter any issues, please report them by either :
 
 Thank you for actually reading a readme file.
 
-And big big thanks to <a href="https://github.com/Rain92/">@Rain92/OfficerAction</a> , <a href="https://github.com/NiLuJe">@NiLuJe</a>, <a href="https://github.com/tux-linux">@NiMa</a> and <a href="https://github.com/Szybet">@Szybet</a> for putting up with me on Discord helping me setup my environment, walking me throught some Qt Kobo specific minefields and creating all those nice tools like QPA allowing me to develop this app.
+And big big thanks to <a href="https://github.com/Rain92/">@Rain92/OfficerAction</a> , <a href="https://github.com/NiLuJe">@NiLuJe</a>, <a href="https://github.com/tux-linux">@NiMa</a> and <a href="https://github.com/Szybet">@Szybet</a> for putting up with me on Discord, helping me setup my environment, walking me throught some Qt Kobo specific minefields and creating all those nice tools/libraries like QPA allowing me to develop this app.
 
 ## Resources licensing (fonts, icons, pictures)
 
-Everything used in this software is "free-to-use and share in a way" (tldr version). Still, credit is given where credit is due. You can find the details about who made what in the following file 
+Everything used in this software is "free-to-use and share in any way" (tldr version). Still, credit is given where credit is due. You can find the details about who made what in the following file 
 <a href="https://github.com/Aryetis/Obenkyobo/tree/master/Resources/LICENSES">Resources Licenses and Details</a>
 
-## For developpers, dummies, and future me. How to compile it ?
+## For developpers, dummies, and future me. How to compile it ? And other dev related tricks and whatnot.
 
 Please check the [DevReadme.md ](DevReadme.md) file.
 
