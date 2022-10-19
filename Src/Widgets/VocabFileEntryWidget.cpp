@@ -97,9 +97,10 @@ void VocabFileEntryWidget::on_TitleButton_clicked()
 
         if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeVocabDisplayPage", true).toBool() )
         {
-            GetMy::Instance().ToolsInst()->DisplayPopup("You can click the top row buttons to hide/show the associated column.\n"
+            GetMy::Instance().ToolsInst()->DisplayPopup("You can click the top row buttons to hide/show each associated column.\n"
                                               "Each cell is also independently clickable.\n"
-                                              "Combine those with the \"Randomize\" button to memorize faster");
+                                              "Combine those with the \"Randomize\" button to memorize faster.\n"
+                                              "\"Reset LS\" will the reset the whole Sheet's Learning Score (LS)");
             GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->setValue("AppSettings/firstTimeVocabDisplayPage", false);
         }
     }

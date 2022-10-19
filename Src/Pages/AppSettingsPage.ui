@@ -613,7 +613,7 @@
        <item>
         <widget class="QLabel" name="ScreenSaverLabel">
          <property name="text">
-          <string>ScreenSaver :</string>
+          <string>Screensaver :</string>
          </property>
         </widget>
        </item>

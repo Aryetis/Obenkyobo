@@ -6,20 +6,18 @@
 #define JP_SYMBOL_FNT_SIZE 20
 #define DEFAULT_KANAS_ANSWER_RMJ_KANA_FNT_SIZE 45
 #define DEFAULT_KANAS_ANSWER_KANA_RMJ_SIZE 45
-#define DEFAULT_KANAS_STEM_FNT_SIZE 70
-#define DEFAULT_KANAS_ALLOW_SILENT_RESIZE false
-#define DEFAULT_VOCAB_ANSWER_RMJ_KANA_FNT_SIZE 30
-#define DEFAULT_VOCAB_ANSWER_KANA_RMJ_SIZE 30
+#define DEFAULT_KANAS_STEM_FNT_SIZE 65
+#define DEFAULT_VOCAB_ANSWER_RMJ_KANA_FNT_SIZE 15
+#define DEFAULT_VOCAB_ANSWER_KANA_RMJ_SIZE 20
 #define DEFAULT_VOCAB_STEM_FNT_SIZE 45
-#define DEFAULT_VOCAB_ALLOW_SILENT_RESIZE true
 #define POPUP_BORDER_SIZE 5
 #define POPUP_MARGIN_X 0.04f
 #define POPUP_MARGIN_Y 0.02f
 #define POPUP_WIDTH 0.9f
 #define CORRECTED_FONT_PRECISION 1
 #define CORRECTED_MINIMAL_FONT_SIZE 5
-#define POPUP_FNT_GUESSES_RESIZE_ERROR_CNT 9 // if lower than 9, popup can be triggered during initial paint
-                                             // and somehow it f**s up the whole sizing thing. TODO : investigate
+#define POPUP_FNT_GUESSES_RESIZE_ERROR_CNT 18 // if lower than 9, popup can be triggered during initial paint
+                                              // and somehow it f**s up the whole sizing thing. TODO : investigate
 #define POPUP_FNT_STEM_RESIZE_ERROR_CNT 3
 #define POWER_REQUEST_TIMER 500 // ms
 #define POST_WAKEUP_WIFI_DELAY 100 // ms

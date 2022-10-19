@@ -94,11 +94,9 @@ void MainWindow::DisplayFirstTimeMainWindowPagePopup()
 {
     if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeMainWindowPage", true).toBool() )
     {
-        GetMy::Instance().ToolsInst()->DisplayPopup("This software is still in development, Some functions are not implemented yet.\n"
-                                          "Sleep functionality is not supported for now.\n"
-                                          "Therefore it is recommended that you close Obenkyobo between each session to save battery life.\n"
-                                          "Each popup will be used only once and sparingly to introduce some mechanisms.\n"
-                                          "If you wish to see any popup again later on, please go to Settings->Application->Reset Help Popup\n\n"
+        GetMy::Instance().ToolsInst()->DisplayPopup("This software is still in development, some functionalities will be added in the future.\n\n"
+                                          "Each popup will be used only once and sparingly to introduce each functionality.\n"
+                                          "You can reread popups again by clicking Settings→Application→Reset Help Popup\n\n"
                                           "Thanks for reading, enjoy.", true);
         GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->setValue("AppSettings/firstTimeMainWindowPage", false);
     }
@@ -108,11 +106,11 @@ void MainWindow::DisplayFirstTimeKanasEditPagePopup()
 {
     if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeKanasEditPage", true).toBool() )
     {
-        GetMy::Instance().ToolsInst()->DisplayPopup("Here you can add/remove kanas to the related MCQ's guesses.\n"
-                                          "The background color and circle gyzmo indicates their status.\n"
+        GetMy::Instance().ToolsInst()->DisplayPopup("Here you can add/remove kanas from the related MCQ's guesses.\n"
+                                          "The background color and circle gyzmo indicate their status.\n"
                                           "The number at the bottom right corner indicates its Learning Score (LS).\n"
-                                          "It ranges reflects your progress, ranging from 0 to 5.\n"
-                                          "You can use the checkboxes to quickly toggle whole section.");
+                                          "It reflects your progress, ranging from 0 to 5.\n"
+                                          "You can use the checkboxes to quickly toggle a whole section.");
         GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->setValue("AppSettings/firstTimeKanasEditPage", false);
     }
 }
@@ -289,7 +287,8 @@ void MainWindow::on_actionHiragana_to_Romanji_MCQ_triggered()
         GetMy::Instance().ToolsInst()->DisplayPopup(
                 "Not enough enabled Hiragana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry()) +
-                " at :\nMain->Hiragana->Edit Hiragana Set");
+                " at : Main→Hiragana→Edit Hiragana Set\n"
+                "Or change the MCQ configuration at Settings→Application→MCQ configuration");
 }
 
 void MainWindow::on_actionRomanji_to_Hiragana_MCQ_triggered()
@@ -304,7 +303,8 @@ void MainWindow::on_actionRomanji_to_Hiragana_MCQ_triggered()
         GetMy::Instance().ToolsInst()->DisplayPopup(
                 "Not enough enabled Hiragana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry()) +
-                " at :\nMain->Hiragana->Edit Hiragana Set");
+                " at : Main→Hiragana→Edit Hiragana Set\n"
+                "Or change the MCQ configuration at Settings→Application→MCQ configuration");
 }
 
 void MainWindow::on_actionHiragana_to_Romanji_Kbd_triggered()
@@ -339,7 +339,8 @@ void MainWindow::on_actionKatakana_to_Romanji_MCQ_triggered()
         GetMy::Instance().ToolsInst()->DisplayPopup(
                 "Not enough enabled Katakana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry()) +
-                " at :\nMain->Hiragana->Edit Hiragana Set");
+                " at : Main→Hiragana→Edit Hiragana Set\n"
+                "Or change the MCQ configuration at Settings→Application→MCQ configuration");
 }
 
 void MainWindow::on_actionRomanji_to_Katakana_MCQ_triggered()
@@ -354,7 +355,8 @@ void MainWindow::on_actionRomanji_to_Katakana_MCQ_triggered()
         GetMy::Instance().ToolsInst()->DisplayPopup(
                 "Not enough enabled Katakana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry()) +
-                " at :\nMain->Hiragana->Edit Hiragana Set");
+                " at : Main→Hiragana->Edit Hiragana Set\n"
+                "Or change the MCQ configuration at Settings→Application→MCQ configuration");
 }
 
 void MainWindow::on_actionKatakana_to_Romanji_Kbd_triggered()
@@ -414,9 +416,10 @@ void MainWindow::on_actionVocabulary_to_Romanji_MCQ_triggered()
     }
     else
         GetMy::Instance().ToolsInst()->DisplayPopup(
-                "Please enable more Vocabulary Sheets at Main->Vocabulary->Learn / Edit words Set\n"
+                "You need more Vocabulary Sheet Entries to start a Vocabulary MCQ.\n"
+                "Please enable more at Main→Vocabulary→Learn / Edit words Set\n"
                 "At least "+QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry())+
-                " entries / Vocabulary Lines across all the Sheets/.oben files are required");
+                " entries / Vocabulary Lines across all the Sheets/.oben files are required.");
 }
 
 void MainWindow::on_actionRomanji_to_Vocabulary_MCQ_triggered()
@@ -429,9 +432,10 @@ void MainWindow::on_actionRomanji_to_Vocabulary_MCQ_triggered()
     }
     else
         GetMy::Instance().ToolsInst()->DisplayPopup(
-                "Please enable more Vocabulary Sheets at Main->Vocabulary->Learn / Edit words Set\n"
+                "You need more Vocabulary Sheet Entries to start a Vocabulary MCQ.\n"
+                "Please enable more at Main→Vocabulary→Learn / Edit words Set\n"
                 "At least "+QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry())+
-                " entries / Vocabulary Lines across all the Sheets/.oben files are required");
+                " entries / Vocabulary Lines across all the Sheets/.oben files are required.");
 }
 
 void MainWindow::on_actionLearn_Edit_Set_triggered()
@@ -443,8 +447,9 @@ void MainWindow::on_actionLearn_Edit_Set_triggered()
 
     if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeVocabListPage", true).toBool() )
     {
-        GetMy::Instance().ToolsInst()->DisplayPopup("Here are displayed your \"vocab sheets\". Please check Obenkyobo's github page to learn how to create your owns.\n"
-                                          "Click on any one to learn/display its content.\n");
+        GetMy::Instance().ToolsInst()->DisplayPopup("Here are displayed your \"Vocabulary Sheets\". Please check Obenkyobo's github page to learn how to create your owns.\n"
+"Sitting down and writing your own sheets is also part of the learning proces.\n\n"
+                                          "Click on any entry to display its content and start learning.\n");
         GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->setValue("AppSettings/firstTimeVocabListPage", false);
     }
 }

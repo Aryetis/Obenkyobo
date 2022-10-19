@@ -138,7 +138,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;  This application is designed to help you memorize kanas and numbers (soon™). Click &amp;quot;Main&amp;quot; to start learning.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;  The &amp;quot;Edit *** set&amp;quot; submenus will allow you to add/remove kanas from your MCQ and keep track of your progress by assigning to each a &amp;quot;learning score&amp;quot; from 0 to 5.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;  This application is very inspired by Obenkyo, scan the QRCode to learn more about it.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This application is designed to help you memorize kanas and kanjis. Click &amp;quot;Main&amp;quot; to start learning.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;The &amp;quot;Edit *** set&amp;quot; submenus will allow you to add/remove kanas/&amp;quot;Vocabulary Sheets&amp;quot; from each MCQ and keep track of your progress by assigning to each entry a &amp;quot;learning score&amp;quot; from 0 to 5.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;This application is very inspired by Obenkyo, scan the QRCode to learn more about it.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
