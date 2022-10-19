@@ -12,8 +12,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>800</height>
+    <width>599</width>
+    <height>597</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,16 +30,16 @@
     <number>9</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>6</number>
    </property>
    <property name="rightMargin">
     <number>9</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>6</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="TextStuffLayout" stretch="2,8">
+    <layout class="QVBoxLayout" name="TextStuffLayout" stretch="0,0">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -50,7 +50,7 @@
       <number>0</number>
      </property>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <layout class="QVBoxLayout" name="TitleLayout">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -66,7 +66,7 @@
        <item>
         <widget class="QLabel" name="WelcomeTitle">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -116,7 +116,7 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="WelcomeTextLayout">
+      <layout class="QVBoxLayout" name="AboutTextLayout">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -130,7 +130,20 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QLabel" name="WelcomeText">
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="Paragraph1">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -138,7 +151,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This application is designed to help you memorize kanas and kanjis. Click &amp;quot;Main&amp;quot; to start learning.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;The &amp;quot;Edit *** set&amp;quot; submenus will allow you to add/remove kanas/&amp;quot;Vocabulary Sheets&amp;quot; from each MCQ and keep track of your progress by assigning to each entry a &amp;quot;learning score&amp;quot; from 0 to 5.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;This application is very inspired by Obenkyo, scan the QRCode to learn more about it.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;This application is designed to help you memorize kanas and kanjis. Click &amp;quot;Main&amp;quot; to start learning.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -147,6 +160,65 @@
           <bool>true</bool>
          </property>
         </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="Paragraph2">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;The &amp;quot;Edit *** set&amp;quot; submenus will allow you to add/remove kanas/&amp;quot;Vocabulary Sheets&amp;quot; from each MCQ and keep track of your progress by assigning to each entry a &amp;quot;learning score&amp;quot; from 0 to 5.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="Paragraph3">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;To learn more about this application such as the Vocabulary Sheet System, please check Obenkyobo's github page by scanning the QRCode below.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </item>
@@ -204,17 +276,20 @@
          <height>0</height>
         </size>
        </property>
+       <property name="styleSheet">
+        <string notr="true">image:url(:/pictures/QrCode/github.svg);</string>
+       </property>
        <property name="frameShape">
         <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="lineWidth">
+        <number>0</number>
        </property>
        <property name="text">
         <string notr="true"/>
        </property>
-       <property name="pixmap">
-        <pixmap resource="../../Resources/Pictures.qrc">:/pictures/QrCode/obenkyoQrCode.png</pixmap>
-       </property>
        <property name="scaledContents">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -234,8 +309,6 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../../Resources/Pictures.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

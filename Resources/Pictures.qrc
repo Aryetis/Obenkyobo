@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/pictures">
-        <file>QrCode/obenkyoQrCode.png</file>
+        <file>QrCode/github.svg</file>
         <file>lockscreen.jpg</file>
         <file>Arrows/upArrow.png</file>
         <file>Arrows/downArrow.png</file>
