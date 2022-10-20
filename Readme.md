@@ -5,22 +5,24 @@
 
 Obenkyobo is an application for kyobo ereaders designed to help you memorize Hiraganas, Katakanas and vocabulary. 
 
+It is very inspired by an Android application called <a href="https://play.google.com/store/apps/details?id=com.Obenkyo">Obenkyo, available at google play</a>. I have no affiliation Obenkyo whatsoever. But check it out it's free and worth your time too if you can resist your urge to procrastinate on your samrtphone instead of studying.
+
 ## How does it look ?
 <p align="center">
-  <img src="Screenshots/about.png" width="252" height="320" >
-  <img src="Screenshots/hiragana1.png" width="252" height="320" >
-  <img src="Screenshots/hiragana2.png" width="252" height="320" >
-  <img src="Screenshots/katakana2.png" width="252" height="320" >
-  <img src="Screenshots/hiraganaEdit.png" width="252" height="320" >
-  <img src="Screenshots/hiraganaEdit2.png" width="252" height="320" >
-  <img src="Screenshots/VocabDir.png" width="252" height="320" >
-  <img src="Screenshots/vocabLearn1.png" width="252" height="320" >
-  <img src="Screenshots/vocabLearn2.png" width="252" height="320" >
+  <img src="Screenshots/Welcome.png" width="252" height="320" >
+  <img src="Screenshots/HiraToRmj.png" width="252" height="320" >
+  <img src="Screenshots/RmjToKat.png" width="252" height="320" >
+  <img src="Screenshots/VocToRmj3.png" width="252" height="320" >
+  <img src="Screenshots/VocToRmj4.png" width="252" height="320" >
+  <img src="Screenshots/RmjToVoc1.png" width="252" height="320" >
+  <img src="Screenshots/EditHiraganaSet1.png" width="252" height="320" >
+  <img src="Screenshots/VocabExplorer3.png" width="252" height="320" >
+  <img src="Screenshots/VocabDisplay6.png" width="252" height="320" >
   <img src="Screenshots/SettingsApplication.png" width="252" height="320" >
   <img src="Screenshots/SettingsFonts.png" width="252" height="320" >
   <img src="Screenshots/SettingsScreen.png" width="252" height="320" >
 </p>
-More screenshots : <a href="https://imgur.com/a/8ehpdbf">here (imgur gallery)</a>
+More screenshots : <a href="https://github.com/Aryetis/Obenkyobo/tree/master/Screenshots">here</a>
 
 ## Features ?
 
@@ -65,16 +67,18 @@ And voilà ! You should now have a NickelMenu entry at the bottom right corner o
 
 ## How to create my vocabulary sheets ?
 
-Each ****.oben file  in `.adds/Obenkyobo/vocab` is a Vocabulary sheet.<br/>. I encourage you to write your owns, searching for new words and writing sheets is also part of the learning process.
+Each ****.oben file  in `.adds/Obenkyobo/vocab` is a Vocabulary sheet.<br/>. Depending of your operating system, you might have to <a href="https://www.google.com/search?client=firefox-b-d&q=enable+hidden+files+">enable "hidden files"</a> to see those directories. I encourage you to write your owns, searching for new words and writing sheets is also part of the learning process.
 To make your own sheet, create a file and follow the same template as the default ones.
 
 Each line should follow this format : `[fontType=hiragana][jp=いぬ][kanji=犬][trad=dog][learningScore=5]`
+
+Provided Vocabulary Sheets can be found on this repository at <a href="https://github.com/Aryetis/Obenkyobo/tree/master/OtherFiles/vocab">this page</a>
 
 You can insert commentary line by having it start with a `#`.
 
 Possible values for fontType are `hiragana, katakana`, it will determine what font is used in Obenkyobo to display this entry's `jp` value.
 
-LearningScore (LS)'s value ranges from 0 to 5, please note that the value is actually registered in the file is inversed from what is displayed in Obenkyobo. Therefore you should probably put 5 for each new Entry.
+LearningScore (LS)'s value ranges from 0 to 5, please note that the value actually registered in the file is inversed from what is displayed in Obenkyobo. Therefore you should probably put 5 for each new Entry.
 
 If your file is misinterpreted in Obenkyobo, please make sure your text editor (notepad++, sublimeText, etc) is saving the file in UTF-8 format.
 
