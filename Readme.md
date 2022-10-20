@@ -24,6 +24,15 @@ It is very inspired by an Android application called <a href="https://play.googl
 </p>
 More screenshots : <a href="https://github.com/Aryetis/Obenkyobo/tree/master/Screenshots">here</a>
 
+## Any demo video ?
+
+<video controls>
+  <source src="Screenshots/Demo.mp4" type="video/mp4">
+  <p>Your browser doesn't support HTML5 video. Use the youtube link below instead.</p>
+</video>
+
+[Youtube link (better video quality)](https://www.youtube.com/watch?v=NnxOF-2C12I)
+
 ## Features ?
 
 Here's what available currently :
