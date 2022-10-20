@@ -26,10 +26,7 @@ More screenshots : <a href="https://github.com/Aryetis/Obenkyobo/tree/master/Scr
 
 ## Any demo video ?
 
-<video controls>
-  <source src="Screenshots/Demo.mp4" type="video/mp4">
-  <p>Your browser doesn't support HTML5 video. Use the youtube link below instead.</p>
-</video>
+https://user-images.githubusercontent.com/4246001/197065422-db6f3642-189e-4b5f-9f7d-373bd2ce00aa.mp4
 
 [Youtube link (better video quality)](https://www.youtube.com/watch?v=NnxOF-2C12I)
 
