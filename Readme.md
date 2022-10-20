@@ -24,7 +24,7 @@ It is very inspired by an Android application called <a href="https://play.googl
 </p>
 More screenshots : <a href="https://github.com/Aryetis/Obenkyobo/tree/master/Screenshots">here</a>
 
-## Any demo video ?
+## Any demo video ? Settings Explanations ?
 
 https://user-images.githubusercontent.com/4246001/197065422-db6f3642-189e-4b5f-9f7d-373bd2ce00aa.mp4
 
