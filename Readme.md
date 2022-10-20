@@ -78,7 +78,7 @@ You can insert commentary line by having it start with a `#`.
 
 Possible values for fontType are `hiragana, katakana`, it will determine what font is used in Obenkyobo to display this entry's `jp` value.
 
-LearningScore (LS)'s value ranges from 0 to 5, please note that the value is actually registered in the file is inversed from what is displayed in Obenkyobo. Therefore you should probably put 5 for each new Entry.
+LearningScore (LS)'s value ranges from 0 to 5, please note that the value actually registered in the file is inversed from what is displayed in Obenkyobo. Therefore you should probably put 5 for each new Entry.
 
 If your file is misinterpreted in Obenkyobo, please make sure your text editor (notepad++, sublimeText, etc) is saving the file in UTF-8 format.
 
