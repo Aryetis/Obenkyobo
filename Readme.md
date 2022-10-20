@@ -86,6 +86,8 @@ Possible values for fontType are `hiragana, katakana`, it will determine what fo
 
 LearningScore (LS)'s value ranges from 0 to 5, please note that the value actually registered in the file is inversed from what is displayed in Obenkyobo. Therefore you should probably put 5 for each new Entry.
 
+Feel free to share your own Vocabulary Sheets in [Obenkyobo's mobileread thread](https://www.mobileread.com/forums/showthread.php?p=4162746)
+
 If your file is misinterpreted in Obenkyobo, please make sure your text editor (notepad++, sublimeText, etc) is saving the file in UTF-8 format.
 
 ## Issues ? 
