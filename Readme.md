@@ -24,12 +24,9 @@ It is very inspired by an Android application called <a href="https://play.googl
 </p>
 More screenshots : <a href="https://github.com/Aryetis/Obenkyobo/tree/master/Screenshots">here</a>
 
-## Any demo video ?
+## Any demo video ? Settings Explanations ?
 
-<video controls>
-  <source src="Screenshots/Demo.mp4" type="video/mp4">
-  <p>Your browser doesn't support HTML5 video. Use the youtube link below instead.</p>
-</video>
+https://user-images.githubusercontent.com/4246001/197065422-db6f3642-189e-4b5f-9f7d-373bd2ce00aa.mp4
 
 [Youtube link (better video quality)](https://www.youtube.com/watch?v=NnxOF-2C12I)
 
@@ -88,6 +85,8 @@ You can insert commentary line by having it start with a `#`.
 Possible values for fontType are `hiragana, katakana`, it will determine what font is used in Obenkyobo to display this entry's `jp` value.
 
 LearningScore (LS)'s value ranges from 0 to 5, please note that the value actually registered in the file is inversed from what is displayed in Obenkyobo. Therefore you should probably put 5 for each new Entry.
+
+Feel free to share your own Vocabulary Sheets in [Obenkyobo's mobileread thread](https://www.mobileread.com/forums/showthread.php?p=4162746)
 
 If your file is misinterpreted in Obenkyobo, please make sure your text editor (notepad++, sublimeText, etc) is saving the file in UTF-8 format.
 
