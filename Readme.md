@@ -5,7 +5,7 @@
 
 Obenkyobo is an application for kyobo ereaders designed to help you memorize Hiraganas, Katakanas and vocabulary. 
 
-It is very inspired by an Android application called <a href="https://play.google.com/store/apps/details?id=com.Obenkyo">Obenkyo, available at google play</a>. I have no affiliation Obenkyo whatsoever. But check it out it's free and worth your time too if you can resist your urge to procrastinate on your samrtphone instead of studying.
+It is very inspired by an Android application called <a href="https://play.google.com/store/apps/details?id=com.Obenkyo">Obenkyo, available at google play</a>. I have no affiliation with Obenkyo whatsoever. But check it out it's free and worth your time too if you can resist the urge to procrastinate on your samrtphone instead of studying.
 
 ## How does it look ?
 <p align="center">
@@ -73,7 +73,7 @@ And voilà ! You should now have a NickelMenu entry at the bottom right corner o
 
 ## How to create my vocabulary sheets ?
 
-Each ****.oben file  in `.adds/Obenkyobo/vocab` is a Vocabulary sheet.<br/>. Depending of your operating system, you might have to <a href="https://www.google.com/search?client=firefox-b-d&q=enable+hidden+files+">enable "hidden files"</a> to see those directories. I encourage you to write your owns, searching for new words and writing sheets is also part of the learning process.
+Each ****.oben file  in `.adds/Obenkyobo/vocab` is a Vocabulary sheet. Depending of your operating system, you might have to <a href="https://www.google.com/search?client=firefox-b-d&q=enable+hidden+files+">enable "hidden files"</a> to see those directories. I encourage you to write your owns, searching for new words and writing sheets is also part of the learning process.
 To make your own sheet, create a file and follow the same template as the default ones.
 
 Each line should follow this format : `[fontType=hiragana][jp=いぬ][kanji=犬][trad=dog][learningScore=5]`
