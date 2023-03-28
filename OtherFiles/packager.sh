@@ -11,7 +11,7 @@ Author="Aryetis"
 KfMonDbComment="Obenkyo clone-ish"
 Version="0.3.0"
 LauncherName=$4_launcher.sh
-QtPluginKobo=kobo_obenkyobo
+QtPluginKobo=kobo
 
 echo ===============================================================
 echo packager.sh $1\;$2\;$3\;$4
@@ -39,6 +39,7 @@ cp $2/OtherFiles/vocab/* $3/Output/.adds/$4/vocab/ -r
 
 #Dependencies
 cp $2/OtherFiles/Dependencies/* $3/Output/.adds/ -r
+mkdir -p $3/Output/.adds/qt-linux-5.15-kde-kobo/plugins/platforms/
 if [[ $1 == debug ]];
 then
     cp $2/../qt5-kobo-platform-plugin/lib$QtPluginKobo.so.debug $3/Output/.adds/qt-linux-5.15-kde-kobo/plugins/platforms/lib$QtPluginKobo.so

@@ -2,11 +2,31 @@
 
 You can setup a very basic Kobo dev environment by following either 
 - the <a href="https://github.com/koreader/koxtoolchain">koxtoolchain instructions</a> and work your way from here by cross-compiling qt for ARM and the QTPA kobo platform plugin. To validate your arm gcc, run your first non graphical "hello world" throught an ssh-server or use koreader "run command" option.
-- Or you can go the "easy" route and use @Rain92's <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> to setup everything "libs, Qt binaries, deployment scripts".
+- Or you can go the "easy" route and use @Rain92's <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> (or <a href="https://github.com/Aryetis/kobo-qt-setup-scripts">my fork of it</a> for now)to setup everything "libs, Qt binaries, deployment scripts".
+
+For Rain92's kobo-qt-setup-scripts, make sure to :
+```
+sudo apt-get install build-essential autoconf automake bison flex gawk libtool libtool-bin libncurses-dev curl file git gperf help2man texinfo unzip wget cmake pkg-config
+git clone git@github.com:Rain92/qt5-kobo-platform-plugin.git
+cd kobo-qt-setup-scripts
+git submodule init
+git submodule update
+./install_toolchain.sh
+./get_qt.sh kobo
+########################################
+# add those to your bashrc too :p
+export PATH="$HOME/kobo/x-tools/arm-kobo-linux-gnueabihf/bin:$PATH"
+#export "LIBRARY_PATH=$HOME/x-tools/arm-kobo-linux-gnueabihf/arm-kobo-linux-gnueabihf/sysroot/usr/lib/:$LIBRARY_PATH" 
+########################################
+./build_qt.sh kobo config
+./build_qt.sh kobo make
+./build_qt.sh kobo install
+./deploy_qt.sh
+```
 
 Once you've got your arm QtBinaries, copy its folder (with necessaries additional libs) to `OtherFiles/Dependencies` (if you're trying to compile Obenkyobo)
 
-For Obenkyobo to work you'll also have to get and compile <a href="https://github.com/Aryetis/qt5-kobo-platform-plugin">qt5-kobo-platform-plugin</a> if you wish to debug any QPA specific stuff.
+For Obenkyobo to work you'll also have to get and compile <a href="https://github.com/Rain92/qt5-kobo-platform-plugin">qt5-kobo-platform-plugin</a> if you wish to debug any QPA specific stuff (don't forget to `git submodule init && git submodule update` for both koboplatformplugin itself AND fbink). And don't forget to set the symbolink link at Libs/qt5-kobo-platform-plugin to point towards it (both release and bug version).
 
 You'll probably run along some troubles, so to save you some time here's the tldr version from my <a href="https://discord.com/channels/793941135419506728/796445063127236648/897503681275129876">discord discussion with devs who actually know their stuff</a>
 
@@ -42,13 +62,16 @@ INSTALLS += target everything thumbnail # use only this for full deploy, to save
 
 For a better workflow and one click build+deploy+launch from within QtCreator : 
 ```
+Settings->Build & Run->Default Build Properties->Default build directory  : 
+%{JS: Util.asciify("build-%{Project:Name}-%{Kit:FileSystemName}-%{BuildConfig:Name}")}
+
 Projects->Kobo(Kit)->Build->Add Custom Process Step (in both Release and debug) with : 
-Command : %{sourceDir}/OtherFiles/packager.sh.
+Command : %{sourceDir}/OtherFiles/packager.sh
 Arguments : %{ActiveProject:BuildConfig:Type} %{sourceDir} %{ActiveProject:BuildConfig:Path} %{ActiveProject:Name}
 Working Directory : %{sourceDir}
 
 Projects->Kobo(Kit)->Run->Deployment-> Upload files via SFTP instead of rsync
-Projects->Kobo(Kit)->Run->Deployment-> Add Run custom remote command (in both Release and debug) with :  
+Projects->Kobo(Kit)->Run->Deployment-> Add Run custom remote command with :  
 /mnt/onboard/.adds/Obenkyobo/debugEnv.sh
 
 Projects->Kobo(Kit)->Run->Environment->(System Environment)->Add create new variable with at least 
