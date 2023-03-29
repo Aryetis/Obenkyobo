@@ -38,7 +38,7 @@ mkdir -p $3/Output/.adds/$4/vocab
 cp $2/OtherFiles/vocab/* $3/Output/.adds/$4/vocab/ -r
 
 #Dependencies
-cp $2/OtherFiles/Dependencies/* $3/Output/.adds/ -r
+cp $2/OtherFiles/Dependencies/* $3/Output/.adds/ -rL
 mkdir -p $3/Output/.adds/qt-linux-5.15-kde-kobo/plugins/platforms/
 if [[ $1 == debug ]];
 then
