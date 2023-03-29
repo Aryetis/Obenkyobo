@@ -23,9 +23,9 @@ export PATH="$HOME/kobo/x-tools/arm-kobo-linux-gnueabihf/bin:$PATH"
 ```
 
 For Obenkyobo to work and to debug it properly you'll also have to get and compile <a href="https://github.com/Rain92/qt5-kobo-platform-plugin">qt5-kobo-platform-plugin</a>. While setting it up, don't forget to `git submodule update --init --recursive`). 
-Don't forget to configure the its deploy script correctly by :
-1. set the correct IP at the end
-2. set correct QTBINPATH and kobopluginpath
+Don't forget to configure its deploy script correctly by :
+1. setting the correct IP at the end
+2. setting correct QTBINPATH and kobopluginpath
 
 ~~fix for libfreetype with harfbuzz not compiling due to pthreads issues, run the following commands (will very probably break at some point in the future) :~~ Now included in my fork.
 ```
