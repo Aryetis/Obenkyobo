@@ -13,9 +13,8 @@ git submodule update --init --recursive
 ./install_toolchain.sh
 ./get_qt.sh kobo
 ########################################
-# add those to your bashrc too :p
+# you probably want to add this one to your bashrc too
 export PATH="$HOME/kobo/x-tools/arm-kobo-linux-gnueabihf/bin:$PATH"
-#export "LIBRARY_PATH=$HOME/x-tools/arm-kobo-linux-gnueabihf/arm-kobo-linux-gnueabihf/sysroot/usr/lib/:$LIBRARY_PATH" 
 ########################################
 ./build_qt.sh kobo config
 ./build_qt.sh kobo make
@@ -23,31 +22,24 @@ export PATH="$HOME/kobo/x-tools/arm-kobo-linux-gnueabihf/bin:$PATH"
 ./deploy_qt.sh
 ```
 
-Once you've got your arm QtBinaries (use kobo-qt-setup-scripts's deploy_qt.sh script to get them), copy its folder (with necessaries additional libs) to `OtherFiles/Dependencies` (if you're trying to compile Obenkyobo)
+For Obenkyobo to work and to debug it properly you'll also have to get and compile <a href="https://github.com/Rain92/qt5-kobo-platform-plugin">qt5-kobo-platform-plugin</a>. While setting it up, don't forget to `git submodule update --init --recursive`). 
+Don't forget to configure the its deploy script correctly by :
+1. set the correct IP at the end
+2. set correct QTBINPATH and kobopluginpath
 
-For Obenkyobo to work you'll also have to get and compile <a href="https://github.com/Rain92/qt5-kobo-platform-plugin">qt5-kobo-platform-plugin</a> if you wish to debug any QPA specific stuff (don't forget to `git submodule update --init --recursive`). And don't forget to set the Obenkyobo's symbolink link at `Libs/qt5-kobo-platform-plugin` to point towards it (both release and bug version).
-
-~~To compile the problematic brotli library, tldr switch to the 3.0.0 branch by :~~
-1. ~~comment previous and following libs related content and prevent any git checkout/clean from install_libs.sh~~
-2. ~~git checkout 3.0.0 in brotly's folder : 'kobo-qt-setup-scripts/libs/brotli/'~~
-3. ~~run install_libs.sh script again~~
-4. ~~comment brotli's section, restore git checkout stuff,  rerun install_libs.sh and move on~~
-
-fix for libfreetype with harfbuzz not compiling due to pthreads issues, run the following commands (will very probably break at some point in the future) :
+~~fix for libfreetype with harfbuzz not compiling due to pthreads issues, run the following commands (will very probably break at some point in the future) :~~ Now included in my fork.
 ```
 export PKG_CONFIG_PATH=""
 export PKG_CONFIG_LIBDIR="${HOME}/x-tools/arm-kobo-linux-gnueabihf/arm-kobo-linux-gnueabihf/sysroot/usr/lib/pkgconfig:${HOME}/x-tools/arm-kobo-linux-gnueabihf/arm-kobo-linux-gnueabihf/sysroot/usr/share/pkgconfig"
 export PKG_CONFIG="pkg-config"
 ```
 
-fix for the deploy script : 
-1. set the correct IP at the end
-2. set correct QTBINPATH and kobopluginpath
-3. add :
-```
-cp -t $TMPPATH/lib ${SYSROOT}/usr/lib/libbrotlidec.so.1
-cp -t $TMPPATH/lib ${SYSROOT}/usr/lib/libbrotlicommon.so.1
-```
+The packager.sh scripts except to have access to a few things at specific places for now. So here are all the symbolink links you'll have to set :
+- to Qt Platform Plugin Base folder `Obenkyobo/Libs/qt5-kobo-platform-plugin` -> `[qt5-kobo-platform-plugin]`
+- from Qt Platform builds (release and debug) to Qt Platform Plugin Base 
+    - `[qt5-kobo-platform-plugin]/libkobo.so` -> `[ReleaseBuildFolder]/libkobo.so`
+    - `[qt5-kobo-platform-plugin]/libkobo.so.debug` -> `[DebugBuildFolder]/libkobo.so`
+- to Qt deployed binaries `OtherFiles/Dependencies/qt-linux-5.15-kde-kobo` -> `[kobo-qt-setup-scripts]/deploy/qt-linux-5.15-kde-kobo/`
 
 Fill the following Obenkyobo.pro variables correctly : 
 ```
