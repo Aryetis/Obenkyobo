@@ -2,15 +2,14 @@
 
 You can setup a very basic Kobo dev environment by following either 
 - the <a href="https://github.com/koreader/koxtoolchain">koxtoolchain instructions</a> and work your way from here by cross-compiling qt for ARM and the QTPA kobo platform plugin. To validate your arm gcc, run your first non graphical "hello world" throught an ssh-server or use koreader "run command" option.
-- Or you can go the "easy" route and use @Rain92's <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> (or <a href="https://github.com/Aryetis/kobo-qt-setup-scripts">my fork of it</a> for now)to setup everything "libs, Qt binaries, deployment scripts".
+- Or you can go the "easy" route and use @Rain92's <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> (or <a href="https://github.com/Aryetis/kobo-qt-setup-scripts">my fork of it</a> for now) to setup everything "libs, Qt binaries, deployment scripts".
 
 For Rain92's kobo-qt-setup-scripts, make sure to :
 ```
 sudo apt-get install build-essential autoconf automake bison flex gawk libtool libtool-bin libncurses-dev curl file git gperf help2man texinfo unzip wget cmake pkg-config
 git clone git@github.com:Rain92/qt5-kobo-platform-plugin.git
 cd kobo-qt-setup-scripts
-git submodule init
-git submodule update
+git submodule update --init --recursive
 ./install_toolchain.sh
 ./get_qt.sh kobo
 ########################################
@@ -26,15 +25,13 @@ export PATH="$HOME/kobo/x-tools/arm-kobo-linux-gnueabihf/bin:$PATH"
 
 Once you've got your arm QtBinaries, copy its folder (with necessaries additional libs) to `OtherFiles/Dependencies` (if you're trying to compile Obenkyobo)
 
-For Obenkyobo to work you'll also have to get and compile <a href="https://github.com/Rain92/qt5-kobo-platform-plugin">qt5-kobo-platform-plugin</a> if you wish to debug any QPA specific stuff (don't forget to `git submodule init && git submodule update` for both koboplatformplugin itself AND fbink). And don't forget to set the symbolink link at Libs/qt5-kobo-platform-plugin to point towards it (both release and bug version).
+For Obenkyobo to work you'll also have to get and compile <a href="https://github.com/Rain92/qt5-kobo-platform-plugin">qt5-kobo-platform-plugin</a> if you wish to debug any QPA specific stuff (don't forget to `git submodule update --init --recursive`). And don't forget to set the Obenkyobo's symbolink link at `Libs/qt5-kobo-platform-plugin` to point towards it (both release and bug version).
 
-You'll probably run along some troubles, so to save you some time here's the tldr version from my <a href="https://discord.com/channels/793941135419506728/796445063127236648/897503681275129876">discord discussion with devs who actually know their stuff</a>
-
-To compile the problematic brotli library, tldr switch to the 3.0.0 branch by :
-1. comment previous and following libs related content and prevent any git checkout/clean from install_libs.sh
-2. git checkout 3.0.0 in brotly's folder : 'kobo-qt-setup-scripts/libs/brotli/'
-3. run install_libs.sh script again
-4. comment brotli's section, restore git checkout stuff,  rerun install_libs.sh and move on
+~~To compile the problematic brotli library, tldr switch to the 3.0.0 branch by :~~
+1. ~~comment previous and following libs related content and prevent any git checkout/clean from install_libs.sh~~
+2. ~~git checkout 3.0.0 in brotly's folder : 'kobo-qt-setup-scripts/libs/brotli/'~~
+3. ~~run install_libs.sh script again~~
+4. ~~comment brotli's section, restore git checkout stuff,  rerun install_libs.sh and move on~~
 
 fix for libfreetype with harfbuzz not compiling due to pthreads issues, run the following commands (will very probably break at some point in the future) :
 ```
