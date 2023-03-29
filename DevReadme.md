@@ -23,7 +23,7 @@ export PATH="$HOME/kobo/x-tools/arm-kobo-linux-gnueabihf/bin:$PATH"
 ./deploy_qt.sh
 ```
 
-Once you've got your arm QtBinaries, copy its folder (with necessaries additional libs) to `OtherFiles/Dependencies` (if you're trying to compile Obenkyobo)
+Once you've got your arm QtBinaries (use kobo-qt-setup-scripts's deploy_qt.sh script to get them), copy its folder (with necessaries additional libs) to `OtherFiles/Dependencies` (if you're trying to compile Obenkyobo)
 
 For Obenkyobo to work you'll also have to get and compile <a href="https://github.com/Rain92/qt5-kobo-platform-plugin">qt5-kobo-platform-plugin</a> if you wish to debug any QPA specific stuff (don't forget to `git submodule update --init --recursive`). And don't forget to set the Obenkyobo's symbolink link at `Libs/qt5-kobo-platform-plugin` to point towards it (both release and bug version).
 
