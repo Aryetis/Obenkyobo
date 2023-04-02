@@ -466,8 +466,11 @@ bool Tools::CorrectFontSize(QString const& text, QFont const& inFont, QWidget co
 void Tools::BumpInactivityTimer()
 {
     int bumpSleepTimerMins = GetMy::Instance().AppSettingsPageInst().GetSleepTimerMins();
-    if (bumpSleepTimerMins < 0 && inactivityTimer.isActive())
-        inactivityTimer.stop();
+    if (bumpSleepTimerMins < 0)
+    {
+        if (inactivityTimer.isActive())
+            inactivityTimer.stop();
+    }
     else
         inactivityTimer.start(bumpSleepTimerMins*60000);
 }
