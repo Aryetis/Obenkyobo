@@ -40,8 +40,8 @@ public :
     bool IsThereEnough(QcmExerciceType qcmType, int vocabPoolSize = -1) const;
 
     //======================================================================
-    void RequestSleep();
-    void RequestWakeUp();
+    static void RequestSleep();
+    static void RequestWakeUp();
     QTouchEventFilter* touchEventFilter = nullptr;
 
     //======================================================================
@@ -65,6 +65,8 @@ public :
 
     static bool CorrectFontSize(QString const& text, QFont const& inFont, QWidget const& widget, QFont& correctedFnt);
 
+    static void BumpInactivityTimer();
+
 private :
     Tools();
     ~Tools();
@@ -76,21 +78,21 @@ private :
     static void WakeUp();
     static void PostWakeUp();
     static bool IsScreenSaverNeeded();
-//    bool IsSleepAuthorized();
 
     //======================================================================
     std::random_device rd_device;
     std::mt19937 mt;
     std::default_random_engine rng_engine;
 
-    std::map<int, std::string> handledErrors = { {SIGINT, "SIGINT"}, {SIGALRM, "SIGALRM"}, {SIGSEGV, "SIGSEGV"}, {SIGILL, "SIGILL"},
-                                                 {SIGFPE, "SIGFPE"}, {SIGABRT, "SIGABRT"}, {SIGBUS, "SIGBUS"}, {SIGUSR1, "SIGUSR1"},
-                                                 {SIGUSR2, "SIGUSR2"}, {SIGSYS, "SIGSYS"}};
-    bool isLocalTimeFormatUS;
-    std::string firmwareStr;
-    PopupWidget* popup;
-    QTimer wakeUpTimer;
-    QTimer preSleepTimer;
+    inline static std::map<int, std::string> handledErrors { {SIGINT, "SIGINT"}, {SIGALRM, "SIGALRM"}, {SIGSEGV, "SIGSEGV"}, {SIGILL, "SIGILL"},
+                                                             {SIGFPE, "SIGFPE"}, {SIGABRT, "SIGABRT"}, {SIGBUS, "SIGBUS"}, {SIGUSR1, "SIGUSR1"},
+                                                             {SIGUSR2, "SIGUSR2"}, {SIGSYS, "SIGSYS"}};
+    inline static bool isLocalTimeFormatUS;
+    inline static std::string firmwareStr;
+    inline static PopupWidget* popup;
+    inline static QTimer wakeUpTimer = QTimer();
+    inline static QTimer preSleepTimer = QTimer();
+    inline static QTimer inactivityTimer = QTimer();
 
     inline static QTimer sleepTimer = QTimer();
     inline static QTimer postWakeUpTimer = QTimer();

@@ -34,6 +34,7 @@ public:
     int GetVocabFntSize() const;
     bool GetWifiStatus() const { return wifiStatus; }
     DisplayLSEnum GetDisplayLSSetting() const { return displayLS; }
+    int GetSleepTimerMins() const;
     bool IsDateAmPmFormat() const { return dateFormatIdx == 1; }
     ScreenSaverSetting GetScreenSaverSetting() const { return static_cast<ScreenSaverSetting>(screenSaverIdx); }
 
@@ -56,6 +57,8 @@ private slots:
     void on_DisplayLSDropdown_currentIndexChanged(int index);
     void on_ScreenSaverDropdown_currentIndexChanged(int index);
 
+    void on_SleepTimerDropdown_currentIndexChanged(int index);
+
 private:
     Ui::AppSettingsPage *ui;
     int nbrOfEntryLinesIdx;
@@ -65,6 +68,7 @@ private:
     int batteryFormatIdx;
     int dateFormatIdx;
     int screenSaverIdx;
+    int sleepTimerIdx;
     int nbrOfRowPerVocabIdx;
     bool kanaHardRefresh;
     int vocabFntSizeIdx;

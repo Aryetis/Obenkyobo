@@ -34,7 +34,7 @@ void Tools::Handler(int sig)
     int size = backtrace(array, 32);
 
     std::cerr << "==========================================================" << std::endl;
-    std::cerr << "ERROR: signal " << GetMy::Instance().ToolsInst()->handledErrors[sig] << ":" << std::endl;
+    std::cerr << "ERROR: signal " << Tools::handledErrors[sig] << ":" << std::endl;
     backtrace_symbols_fd(array, size, STDERR_FILENO);
     std::cerr << "==========================================================" << std::endl;
     exit(sig);
@@ -175,6 +175,7 @@ void Tools::RequestSleep() // needs to turn off wifi, stop printing stuff on scr
     std::cout << "!!! DEVICE STATE = FAKE SLEEPING @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
     // Moved here so the screen is updated immediately and not frozen by wifi process
+    inactivityTimer.stop();
     GetMy::Instance().ScreenSettingsPageInst().OnSleep();
     GetMy::Instance().MainWindowInst().OnSleep();
 
@@ -200,23 +201,6 @@ void Tools::RequestWakeUp()
 
     wakeUpTimer.start(POWER_REQUEST_TIMER);
 }
-
-//bool Tools::IsSleepAuthorized()
-//{
-//    QList<KoboDevice> NoChargeSleepList
-//    {
-//        KoboDevice::KoboTouchAB,
-//        KoboDevice::KoboTouchC,
-//        KoboDevice::KoboMini,
-//        KoboDevice::KoboGlo,
-//        KoboDevice::KoboAura,
-//        KoboDevice::KoboAuraHD,
-//        KoboDevice::KoboAuraH2O
-//    }; // Informed guess ... https://discord.com/channels/809205711778480158/958419944243089479/999974500756103188
-//       // to be confirmed as my glo can go to sleep and charge ?
-
-//    return !(KoboPlatformFunctions::isBatteryCharging() && NoChargeSleepList.contains(GetMy::Instance().Descriptor().device));
-//}
 
 //======================================================================
 void Tools::InstallGlobalEventFilter(bool enable)
@@ -406,6 +390,7 @@ void Tools::PostWakeUp()
         GetMy::Instance().ToolsInst()->GetPopupInstance()->close();
     std::cout << "!!! DEVICE STATE = AWAKE @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
     deviceState = DeviceState::awake;
+    Tools::BumpInactivityTimer();
 }
 
 //======================================================================
@@ -477,6 +462,15 @@ bool Tools::CorrectFontSize(QString const& text, QFont const& inFont, QWidget co
     return correctedFnt.pointSizeF() != std::floor(inFont.pointSizeF());
 }
 
+//======================================================================
+void Tools::BumpInactivityTimer()
+{
+    int bumpSleepTimerMins = GetMy::Instance().AppSettingsPageInst().GetSleepTimerMins();
+    if (bumpSleepTimerMins < 0 && inactivityTimer.isActive())
+        inactivityTimer.stop();
+    else
+        inactivityTimer.start(bumpSleepTimerMins*60000);
+}
 
 /******************************** private ********************************/
 Tools::Tools()
@@ -491,10 +485,12 @@ Tools::Tools()
     sleepTimer.setSingleShot(true);
     preSleepTimer.setSingleShot(true);
     postWakeUpTimer.setSingleShot(true);
+    inactivityTimer.setSingleShot(true);
     QObject::connect(&wakeUpTimer, &QTimer::timeout, &Tools::WakeUp);
     QObject::connect(&preSleepTimer, &QTimer::timeout, &Tools::PreSleep);
     QObject::connect(&sleepTimer, &QTimer::timeout, &Tools::Sleep);
     QObject::connect(&postWakeUpTimer, &QTimer::timeout, &Tools::PostWakeUp);
+    QObject::connect(&inactivityTimer, &QTimer::timeout, &Tools::RequestSleep);
 }
 
 //======================================================================
@@ -517,6 +513,20 @@ QTouchEventFilter::~QTouchEventFilter() {}
 //======================================================================
 bool QTouchEventFilter::eventFilter(QObject */*p_obj*/, QEvent *p_event)
 {
+    if (GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::awake &&
+            (p_event->type() == QEvent::TouchBegin ||
+             p_event->type() == QEvent::TouchUpdate ||
+             p_event->type() == QEvent::TouchEnd ||
+             p_event->type() == QEvent::TouchCancel ||
+             p_event->type() == QEvent::MouseButtonPress ||
+             p_event->type() == QEvent::MouseButtonRelease ||
+             p_event->type() == QEvent::MouseButtonDblClick ||
+             p_event->type() == QEvent::MouseMove ||
+             p_event->type() == QEvent::KeyPress ||
+             p_event->type() == QEvent::KeyRelease))
+        Tools::BumpInactivityTimer();
+
+
     if ((p_event->type() == QEvent::TouchBegin ||
         p_event->type() == QEvent::TouchUpdate ||
         p_event->type() == QEvent::TouchEnd ||
@@ -539,7 +549,7 @@ bool QTouchEventFilter::eventFilter(QObject */*p_obj*/, QEvent *p_event)
             {
                 if (p_keyPressEvent->key() == KoboKey::Key_Power || p_keyPressEvent->key() == KoboKey::Key_SleepCover)
                 {
-                    GetMy::Instance().ToolsInst()->RequestSleep();
+                    Tools::RequestSleep();
                     return true;
                 }
                 else if (p_keyPressEvent->key() == KoboKey::Key_Light)
@@ -554,7 +564,7 @@ bool QTouchEventFilter::eventFilter(QObject */*p_obj*/, QEvent *p_event)
             {
                 if (p_keyPressEvent->key() == KoboKey::Key_Power)
                 {
-                    GetMy::Instance().ToolsInst()->RequestWakeUp();
+                    Tools::RequestWakeUp();
                     return true;
                 }
                 break;

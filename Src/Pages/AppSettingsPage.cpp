@@ -19,12 +19,12 @@ AppSettingsPage::AppSettingsPage(QWidget *parent) :
     ui->KanaHardRefreshCheckBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
                                                      .arg((int)(GetMy::Instance().Descriptor().width*0.075f)));
 
-
     qRegisterMetaTypeStreamOperators<QSet<QString> >("QSet<QString>");
     ParseConfigFile();
     InitializeUIValues();
 
     GetMy::Instance().SetAppSettingsPageInst(this);
+    Tools::BumpInactivityTimer(); // needs to be done AFTER SetAppSettingsPageInst(this)
 }
 
 void AppSettingsPage::ParseConfigFile()
@@ -41,6 +41,7 @@ void AppSettingsPage::ParseConfigFile()
     vocabFntSizeIdx = settingsSerializer->value("AppSettings/vocabFntSizeIdx", 4).toInt();
     displayLS = static_cast<DisplayLSEnum>(settingsSerializer->value("AppSettings/displayLSIdx", 0).toInt());
     screenSaverIdx = settingsSerializer->value("AppSettings/screenSaverIdx", 2).toInt();
+    sleepTimerIdx = settingsSerializer->value("AppSettings/sleepTimerIdx", 1).toInt();
 
 #ifdef QT_NO_DEBUG // App doesn't like loosing contact with QtCreator debugger btw
     wifiStatus = settingsSerializer->value("AppSettings/wifi", false).toBool();
@@ -71,6 +72,7 @@ void AppSettingsPage::InitializeUIValues() const
     ui->VocabFntSizeCombox->setCurrentIndex(vocabFntSizeIdx);
     ui->DisplayLSDropdown->setCurrentIndex(displayLS);
     ui->ScreenSaverDropdown->setCurrentIndex(screenSaverIdx);
+    ui->SleepTimerDropdown->setCurrentIndex(sleepTimerIdx);
 }
 
 AppSettingsPage::~AppSettingsPage()
@@ -184,8 +186,27 @@ int AppSettingsPage::GetVocabFntSize() const
     return (parsed) ? num : -1;
 }
 
+int AppSettingsPage::GetSleepTimerMins() const
+{
+    switch (sleepTimerIdx)
+    {
+        case 0 : return 5;
+        case 1 : return 10;
+        case 2 : return 15;
+        case 3 : return 30;
+        case 4 : return -1;
+        default : return 10;
+    }
+}
+
 void AppSettingsPage::on_ScreenSaverDropdown_currentIndexChanged(int index)
 {
     screenSaverIdx = index;
     settingsSerializer->setValue("AppSettings/screenSaverIdx", index);
+}
+
+void AppSettingsPage::on_SleepTimerDropdown_currentIndexChanged(int index)
+{
+    sleepTimerIdx = index;
+    settingsSerializer->setValue("AppSettings/sleepTimerIdx", index);
 }

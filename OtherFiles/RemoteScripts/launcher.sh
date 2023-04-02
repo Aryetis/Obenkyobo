@@ -2,7 +2,7 @@ export APPNAME=templateAppName
 export ADDSPATH=/mnt/onboard/.adds
 export APPPATH=${ADDSPATH}/${APPNAME}
 export QTPATH=${ADDSPATH}/qt-linux-5.15-kde-kobo
-export QTPLUGINOBENKYOBO=kobo_obenkyobo
+export QTPLUGINOBENKYOBO=kobo
 
 LOGFILE=${APPPATH}/log.txt
 

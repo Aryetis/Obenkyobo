@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>436</width>
-    <height>511</height>
+    <width>594</width>
+    <height>588</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="4,0,4,0,6">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="4,0,4,0,7">
    <property name="spacing">
     <number>6</number>
    </property>
@@ -435,7 +435,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="GlobalSettings" stretch="1,1,1,1,1,1">
+    <layout class="QVBoxLayout" name="GlobalSettings" stretch="1,1,1,1,1,1,1">
      <property name="topMargin">
       <number>0</number>
      </property>
@@ -641,6 +641,55 @@
          <item>
           <property name="text">
            <string>On (Except Vocab)</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="SleepTimerLayout">
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="SleepTimerLabel">
+         <property name="text">
+          <string>Go to sleep after :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="SleepTimerDropdown">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <item>
+          <property name="text">
+           <string>5 minutes</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>10 minutes</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>15 minutes</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>30 minutes</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Never</string>
           </property>
          </item>
         </widget>
