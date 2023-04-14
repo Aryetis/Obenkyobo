@@ -144,3 +144,19 @@ Nickel : 0.0102 A (takes longer to stabilize)
 Obenkyobo : 0.0101 A ( (after the minute of Fake Sleep)) 
 UMR : 0.0425 -> 0.0429 A (oscillation for long time) then 0.0103 A
 ```
+
+### How to build and get docs working in QTCreator (the dirty way)
+
+set ~/qt-bin/qt-linux-5.15-kde-kobo/bin symbolink links to system bin for ; qdoc, qhelpconverter, qhelpgenerator, qtattributionsscanner (or modify kobo-qt-setup-scripts to compile them yourself)
+
+```
+export QT_VER=5.15.8
+export BUILDDIR=/home/aramir/qt-docs #probably doesn't matter actually
+cd [...]/kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo
+make docs #gonna take about 30 minutes... yes for real...
+cd [...]/kobo-qt-setup-scripts/
+find . -type f -name "*.qch"
+```
+
+Open QtCreator, Tools->Help->Documentation->Add.. add every single generated .qch.
+Now when selecting a QtClass in your code and pressing f1 it should display the local doc associated to said QtClass.
