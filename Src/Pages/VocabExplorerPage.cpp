@@ -46,10 +46,27 @@ void VocabExplorerPage::Populate()
     vocabFileWidgets.clear();
 
     // ************* curDirLabelText and top dir *************
-    QString curDirLabelText = currentVocabDirString;
-    if (curDirLabelText.size() > 16)
-        curDirLabelText = "[...]" + curDirLabelText.right(16);
-    ui->curDirLabel->setText("Current Dir : "+curDirLabelText);
+    QString curDirLabelText {"Current Dir : "+currentVocabDirString};
+
+    QFontMetricsF fm{ui->curDirLabel->font()};
+    int boundingRectFlags = ui->curDirLabel != nullptr ? (ui->curDirLabel->wordWrap() ? Qt::TextWordWrap : 0) | ui->curDirLabel->alignment() : 0;
+    QRectF newFontSizeRect {fm.boundingRect(ui->curDirLabel->rect(), boundingRectFlags, curDirLabelText)};
+    qreal curW {newFontSizeRect.width()};
+    if (curW > ui->curDirLabel->width())
+    {
+        while (curW > ui->curDirLabel->width())
+        {
+            int secondSlashPos = currentVocabDirString.indexOf('/', 1);
+            if (secondSlashPos == -1) break; // TODO NOW MG (proper support for stupidly long folder name)
+            currentVocabDirString = currentVocabDirString.right(currentVocabDirString.size()-secondSlashPos);
+
+            curDirLabelText = "Current Dir : [...]"+currentVocabDirString;
+            newFontSizeRect = fm.boundingRect(ui->curDirLabel->rect(), boundingRectFlags, curDirLabelText);
+            curW = newFontSizeRect.width();
+        }
+    }
+    ui->curDirLabel->setText(curDirLabelText);
+
 
     // ************* dirs *************
     QDir upDir = currentDir;

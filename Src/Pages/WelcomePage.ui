@@ -90,7 +90,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="versionLabel">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -106,7 +106,7 @@
           <enum>QFrame::NoFrame</enum>
          </property>
          <property name="text">
-          <string>v0.3.0</string>
+          <string>v0.3.1</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignHCenter|Qt::AlignTop</set>
