@@ -52,17 +52,49 @@ void VocabExplorerPage::Populate()
     int boundingRectFlags = ui->curDirLabel != nullptr ? (ui->curDirLabel->wordWrap() ? Qt::TextWordWrap : 0) | ui->curDirLabel->alignment() : 0;
     QRectF newFontSizeRect {fm.boundingRect(ui->curDirLabel->rect(), boundingRectFlags, curDirLabelText)};
     qreal curW {newFontSizeRect.width()};
-    if (curW > ui->curDirLabel->width())
+    bool finalCut = false;
+    if (curW > ui->curDirLabel->width()) // if path is too big to fit on screen
     {
-        while (curW > ui->curDirLabel->width())
+        while (curW > ui->curDirLabel->width() && !finalCut) // remove directory from path one by one unti it fits (or had to cut last dir)
         {
             int secondSlashPos = currentVocabDirString.indexOf('/', 1);
-            if (secondSlashPos == -1) break; // TODO NOW MG (proper support for stupidly long folder name)
-            currentVocabDirString = currentVocabDirString.right(currentVocabDirString.size()-secondSlashPos);
+            if (secondSlashPos == -1) // if even the last directory by itself is still too big => cut it ...
+            {
+                // TODO NOW MG cut in half until it fits (proper support for stupidly long folder name)
+                QString cutFileNameLeft = currentVocabDirString.left(currentVocabDirString.size()/2);
+                QString cutFileNameRight = currentVocabDirString.mid(currentVocabDirString.size()/2);
 
-            curDirLabelText = "Current Dir : [...]"+currentVocabDirString;
-            newFontSizeRect = fm.boundingRect(ui->curDirLabel->rect(), boundingRectFlags, curDirLabelText);
-            curW = newFontSizeRect.width();
+                while (cutFileNameLeft.size() != 1)
+                {
+                    if (cutFileNameLeft.size() == 0) // no left side => split right into two and loopback
+                    {
+                        cutFileNameLeft = cutFileNameRight.left(cutFileNameRight.size()/2);
+                        cutFileNameRight = cutFileNameRight.mid(cutFileNameRight.size()/2);
+                    }
+                    else
+                    {
+                        curDirLabelText = "Current Dir : [...]"+cutFileNameRight;
+                        newFontSizeRect = fm.boundingRect(ui->curDirLabel->rect(), boundingRectFlags, curDirLabelText);
+                        curW = newFontSizeRect.width();
+                        if(curW > ui->curDirLabel->width()) // if cutFileNameRight is already too big by itself
+                            cutFileNameLeft = ""; // we'll cutFileNameRight in two at next iteration
+                        else // if cutFileNameRight can still fit more char
+                        {
+                            cutFileNameRight = cutFileNameLeft.mid(cutFileNameLeft.size()/2) + cutFileNameRight;
+                            cutFileNameLeft = cutFileNameLeft.left(cutFileNameLeft.size()/2);
+                        }
+                    }
+                }
+                finalCut = true;
+            }
+            else // remove directory from path one by one (starting left)
+            {
+                currentVocabDirString = currentVocabDirString.right(currentVocabDirString.size()-secondSlashPos);
+
+                curDirLabelText = "Current Dir : [...]"+currentVocabDirString;
+                newFontSizeRect = fm.boundingRect(ui->curDirLabel->rect(), boundingRectFlags, curDirLabelText);
+                curW = newFontSizeRect.width();
+            }
         }
     }
     ui->curDirLabel->setText(curDirLabelText);
