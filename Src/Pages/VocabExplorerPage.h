@@ -24,6 +24,7 @@ public:
 
 protected:
     bool eventFilter(QObject *obj, QEvent *ev) override;
+    void resizeEvent(QResizeEvent* event) override;
 
 private slots:
     void on_SelectAllButton_clicked();
@@ -31,12 +32,14 @@ private slots:
 
 private:
     void Populate();
+    void SetAndTrimCurDirLabel();
 
     Ui::VocabExplorerPage *ui;
     std::vector<VocabFileEntryWidget*> vocabFileWidgets;
     void OnSliderReleased() const;
     void OnValueChanged(int /*value*/) const;
 
+    bool initialPaintDone;
     bool selectAllStatus;
     QString currentVocabDirString;
     QDir currentDir;
