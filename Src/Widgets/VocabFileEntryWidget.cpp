@@ -20,12 +20,11 @@ VocabFileEntryWidget::VocabFileEntryWidget(QWidget *parent) :
 
 VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fi, bool dirtyUpDirHack, QWidget *parent)
     : QWidget(parent), ui(new Ui::VocabFileEntryWidget)
-    , vocabFileInfo(fi), vocabSetting(fi.filePath(), QSettings::IniFormat)
+    , vocabFileInfo(fi), vocabSetting(fi.filePath(), QSettings::IniFormat), title(), fakeUpDir(dirtyUpDirHack)
 {
     ui->setupUi(this);
 
-    QString title;
-    if (dirtyUpDirHack)
+    if (fakeUpDir)
     {
         title = "[UP_DIR] ..";
         ui->checkBox->setDisabled(true);
@@ -33,13 +32,6 @@ VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fi, bool dirtyUpDirHack, QW
     else
     {
         title = vocabFileInfo.completeBaseName();
-        if (fi.isDir())
-            title = "[DIR] " + vocabFileInfo.fileName(); // because hidden dir completeBaseName is empty
-        if (title.size() > 20)
-        {
-            title.truncate(20);
-            title.append("...");
-        }
 
         if  (vocabFileInfo.isFile())
             ui->checkBox->setChecked(GetMy::Instance().GetEnabledVocabSheets().contains(vocabFileInfo.absoluteFilePath()));
@@ -67,7 +59,6 @@ VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fi, bool dirtyUpDirHack, QW
                 ui->checkBox->setCheckState(Qt::CheckState::Unchecked);
         }
     }
-    ui->TitleButton->setText(title);
     // another dirty hack because koboQT... for some reasons I can't use TitleButton.height to set checkbox's one
     ui->checkBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
                                  .arg(GetMy::Instance().Descriptor().height/20) );
@@ -129,6 +120,58 @@ void VocabFileEntryWidget::on_checkBox_clicked(bool checked)
         else
             GetMy::Instance().RemoveEnabledVocabSheets(sheetSet);
     }
+}
+
+void VocabFileEntryWidget::resizeEvent(QResizeEvent *event)
+{
+    std::cout << "LOG: VocabExplorerPage::resizeEvent() BEGIN" << std::endl;
+    QWidget::resizeEvent(event);
+
+    // ********************* Trim and cut off button's text *********************
+    QString prefix { (vocabFileInfo.isDir() && !fakeUpDir) ? "[DIR] " : ""};
+
+    QFontMetricsF fm{ui->TitleButton->font()};
+//    int boundingRectFlags = ui->TitleButton != nullptr ? (ui->TitleButton->wordWrap() ? Qt::TextWordWrap : 0) | ui->TitleButton->alignment() : 0;
+int boundingRectFlags = 0;
+    QRectF newFontSizeRect {fm.boundingRect(ui->TitleButton->rect(), boundingRectFlags, prefix+title)};
+    qreal curW {newFontSizeRect.width()};
+    if (curW > ui->TitleButton->width()) // if path is too big to fit on screen
+    {
+        if (vocabFileInfo.isDir() && !fakeUpDir)
+            prefix = "[DIR] [...]";
+        QString cutTitleLeft = title.left(title.size()/2);
+        QString cutTitleRight = title.mid(title.size()/2);
+
+        while (cutTitleLeft.size() != 1)
+        {
+            if (cutTitleLeft.size() == 0) // no left side => split right into two and loopback
+            {
+                cutTitleLeft = cutTitleRight.left(cutTitleRight.size()/2);
+                cutTitleRight = cutTitleRight.mid(cutTitleRight.size()/2);
+            }
+            else
+            {
+                title = cutTitleRight;
+                newFontSizeRect = fm.boundingRect(ui->TitleButton->rect(), boundingRectFlags, prefix+title);
+                curW = newFontSizeRect.width();
+                if(curW > ui->TitleButton->width()) // if cutFileNameRight is already too big by itself
+                    cutTitleLeft = ""; // we'll cutFileNameRight in two at next iteration
+                else // if cutFileNameRight can still fit more char
+                {
+                    cutTitleRight = cutTitleLeft.mid(cutTitleLeft.size()/2) + cutTitleRight;
+                    cutTitleLeft = cutTitleLeft.left(cutTitleLeft.size()/2);
+                }
+            }
+        }
+    }
+    ui->TitleButton->setText(prefix+title);
+
+
+//    if (vocabFileInfo.isDir() && !fakeUpDir)
+//        title = "[DIR] " + vocabFileInfo.fileName(); // because hidden dir completeBaseName is empty
+
+    // TODO NOW set title size automatically
+//    ui->TitleButton->setText(title);
 }
 
 void VocabFileEntryWidget::FakeClick(bool checked)
