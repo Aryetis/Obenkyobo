@@ -1,12 +1,11 @@
 #-------------------------------------------------
-# WORKING ON : - test, test test !!! Shoot a proper video showcase, recheck popup and readme (including dev's) one last time
+# WORKING ON : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
+#              - Make [UP_DIR] checkbox tick everything in current dir
+#              - Handle properly [UP_DIR] in VocabExplorerPage instead of adding a dummy entry
 #-------------------------------------------------
 # TODO (0.3.1) : - Show last error's log in a popup on startup
-#                - use a fontMetrics().boundingRect to determine max length of VocabExplorer entries text
-#                - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
+#                - use a fontMetrics().boundingRect to determine max length of VocabExplorer entries text  
 #                - redo the Qmenu::right-arrow
-#                - Handle properly [UP_DIR] in VocabExplorerPage instead of adding a dummy entry
-#                - Make [UP_DIR] checkbox tick everything in current dir
 #                - Investigate weird hard refresh (Edit page) glitch on Kobo Glo HD under unknown circumstances
 #                - replace QList by QVector
 #                - use qobject_cast instead of static_cast wherever it applies

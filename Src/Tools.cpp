@@ -202,6 +202,13 @@ void Tools::RequestWakeUp()
     wakeUpTimer.start(POWER_REQUEST_TIMER);
 }
 
+void Tools::DebugLog(QString message)
+{
+#ifdef QT_DEBUG
+    std::cout <<"DEBUG: " << message.toStdString() << std::endl;
+#endif
+}
+
 //======================================================================
 void Tools::InstallGlobalEventFilter(bool enable)
 {

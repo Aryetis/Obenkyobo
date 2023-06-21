@@ -45,6 +45,9 @@ public :
     QTouchEventFilter* touchEventFilter = nullptr;
 
     //======================================================================
+    static void DebugLog(QString message);
+
+    //======================================================================
     template<typename Iter, typename RandomGenerator>
     Iter GetRandom(Iter start, Iter end, RandomGenerator& gen)
     {

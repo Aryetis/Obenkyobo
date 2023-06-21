@@ -117,8 +117,8 @@ void VocabExplorerPage::SetAndTrimCurDirLabel()
 
     QFontMetricsF fm{ui->curDirLabel->font()};
     int boundingRectFlags = ui->curDirLabel != nullptr ? (ui->curDirLabel->wordWrap() ? Qt::TextWordWrap : 0) | ui->curDirLabel->alignment() : 0;
-    QRectF newFontSizeRect {fm.boundingRect(ui->curDirLabel->rect(), boundingRectFlags, curDirLabelText)};
-    qreal curW {newFontSizeRect.width()};
+    QRectF newLabelRect {fm.boundingRect(ui->curDirLabel->rect(), boundingRectFlags, curDirLabelText)};
+    qreal curW {newLabelRect.width()};
     bool finalCut = false;
     if (curW > ui->curDirLabel->width()) // if path is too big to fit on screen
     {
@@ -127,27 +127,27 @@ void VocabExplorerPage::SetAndTrimCurDirLabel()
             int secondSlashPos = currentVocabDirString.indexOf('/', 1);
             if (secondSlashPos == -1) // if even the last directory by itself is still too big => cut it ...
             {
-                QString cutFileNameLeft = currentVocabDirString.left(currentVocabDirString.size()/2);
-                QString cutFileNameRight = currentVocabDirString.mid(currentVocabDirString.size()/2);
+                QString cutFileNameLeft = currentVocabDirString.left(static_cast<int>(currentVocabDirString.size()/2));
+                QString cutFileNameRight = currentVocabDirString.mid(static_cast<int>(currentVocabDirString.size()/2));
 
                 while (cutFileNameLeft.size() != 1)
                 {
                     if (cutFileNameLeft.size() == 0) // no left side => split right into two and loopback
                     {
-                        cutFileNameLeft = cutFileNameRight.left(cutFileNameRight.size()/2);
-                        cutFileNameRight = cutFileNameRight.mid(cutFileNameRight.size()/2);
+                        cutFileNameLeft = cutFileNameRight.left(static_cast<int>(cutFileNameRight.size()/2));
+                        cutFileNameRight = cutFileNameRight.mid(static_cast<int>(cutFileNameRight.size()/2));
                     }
                     else
                     {
                         curDirLabelText = "Current Dir : [...]"+cutFileNameRight;
-                        newFontSizeRect = fm.boundingRect(ui->curDirLabel->rect(), boundingRectFlags, curDirLabelText);
-                        curW = newFontSizeRect.width();
+                        newLabelRect = fm.boundingRect(ui->curDirLabel->rect(), boundingRectFlags, curDirLabelText);
+                        curW = newLabelRect.width();
                         if(curW > ui->curDirLabel->width()) // if cutFileNameRight is already too big by itself
                             cutFileNameLeft = ""; // we'll cutFileNameRight in two at next iteration
                         else // if cutFileNameRight can still fit more char
                         {
-                            cutFileNameRight = cutFileNameLeft.mid(cutFileNameLeft.size()/2) + cutFileNameRight;
-                            cutFileNameLeft = cutFileNameLeft.left(cutFileNameLeft.size()/2);
+                            cutFileNameRight = cutFileNameLeft.mid(static_cast<int>(cutFileNameLeft.size()/2)) + cutFileNameRight;
+                            cutFileNameLeft = cutFileNameLeft.left(static_cast<int>(cutFileNameLeft.size()/2));
                         }
                     }
                 }
@@ -158,8 +158,8 @@ void VocabExplorerPage::SetAndTrimCurDirLabel()
                 currentVocabDirString = currentVocabDirString.right(currentVocabDirString.size()-secondSlashPos);
 
                 curDirLabelText = "Current Dir : [...]"+currentVocabDirString;
-                newFontSizeRect = fm.boundingRect(ui->curDirLabel->rect(), boundingRectFlags, curDirLabelText);
-                curW = newFontSizeRect.width();
+                newLabelRect = fm.boundingRect(ui->curDirLabel->rect(), boundingRectFlags, curDirLabelText);
+                curW = newLabelRect.width();
             }
         }
     }
