@@ -12,9 +12,10 @@ KfMonDbComment="Obenkyo clone-ish"
 Version="0.3.1"
 LauncherName=$4_launcher.sh
 QtPluginKobo=kobo
+QtFolder="qt-linux-5.15-kde-kobo"
 
 echo ===============================================================
-echo packager.sh $1\;$2\;$3\;$4
+echo packager.sh $1 $2 $3 $4
 echo ===============================================================
 
 #Launcher and application
@@ -39,13 +40,8 @@ cp $2/OtherFiles/vocab/* $3/Output/.adds/$4/vocab/ -r
 
 #Dependencies
 cp $2/OtherFiles/Dependencies/* $3/Output/.adds/ -rL
-mkdir -p $3/Output/.adds/qt-linux-5.15-kde-kobo/plugins/platforms/
-if [[ $1 == debug ]];
-then
-    cp $2/../qt5-kobo-platform-plugin/lib$QtPluginKobo.so.debug $3/Output/.adds/qt-linux-5.15-kde-kobo/plugins/platforms/lib$QtPluginKobo.so
-else
-    cp $2/../qt5-kobo-platform-plugin/lib$QtPluginKobo.so $3/Output/.adds/qt-linux-5.15-kde-kobo/plugins/platforms/lib$QtPluginKobo.so
-fi
+mkdir -p $3/Output/.adds/$QtFolder/plugins/platforms/
+cp $3/../Libs/qt5-kobo-platform-plugin/lib$QtPluginKobo.so $3/Output/.adds/qt-linux-5.15-kde-kobo/plugins/platforms/lib$QtPluginKobo.so
 
 #kfmon
 mkdir -p $3/Output/.adds/kfmon/config
@@ -62,9 +58,13 @@ sed -i "s/shortName/$4/g" $3/Output/.adds/nm/$4
 sed -i "s/longName/$LongName/g" $3/Output/.adds/nm/$4
 sed -i "s~launcherAddress~/mnt/onboard/.adds/$4/$LauncherName~g" $3/Output/.adds/nm/$4
 
-#+ zip it up if building release
+# zip it up if building release
 if [[ $1 == release ]];
 then
     cd $3/Output
     zip -FSr $4_AIO_Release_$Version.zip ./
 fi
+
+echo ===============================================================
+echo Packaging done !
+echo ===============================================================

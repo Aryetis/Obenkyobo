@@ -19,12 +19,10 @@
 TEMPLATE = subdirs
 SUBDIRS = \
     koboplatformplugin \
-    Obenkyobo \
-#Packager
+    Obenkyobo
 
 Obenkyobo.file = Src/Obenkyobo/Obenkyobo.pro
 koboplatformplugin.file = Src/Libs/qt5-kobo-platform-plugin/koboplatformplugin.pro
-#Packager.file = Src/Packager/Packager.pro # et pif paf pouf un call à system() pour appeler mon packager.sh directement là dedans
 
 Obenkyobo.depends = koboplatformplugin
 
