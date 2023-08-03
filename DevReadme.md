@@ -7,7 +7,7 @@ You can setup a very basic Kobo dev environment by following either
 ### How to setup Obenkyobo dev environment using kobo-qt-setup-scripts ?
 1. Run the following commands :
 ```
-sudo apt-get install build-essential autoconf automake bison flex gawk libtool libtool-bin libncurses-dev curl file git gperf help2man texinfo unzip wget cmake pkg-config
+sudo apt-get install build-essential autoconf automake bison flex gawk libtool libtool-bin libncurses-dev curl file git gperf help2man texinfo unzip wget cmake pkg-config python3
 git clone git@github.com:Rain92/kobo-qt-setup-scripts.git
 cd kobo-qt-setup-scripts
 git submodule update --init --recursive
