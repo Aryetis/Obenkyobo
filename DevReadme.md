@@ -8,7 +8,7 @@ You can setup a very basic Kobo dev environment by following either
 1. Run the following commands :
 ```
 sudo apt-get install build-essential autoconf automake bison flex gawk libtool libtool-bin libncurses-dev curl file git gperf help2man texinfo unzip wget cmake pkg-config python3
-git clone git@github.com:Rain92/kobo-qt-setup-scripts.git
+git clone git@github.com:Aryetis/kobo-qt-setup-scripts.git
 cd kobo-qt-setup-scripts
 git submodule update --init --recursive
 ./install_toolchain.sh
@@ -19,6 +19,7 @@ git submodule update --init --recursive
 export PATH="$HOME/x-tools/arm-kobo-linux-gnueabihf/bin:$PATH"
 #export LIBRARY_PATH="$HOME/x-tools/arm-kobo-linux-gnueabihf/arm-kobo-linux-gnueabihf/sysroot/usr/lib/:$LIBRARY_PATH" #probably not this one
 ########################################
+source ~/.bashrc
 ./build_qt.sh kobo config
 ./build_qt.sh kobo make
 ./build_qt.sh kobo install
