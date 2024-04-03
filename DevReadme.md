@@ -15,10 +15,13 @@ git submodule update --init --recursive
 ./get_qt.sh kobo
 ./install_libs.sh
 ########################################
+# ignore this part for now
 # you probably want to add this one to your bashrc too
-export PATH="$HOME/x-tools/arm-kobo-linux-gnueabihf/bin:$PATH"
-#export LIBRARY_PATH="$HOME/x-tools/arm-kobo-linux-gnueabihf/arm-kobo-linux-gnueabihf/sysroot/usr/lib/:$LIBRARY_PATH" #probably not this one
+#export PATH="$HOME/x-tools/arm-kobo-linux-gnueabihf/bin:$PATH"
+##export LIBRARY_PATH="$HOME/x-tools/arm-kobo-linux-gnueabihf/arm-kobo-linux-gnueabihf/sysroot/usr/lib/:$LIBRARY_PATH" ##probably not this one
 ########################################
+echo $'\n########################################' >> ~/.bashrc
+echo 'export PATH="$HOME/x-tools/arm-kobo-linux-gnueabihf/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ./build_qt.sh kobo config
 ./build_qt.sh kobo make
