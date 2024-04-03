@@ -4,7 +4,7 @@ You can setup a very basic Kobo dev environment by following either
 - The <a href="https://github.com/koreader/koxtoolchain">koxtoolchain instructions</a> and work your way from here by cross-compiling qt for ARM and the QTPA kobo platform plugin. To validate your arm gcc, run your first non graphical "hello world" throught an ssh-server or use koreader "run command" option.
 - Go the "easy" route and use my fork of @Rain92's <a href="https://github.com/Aryetis/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> (until the PR eventually get accepted) to setup everything "libs, Qt binaries, deployment scripts".
 
-### How to setup Obenkyobo dev environment using kobo-qt-setup-scripts ?
+### How to setup Obenkyobo dev environment using kobo-qt-setup-scripts ? (as of 04/04/2024) 
 1. Run the following commands :
 ```
 sudo apt-get install build-essential autoconf automake bison flex gawk libtool libtool-bin libncurses-dev curl file git gperf help2man texinfo unzip wget cmake pkg-config python3
@@ -27,23 +27,14 @@ Don't forget to configure its deploy script correctly by :
     - setting the correct IP at the end
     - setting correct QTBINPATH and kobopluginpath
 
-3. ~~fix for libfreetype with harfbuzz not compiling due to pthreads issues, run the following commands (will very probably break at some point in the future) :~~ 
-
-    **Useless step, fix should now be included in my fork**.
-```
-export PKG_CONFIG_PATH=""
-export PKG_CONFIG_LIBDIR="${HOME}/x-tools/arm-kobo-linux-gnueabihf/arm-kobo-linux-gnueabihf/sysroot/usr/lib/pkgconfig:${HOME}/x-tools/arm-kobo-linux-gnueabihf/arm-kobo-linux-gnueabihf/sysroot/usr/share/pkgconfig"
-export PKG_CONFIG="pkg-config"
-```
-
-4. The packager.sh scripts except to have access to a few things at specific places for now. So here are all the symbolink links you'll have to set :
+3. The packager.sh scripts except to have access to a few things at specific places for now. So here are all the symbolink links you'll have to set :
     - to Qt Platform Plugin Base folder `[Obenkyobo]/Libs/qt5-kobo-platform-plugin` -> `[qt5-kobo-platform-plugin]`
     - from Qt Platform builds (release and debug) to Qt Platform Plugin Base 
         - `[qt5-kobo-platform-plugin]/libkobo.so` -> `[ReleaseBuildFolder]/libkobo.so`
         - `[qt5-kobo-platform-plugin]/libkobo.so.debug` -> `[DebugBuildFolder]/libkobo.so`
     - to Qt deployed binaries `[Obenkyobo]/OtherFiles/Dependencies/qt-linux-5.15-kde-kobo` -> `[kobo-qt-setup-scripts]/deploy/qt-linux-5.15-kde-kobo/`
 
-5. Fill the following Obenkyobo.pro variables correctly : 
+4. Fill the following Obenkyobo.pro variables correctly : 
 ```
 INCLUDEPATH += $$PWD/libs/qt5-kobo-platform-plugin/src # should link to the libkobo.so git local repo
 INSTALLS += target everything thumbnail # use only this for full deploy, to save time set it to += target afterwards  
@@ -149,7 +140,7 @@ UMR : 0.0425 -> 0.0429 A (oscillation for long time) then 0.0103 A
 set ~/qt-bin/qt-linux-5.15-kde-kobo/bin symbolink links to system bin for ; qdoc, qhelpconverter, qhelpgenerator, qtattributionsscanner (or modify kobo-qt-setup-scripts to compile them yourself)
 
 ```
-export QT_VER=5.15.8
+export QT_VER=5.15.13
 export BUILDDIR=/home/aramir/qt-docs #probably doesn't matter actually
 cd [...]/kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo
 make docs #gonna take about 30 minutes... yes for real...
