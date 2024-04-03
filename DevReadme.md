@@ -2,24 +2,17 @@
 
 You can setup a very basic Kobo dev environment by following either 
 - The <a href="https://github.com/koreader/koxtoolchain">koxtoolchain instructions</a> and work your way from here by cross-compiling qt for ARM and the QTPA kobo platform plugin. To validate your arm gcc, run your first non graphical "hello world" throught an ssh-server or use koreader "run command" option.
-- **[Broken at the moment]** Go the "easy" route and use @Rain92's <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> (or <a href="https://github.com/Aryetis/kobo-qt-setup-scripts">my fork of it</a> for now) to setup everything "libs, Qt binaries, deployment scripts".
+- Go the "easy" route and use my fork of @Rain92's <a href="https://github.com/Aryetis/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> (until the PR eventually get accepted) to setup everything "libs, Qt binaries, deployment scripts".
 
 ### How to setup Obenkyobo dev environment using kobo-qt-setup-scripts ?
 1. Run the following commands :
 ```
 sudo apt-get install build-essential autoconf automake bison flex gawk libtool libtool-bin libncurses-dev curl file git gperf help2man texinfo unzip wget cmake pkg-config python3
-git clone git@github.com:Aryetis/kobo-qt-setup-scripts.git
+git clone --recurse-submodules git@github.com:Aryetis/kobo-qt-setup-scripts.git
 cd kobo-qt-setup-scripts
-git submodule update --init --recursive
 ./install_toolchain.sh
 ./get_qt.sh kobo
 ./install_libs.sh
-########################################
-# ignore this part for now
-# you probably want to add this one to your bashrc too
-#export PATH="$HOME/x-tools/arm-kobo-linux-gnueabihf/bin:$PATH"
-##export LIBRARY_PATH="$HOME/x-tools/arm-kobo-linux-gnueabihf/arm-kobo-linux-gnueabihf/sysroot/usr/lib/:$LIBRARY_PATH" ##probably not this one
-########################################
 echo $'\n########################################' >> ~/.bashrc
 echo 'export PATH="$HOME/x-tools/arm-kobo-linux-gnueabihf/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
