@@ -45,7 +45,7 @@ echo Vocab files - Done
 #Dependencies
 for f in $2/Src/$ProjectSubDirName/OtherFiles/Dependencies/*;
 do
-  if [ -e "$F" ];
+  if [ -e "$f" ];
   then
     cp $f $3/Output/.adds/ -rL
   else
