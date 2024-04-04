@@ -8,7 +8,7 @@ You can setup a very basic Kobo dev environment by following either
 1. Run the following commands :
 ```
 sudo apt-get install build-essential autoconf automake bison flex gawk libtool libtool-bin libncurses-dev curl file git gperf help2man texinfo unzip wget cmake pkg-config python3 mmv lftp
-git clone --recurse-submodules git@github.com:Aryetis/kobo-qt-setup-scripts.git
+git clone --recurse-submodules git@github.com:Aryetis/kobo-qt-setup-scripts.git # or "git clone --recurse-submodules https://github.com/Aryetis/Obenkyobo.git", if you don't use ssh keys for github
 cd kobo-qt-setup-scripts
 ./install_toolchain.sh
 ./get_qt.sh kobo
@@ -19,27 +19,28 @@ source ~/.bashrc
 ./build_qt.sh kobo config
 ./build_qt.sh kobo make
 ./build_qt.sh kobo install
-./deploy_qt.sh KOBO_IP_DEVICE QTPA_BUILD_FOLDER #facultative
+./deploy_qt.sh KOBO_IP_DEVICE QTPA_BUILD_FOLDER #eg : ./deploy_qt.sh 192.168.1.18 /home/${USER}/Obenkyobo/build-ObenkyoboProject-KoboLibraH2o-Debug/Src/Libs/qt5-kobo-platform-plugin/
 ```
 
 That should get you a working cross commpiler and qt binaries configured with a bunch of libraries (mostly useful for UltimateMangaReader)
 
-2. For Obenkyobo to work and to debug it properly you'll also have to get and compile <a href="https://github.com/Rain92/qt5-kobo-platform-plugin">qt5-kobo-platform-plugin</a>. While setting it up, don't forget to `git submodule update --init --recursive`). 
-Don't forget to configure its deploy script correctly by :
-    - setting the correct IP at the end
-    - setting correct QTBINPATH and kobopluginpath
+2. Time to get Obenkyobo's repository : 
+- `git clone --recurse-submodules git@github.com:Aryetis/Obenkyobo.git` (or `git clone --recurse-submodules https://github.com/Aryetis/Obenkyobo.git` if you don't use ssh keys for github)
+- And then simply open its `ObenkyoboProject.pro` file with QtCreator. Once there you'll have to setup a "kit" using the arm-kobo-linux-gnueabihf-gcc/g++ and qt binaries compiled above.
 
-3. The packager.sh scripts except to have access to a few things at specific places for now. So here are all the symbolink links you'll have to set :
-    - to Qt Platform Plugin Base folder `[Obenkyobo]/Libs/qt5-kobo-platform-plugin` -> `[qt5-kobo-platform-plugin]`
-    - from Qt Platform builds (release and debug) to Qt Platform Plugin Base 
-        - `[qt5-kobo-platform-plugin]/libkobo.so` -> `[ReleaseBuildFolder]/libkobo.so`
-        - `[qt5-kobo-platform-plugin]/libkobo.so.debug` -> `[DebugBuildFolder]/libkobo.so`
-    - to Qt deployed binaries `[Obenkyobo]/OtherFiles/Dependencies/qt-linux-5.15-kde-kobo` -> `[kobo-qt-setup-scripts]/deploy/qt-linux-5.15-kde-kobo/`
+<p align="center">
+  <img src="DevScreenshots/KoboQtKit.jpg">
+</p>
 
-4. Fill the following Obenkyobo.pro variables correctly : 
+3. And finally, let's tweak a couple of things so you can use the packager.sh to compile and ship everything with a single press on the build button (also requires you to follow `Setup QtCreator` steps)
+- Create a symbolic link to the qt binaries like so : `ln -s [Obenkyobo]/Src/Obenkyobo/OtherFiles/Dependencies/qt-linux-5.15-kde-kobo` -> `[kobo-qt-setup-scripts]/deploy/qt-linux-5.15-kde-kobo/`
+- Modify `ObenkyoboProject/Src/Obenkyobo/Obenkyobo.pro` to set what part of the project you actually want to ship over sftp : 
 ```
-INCLUDEPATH += $$PWD/libs/qt5-kobo-platform-plugin/src # should link to the libkobo.so git local repo
+INSTALLS += target everything thumbnail # will ship everything (you probably want to do this at first then switch to the last one)
+INSTALLS += target everythingButLibs thumbnail  # ship everything but libraries/dependencies
+INSTALLS += target everythingButLibsAndSh #s ship everything but libraries/dependencies and the Obenkyobo_launcher.sh
 INSTALLS += target everything thumbnail # use only this for full deploy, to save time set it to += target afterwards  
+INSTALLS += target # will only ship Obenkyobo's binary
 ```
 
 ### Setup QtCreator
@@ -51,7 +52,7 @@ Settings->Build & Run->Default Build Properties->Default build directory  :
 
 Projects->Kobo(Kit)->Build->Add Custom Process Step (in both Release and debug) with : 
 Command : %{sourceDir}/Src/Obenkyobo/OtherFiles/packager.sh
-Arguments : %{ActiveProject:BuildConfig:Type} %{sourceDir} %{ActiveProject:BuildConfig:Path} %{ActiveProject:Name}
+Arguments : %{ActiveProject:BuildConfig:Type} %{sourceDir} %{ActiveProject:BuildConfig:Path}
 Working Directory : %{sourceDir}
 
 Projects->Kobo(Kit)->Run->Deployment-> Upload files via SFTP instead of rsync
