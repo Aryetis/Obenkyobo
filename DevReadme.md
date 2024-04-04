@@ -50,11 +50,6 @@ For a better workflow and one click build+deploy+launch from within QtCreator :
 Settings->Build & Run->Default Build Properties->Default build directory  : 
 %{JS: Util.asciify("build-%{Project:Name}-%{Kit:FileSystemName}-%{BuildConfig:Name}")}
 
-Projects->Kobo(Kit)->Build->Add Custom Process Step (in both Release and debug) with : 
-Command : %{sourceDir}/Src/Obenkyobo/OtherFiles/packager.sh
-Arguments : %{ActiveProject:BuildConfig:Type} %{sourceDir} %{ActiveProject:BuildConfig:Path}
-Working Directory : %{sourceDir}
-
 Projects->Kobo(Kit)->Run->Deployment-> Upload files via SFTP instead of rsync
 Projects->Kobo(Kit)->Run->Deployment-> Add Run custom remote command with :  
 /mnt/onboard/.adds/Obenkyobo/debugEnv.sh
@@ -63,6 +58,8 @@ Projects->Kobo(Kit)->Run->Environment->(System Environment)->Add create new vari
 LD_LIBRARY_PATH = /mnt/onboard/.adds/qt-linux-5.15-kde-kobo/lib:lib:
 QT_QPA_PLATFORM = kobo_obenkyobo (keep an eye on https://github.com/Rain92/qt5-kobo-platform-plugin to switch back to official qpa plugin once issues are resolved over here)
 ```
+
+The preparation of the files for sftp transfer (and creationg of a .zip file for release) should be handled by the `Src/Obenkyobo/OtherFiles/packager.sh` (triggered by Obenkyobo.pro's QMAKE_POST_LINK action)
 
 And that's it! With all of that done, you should now be able to simply click the "Run" button to compile and send eveything necessary to your kobo device over the air.
 
