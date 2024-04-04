@@ -115,9 +115,27 @@ kernel=C:\\Users\\aramir\\wsl_kernel
 11. relaunch your WSL2 and check out your new kernel with : `uname -a` 
 12. connect to your kobo with the usual `sudo minicom -D /dev/ttyUSB0` and voila !
 
-### Which serial port should I solder onto ?
+### Which serial port should I solder my UART to debug over wire ?
 
-This <a href="http://gethighstayhigh.co.uk/kobo-self-build/">gethighstayhigh blog entry</a> references a lot of Kobo internal layout. Thanks !
+This <a href="https://web.archive.org/web/20220627124323/http://gethighstayhigh.co.uk/kobo-self-build/">gethighstayhigh blog entry</a> used to host references for a lot of Kobo internal layout. Thanks ! 
+
+But for prosperity I saved all the layout pictures in the "DevScreenshots" folder. And here's what the "serial port" section used to say:
+```
+Most Kobo's typically have 3 or 4 serial ports, but only one is functional. The serial ports on 6 popular models can be seen in the photographs below. Each Serial port has 4 connections,
+
+V         (Power)
+Ground
+Data in   (or Rx)
+Data Out  (or Tx).
+
+Not all instruments require all 4 connections (some examples are covered later). The ground connection is connected to the wider copper 'ground' of the entire PCB, which means that the heat from a soldering iron is wicked away fast which can compromise a good joint. Instead, it is recommended that the ground is connected to the nearest PCB screw for a more reliable connection.
+
+Here is the proven layout for the 2020 Kobo Nia. Note that wiring from the 'other’'end (see Clara, below) was susceptible to EMF.
+
+Here is the proven layout for the 2019 Kobo Clara HD
+
+Here is the layout on older Kobo models; the cables colours are: White is V, Yellow is Ground, Black is Data-In/Rx**, Red is Data-Out/Tx**                                **at the 'kobo' end
+```
 
 ### Some Power Consumption measurements (needs to be redone with a proper methodology later on !!!)
 ```
