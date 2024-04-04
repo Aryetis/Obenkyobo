@@ -2,7 +2,7 @@
 
 You can setup a very basic Kobo dev environment by following either 
 - The <a href="https://github.com/koreader/koxtoolchain">koxtoolchain instructions</a> and work your way from here by cross-compiling qt for ARM and the QTPA kobo platform plugin. To validate your arm gcc, run your first non graphical "hello world" throught an ssh-server or use koreader "run command" option.
-- Go the "easy" route and use my fork of @Rain92's <a href="https://github.com/Aryetis/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> (until the PR eventually get accepted) to setup everything "libs, Qt binaries, deployment scripts".
+- Go the "easy" route and use my fork of @Rain92's <a href="https://github.com/Aryetis/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> (until I eventually find time to write a clean PR for the main repository) to setup everything "libs, Qt binaries, deployment scripts".
 
 ### How to setup Obenkyobo dev environment using kobo-qt-setup-scripts ? (as of 04/04/2024) 
 1. Run the following commands :
@@ -19,17 +19,17 @@ source ~/.bashrc
 ./build_qt.sh kobo config
 ./build_qt.sh kobo make
 ./build_qt.sh kobo install
-./deploy_qt.sh KOBO_IP_DEVICE QTPA_BUILD_FOLDER #eg : ./deploy_qt.sh 192.168.1.18 /home/${USER}/Obenkyobo/build-ObenkyoboProject-KoboLibraH2o-Debug/Src/Libs/qt5-kobo-platform-plugin/
+./deploy_qt.sh KOBO_IP_DEVICE QTPA_BUILD_FOLDER #eg : ./deploy_qt.sh 192.168.1.18 ~/Obenkyobo/build-ObenkyoboProject-KoboLibraH2o-Debug/Src/Libs/qt5-kobo-platform-plugin/
 ```
 
-That should get you a working cross commpiler and qt binaries configured with a bunch of libraries (mostly useful for UltimateMangaReader)
+That should get you a working cross commpiler and qt binaries configured with a bunch of libraries (most of them only useful for UltimateMangaReader)
 
 2. Time to get Obenkyobo's repository : 
 - `git clone --recurse-submodules git@github.com:Aryetis/Obenkyobo.git` (or `git clone --recurse-submodules https://github.com/Aryetis/Obenkyobo.git` if you don't use ssh keys for github)
-- And then simply open its `ObenkyoboProject.pro` file with QtCreator. Once there you'll have to setup a "kit" using the arm-kobo-linux-gnueabihf-gcc/g++ and qt binaries compiled above.
+- And then simply open its `ObenkyoboProject.pro` file with QtCreator. Once there you'll have to setup a "kit" using the arm-kobo-linux-gnueabihf-gcc/g++ and qt binaries compiled above. cf screenshot below.
 
 <p align="center">
-  <img src="DevScreenshots/KoboQtKit.jpg">
+  <img src="DevScreenshots/KoboQtKit.jpg" width="807" height="528" >
 </p>
 
 3. And finally, let's tweak a couple of things so you can use the packager.sh to compile and ship everything with a single press on the build button (also requires you to follow `Setup QtCreator` steps)
@@ -64,7 +64,9 @@ LD_LIBRARY_PATH = /mnt/onboard/.adds/qt-linux-5.15-kde-kobo/lib:lib:
 QT_QPA_PLATFORM = kobo_obenkyobo (keep an eye on https://github.com/Rain92/qt5-kobo-platform-plugin to switch back to official qpa plugin once issues are resolved over here)
 ```
 
-NEVER modify any of the .sh scripts under windows... Windows end of line will mess things up when ran on linux, or at the very least use `win2unix` afterwards to fix line endings issues.
+And that's it! With all of that done, you should now be able to simply click the "Run" button to compile and send eveything necessary to your kobo device over the air.
+
+Also, NEVER modify any of the .sh scripts under windows... Windows end of line will mess things up when ran on linux, or at the very least use `win2unix` afterwards to fix line endings issues.
 
 ### Setup gdb
 
@@ -83,7 +85,9 @@ Setup a fixed IP address for it and use it in <a href="https://github.com/Rain92
 
 Ereader is rebooting upon Deployment ? Probably because kfmon/nm is scanning for the freshly installed/deployed stuff and reboots the device to update its nickelMenu entry. You should probably setup only select INSTALLS += target , when working daily
 
-Turn on developer mode on the kobo by searching for a book named `devmodeon`, then force the wifi to stay on during dev session : Plus->Parameters->Technical informations->Developer options->force Wifi ON
+Please note that the wifi indicator on your kobo can sometimes lie to you. To fix this you can either : 
+- Turn on developer mode on the kobo by searching for a book named `devmodeon`, then force the wifi to stay on during dev session : Plus->Parameters->Technical informations->Developer options->force Wifi ON. 
+- Simply tap the wifi signal icon and keep its wifi list widget open, this should work 99% of the time.
 
 Install <a href="https://www.mobileread.com/forums/showthread.php?t=254214">Niluje's kobo stuff</a> package to get various programs running on the kobo such as : 
 - `dropbear` ssh server (connect with root and empty password)
