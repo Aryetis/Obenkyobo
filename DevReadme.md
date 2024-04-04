@@ -7,7 +7,7 @@ You can setup a very basic Kobo dev environment by following either
 ### How to setup Obenkyobo dev environment using kobo-qt-setup-scripts ? (as of 04/04/2024) 
 1. Run the following commands :
 ```
-sudo apt-get install build-essential autoconf automake bison flex gawk libtool libtool-bin libncurses-dev curl file git gperf help2man texinfo unzip wget cmake pkg-config python3
+sudo apt-get install build-essential autoconf automake bison flex gawk libtool libtool-bin libncurses-dev curl file git gperf help2man texinfo unzip wget cmake pkg-config python3 mmv lftp
 git clone --recurse-submodules git@github.com:Aryetis/kobo-qt-setup-scripts.git
 cd kobo-qt-setup-scripts
 ./install_toolchain.sh
@@ -19,8 +19,10 @@ source ~/.bashrc
 ./build_qt.sh kobo config
 ./build_qt.sh kobo make
 ./build_qt.sh kobo install
-./deploy_qt.sh
+./deploy_qt.sh KOBO_IP_DEVICE QTPA_BUILD_FOLDER #facultative
 ```
+
+That should get you a working cross commpiler and qt binaries configured with a bunch of libraries (mostly useful for UltimateMangaReader)
 
 2. For Obenkyobo to work and to debug it properly you'll also have to get and compile <a href="https://github.com/Rain92/qt5-kobo-platform-plugin">qt5-kobo-platform-plugin</a>. While setting it up, don't forget to `git submodule update --init --recursive`). 
 Don't forget to configure its deploy script correctly by :
@@ -48,7 +50,7 @@ Settings->Build & Run->Default Build Properties->Default build directory  :
 %{JS: Util.asciify("build-%{Project:Name}-%{Kit:FileSystemName}-%{BuildConfig:Name}")}
 
 Projects->Kobo(Kit)->Build->Add Custom Process Step (in both Release and debug) with : 
-Command : %{sourceDir}/OtherFiles/packager.sh
+Command : %{sourceDir}/Src/Obenkyobo/OtherFiles/packager.sh
 Arguments : %{ActiveProject:BuildConfig:Type} %{sourceDir} %{ActiveProject:BuildConfig:Path} %{ActiveProject:Name}
 Working Directory : %{sourceDir}
 
@@ -66,8 +68,13 @@ NEVER modify any of the .sh scripts under windows... Windows end of line will me
 ### Setup gdb
 
 Two solutions : 
-- Use cross compiled arm gdb from <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a>. You might have to `apt install python2/3 python2/3-dev` and tweak the ./install_gdb.sh to add "--with-python" to the ./configure flags
-- Install gdb-multiarch and set it up for arm architecture in QtCreator by :  `Tools->Options->Debugger->GDB->Additional Startup Commands : -q --nh -ex 'set architecture arm'`
+- Use cross compiled arm gdb from <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a>. 
+```
+sudo apt install python3-dev libgmp-dev
+cd kobo-qt-setup-scripts
+./install_gdb.sh
+```
+- Install gdb-multiarch, select it in your qt kit and set it up for arm architecture in QtCreator by :  `Tools->Options->Debugger->GDB->Additional Startup Commands : -q --nh -ex 'set architecture arm'`
 
 ### Setup the Ereader
 
