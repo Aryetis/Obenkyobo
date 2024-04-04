@@ -24,12 +24,12 @@ echo ===============================================================
 mkdir -p $3/Output/.adds/$ProjectSubDirName
 cp $3/Src/$ProjectSubDirName/$ProjectSubDirName $3/Output/.adds/$ProjectSubDirName/$ProjectSubDirName
 cp $2/Src/$ProjectSubDirName/OtherFiles/RemoteScripts/launcher.sh $3/Output/.adds/$ProjectSubDirName/$LauncherName
-sed  -i "1s/.*/""export APPNAME=$4""/" $3/Output/.adds/$ProjectSubDirName/$LauncherName
+sed  -i "1s/.*/""export APPNAME=${ProjectSubDirName}""/" $3/Output/.adds/$ProjectSubDirName/$LauncherName
 sed  -i "5s/.*/""export QTPLUGINOBENKYOBO=$QtPluginKobo/g" $3/Output/.adds/$ProjectSubDirName/$LauncherName
 if [[ $1 == debug ]];
 then
     cp $2/Src/$ProjectSubDirName/OtherFiles/RemoteScripts/debugEnv.sh $3/Output/.adds/$ProjectSubDirName/debugEnv.sh
-    sed  -i "1s/.*/""export APPNAME=$4""/" $3/Output/.adds/$ProjectSubDirName/debugEnv.sh
+    sed  -i "1s/.*/""export APPNAME=${ProjectSubDirName}""/" $3/Output/.adds/$ProjectSubDirName/debugEnv.sh
     sed  -i "5s/.*/""export QTPLUGINOBENKYOBO=$QtPluginKobo/g" $3/Output/.adds/$ProjectSubDirName/debugEnv.sh
 fi
 cp $2/Src/$ProjectSubDirName/OtherFiles/RemoteScripts/start_nickel.sh $3/Output/.adds/$ProjectSubDirName/start_nickel.sh
@@ -38,8 +38,8 @@ cp $2/Src/$ProjectSubDirName/OtherFiles/RemoteScripts/pic.png $3/Output/$Project
 echo Launcher and application - Done
 
 #Vocab files
-mkdir -p $3/Output/.adds/$4/vocab
-cp $2/Src/$ProjectSubDirName/OtherFiles/vocab/* $3/Output/.adds/$4/vocab/ -r
+mkdir -p $3/Output/.adds/${ProjectSubDirName}/vocab
+cp $2/Src/$ProjectSubDirName/OtherFiles/vocab/* $3/Output/.adds/${ProjectSubDirName}/vocab/ -r
 echo Vocab files - Done
 
 #Dependencies
@@ -58,19 +58,19 @@ echo Dependencies - Done
 
 #kfmon
 mkdir -p $3/Output/.adds/kfmon/config
-cp $2/Src/$ProjectSubDirName/OtherFiles/RemoteScripts/KfMonTemplate.ini $3/Output/.adds/kfmon/config/$4.ini
-sed -i "s/shortName/$4/g" $3/Output/.adds/kfmon/config/$4.ini
-sed -i "s/longName/$LongName/g" $3/Output/.adds/kfmon/config/$4.ini
-sed -i "s/KfMonDbComment/$KfMonDbComment/g" $3/Output/.adds/kfmon/config/$4.ini
-sed -i "s/launcherName/$LauncherName/g" $3/Output/.adds/kfmon/config/$4.ini
+cp $2/Src/$ProjectSubDirName/OtherFiles/RemoteScripts/KfMonTemplate.ini $3/Output/.adds/kfmon/config/${ProjectSubDirName}.ini
+sed -i "s/shortName/${ProjectSubDirName}/g" $3/Output/.adds/kfmon/config/${ProjectSubDirName}.ini
+sed -i "s/longName/$LongName/g" $3/Output/.adds/kfmon/config/${ProjectSubDirName}.ini
+sed -i "s/KfMonDbComment/$KfMonDbComment/g" $3/Output/.adds/kfmon/config/${ProjectSubDirName}.ini
+sed -i "s/launcherName/$LauncherName/g" $3/Output/.adds/kfmon/config/${ProjectSubDirName}.ini
 echo kfmon - Done
 
 #NickelMenu
 mkdir -p $3/Output/.adds/nm
 cp $2/Src/$ProjectSubDirName/OtherFiles/RemoteScripts/nmTemplate $3/Output/.adds/nm/$ProjectSubDirName
-sed -i "s/shortName/$4/g" $3/Output/.adds/nm/$ProjectSubDirName
+sed -i "s/shortName/${ProjectSubDirName}/g" $3/Output/.adds/nm/$ProjectSubDirName
 sed -i "s/longName/$LongName/g" $3/Output/.adds/nm/$ProjectSubDirName
-sed -i "s~launcherAddress~/mnt/onboard/.adds/$4/$LauncherName~g" $3/Output/.adds/nm/$ProjectSubDirName
+sed -i "s~launcherAddress~/mnt/onboard/.adds/${ProjectSubDirName}/$LauncherName~g" $3/Output/.adds/nm/$ProjectSubDirName
 echo NickelMenu - Done
 
 # zip it up if building release
