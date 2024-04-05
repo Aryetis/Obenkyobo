@@ -98,12 +98,12 @@ How to read the backtrace logs : convert address to line using `addr2line -e [No
 
 ### How to serial connect to Kobo ereader in WSL2 
 
-1. install usbipd on windows's side to share usb device through IP with WSL2, more info on <a href="https://github.com/dorssel/usbipd-win/wiki/WSL-support">WSL-support's page</a>.
-2. install bunch of necessary software in WSL2 (might be some unnecessary ones depends of your needs, distrib) with : 
-`sudo apt install linux-tools-5.10 usbip hwdata usbutils usbserial setserial`
-3. In some Admin Powershell (urgh), lis usb devices busids with : `usbipd wsl list`
-4. link usb device to WSL2 with `usbipd wsl attach --busid [BUS_ID]`
-5. check if /dev/ttyUSBxxx shows up. If not ... guess what ... WSL2 kernel probably doesn't have your device's driver. To be sure, check it out with `ls -l /sys/bus/usb-serial/drivers`. You'll have to build your own kernel then.
+1. install usbipd on windows's side to share usb device through IP with WSL2, more info on <a href="https://github.com/dorssel/usbipd-win/wiki/WSL-support">WSL-support's page</a> and <a href="https://learn.microsoft.com/fr-fr/windows/wsl/connect-usb#attach-a-usb-device.">this windows's doc page</a>.
+2. install bunch of necessary software in WSL2 with : 
+`sudo apt install usbip hwdata usbutils setserial`
+3. In some Admin Powershell (urgh), lis usb devices busids with : `usbipd list`
+4. link usb device to WSL2 with `usbipd wsl attach --busid [BUS_ID]; usbipd attach --wsl --busid [BUS_ID]`
+5. check with `lsusb` if you're device shows up and if `/dev/ttyUSBxxx` entry is created. If not ... guess what ... WSL2 kernel probably doesn't have your device's driver. To be sure, check it out with `ls -l /sys/bus/usb-serial/drivers`. You'll have to build your own kernel then, cf section below.
 
 ### How to build custom WSL2 kernel 
 
@@ -112,13 +112,13 @@ How to read the backtrace logs : convert address to line using `addr2line -e [No
 3. `cd WSL2-Linux-Kernel`
 4. `cp Microsoft/config-wsl .config` (might as well change CONFIG_LOCALVERSION in it while you're at it so you can differentiate your kernel later on)
 5. `make menuconfig`
-6. Enable your driver : `Device Drivers -> USB Support -> USB Serial Converter support -> [whatever device you're using]` (in my case, USB Prolific 2303 Single Port Serial Driver)
+6. Enable your driver : `Device Drivers -> USB Support -> USB Serial Converter support -> [whatever device you're using] + [USB Serial Console device support] + [USB Generic Serial Driver]`. It's your choice but you might as well make it "built-in" to make your life easier (marked with a `*`). In my case, the necessary driver is "USB Prolific 2303 Single Port Serial Driver"
 7. `make -j xxx` (xxx being how many cores you want to build with)
-8. `cp arch/x86/boot/bzImage /mnt/c/[USER_NAME]/wsl_kernel`
+8. `cp arch/x86/boot/bzImage /mnt/c/Users/[USER_NAME]/wsl_kernel`
 9. Create the following file `C:\Users\<UserName>\.wslconfig with this content` : 
 ```
 [wsl2]
-kernel=C:\\Users\\aramir\\wsl_kernel
+kernel=C:\\Users\\aramir\\wsl_kernel\\bzImage
 ```
 10. in powershell/cmd `wsl --shutdown` (just to be sure)
 11. relaunch your WSL2 and check out your new kernel with : `uname -a` 
