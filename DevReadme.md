@@ -56,7 +56,7 @@ Projects->Kobo(Kit)->Run->Deployment-> Add Run custom remote command with :
 
 Projects->Kobo(Kit)->Run->Environment->(System Environment)->Add create new variable with at least 
 LD_LIBRARY_PATH = /mnt/onboard/.adds/qt-linux-5.15-kde-kobo/lib:lib:
-QT_QPA_PLATFORM = kobo_obenkyobo (keep an eye on https://github.com/Rain92/qt5-kobo-platform-plugin to switch back to official qpa plugin once issues are resolved over here)
+QT_QPA_PLATFORM = kobo
 ```
 
 The preparation of the files for sftp transfer (and creationg of a .zip file for release) should be handled by the `Src/Obenkyobo/OtherFiles/packager.sh` (triggered by Obenkyobo.pro's QMAKE_POST_LINK action)
