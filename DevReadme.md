@@ -19,7 +19,7 @@ source ~/.bashrc
 ./build_qt.sh kobo config
 ./build_qt.sh kobo make
 ./build_qt.sh kobo install
-./deploy_qt.sh KOBO_IP_DEVICE QTPA_BUILD_FOLDER #eg : ./deploy_qt.sh 192.168.1.18 ~/Obenkyobo/build-ObenkyoboProject-KoboLibraH2o-Debug/Src/Libs/qt5-kobo-platform-plugin/
+./deploy_qt.sh QTPA_BUILD_FOLDER KOBO_IP_DEVICE #eg : ./deploy_qt.sh ~/Obenkyobo/build-ObenkyoboProject-KoboLibraH2o-Debug/Src/Libs/qt5-kobo-platform-plugin/ 192.168.1.18
 ```
 
 That should get you a working cross commpiler and qt binaries configured with a bunch of libraries (most of them only useful for UltimateMangaReader)
