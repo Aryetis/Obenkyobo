@@ -46,6 +46,7 @@ Tested and working on :
 - Mini (might have minor UI scaling issues)
 - Glo
 - Glo HD
+- Clara HD
 - Please report if it works for your model too
 
 ## How to install ?
