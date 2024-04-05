@@ -111,8 +111,8 @@ How to read the backtrace logs : convert address to line using `addr2line -e [No
 2. `git clone https://github.com/microsoft/WSL2-Linux-Kernel.git`
 3. `cd WSL2-Linux-Kernel`
 4. `cp Microsoft/config-wsl .config` (might as well change CONFIG_LOCALVERSION in it while you're at it so you can differentiate your kernel later on)
-5. `Make menuconfig`
-6. Enable your driver : `Device Drivers -> USB Support -> USB Serial Converter support -> [whatever device you're using]`
+5. `make menuconfig`
+6. Enable your driver : `Device Drivers -> USB Support -> USB Serial Converter support -> [whatever device you're using]` (in my case, USB Prolific 2303 Single Port Serial Driver)
 7. `make -j xxx` (xxx being how many cores you want to build with)
 8. `cp arch/x86/boot/bzImage /mnt/c/[USER_NAME]/wsl_kernel`
 9. Create the following file `C:\Users\<UserName>\.wslconfig with this content` : 
