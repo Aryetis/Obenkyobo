@@ -79,7 +79,7 @@ To make your own sheet, create a file and follow the same template as the defaul
 
 Each line should follow this format : `[fontType=hiragana][jp=いぬ][kanji=犬][trad=dog][learningScore=5]`
 
-Provided Vocabulary Sheets can be found on this repository at <a href="https://github.com/Aryetis/Obenkyobo/tree/master/OtherFiles/vocab">this page</a>
+Provided Vocabulary Sheets can be found on this repository at <a href="https://github.com/Aryetis/Obenkyobo/tree/master/Src/Obenkyobo/OtherFiles/vocab">this page</a>
 
 You can insert commentary line by having it start with a `#`.
 
