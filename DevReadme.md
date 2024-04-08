@@ -20,6 +20,7 @@ source ~/.bashrc
 ./build_qt.sh kobo make
 ./build_qt.sh kobo install
 ./deploy_qt.sh QTPA_BUILD_FOLDER KOBO_IP_DEVICE #eg : ./deploy_qt.sh ~/Obenkyobo/build-ObenkyoboProject-KoboLibraH2o-Debug/Src/Libs/qt5-kobo-platform-plugin/ 192.168.1.18
+# Ok but what is QTPA_BUILD_FOLDER ? It s the folder libkobo.so which comes from the compilation of https://github.com/Rain92/qt5-kobo-platform-plugin . If you re trying to compile Obenkyobo, don't worry too much about it for now and do this step later as qt5-kobo-platform-plugin is included as an Obenkyobo's subdir/dependency.
 ```
 
 That should get you a working cross commpiler and qt binaries configured with a bunch of libraries (most of them only useful for UltimateMangaReader)
