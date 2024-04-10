@@ -26,7 +26,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #qt5-kobo-platform-plugin stuff
 INCLUDEPATH += $$PWD/../Libs/qt5-kobo-platform-plugin/src
 
-# QtCreator parameters %{CurrentBuild:Type} %{sourceDir} %{CurrentProject:BuildPath} %{CurrentProject:Name}
+# packager.sh release [/]Obenkyobo/Src/Obenkyobo [/]Obenkyobo/build-ObenkyoboProject-KoboLibraH2o-Release/Src/Obenkyobo Obenkyobo
 CONFIG(debug, debug|release) {
 QMAKE_POST_LINK += $$PWD/OtherFiles/packager.sh debug $$PWD $$OUT_PWD $$TARGET
 } else {

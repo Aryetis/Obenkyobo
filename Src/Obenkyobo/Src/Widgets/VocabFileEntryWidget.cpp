@@ -16,11 +16,6 @@ VocabFileEntryWidget::VocabFileEntryWidget(QWidget *parent) :
     QWidget(parent), ui(new Ui::VocabFileEntryWidget)
 {
     ui->setupUi(this);
-
-//    ui->TitleButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-//    ui->TitleButton->setFixedWidth((GetMy::Instance().Descriptor().width/100)*90);
-//    ui->checkBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-//    ui->checkBox->setFixedWidth((GetMy::Instance().Descriptor().width/100)*10);
 }
 
 VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fi, bool dirtyUpDirHack, QWidget *parent)
@@ -100,7 +95,7 @@ void VocabFileEntryWidget::on_TitleButton_clicked()
 
 void VocabFileEntryWidget::on_checkBox_clicked(bool checked)
 {
-    std::cout << "DEBUG: ON_CLIC : contentsRect().width():" << ui->TitleButton->contentsRect().width() << std::endl;
+    std::cout << "DEBUG: ON_CLIC : contentsRect().width():" << ui->TitleButton->rect().width() << std::endl;
     if ( vocabFileInfo.isFile() )
     {
         ui->checkBox->setChecked(checked);
@@ -134,93 +129,49 @@ void VocabFileEntryWidget::resizeEvent(QResizeEvent *event)
                                  .arg(GetMy::Instance().Descriptor().height/20) );
     setMaximumHeight(GetMy::Instance().Descriptor().height/20);
 
-    Tools::DebugLog("DEBUG: ON_RESIZE, contentsRect().width() : "+QString::number(ui->TitleButton->contentsRect().width()));
-    Tools::DebugLog("DEBUG: ON_RESIZE, (GetMy::Instance().Descriptor().width/100)*90 : "+
-                    QString::number((GetMy::Instance().Descriptor().width/100)*90));
-    // ********************* Trim and cut off button's text *********************
-//    QString prefix { (vocabFileInfo.isDir() && !fakeUpDir) ? "[DIR] " : ""};
-
-//    QFontMetricsF fm{ui->TitleButton->font()};
-//    int boundingRectFlags = 0;
-//    QRectF newTitleRect {fm.boundingRect(ui->TitleButton->contentsRect(), boundingRectFlags, prefix+title)};
-//    qreal curW {newTitleRect.width()};
-//float cntRectWidth = ui->TitleButton->contentsRect().width();
-//    if (curW > ui->TitleButton->contentsRect().width()) // if path is too big to fit on screen
-//    {
-//        // TODO WHAT THE FUCK !!!! WHERE IS MY [...] at first draw ?
-//        prefix = (vocabFileInfo.isDir()) ? "[DIR] [...]" : "[...]"; // fakeUpDir can't be too long.
-//        QString cutTitleLeft = title.left(static_cast<int>(title.size()/2));
-//        QString cutTitleRight = title.mid(static_cast<int>(title.size()/2));
-
-//        while (cutTitleLeft.size() != 1)
-//        {
-//            if (cutTitleLeft.size() == 0) // no left side => split right into two and loopback
-//            {
-//                cutTitleLeft = cutTitleRight.left(static_cast<int>(cutTitleRight.size()/2));
-//                cutTitleRight = cutTitleRight.mid(static_cast<int>(cutTitleRight.size()/2));
-//            }
-//            else
-//            {
-//                title = cutTitleRight;
-//                newTitleRect = fm.boundingRect(ui->TitleButton->contentsRect(), boundingRectFlags, prefix+title);
-//                curW = newTitleRect.width();
-//                if(curW > ui->TitleButton->contentsRect().width()) // if cutFileNameRight is already too big by itself
-//                    cutTitleLeft = ""; // we'll cutFileNameRight in two at next iteration
-//                else // if cutFileNameRight can still fit more char
-//                {
-//                    cutTitleRight = cutTitleLeft.mid(static_cast<int>(cutTitleLeft.size()/2)) + cutTitleRight;
-//                    cutTitleLeft = cutTitleLeft.left(static_cast<int>(cutTitleLeft.size()/2));
-//                }
-//            }
-//        }
-//newTitleRect = fm.boundingRect(ui->TitleButton->contentsRect(), boundingRectFlags, prefix+title);
-//curW = newTitleRect.width();
-//if(curW > ui->TitleButton->contentsRect().width()) // if cutFileNameRight is already too big by itself
-//std::cout << "FUCK" << ui->TitleButton->contentsRect().width() << std::endl;
-//    }
-//    ui->TitleButton->setText(prefix+title);
-
-float cntRectWidth = ui->TitleButton->contentsRect().width();
-// ********************* Trim and cut off button's text *********************
-QString prefix { (vocabFileInfo.isDir() && !fakeUpDir) ? "[DIR] " : ""};
-QFontMetricsF fm{ui->TitleButton->font()};
-int boundingRectFlags = 0;
-QString wholeTitle {prefix+title};
-QString wipTitle {wholeTitle};
-auto DoesItFit = [&](auto testTitle)
-{
-    QRectF newTitleRect {fm.boundingRect(ui->TitleButton->contentsRect(), boundingRectFlags, testTitle)};
-    qreal curW {newTitleRect.width()};
-    Tools::DebugLog("DEBUG: ON_RESIZE, DoesItFit, curW : "+QString::number(curW));
-    return curW <= (GetMy::Instance().Descriptor().width/100)*90;
-//    return curW <= ui->TitleButton->contentsRect().width();
-};
-
-int cutPoint = static_cast<int>(wipTitle.size()/2);
-int step = cutPoint;
-bool doesItFit = DoesItFit(wipTitle);
-if(!doesItFit)
-{
-    // TODO change prefix and wipTitle;
-    bool didItFit = true;
-    while(step > 1)
-    {
-        didItFit =  doesItFit;
-        int foo = static_cast<int>(step/2);
-        step = (foo > 0) ? foo : 1;
-        if (doesItFit)
-            cutPoint += step;
-        else if (didItFit)
-            cutPoint -= step;
-
-        wipTitle = wholeTitle.mid(cutPoint);
-        doesItFit = DoesItFit(wipTitle);
-        Tools::DebugLog("DEBUG: ON_RESIZE, evolving wipTitle : "+wipTitle);
-        Tools::DebugLog("DEBUG: ON_RESIZE, doesItFit : "+QString::number(doesItFit)+" ; didItFit : "+QString::number(didItFit));
-    }
+    initialPaintDone = true;
+    SetAndTrimCurDirLabel();
 }
-Tools::DebugLog("DEBUG: ON_RESIZE, final wipTitle : "+wipTitle);
-ui->TitleButton->setText(wipTitle);
+
+void VocabFileEntryWidget::SetAndTrimCurDirLabel()
+{
+    QString prefix { (vocabFileInfo.isDir() && !fakeUpDir) ? "[DIR] " : ""};
+    QString curLabelText {prefix+title};
+
+    QFontMetricsF fm { ui->TitleButton->font() };
+    int boundingRectFlags { 0 };
+    QRectF newLabelRect { fm.boundingRect(ui->TitleButton->rect(), boundingRectFlags, curLabelText) };
+    qreal curW { newLabelRect.width() };
+    if (curW > ui->TitleButton->width())
+    {
+        QString securedCut;
+        QString cutFileNameLeft = curLabelText.left(static_cast<int>(curLabelText.size()/2));
+        QString cutFileNameRight = curLabelText.mid(static_cast<int>(curLabelText.size()/2));
+
+        while (cutFileNameRight.size() != 1)
+        {
+            if (cutFileNameRight.size() == 0) // no right side => split right into two and loopback
+            {
+                cutFileNameLeft = cutFileNameLeft.left(static_cast<int>(cutFileNameLeft.size()/2));
+                cutFileNameRight = cutFileNameLeft.mid(static_cast<int>(cutFileNameLeft.size()/2));
+            }
+            else
+            {
+                newLabelRect = fm.boundingRect(ui->TitleButton->rect(), boundingRectFlags, securedCut + cutFileNameLeft);
+                curW = newLabelRect.width();
+                if(curW > ui->TitleButton->width()) // if cutFileNameLeft is already too big by itself
+                    cutFileNameRight = ""; // we'll cutFileNameLeft in two at next iteration
+                else // there's enough room, try to fit more of the the right part into the left
+                {
+                    securedCut = securedCut + cutFileNameLeft;
+                    cutFileNameLeft = cutFileNameRight.left(static_cast<int>(cutFileNameRight.size()/2));
+                    cutFileNameRight = cutFileNameRight.mid(static_cast<int>(cutFileNameRight.size()/2));
+                }
+            }
+        }
+        curLabelText = securedCut;
+    }
+    ui->TitleButton->setText(curLabelText);
 }
 
 void VocabFileEntryWidget::FakeClick(bool checked)

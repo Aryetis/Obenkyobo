@@ -47,6 +47,8 @@ private:
     bool kanjiShow;
     bool traductionShow;
     bool lsShow;
+
+    bool initialPaintDone;
 };
 
 #endif // VOCABULARYDISPLAYPAGE_H

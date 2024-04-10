@@ -34,11 +34,15 @@ protected:
     void resizeEvent(QResizeEvent* event) override;
 
 private:
+    void SetAndTrimCurDirLabel();
+
     Ui::VocabFileEntryWidget *ui;
     QFileInfo vocabFileInfo;
     QSettings vocabSetting;
     QString title;
     bool fakeUpDir;
+
+    bool initialPaintDone;
 };
 
 #endif // VOCABFILEENTRYWIDGET_H

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e #-x
 # Script called by Obenkyobo.pro's QMAKE_POST_LINK
-# eg: packager.sh release /home/aramir/Obenkyobo/Src/Obenkyobo /home/aramir/Obenkyobo/build-ObenkyoboProject-KoboLibraH2o-Release/Src/Obenkyobo Obenkyobo
+# packager.sh release [/]Obenkyobo/Src/Obenkyobo [/]Obenkyobo/build-ObenkyoboProject-KoboLibraH2o-Release/Src/Obenkyobo Obenkyobo
 #[BuildPath].adds/   [Dependencies]
 #				  | [kfmon] / config / [ProjectName].ini
 #				  | [nm] / [ProjectName]
