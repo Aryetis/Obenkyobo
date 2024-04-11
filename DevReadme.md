@@ -79,7 +79,7 @@ cd kobo-qt-setup-scripts
 ```
 - Install gdb-multiarch, select it in your qt kit and set it up for arm architecture in QtCreator by :  `Tools->Options->Debugger->GDB->Additional Startup Commands : -q --nh -ex 'set architecture arm'`
 
-Please note that there is a <a href="https://bugreports.qt.io/browse/QTCREATORBUG-28505">bug</a> in QtCreator v8 and v9 with gdb's "Debugging Helper". Therefore if like me you re using Debian wsl2, you ll be stuck with a bugged version. Here's two proper solutions :
+Please note that there is a <a href="https://bugreports.qt.io/browse/QTCREATORBUG-28505">bug</a> in QtCreator v8 and v9 with gdb's "Debugging Helper". Therefore if like me you re using Debian wsl2, you ll be stuck with a bugged version. Here's three proper solutions :
 - Fix the bug manually by following <a href="https://microhobby.com.br/blog/2023/08/08/qt-creator-v9-0-2-debug-helpers-not-working-on-ubuntu-23-04-and-debian-bookworm-12/">this tutorial</a>
 - Update to Trixie/unstable which has QtCreator v10.0.2-4. (seems to cause issue with ./install_toolchain.sh ? Will investigate when Trixie is out of testing phase)
 - Download standalone QtCreator from <a href="https://download.qt.io/official_releases/qtcreator/">offline installers</a>, in theory it shouldn't mix with system libs and packages... I'm not too fond of it but it looks likes the best bet for now. Here's a bunch of things you'll need to intall to make it work (might be missing some I didn't took notes) 
