@@ -221,4 +221,6 @@ rm /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qtattributionsscanner
 rm /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qhelpgenerator
 ```
 
+- The lazy way, use the compiled .qch (for qt 5.15.13) I've put in the DevReadme folder 
+
 Now when selecting a QtClass in your code and pressing f1 it should display the local doc associated to said QtClass.
