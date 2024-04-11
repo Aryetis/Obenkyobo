@@ -11,7 +11,7 @@ sudo apt-get install build-essential autoconf automake bison flex gawk libtool l
 git clone --recurse-submodules git@github.com:Aryetis/kobo-qt-setup-scripts.git # or "git clone --recurse-submodules https://github.com/Aryetis/Obenkyobo.git", if you don't use ssh keys for github
 cd kobo-qt-setup-scripts
 ./install_toolchain.sh
-./get_qt.sh kobo
+./get_qt.sh kobo # at this point check the "How to build and get docs working in QTCreator" section if you want to build qt docs too
 ./install_libs.sh
 echo $'\n########################################' >> ~/.bashrc
 echo 'export PATH="$HOME/x-tools/arm-kobo-linux-gnueabihf/bin:$PATH"' >> ~/.bashrc
@@ -82,7 +82,8 @@ cd kobo-qt-setup-scripts
 Please note that there is a <a href="https://bugreports.qt.io/browse/QTCREATORBUG-28505">bug</a> in QtCreator v8 and v9 with gdb's "Debugging Helper". Therefore if like me you re using Debian wsl2, you ll be stuck with a bugged version. Here's two proper solutions :
 - Fix the bug manually by following <a href="https://microhobby.com.br/blog/2023/08/08/qt-creator-v9-0-2-debug-helpers-not-working-on-ubuntu-23-04-and-debian-bookworm-12/">this tutorial</a>
 - Update to Trixie/unstable which has QtCreator v10.0.2-4. (seems to cause issue with ./install_toolchain.sh ? Will investigate when Trixie is out of testing phase)
-- Download standalone QtCreator from <a href="https://download.qt.io/official_releases/qtcreator/">offline installers</a>, in theory it shouldn't mix with system libs and packages... I'm not too fond of it but it looks likes the best bet for now
+- Download standalone QtCreator from <a href="https://download.qt.io/official_releases/qtcreator/">offline installers</a>, in theory it shouldn't mix with system libs and packages... I'm not too fond of it but it looks likes the best bet for now. Here's a bunch of things you'll need to intall to make it work (might be missing some I didn't took notes) 
+`sudo apt install libxkbcommon-x11-0 libxcb-shape0 libxcb-render-util0 libxcb-keysyms1 libxcb-image0 libxcb-icccm4 libdbus-1-dev libwayland-cursor0 libxaw7 libxmu6 libxt6 libxtst6`
 
 ### Setup the Ereader
 
@@ -169,27 +170,20 @@ Obenkyobo : 0.0101 A ( (after the minute of Fake Sleep))
 UMR : 0.0425 -> 0.0429 A (oscillation for long time) then 0.0103 A
 ```
 
-### How to build and get docs working in QTCreator (the dirty way)
+### How to build and get docs working in QTCreator
 
 ```
+sudo install llvm
 cd [...]/kobo-qt-setup-scripts/
 #add `qttools` to MODULES_BASE in get_qt.sh`
 ./get_qt.sh
-./build_qt.sh kobo config
+./build_qt.sh kobo config (Should state "QtTools\n QtDocs ...... ok" at the end of the summary)
 ./build_qt.sh kobo make
 ./build_qt.sh kobo install
-# Now here comes the dirty part, reuse part of the qt bins you already have 
-ln -s /usr/lib/qt6/bin/qdoc /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qdoc
-ln -s /usr/lib/qt6/libexec/qtattributionsscanner /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qtattributionsscanner
-ln -s /usr/lib/qt6/libexec/qhelpgenerator /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qhelpgenerator
 cd [...]/kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo
 make docs # it's gonna take about 30 minutes... yes for real...
 find ./ -name "*.qch" | grep doc
-# Open QtCreator, Edit -> Preferences -> Help -> Documentation and add have fun adding every single .pch listed by the command above :D
-# Ok time to clean our mess
-rm /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qdoc
-rm /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qtattributionsscanner
-rm /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qhelpgenerator
+# Open QtCreator, Edit -> Preferences -> Help -> Documentation and add have fun adding every single .pch listed by the command above :D (qtcore and qtdoc are the two main ones)
 ```
 
 Now when selecting a QtClass in your code and pressing f1 it should display the local doc associated to said QtClass.
