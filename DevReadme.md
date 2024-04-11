@@ -175,7 +175,7 @@ UMR : 0.0425 -> 0.0429 A (oscillation for long time) then 0.0103 A
 ```
 sudo install llvm
 cd [...]/kobo-qt-setup-scripts/
-#add `qttools` to MODULES_BASE in get_qt.sh`
+#add `qttools qtdoc` to MODULES_BASE in get_qt.sh`
 ./get_qt.sh
 ./build_qt.sh kobo config (Should state "QtTools\n QtDocs ...... ok" at the end of the summary)
 ./build_qt.sh kobo make
