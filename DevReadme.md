@@ -175,7 +175,7 @@ UMR : 0.0425 -> 0.0429 A (oscillation for long time) then 0.0103 A
 - The <a href="https://wiki.qt.io/Building_Qt_Documentation">official</a> (yet broken) way : 
 
 ```
-sudo install llvm
+sudo install llvm libclang-dev
 cd [...]/kobo-qt-setup-scripts/
 #add `qttools qtdoc` to MODULES_BASE in get_qt.sh`
 ./get_qt.sh
