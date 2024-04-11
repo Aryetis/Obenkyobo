@@ -4,7 +4,7 @@ You can setup a very basic Kobo dev environment by following either
 - The <a href="https://github.com/koreader/koxtoolchain">koxtoolchain instructions</a> and work your way from here by cross-compiling qt for ARM and the QTPA kobo platform plugin. To validate your arm gcc, run your first non graphical "hello world" throught an ssh-server or use koreader "run command" option.
 - Go the "easy" route and use my fork of @Rain92's <a href="https://github.com/Aryetis/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> (until I eventually find time to write a clean PR for the main repository) to setup everything "libs, Qt binaries, deployment scripts".
 
-### How to setup Obenkyobo dev environment using kobo-qt-setup-scripts ? (as of 04/04/2024) 
+### How to setup Obenkyobo dev environment using kobo-qt-setup-scripts ? (as of 04/04/2024, tested with WSL2 Debian Bookworm ) 
 1. Run the following commands :
 ```
 sudo apt-get install build-essential autoconf automake bison flex gawk libtool libtool-bin libncurses-dev curl file git gperf help2man texinfo unzip wget cmake pkg-config python3 mmv lftp
@@ -138,20 +138,19 @@ This <a href="https://web.archive.org/web/20220627124323/http://gethighstayhigh.
 
 But for prosperity I saved all the layout pictures in the "DevScreenshots" folder. And here's what the "serial port" section used to say:
 ```
-Most Kobo's typically have 3 or 4 serial ports, but only one is functional. The serial ports on 6 popular models can be seen in the photographs below. Each Serial port has 4 connections,
+Most Kobo's typically have 3 or 4 serial ports, but only one is functional. The serial ports on 6 popular models can be seen in the photographs. Each Serial port has 4 connections,
 
 V         (Power)
 Ground
 Data in   (or Rx)
 Data Out  (or Tx).
 
-Not all instruments require all 4 connections (some examples are covered later). The ground connection is connected to the wider copper 'ground' of the entire PCB, which means that the heat from a soldering iron is wicked away fast which can compromise a good joint. Instead, it is recommended that the ground is connected to the nearest PCB screw for a more reliable connection.
+Not all instruments require all 4 connections (In our UART debugging case you probably don't need 5v). The ground connection is connected to the wider copper 'ground' of the entire PCB, which means that the heat from a soldering iron is wicked away fast which can compromise a good joint. Instead, it is recommended that the ground is connected to the nearest PCB screw for a more reliable connection.
 
-Here is the proven layout for the 2020 Kobo Nia. Note that wiring from the 'other’'end (see Clara, below) was susceptible to EMF.
+For the 2020 Kobo Nia. Note that wiring from the 'other’'end (see Clara, below) was susceptible to EMF.
 
-Here is the proven layout for the 2019 Kobo Clara HD
-
-Here is the layout on older Kobo models; the cables colours are: White is V, Yellow is Ground, Black is Data-In/Rx**, Red is Data-Out/Tx**                                **at the 'kobo' end
+Layout on older Kobo models; the cables colours are: White is V, Yellow is Ground, Black is Data-In/Rx**, Red is Data-Out/Tx**
+**at the 'kobo' end
 ```
 
 ### Some Power Consumption measurements (needs to be redone with a proper methodology later on !!!)
