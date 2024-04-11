@@ -66,6 +66,8 @@ And that's it! With all of that done, you should now be able to simply click the
 
 Also, NEVER modify any of the .sh scripts under windows... Windows end of line will mess things up when ran on linux, or at the very least use `win2unix` afterwards to fix line endings issues.
 
+There seems to be a bug with WSL 2.1.5.0 ; WSLg 1.0.60 where QtCreator freezes when reading a large .qch doc (eg : QString), updating to <a href="https://github.com/microsoft/WSL/releases/">WSL 2.2.2 ; WSLg 1.0.61</a> seems to fix it
+
 ### Setup gdb
 
 Two solutions : 
@@ -79,7 +81,8 @@ cd kobo-qt-setup-scripts
 
 Please note that there is a <a href="https://bugreports.qt.io/browse/QTCREATORBUG-28505">bug</a> in QtCreator v8 and v9 with gdb's "Debugging Helper". Therefore if like me you re using Debian wsl2, you ll be stuck with a bugged version. Here's two proper solutions :
 - Fix the bug manually by following <a href="https://microhobby.com.br/blog/2023/08/08/qt-creator-v9-0-2-debug-helpers-not-working-on-ubuntu-23-04-and-debian-bookworm-12/">this tutorial</a>
-- Update to Trixie/unstable which has QtCreator v10.0.2-4.
+- Update to Trixie/unstable which has QtCreator v10.0.2-4. (seems to cause issue with ./install_toolchain.sh ? Will investigate when Trixie is out of testing phase)
+- Download standalone QtCreator from <a href="https://download.qt.io/official_releases/qtcreator/">offline installers</a>, in theory it shouldn't mix with system libs and packages... I'm not too fond of it but it looks likes the best bet for now
 
 ### Setup the Ereader
 
