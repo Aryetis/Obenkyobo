@@ -172,6 +172,8 @@ UMR : 0.0425 -> 0.0429 A (oscillation for long time) then 0.0103 A
 
 ### How to build and get docs working in QTCreator
 
+- The <a href="https://wiki.qt.io/Building_Qt_Documentation">official</a> (yet broken) way : 
+
 ```
 sudo install llvm
 cd [...]/kobo-qt-setup-scripts/
@@ -181,9 +183,42 @@ cd [...]/kobo-qt-setup-scripts/
 ./build_qt.sh kobo make
 ./build_qt.sh kobo install
 cd [...]/kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo
+cd [...]/kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo/qttools/src/assistant
+make sub-qhelpgenerator
+make sub-qhelpgenerator-install_subtargets
+cd [...]/kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo/qtdeclarative/src
+make sub-qmldevtools
+make sub-qmldevtools-install_subtargets
+cd [...]/kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo/qttools/src
+make sub-qdoc
+make sub-qdoc-install_subtargets
+cd /home/aramir/kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo/qtbase
 make docs # it's gonna take about 30 minutes... yes for real...
 find ./ -name "*.qch" | grep doc
 # Open QtCreator, Edit -> Preferences -> Help -> Documentation and add have fun adding every single .pch listed by the command above :D (qtcore and qtdoc are the two main ones)
+```
+
+- The dirty (yet working) way
+
+```
+cd [...]/kobo-qt-setup-scripts/
+#add `qttools` to MODULES_BASE in get_qt.sh`
+./get_qt.sh
+./build_qt.sh kobo config
+./build_qt.sh kobo make
+./build_qt.sh kobo install
+# Now here comes the dirty part, reuse part of the qt bins you already have 
+ln -s /usr/lib/qt6/bin/qdoc /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qdoc
+ln -s /usr/lib/qt6/libexec/qtattributionsscanner /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qtattributionsscanner
+ln -s /usr/lib/qt6/libexec/qhelpgenerator /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qhelpgenerator
+cd [...]/kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo
+make docs # it's gonna take about 30 minutes... yes for real...
+find ./ -name "*.qch" | grep doc
+# Open QtCreator, Edit -> Preferences -> Help -> Documentation and add have fun adding every single .pch listed by the command above :D
+# Ok time to clean our mess
+rm /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qdoc
+rm /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qtattributionsscanner
+rm /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qhelpgenerator
 ```
 
 Now when selecting a QtClass in your code and pressing f1 it should display the local doc associated to said QtClass.
