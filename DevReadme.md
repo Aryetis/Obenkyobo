@@ -214,7 +214,10 @@ find ./ -name "*.qch" | grep doc
 ln -s /usr/lib/qt6/bin/qdoc /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qdoc
 ln -s /usr/lib/qt6/libexec/qtattributionsscanner /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qtattributionsscanner
 ln -s /usr/lib/qt6/libexec/qhelpgenerator /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qhelpgenerator
-cd [...]/kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo
+cd [...]kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo/qtbase
+mkdir LICENSES
+touch LICENSES/NONE.txt
+cd ..
 make docs # it's gonna take about 30 minutes... yes for real...
 find ./ -name "*.qch" | grep doc
 # Open QtCreator, Edit -> Preferences -> Help -> Documentation and add have fun adding every single .pch listed by the command above :D
