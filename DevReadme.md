@@ -66,6 +66,8 @@ And that's it! With all of that done, you should now be able to simply click the
 
 Also, NEVER modify any of the .sh scripts under windows... Windows end of line will mess things up when ran on linux, or at the very least use `win2unix` afterwards to fix line endings issues.
 
+If for some reasons you need to debug QtCreator's behavior (cough cough), run `export QT_LOGGING_RULES=qtc.*=true` before it.
+
 ### Setup gdb
 
 Two solutions : 
