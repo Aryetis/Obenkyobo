@@ -51,7 +51,12 @@ For a better workflow and one click build+deploy+launch from within QtCreator :
 Settings->Build & Run->Default Build Properties->Default build directory  : 
 %{JS: Util.asciify("build-%{Project:Name}-%{Kit:FileSystemName}-%{BuildConfig:Name}")}
 
-Projects->Kobo(Kit)->Run->Deployment-> Upload files via SFTP instead of rsync
+# If QtCreator < 13
+Projects->Kobo(Kit)->Run->Deployment->Upload files via SFTP instead of rsync
+# If QtCreator == 13, install rsync and 
+Projects->Kobo(Kit)->Run->Deployment->Deploy files and set flags for rsync : --chown=root:root
+(can't pass more than one argument without everyhing breaking apart because of how they pass the arguments --")
+
 Projects->Kobo(Kit)->Run->Deployment-> Add Run custom remote command with :  
 /mnt/onboard/.adds/Obenkyobo/debugEnv.sh
 
