@@ -19,8 +19,6 @@ source ~/.bashrc
 ./build_qt.sh kobo config
 ./build_qt.sh kobo make
 ./build_qt.sh kobo install
-./deploy_qt.sh QTPA_BUILD_FOLDER KOBO_IP_DEVICE #eg : ./deploy_qt.sh ~/Obenkyobo/build-ObenkyoboProject-KoboLibraH2o-Debug/Src/Libs/qt5-kobo-platform-plugin/ 192.168.1.18
-# Ok but what is QTPA_BUILD_FOLDER ? It s the folder libkobo.so which comes from the compilation of https://github.com/Rain92/qt5-kobo-platform-plugin . If you re trying to compile Obenkyobo, don't worry too much about it for now and do this step later as qt5-kobo-platform-plugin is included as an Obenkyobo's subdir/dependency.
 ```
 
 That should get you a working cross commpiler and qt binaries configured with a bunch of libraries (most of them only useful for UltimateMangaReader)
@@ -32,6 +30,8 @@ That should get you a working cross commpiler and qt binaries configured with a 
 <p align="center">
   <img src="DevReadme/KoboQtKit.jpg" width="807" height="528" >
 </p>
+
+- Once you've compiled Obenkyobo (and therefore qtpa too), time to run the `deploy_qt.sh QTPA_BUILD_FOLDER [KOBO_IP_DEVICE]` script with `QTPA_BUILD_FOLDER`as the folder holding libkobo.so and leave KOBO_IP_DEVICE empty as we'll ship everything using rsync/sftp directly from QtCreator. This should create the `/kobo-qt-setup-scripts/deploy/qt-linux-5.15-kde-kobo/` folder containing every qt binaries and libraries to be deployed on the kobo device. Make sure to fix the associated symbolic link `Obenkyobo/Src/Obenkyobo/OtherFiles/Dependencies/qt-linux-5.15-kde-kobo` so that it points towards `kobo-qt-setup-scripts/deploy/qt-linux-5.15-kde-kobo/` (that way packager.sh will be able to include it). 
 
 3. And finally, let's tweak a couple of things so you can use the packager.sh to compile and ship everything with a single press on the build button (also requires you to follow `Setup QtCreator` steps)
 - Create a symbolic link to the qt binaries like so : `ln -s [Obenkyobo]/Src/Obenkyobo/OtherFiles/Dependencies/qt-linux-5.15-kde-kobo` -> `[kobo-qt-setup-scripts]/deploy/qt-linux-5.15-kde-kobo/`
