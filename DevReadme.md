@@ -66,8 +66,6 @@ And that's it! With all of that done, you should now be able to simply click the
 
 Also, NEVER modify any of the .sh scripts under windows... Windows end of line will mess things up when ran on linux, or at the very least use `win2unix` afterwards to fix line endings issues.
 
-There seems to be a bug with WSL 2.1.5.0 ; WSLg 1.0.60 where QtCreator freezes when reading a large .qch doc (eg : QString), updating to <a href="https://github.com/microsoft/WSL/releases/">WSL 2.2.2 ; WSLg 1.0.61</a> seems to fix it
-
 ### Setup gdb
 
 Two solutions : 
@@ -213,17 +211,13 @@ find ./ -name "*.qch" | grep doc
 - The dirty (yet working) way
 
 ```
-cd [...]/kobo-qt-setup-scripts/
-#add `qttools` to MODULES_BASE in get_qt.sh`
-./get_qt.sh
-./build_qt.sh kobo config
-./build_qt.sh kobo make
-./build_qt.sh kobo install
-# Now here comes the dirty part, reuse part of the qt bins you already have 
 ln -s /usr/lib/qt6/bin/qdoc /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qdoc
 ln -s /usr/lib/qt6/libexec/qtattributionsscanner /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qtattributionsscanner
 ln -s /usr/lib/qt6/libexec/qhelpgenerator /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qhelpgenerator
-cd [...]/kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo
+cd [...]kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo/qtbase
+mkdir LICENSES
+touch LICENSES/NONE.txt
+cd ..
 make docs # it's gonna take about 30 minutes... yes for real...
 find ./ -name "*.qch" | grep doc
 # Open QtCreator, Edit -> Preferences -> Help -> Documentation and add have fun adding every single .pch listed by the command above :D
@@ -236,3 +230,5 @@ rm /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qhelpgenerator
 - The lazy way, use the compiled .qch (for qt 5.15.13) I've put in the DevReadme folder 
 
 Now when selecting a QtClass in your code and pressing f1 it should display the local doc associated to said QtClass.
+
+QtCreator freezes a lot when loading some huge documentation page (eg : QString) ? Congratulations you've encountered yet another qt/wsl bug. To counter this bug this one : Edit->Preferences->Help->Viewer Backend : QTextBrowser. Oh ? What's that ? Now every doc page is flashbang white ? To counter this one you'll simply have to change the stylsheet used by QtCreator using an undocumented launch argument :D. `qtcreator -stylesheet blabla.css/blabla.qss` but don't worry it gets even more stupid! The stylesheet can even be a blank file and it should still override whatever the default stylesheet is and work just fine. So if you're using wsl2 like me, run `touch EmptyTheme.css` along qtcreator binary, right click your windows qtcreator shortcut/startbar pin->properties->target : `"C:\Program Files\WSL\wslg.exe" -d Debian --cd "~" -- "~/qtcreator-13.0.0/bin/qtcreator" -stylesheet ~/qtcreator-13.0.0/bin/EmptyTheme.css`
