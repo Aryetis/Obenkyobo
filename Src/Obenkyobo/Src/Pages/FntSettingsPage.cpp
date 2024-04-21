@@ -85,13 +85,13 @@ void FntSettingsPage::RegisterFntsFromResources()
     while (it->hasNext())
         RegisterKanjiFont(it->next());
 
-    for (QFont fnt : hiraganaFonts)
+    for (QFont const& fnt : hiraganaFonts)
         ui->HiraganaFntDropdown->addItem(fnt.family());
-    for (QFont fnt : katakanaFonts)
+    for (QFont const& fnt : katakanaFonts)
         ui->KatakanaFntDropdown->addItem(fnt.family());
-    for (QFont fnt : romanjiFonts)
+    for (QFont const& fnt : romanjiFonts)
         ui->RomanjiFntDropdown->addItem(fnt.family());
-    for (QFont fnt : kanjiFonts)
+    for (QFont const& fnt : kanjiFonts)
         ui->KanjiFntDropdown->addItem(fnt.family());
 
 //    Works just fine but I can't stand Roboto Mono... Plus it's way larger => bad for small screens

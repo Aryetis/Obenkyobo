@@ -22,6 +22,7 @@
 #define POWER_REQUEST_TIMER 500 // ms
 #define POST_WAKEUP_WIFI_DELAY 100 // ms
 #define PRESLEEP_DURATION 60000 // ms
+#define SET_AND_TRIM_LOOPING_RAILGUARD 25
 
 enum KanaFamilyEnum
 {

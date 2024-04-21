@@ -1,4 +1,5 @@
 #include <QScrollBar>
+                                                        #include <QSizePolicy>
 #include "Src/Pages/VocabExplorerPage.h"
 #include "ui_VocabExplorerPage.h"
 #include "Src/GetMy.h"
@@ -18,6 +19,9 @@ VocabExplorerPage::VocabExplorerPage(QWidget *parent) :
     currentDir = QDir(currentVocabDirString);
 
     ui->VocabularyCfgListContentVLayout->addStretch(); // TODO : for some reasons storing and inserting/removing SpacerItem at each Populate does not work because reasons... It's good enough for now
+
+
+    // ui->
 
     GetMy::Instance().SetVocabExplorerPageInst(this);
 }
@@ -55,7 +59,7 @@ void VocabExplorerPage::Populate()
     QDir upDir = currentDir;
     if (upDir.cdUp())
     {
-        VocabFileEntryWidget* foo = new VocabFileEntryWidget(QFileInfo(upDir, upDir.path()), true);
+        VocabFileUpDirWidget* foo = new VocabFileUpDirWidget(QFileInfo(upDir, upDir.path()));
         vocabFileWidgets.push_back(foo);
         ui->VocabularyCfgListContentVLayout->insertWidget(0, foo);
     }
@@ -130,7 +134,8 @@ void VocabExplorerPage::SetAndTrimCurDirLabel()
                 QString cutFileNameLeft = currentVocabDirString.left(static_cast<int>(currentVocabDirString.size()/2));
                 QString cutFileNameRight = currentVocabDirString.mid(static_cast<int>(currentVocabDirString.size()/2));
 
-                while (cutFileNameLeft.size() != 1)
+                int railguard {0};
+                while (railguard++ < SET_AND_TRIM_LOOPING_RAILGUARD && cutFileNameLeft.size() != 1)
                 {
                     if (cutFileNameLeft.size() == 0) // no left side => split right into two and loopback
                     {
@@ -151,6 +156,8 @@ void VocabExplorerPage::SetAndTrimCurDirLabel()
                         }
                     }
                 }
+                if (railguard >= SET_AND_TRIM_LOOPING_RAILGUARD)
+                    std::cerr << "VocabFileEntryWidget::SetAndTrimCurDirLabel IS STUCK LOOPING" << std::endl;
                 finalCut = true;
             }
             else // remove directory from path one by one (starting left)
@@ -186,6 +193,7 @@ void VocabExplorerPage::resizeEvent(QResizeEvent *event)
 {
     std::cout << "LOG: VocabExplorerPage::resizeEvent() BEGIN" << std::endl;
     QWidget::resizeEvent(event);
+
     initialPaintDone = true;
 
     SetAndTrimCurDirLabel();

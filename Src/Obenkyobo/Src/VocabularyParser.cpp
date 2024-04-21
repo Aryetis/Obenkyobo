@@ -49,15 +49,15 @@ void VocabDataFile::ParseLine(const QString &line, int lineNumber_)
         return;
 
     //[fontType=hiragana][jp=sanity][kanji=kan][trad=check][learningScore=5]
-    QRegularExpression rx("\\[fontType=([a-zA-Z]+)\\]\\[jp=([^\\]]+)\\]\\[kanji=([^\\]]+)\\]\\[trad=([^\\]]+)\\]\\[learningScore=([0-5])\\]");
-    QRegularExpressionMatch match = rx.match(line);
-    QStringList parsedFields = match.capturedTexts();
+    static QRegularExpression rx{"\\[fontType=([a-zA-Z]+)\\]\\[jp=([^\\]]+)\\]\\[kanji=([^\\]]+)\\]\\[trad=([^\\]]+)\\]\\[learningScore=([0-5])\\]"};
+    QRegularExpressionMatch match { rx.match(line) };
+    QStringList parsedFields { match.capturedTexts() };
 
-    QString kanas_ = "";
-    QString kanji_ = "";
-    QString trad_ = "";
-    int learningScore_ = -1;
-    KanaFamilyEnum fontType_ = KanaFamilyEnum::hiragana;
+    QString kanas_ {""};
+    QString kanji_ {""};
+    QString trad_ {""};
+    int learningScore_ {-1};
+    KanaFamilyEnum fontType_ {KanaFamilyEnum::hiragana};
 
     if ( parsedFields.count() == 6 )
     {
@@ -119,8 +119,8 @@ bool VocabDataFile::WriteLearningScoreInt(std::vector<std::pair<int, int>> trans
                     if (curLine.size() <= 0 || curLine[0] == '#')
                         continue;
 
-                    QRegularExpression rx("\\[learningScore=([0-9]{1})\\]");
-                    QRegularExpressionMatch match = rx.match(curLine);
+                    static QRegularExpression rx {"\\[learningScore=([0-9]{1})\\]"};
+                    QRegularExpressionMatch match {rx.match(curLine)};
                     if (match.capturedTexts().size() != 2)
                     {
                         std::cerr << "[WriteLearningScore] : incorrect number of [learningScore] group in " << vocabSheetPath.toStdString().c_str() << "'s line :" << curLine.toStdString().c_str() << std::endl;
@@ -139,9 +139,9 @@ bool VocabDataFile::WriteLearningScoreInt(std::vector<std::pair<int, int>> trans
                 QString targetLine = fileContent[trans.second]; // assuming lineNumber is pointing to a sane line
                 if (targetLine.size() > 0 && targetLine[0] != '#')
                 {
-                    QRegularExpression rx("\\[learningScore=([0-9]{1})\\]");
-                    QRegularExpressionMatch match = rx.match(targetLine);
-                    QString& curLine = fileContent[trans.second];
+                    static QRegularExpression rx{"\\[learningScore=([0-9]{1})\\]"};
+                    QRegularExpressionMatch match {rx.match(targetLine)};
+                    QString& curLine {fileContent[trans.second]};
                     if (match.capturedTexts().size() != 2)
                     {
                         std::cerr << "[WriteLearningScore] : incorrect number of [learningScore] group in " << vocabSheetPath.toStdString().c_str() << "'s line :" << curLine.toStdString().c_str() << std::endl;
@@ -215,7 +215,7 @@ VocabDataPool::VocabDataPool(QString sheetPath)
 
 VocabDataPool::VocabDataPool(QSet<QString> sheetPaths)
 {
-    for(QString path : sheetPaths)
+    for(QString const& path : sheetPaths)
         PopulateFromPath(path);
 }
 
@@ -242,7 +242,7 @@ void VocabDataPool::PopulateFromPath(QString path)
 
 void VocabDataPool::PopulateFromPaths(QSet<QString> sheetPaths)
 {
-    for(QString path : sheetPaths)
+    for(QString const& path : sheetPaths)
         PopulateFromPath(path);
 }
 

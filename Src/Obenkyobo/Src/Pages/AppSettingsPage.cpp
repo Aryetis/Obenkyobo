@@ -5,7 +5,6 @@
 #include "Src/GetMy.h"
 #include "Src/Tools.h"
 #include "Src/mainwindow.h"
-#include "Src/KanasTables.h"
 #include "Src/Widgets/PopupWidget.h"
 
 AppSettingsPage::AppSettingsPage(QWidget *parent) :

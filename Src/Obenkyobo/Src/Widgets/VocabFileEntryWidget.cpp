@@ -12,52 +12,43 @@
 #include "Src/GetMy.h"
 #include "Src/Tools.h"
 
-VocabFileEntryWidget::VocabFileEntryWidget(QWidget *parent) :
+VocabFileEntryWidget::VocabFileEntryWidget(QWidget *parent /*= nullptr*/) :
     QWidget(parent), ui(new Ui::VocabFileEntryWidget)
 {
     ui->setupUi(this);
 }
 
-VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fi, bool dirtyUpDirHack, QWidget *parent)
+VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fi, QWidget *parent)
     : QWidget(parent), ui(new Ui::VocabFileEntryWidget)
-    , vocabFileInfo(fi), vocabSetting(fi.filePath(), QSettings::IniFormat), title(), fakeUpDir(dirtyUpDirHack)
+    , vocabFileInfo(fi)
 {
     ui->setupUi(this);
+    ui->TitleButton->setText(vocabFileInfo.completeBaseName());
 
-    if (fakeUpDir)
-    {
-        title = "[UP_DIR] ..";
-        ui->checkBox->setDisabled(true);
-    }
+    if  (vocabFileInfo.isFile())
+        ui->checkBox->setChecked(GetMy::Instance().GetEnabledVocabSheets().contains(vocabFileInfo.absoluteFilePath()));
     else
     {
-        title = vocabFileInfo.completeBaseName();
+        ui->checkBox->setTristate(true);
 
-        if  (vocabFileInfo.isFile())
-            ui->checkBox->setChecked(GetMy::Instance().GetEnabledVocabSheets().contains(vocabFileInfo.absoluteFilePath()));
-        else
+        QDirIterator it(vocabFileInfo.absoluteFilePath(), {"*.oben"}, QDir::Files, QDirIterator::Subdirectories);
+        bool foundOne = false, missedOne = false;
+        while (it.hasNext())
         {
-            ui->checkBox->setTristate(true);
+            bool containsItSheet = GetMy::Instance().GetEnabledVocabSheets().contains(it.next());
 
-            QDirIterator it(vocabFileInfo.absoluteFilePath(), {"*.oben"}, QDir::Files, QDirIterator::Subdirectories);
-            bool foundOne = false, missedOne = false;
-            while (it.hasNext())
-            {
-                bool containsItSheet = GetMy::Instance().GetEnabledVocabSheets().contains(it.next());
+            foundOne = foundOne || containsItSheet;
+            missedOne = missedOne || !containsItSheet;
 
-                foundOne = foundOne || containsItSheet;
-                missedOne = missedOne || !containsItSheet;
-
-                if (foundOne && missedOne)
-                    break;
-            }
             if (foundOne && missedOne)
-                ui->checkBox->setCheckState(Qt::CheckState::PartiallyChecked);
-            else if (foundOne && !missedOne)
-                ui->checkBox->setCheckState(Qt::CheckState::Checked);
-            else if (!foundOne && missedOne)
-                ui->checkBox->setCheckState(Qt::CheckState::Unchecked);
+                break;
         }
+        if (foundOne && missedOne)
+            ui->checkBox->setCheckState(Qt::CheckState::PartiallyChecked);
+        else if (foundOne && !missedOne)
+            ui->checkBox->setCheckState(Qt::CheckState::Checked);
+        else if (!foundOne && missedOne)
+            ui->checkBox->setCheckState(Qt::CheckState::Unchecked);
     }
 }
 
@@ -124,19 +115,31 @@ void VocabFileEntryWidget::resizeEvent(QResizeEvent *event)
     std::cout << "LOG: VocabExplorerPage::resizeEvent() BEGIN" << std::endl;
     QWidget::resizeEvent(event);
 
-    // another dirty hack because koboQT... for some reasons I can't use TitleButton.height to set checkbox's one
-    ui->checkBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
-                                 .arg(GetMy::Instance().Descriptor().height/20) );
-    setMaximumHeight(GetMy::Instance().Descriptor().height/20);
+    DirtySetFixedButtonSize();
 
     initialPaintDone = true;
     SetAndTrimCurDirLabel();
 }
 
+void VocabFileEntryWidget::DirtySetFixedButtonSize()
+{
+    // another dirty hack because koboQT... for some reasons I can't use TitleButton.height to set checkbox's one
+    ui->checkBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
+                                    .arg(GetMy::Instance().Descriptor().height/20) );
+    setMaximumHeight(GetMy::Instance().Descriptor().height/20);
+
+    // Hack to prevent the TitleButton from expanding the whole VocabularyCfgListContentVLayout, fuck qt
+    if (!initialPaintDone)
+    {
+        int correctHeight = ui->TitleButton->height();
+        ui->TitleButton->setSizePolicy({QSizePolicy::Fixed, QSizePolicy::Expanding});
+        ui->TitleButton->setFixedSize(GetMy::Instance().Descriptor().width *0.84f, correctHeight);
+    }
+}
+
 void VocabFileEntryWidget::SetAndTrimCurDirLabel()
 {
-    QString prefix { (vocabFileInfo.isDir() && !fakeUpDir) ? "[DIR] " : ""};
-    QString curLabelText {prefix+title};
+    QString curLabelText {ui->TitleButton->text()};
 
     QFontMetricsF fm { ui->TitleButton->font() };
     int boundingRectFlags { 0 };
@@ -148,7 +151,8 @@ void VocabFileEntryWidget::SetAndTrimCurDirLabel()
         QString cutFileNameLeft = curLabelText.left(static_cast<int>(curLabelText.size()/2));
         QString cutFileNameRight = curLabelText.mid(static_cast<int>(curLabelText.size()/2));
 
-        while (cutFileNameRight.size() != 1)
+        int railguard {0};
+        while (railguard++ < SET_AND_TRIM_LOOPING_RAILGUARD && cutFileNameRight.size() != 1)
         {
             if (cutFileNameRight.size() == 0) // no right side => split right into two and loopback
             {
@@ -169,6 +173,8 @@ void VocabFileEntryWidget::SetAndTrimCurDirLabel()
                 }
             }
         }
+        if (railguard >= SET_AND_TRIM_LOOPING_RAILGUARD)
+            std::cerr << "VocabFileEntryWidget::SetAndTrimCurDirLabel IS STUCK LOOPING" << std::endl;
         curLabelText = securedCut;
     }
     ui->TitleButton->setText(curLabelText);
@@ -178,4 +184,33 @@ void VocabFileEntryWidget::FakeClick(bool checked)
 {
     ui->checkBox->setChecked(checked);
     on_checkBox_clicked(checked);
+}
+
+/*********************************************************************************************************************/
+
+VocabFileUpDirWidget::VocabFileUpDirWidget(QFileInfo fileInfo, QWidget *parent) :
+    VocabFileEntryWidget(fileInfo, parent)
+{
+    ui->TitleButton->setText("[UP_DIR] ..");
+    ui->checkBox->setDisabled(true);
+    ui->checkBox->setText("LS");
+}
+
+VocabFileUpDirWidget::~VocabFileUpDirWidget()
+{
+}
+
+void VocabFileUpDirWidget::resizeEvent(QResizeEvent *event)
+{
+    std::cout << "LOG: VocabFileUpDirWidget::resizeEvent() BEGIN" << std::endl;
+    QWidget::resizeEvent(event);
+
+    DirtySetFixedButtonSize();
+
+    initialPaintDone = true;
+}
+
+void VocabFileUpDirWidget::on_TitleButton_clicked()
+{
+    GetMy::Instance().VocabExplorerPageInst()->Populate(vocabFileInfo.filePath());
 }

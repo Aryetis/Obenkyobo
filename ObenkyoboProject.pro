@@ -1,8 +1,9 @@
 #-------------------------------------------------
-# WORKING ON : - Finish moving on to git submodules properly and move the packager to its own project so my lazy ass won't have to set it up ever again
-#              - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
-#              - Make [UP_DIR] checkbox tick everything in current dir
-#              - Handle properly [UP_DIR] in VocabExplorerPage instead of adding a dummy entry
+# WORKING ON : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
+#              - Make long press set a new "home" folder
+#              - finish fixing VocabFileEntryWidget::SetAndTrimCurDirLabel()
+#              - put date of launch in log file name so it doesn't overwrite the last one
+#              - How did I end up with an entry "[fontType=hiragana][jp=ひ][kanji=火][trad=feu][learningScore=6]"
 #-------------------------------------------------
 # TODO (0.3.1) : - Show last error's log in a popup on startup
 #                - use a fontMetrics().boundingRect to determine max length of VocabExplorer entries text  

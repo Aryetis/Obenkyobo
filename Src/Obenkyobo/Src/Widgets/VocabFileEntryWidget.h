@@ -8,6 +8,7 @@
 namespace Ui
 {
     class VocabFileEntryWidget;
+    class VocabFileUpDirWidget;
 }
 
 class VocabFileEntryWidget : public QWidget
@@ -15,34 +16,44 @@ class VocabFileEntryWidget : public QWidget
     Q_OBJECT
 
 public:
-    VocabFileEntryWidget() = delete;
-    explicit VocabFileEntryWidget(QFileInfo fileInfo, bool dirtyUpDirHack = false, QWidget *parent = nullptr);
-    explicit VocabFileEntryWidget(QWidget *parent = nullptr);
+    explicit VocabFileEntryWidget(QFileInfo fileInfo, QWidget *parent = nullptr);
+    VocabFileEntryWidget(QWidget *parent = nullptr);
     ~VocabFileEntryWidget();
 
     QFileInfo const& VocabFileInfo() { return vocabFileInfo; }
-    QSettings const& VocabSetting() { return vocabSetting; }
     void SetLearningScoreText(QString learningScoreText);
 
     void FakeClick(bool checked);
 
 private slots:
-    void on_TitleButton_clicked();
-    void on_checkBox_clicked(bool checked);
+    virtual void on_TitleButton_clicked();
+    virtual void on_checkBox_clicked(bool checked);
+
+protected:
+    virtual void resizeEvent(QResizeEvent* event) override;
+    void DirtySetFixedButtonSize();
+    Ui::VocabFileEntryWidget *ui;
+    QFileInfo vocabFileInfo;
+    bool initialPaintDone;
+
+private:
+    void SetAndTrimCurDirLabel();
+};
+
+
+class VocabFileUpDirWidget :  /*public QWidget,*/ public VocabFileEntryWidget
+{
+    Q_OBJECT
+
+public:
+    VocabFileUpDirWidget(QFileInfo fileInfo, QWidget *parent = nullptr);
+    ~VocabFileUpDirWidget();
 
 protected:
     void resizeEvent(QResizeEvent* event) override;
 
-private:
-    void SetAndTrimCurDirLabel();
-
-    Ui::VocabFileEntryWidget *ui;
-    QFileInfo vocabFileInfo;
-    QSettings vocabSetting;
-    QString title;
-    bool fakeUpDir;
-
-    bool initialPaintDone;
+private slots:
+    void on_TitleButton_clicked() override;
 };
 
 #endif // VOCABFILEENTRYWIDGET_H

@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Src/Pages/WelcomePage.h"
 #include "ui_WelcomePage.h"
 
