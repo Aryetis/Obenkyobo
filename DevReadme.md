@@ -73,6 +73,8 @@ Also, NEVER modify any of the .sh scripts under windows... Windows end of line w
 
 If for some reasons you need to debug QtCreator's behavior (cough cough), run `export QT_LOGGING_RULES=qtc.*=true` before it.
 
+ps : `apt-get install fonts-takao-mincho` to make sure you have at least one set of font capable of displaying japanese.
+
 ### Setup gdb
 
 Two solutions : 
