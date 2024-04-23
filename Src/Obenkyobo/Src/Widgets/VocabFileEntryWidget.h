@@ -41,7 +41,7 @@ private:
 };
 
 
-class VocabFileUpDirWidget :  /*public QWidget,*/ public VocabFileEntryWidget
+class VocabFileUpDirWidget : public VocabFileEntryWidget
 {
     Q_OBJECT
 

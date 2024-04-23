@@ -1,5 +1,4 @@
 #include <QScrollBar>
-                                                        #include <QSizePolicy>
 #include "Src/Pages/VocabExplorerPage.h"
 #include "ui_VocabExplorerPage.h"
 #include "Src/GetMy.h"
@@ -19,9 +18,6 @@ VocabExplorerPage::VocabExplorerPage(QWidget *parent) :
     currentDir = QDir(currentVocabDirString);
 
     ui->VocabularyCfgListContentVLayout->addStretch(); // TODO : for some reasons storing and inserting/removing SpacerItem at each Populate does not work because reasons... It's good enough for now
-
-
-    // ui->
 
     GetMy::Instance().SetVocabExplorerPageInst(this);
 }

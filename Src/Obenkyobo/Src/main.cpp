@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
             "{                                                                                                          "
                 "image : url(:/pictures/Logos/CheckboxChecked.svg);                                                     "
             "}                                                                                                          "
-        ).arg( GetMy::Instance().Descriptor().width/10 )
+        ).arg( GetMy::Instance().GetScrollBarSize() )
     );
 
     MainWindow w;

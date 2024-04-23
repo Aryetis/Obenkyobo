@@ -23,7 +23,16 @@ VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fi, QWidget *parent)
     , vocabFileInfo(fi)
 {
     ui->setupUi(this);
-    ui->TitleButton->setText(vocabFileInfo.completeBaseName());
+    QString filename = vocabFileInfo.fileName();
+    if (filename.isEmpty())
+        ui->TitleButton->setText("∅"); // how tho ?
+    else
+    {
+        if (filename[0] == '.') // hidden file/folder
+            ui->TitleButton->setText('.'+vocabFileInfo.completeSuffix());
+        else
+            ui->TitleButton->setText(vocabFileInfo.completeBaseName());
+    }
 
     if  (vocabFileInfo.isFile())
         ui->checkBox->setChecked(GetMy::Instance().GetEnabledVocabSheets().contains(vocabFileInfo.absoluteFilePath()));
@@ -50,6 +59,8 @@ VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fi, QWidget *parent)
         else if (!foundOne && missedOne)
             ui->checkBox->setCheckState(Qt::CheckState::Unchecked);
     }
+
+    SetAndTrimCurDirLabel();
 }
 
 VocabFileEntryWidget::~VocabFileEntryWidget()
@@ -116,9 +127,7 @@ void VocabFileEntryWidget::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
 
     DirtySetFixedButtonSize();
-
     initialPaintDone = true;
-    SetAndTrimCurDirLabel();
 }
 
 void VocabFileEntryWidget::DirtySetFixedButtonSize()
@@ -133,49 +142,52 @@ void VocabFileEntryWidget::DirtySetFixedButtonSize()
     {
         int correctHeight = ui->TitleButton->height();
         ui->TitleButton->setSizePolicy({QSizePolicy::Fixed, QSizePolicy::Expanding});
-        ui->TitleButton->setFixedSize(GetMy::Instance().Descriptor().width *0.84f, correctHeight);
+        ui->TitleButton->setFixedSize(GetMy::Instance().Descriptor().width * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT, correctHeight); // TODO NOW Handle scrollbar
+                                                                                                                // use GetMy::Instance().GetScrollBarSize()
     }
 }
 
 void VocabFileEntryWidget::SetAndTrimCurDirLabel()
 {
-    QString curLabelText {ui->TitleButton->text()};
+    QString prefix { (vocabFileInfo.isDir() ) ? "[DIR] " : ""};
+    QString curLabelText { prefix + ui->TitleButton->text() };
 
     QFontMetricsF fm { ui->TitleButton->font() };
     int boundingRectFlags { 0 };
-    QRectF newLabelRect { fm.boundingRect(ui->TitleButton->rect(), boundingRectFlags, curLabelText) };
+    QRectF newLabelRect { fm.boundingRect(
+        QRect(0, 0, GetMy::Instance().Descriptor().width * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT
+              , ui->TitleButton->rect().height()), boundingRectFlags, curLabelText) };
     qreal curW { newLabelRect.width() };
-    if (curW > ui->TitleButton->width())
+    if (curW > GetMy::Instance().Descriptor().width * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT )  // TODO NOW Handle scrollbar
     {
-        QString securedCut;
         QString cutFileNameLeft = curLabelText.left(static_cast<int>(curLabelText.size()/2));
         QString cutFileNameRight = curLabelText.mid(static_cast<int>(curLabelText.size()/2));
 
         int railguard {0};
         while (railguard++ < SET_AND_TRIM_LOOPING_RAILGUARD && cutFileNameRight.size() != 1)
         {
-            if (cutFileNameRight.size() == 0) // no right side => split right into two and loopback
+            if (cutFileNameRight.size() == 0) // no right side => split leftinto two and loopback
             {
-                cutFileNameLeft = cutFileNameLeft.left(static_cast<int>(cutFileNameLeft.size()/2));
                 cutFileNameRight = cutFileNameLeft.mid(static_cast<int>(cutFileNameLeft.size()/2));
+                cutFileNameLeft = cutFileNameLeft.left(static_cast<int>(cutFileNameLeft.size()/2));
             }
             else
             {
-                newLabelRect = fm.boundingRect(ui->TitleButton->rect(), boundingRectFlags, securedCut + cutFileNameLeft);
+                curLabelText = cutFileNameLeft + "[...]";
+                newLabelRect = fm.boundingRect( QRect(0, 0, GetMy::Instance().Descriptor().width * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT  // TODO NOW Handle scrollbar
+                                                , ui->TitleButton->rect().height()), boundingRectFlags, curLabelText);
                 curW = newLabelRect.width();
-                if(curW > ui->TitleButton->width()) // if cutFileNameLeft is already too big by itself
+                if(curW > GetMy::Instance().Descriptor().width * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT) // if cutFileNameLeft is already too big by itself  // TODO NOW Handle scrollbar
                     cutFileNameRight = ""; // we'll cutFileNameLeft in two at next iteration
-                else // there's enough room, try to fit more of the the right part into the left
+                else // if cutFileNameLeft can still fit more char
                 {
-                    securedCut = securedCut + cutFileNameLeft;
-                    cutFileNameLeft = cutFileNameRight.left(static_cast<int>(cutFileNameRight.size()/2));
+                    cutFileNameLeft = cutFileNameLeft + cutFileNameRight.left(static_cast<int>(cutFileNameRight.size()/2));
                     cutFileNameRight = cutFileNameRight.mid(static_cast<int>(cutFileNameRight.size()/2));
                 }
             }
         }
         if (railguard >= SET_AND_TRIM_LOOPING_RAILGUARD)
             std::cerr << "VocabFileEntryWidget::SetAndTrimCurDirLabel IS STUCK LOOPING" << std::endl;
-        curLabelText = securedCut;
     }
     ui->TitleButton->setText(curLabelText);
 }
@@ -206,7 +218,6 @@ void VocabFileUpDirWidget::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
 
     DirtySetFixedButtonSize();
-
     initialPaintDone = true;
 }
 

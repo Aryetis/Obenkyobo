@@ -56,7 +56,9 @@ public:
     void SetStatisticsInst(StatisticsPage* stats) { statisticsInstance = stats; }
     StatisticsPage* StatisticsInst() { return statisticsInstance; }
 
-    const KoboDeviceDescriptor& Descriptor() { return desc; }
+    int GetScrollBarSize() const { return GetMy::Instance().Descriptor().width/10;}
+
+    KoboDeviceDescriptor const& Descriptor() { return desc; }
 
     QSet<QString> const& GetEnabledVocabSheets() const { return enabledSheets; }
     QSet<QString>& ModifyEnabledVocabSheets() { return enabledSheets; }

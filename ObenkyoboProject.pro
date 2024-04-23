@@ -1,7 +1,7 @@
 #-------------------------------------------------
 # WORKING ON : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
 #              - Make long press set a new "home" folder
-#              - finish fixing VocabFileEntryWidget::SetAndTrimCurDirLabel()
+#              - VocabExplorerPage handle cases where scrollbar must be displayed
 #              - put date of launch in log file name so it doesn't overwrite the last one
 #              - How did I end up with an entry "[fontType=hiragana][jp=ひ][kanji=火][trad=feu][learningScore=6]"
 #-------------------------------------------------
