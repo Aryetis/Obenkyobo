@@ -9,18 +9,16 @@
 #include "Src/Pages/VocabularyDisplayPage.h"
 #include "Src/Pages/AppSettingsPage.h"
 #include "Src/Pages/VocabExplorerPage.h"
-#include "Src/GetMy.h"
 #include "Src/Tools.h"
 
 VocabFileEntryWidget::VocabFileEntryWidget(QWidget *parent /*= nullptr*/) :
-    QWidget(parent), ui(new Ui::VocabFileEntryWidget)
+    QWidget(parent), ui(new Ui::VocabFileEntryWidget), vocabFileInfo(), scrollBarDisplayed(false), initialPaintDone(false)
 {
     ui->setupUi(this);
 }
 
 VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fi, QWidget *parent)
-    : QWidget(parent), ui(new Ui::VocabFileEntryWidget)
-    , vocabFileInfo(fi)
+    : QWidget(parent), ui(new Ui::VocabFileEntryWidget), vocabFileInfo(fi), scrollBarDisplayed(false), initialPaintDone(false)
 {
     ui->setupUi(this);
     QString filename = vocabFileInfo.fileName();
@@ -60,6 +58,9 @@ VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fi, QWidget *parent)
             ui->checkBox->setCheckState(Qt::CheckState::Unchecked);
     }
 
+    ui->checkBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}").arg(GetMy::Instance().Descriptor().height/20) );
+    setMaximumHeight(GetMy::Instance().Descriptor().height/20);
+
     SetAndTrimCurDirLabel();
 }
 
@@ -71,6 +72,14 @@ VocabFileEntryWidget::~VocabFileEntryWidget()
 void VocabFileEntryWidget::SetLearningScoreText(QString learningScoreText)
 {
     ui->checkBox->setText(learningScoreText);
+}
+
+void VocabFileEntryWidget::OnScrollbarEnabled()
+{
+    std::cout << "LOG: VocabExplorerPage::OnScrollbarEnabled()" << std::endl;
+    scrollBarDisplayed = true;
+    SetAndTrimCurDirLabel();
+    ForceTitleButtonSize();
 }
 
 void VocabFileEntryWidget::on_TitleButton_clicked()
@@ -123,28 +132,29 @@ void VocabFileEntryWidget::on_checkBox_clicked(bool checked)
 
 void VocabFileEntryWidget::resizeEvent(QResizeEvent *event)
 {
-    std::cout << "LOG: VocabExplorerPage::resizeEvent() BEGIN" << std::endl;
+    // ugly, don't care for now, will have to separate VocabFileEntryWidget into its own daughter class at some point
+    if (dynamic_cast<VocabFileUpDirWidget*>(this) != nullptr)
+        std::cout << "LOG: VocabFileUpDirWidget::resizeEvent() BEGIN" << std::endl;
+    else
+        std::cout << "LOG: VocabExplorerPage::resizeEvent() BEGIN" << std::endl;
+
     QWidget::resizeEvent(event);
 
-    DirtySetFixedButtonSize();
+    if (!initialPaintDone)
+        ForceTitleButtonSize();
+
     initialPaintDone = true;
 }
 
-void VocabFileEntryWidget::DirtySetFixedButtonSize()
+void VocabFileEntryWidget::ForceTitleButtonSize()
 {
-    // another dirty hack because koboQT... for some reasons I can't use TitleButton.height to set checkbox's one
-    ui->checkBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
-                                    .arg(GetMy::Instance().Descriptor().height/20) );
-    setMaximumHeight(GetMy::Instance().Descriptor().height/20);
-
     // Hack to prevent the TitleButton from expanding the whole VocabularyCfgListContentVLayout, fuck qt
-    if (!initialPaintDone)
-    {
-        int correctHeight = ui->TitleButton->height();
-        ui->TitleButton->setSizePolicy({QSizePolicy::Fixed, QSizePolicy::Expanding});
-        ui->TitleButton->setFixedSize(GetMy::Instance().Descriptor().width * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT, correctHeight); // TODO NOW Handle scrollbar
-                                                                                                                // use GetMy::Instance().GetScrollBarSize()
-    }
+    int correctHeight { ui->TitleButton->height() };
+    int correctedWidth { (GetMy::Instance().Descriptor().width - (scrollBarDisplayed ? GetMy::Instance().GetScrollBarSize() : 0))
+                       * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT };
+
+    ui->TitleButton->setSizePolicy({QSizePolicy::Fixed, QSizePolicy::Fixed});
+    ui->TitleButton->setFixedSize(correctedWidth, correctHeight);
 }
 
 void VocabFileEntryWidget::SetAndTrimCurDirLabel()
@@ -157,8 +167,10 @@ void VocabFileEntryWidget::SetAndTrimCurDirLabel()
     QRectF newLabelRect { fm.boundingRect(
         QRect(0, 0, GetMy::Instance().Descriptor().width * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT
               , ui->TitleButton->rect().height()), boundingRectFlags, curLabelText) };
-    qreal curW { newLabelRect.width() };
-    if (curW > GetMy::Instance().Descriptor().width * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT )  // TODO NOW Handle scrollbar
+    qreal curFmRectWidth { newLabelRect.width() };
+    int correctedWidth { (GetMy::Instance().Descriptor().width - (scrollBarDisplayed ? GetMy::Instance().GetScrollBarSize() : 0))
+                       * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT };
+    if (curFmRectWidth > correctedWidth)
     {
         QString cutFileNameLeft = curLabelText.left(static_cast<int>(curLabelText.size()/2));
         QString cutFileNameRight = curLabelText.mid(static_cast<int>(curLabelText.size()/2));
@@ -174,10 +186,9 @@ void VocabFileEntryWidget::SetAndTrimCurDirLabel()
             else
             {
                 curLabelText = cutFileNameLeft + "[...]";
-                newLabelRect = fm.boundingRect( QRect(0, 0, GetMy::Instance().Descriptor().width * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT  // TODO NOW Handle scrollbar
-                                                , ui->TitleButton->rect().height()), boundingRectFlags, curLabelText);
-                curW = newLabelRect.width();
-                if(curW > GetMy::Instance().Descriptor().width * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT) // if cutFileNameLeft is already too big by itself  // TODO NOW Handle scrollbar
+                newLabelRect = fm.boundingRect( QRect(0, 0, correctedWidth, ui->TitleButton->rect().height()), boundingRectFlags, curLabelText);
+                curFmRectWidth = newLabelRect.width();
+                if(curFmRectWidth > correctedWidth) // if cutFileNameLeft is already too big by itself
                     cutFileNameRight = ""; // we'll cutFileNameLeft in two at next iteration
                 else // if cutFileNameLeft can still fit more char
                 {
@@ -205,20 +216,11 @@ VocabFileUpDirWidget::VocabFileUpDirWidget(QFileInfo fileInfo, QWidget *parent) 
 {
     ui->TitleButton->setText("[UP_DIR] ..");
     ui->checkBox->setDisabled(true);
-    ui->checkBox->setText("LS");
+    ui->checkBox->setText("-");
 }
 
 VocabFileUpDirWidget::~VocabFileUpDirWidget()
 {
-}
-
-void VocabFileUpDirWidget::resizeEvent(QResizeEvent *event)
-{
-    std::cout << "LOG: VocabFileUpDirWidget::resizeEvent() BEGIN" << std::endl;
-    QWidget::resizeEvent(event);
-
-    DirtySetFixedButtonSize();
-    initialPaintDone = true;
 }
 
 void VocabFileUpDirWidget::on_TitleButton_clicked()

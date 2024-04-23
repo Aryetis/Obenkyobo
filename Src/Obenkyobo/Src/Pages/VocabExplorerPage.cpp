@@ -180,7 +180,11 @@ VocabExplorerPage::~VocabExplorerPage()
 bool VocabExplorerPage::eventFilter(QObject *obj, QEvent *event)
 {
     if (obj == ui->VocabularyCfgList->verticalScrollBar() && event->type() == QEvent::Type::Show)
+    {
         GetMy::Instance().MainWindowInst().AggressiveClearScreen();
+        for(VocabFileEntryWidget* vc : vocabFileWidgets)
+            vc->OnScrollbarEnabled();
+    }
 
     return false;
 }
@@ -198,6 +202,11 @@ void VocabExplorerPage::resizeEvent(QResizeEvent *event)
 void VocabExplorerPage::InitializeVocabularyLearnEditSet()
 {
     Populate();
+}
+
+bool VocabExplorerPage::IsScrollBarDisplayed() const
+{
+    return ui->VocabularyCfgList->verticalScrollBar()->isVisible();
 }
 
 void VocabExplorerPage::on_SelectAllButton_clicked()

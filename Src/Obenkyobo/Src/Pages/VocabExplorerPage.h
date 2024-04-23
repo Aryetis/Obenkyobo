@@ -21,6 +21,7 @@ public:
     void Populate(QDir dir);
 
     void InitializeVocabularyLearnEditSet();
+    bool IsScrollBarDisplayed() const;
 
 protected:
     bool eventFilter(QObject *obj, QEvent *ev) override;

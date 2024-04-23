@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QSettings>
 #include <QFileInfo>
+#include "Src/GetMy.h"
 
 namespace Ui
 {
@@ -23,6 +24,8 @@ public:
     QFileInfo const& VocabFileInfo() { return vocabFileInfo; }
     void SetLearningScoreText(QString learningScoreText);
 
+    void OnScrollbarEnabled();
+
     void FakeClick(bool checked);
 
 private slots:
@@ -31,13 +34,15 @@ private slots:
 
 protected:
     virtual void resizeEvent(QResizeEvent* event) override;
-    void DirtySetFixedButtonSize();
     Ui::VocabFileEntryWidget *ui;
     QFileInfo vocabFileInfo;
     bool initialPaintDone;
 
 private:
+    void ForceTitleButtonSize();
     void SetAndTrimCurDirLabel();
+
+    bool scrollBarDisplayed;
 };
 
 
@@ -48,9 +53,6 @@ class VocabFileUpDirWidget : public VocabFileEntryWidget
 public:
     VocabFileUpDirWidget(QFileInfo fileInfo, QWidget *parent = nullptr);
     ~VocabFileUpDirWidget();
-
-protected:
-    void resizeEvent(QResizeEvent* event) override;
 
 private slots:
     void on_TitleButton_clicked() override;
