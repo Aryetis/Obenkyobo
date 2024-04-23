@@ -26,10 +26,12 @@ VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fi, QWidget *parent)
         ui->TitleButton->setText(""); // how tho ?
     else
     {
+        QString prefix { (vocabFileInfo.isDir() ) ? "[DIR] " : ""};
+
         if (filename[0] == '.') // hidden file/folder
-            ui->TitleButton->setText('.'+vocabFileInfo.completeSuffix());
+            ui->TitleButton->setText(prefix+'.'+vocabFileInfo.completeSuffix());
         else
-            ui->TitleButton->setText(vocabFileInfo.completeBaseName());
+            ui->TitleButton->setText(prefix+vocabFileInfo.completeBaseName());
     }
 
     if  (vocabFileInfo.isFile())
@@ -159,9 +161,7 @@ void VocabFileEntryWidget::ForceTitleButtonSize()
 
 void VocabFileEntryWidget::SetAndTrimCurDirLabel()
 {
-    QString prefix { (vocabFileInfo.isDir() ) ? "[DIR] " : ""};
-    QString curLabelText { prefix + ui->TitleButton->text() };
-
+    QString curLabelText { ui->TitleButton->text() };
     QFontMetricsF fm { ui->TitleButton->font() };
     int boundingRectFlags { 0 };
     QRectF newLabelRect { fm.boundingRect(

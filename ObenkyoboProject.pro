@@ -1,9 +1,7 @@
 #-------------------------------------------------
 # WORKING ON : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
 #              - Make long press set a new "home" folder
-#              - Scrollbar triggers doubling of "[DIR]" for every entry in VocabExplorerPage
 #              - seems like the button height get incorrects eventually.... test with /mnt/onboard and /proc
-#              - investigate QScrollArea::widgetResizable of VocabExplorer Page
 #              - put date of launch in log file name so it doesn't overwrite the last one
 #              - How did I end up with an entry "[fontType=hiragana][jp=ひ][kanji=火][trad=feu][learningScore=6]"
 #-------------------------------------------------
