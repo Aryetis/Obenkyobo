@@ -12,18 +12,18 @@
 #include "Src/Tools.h"
 
 VocabFileEntryWidget::VocabFileEntryWidget(QWidget *parent /*= nullptr*/) :
-    QWidget(parent), ui(new Ui::VocabFileEntryWidget), vocabFileInfo(), scrollBarDisplayed(false), initialPaintDone(false)
+    QWidget(parent), ui(new Ui::VocabFileEntryWidget), vocabFileInfo(), initialPaintDone(false), scrollBarDisplayed(false)
 {
     ui->setupUi(this);
 }
 
 VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fi, QWidget *parent)
-    : QWidget(parent), ui(new Ui::VocabFileEntryWidget), vocabFileInfo(fi), scrollBarDisplayed(false), initialPaintDone(false)
+    : QWidget(parent), ui(new Ui::VocabFileEntryWidget), vocabFileInfo(fi), initialPaintDone(false), scrollBarDisplayed(false)
 {
     ui->setupUi(this);
     QString filename = vocabFileInfo.fileName();
     if (filename.isEmpty())
-        ui->TitleButton->setText("∅"); // how tho ?
+        ui->TitleButton->setText(""); // how tho ?
     else
     {
         if (filename[0] == '.') // hidden file/folder
@@ -150,8 +150,8 @@ void VocabFileEntryWidget::ForceTitleButtonSize()
 {
     // Hack to prevent the TitleButton from expanding the whole VocabularyCfgListContentVLayout, fuck qt
     int correctHeight { ui->TitleButton->height() };
-    int correctedWidth { (GetMy::Instance().Descriptor().width - (scrollBarDisplayed ? GetMy::Instance().GetScrollBarSize() : 0))
-                       * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT };
+    int correctedWidth { static_cast<int>((GetMy::Instance().Descriptor().width - (scrollBarDisplayed ? GetMy::Instance().GetScrollBarSize() : 0))
+                                        * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT) };
 
     ui->TitleButton->setSizePolicy({QSizePolicy::Fixed, QSizePolicy::Fixed});
     ui->TitleButton->setFixedSize(correctedWidth, correctHeight);
@@ -168,8 +168,8 @@ void VocabFileEntryWidget::SetAndTrimCurDirLabel()
         QRect(0, 0, GetMy::Instance().Descriptor().width * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT
               , ui->TitleButton->rect().height()), boundingRectFlags, curLabelText) };
     qreal curFmRectWidth { newLabelRect.width() };
-    int correctedWidth { (GetMy::Instance().Descriptor().width - (scrollBarDisplayed ? GetMy::Instance().GetScrollBarSize() : 0))
-                       * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT };
+    int correctedWidth { static_cast<int>((GetMy::Instance().Descriptor().width - (scrollBarDisplayed ? GetMy::Instance().GetScrollBarSize() : 0))
+                                          * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT) };
     if (curFmRectWidth > correctedWidth)
     {
         QString cutFileNameLeft = curLabelText.left(static_cast<int>(curLabelText.size()/2));
@@ -221,6 +221,13 @@ VocabFileUpDirWidget::VocabFileUpDirWidget(QFileInfo fileInfo, QWidget *parent) 
 
 VocabFileUpDirWidget::~VocabFileUpDirWidget()
 {
+}
+
+void VocabFileUpDirWidget::OnScrollbarEnabled()
+{
+    std::cout << "LOG: VocabExplorerPage::OnScrollbarEnabled()" << std::endl;
+    scrollBarDisplayed = true;
+    ForceTitleButtonSize();
 }
 
 void VocabFileUpDirWidget::on_TitleButton_clicked()

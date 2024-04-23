@@ -24,7 +24,7 @@ public:
     QFileInfo const& VocabFileInfo() { return vocabFileInfo; }
     void SetLearningScoreText(QString learningScoreText);
 
-    void OnScrollbarEnabled();
+    virtual void OnScrollbarEnabled();
 
     void FakeClick(bool checked);
 
@@ -34,15 +34,15 @@ private slots:
 
 protected:
     virtual void resizeEvent(QResizeEvent* event) override;
+    void ForceTitleButtonSize();
+
     Ui::VocabFileEntryWidget *ui;
     QFileInfo vocabFileInfo;
     bool initialPaintDone;
+    bool scrollBarDisplayed;
 
 private:
-    void ForceTitleButtonSize();
     void SetAndTrimCurDirLabel();
-
-    bool scrollBarDisplayed;
 };
 
 
@@ -53,6 +53,8 @@ class VocabFileUpDirWidget : public VocabFileEntryWidget
 public:
     VocabFileUpDirWidget(QFileInfo fileInfo, QWidget *parent = nullptr);
     ~VocabFileUpDirWidget();
+
+    void OnScrollbarEnabled() override;
 
 private slots:
     void on_TitleButton_clicked() override;
