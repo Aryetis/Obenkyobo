@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QSettings>
 #include <QFileInfo>
-#include "Src/GetMy.h"
 
 namespace Ui
 {

@@ -5,6 +5,7 @@
 #include <QDirIterator>
 #include "Src/Widgets/VocabFileEntryWidget.h"
 #include "ui_VocabFileEntryWidget.h"
+#include "Src/GetMy.h"
 #include "Src/mainwindow.h"
 #include "Src/Pages/VocabularyDisplayPage.h"
 #include "Src/Pages/AppSettingsPage.h"
@@ -23,7 +24,7 @@ VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fi, QWidget *parent)
     ui->setupUi(this);
     QString filename = vocabFileInfo.fileName();
     if (filename.isEmpty())
-        ui->TitleButton->setText(""); // how tho ?
+        ui->TitleButton->setText(""); // how tho ? (except for VocabFileUpDirWidget)
     else
     {
         QString prefix { (vocabFileInfo.isDir() ) ? "[DIR] " : ""};
@@ -60,8 +61,8 @@ VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fi, QWidget *parent)
             ui->checkBox->setCheckState(Qt::CheckState::Unchecked);
     }
 
-    ui->checkBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}").arg(GetMy::Instance().Descriptor().height/20) );
-    setMaximumHeight(GetMy::Instance().Descriptor().height/20);
+    ui->checkBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}").arg(VOCAB_FILE_ENTRY_TITLE_HEIGHT) );
+    setMaximumHeight(VOCAB_FILE_ENTRY_TITLE_HEIGHT);
 
     SetAndTrimCurDirLabel();
 }
@@ -151,7 +152,7 @@ void VocabFileEntryWidget::resizeEvent(QResizeEvent *event)
 void VocabFileEntryWidget::ForceTitleButtonSize()
 {
     // Hack to prevent the TitleButton from expanding the whole VocabularyCfgListContentVLayout, fuck qt
-    int correctHeight { ui->TitleButton->height() };
+    int correctHeight { VOCAB_FILE_ENTRY_TITLE_HEIGHT };
     int correctedWidth { static_cast<int>((GetMy::Instance().Descriptor().width - (scrollBarDisplayed ? GetMy::Instance().GetScrollBarSize() : 0))
                                         * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT) };
 

@@ -1,7 +1,6 @@
 #-------------------------------------------------
 # WORKING ON : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
 #              - Make long press set a new "home" folder
-#              - seems like the button height get incorrects eventually.... test with /mnt/onboard and /proc
 #              - put date of launch in log file name so it doesn't overwrite the last one
 #              - How did I end up with an entry "[fontType=hiragana][jp=ひ][kanji=火][trad=feu][learningScore=6]"
 #-------------------------------------------------
