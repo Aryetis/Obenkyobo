@@ -30,12 +30,10 @@ private slots:
     virtual void on_checkBox_clicked(bool checked);
 
 protected :
-    virtual void resizeEvent(QResizeEvent* event) override = 0;
     void ForceTitleButtonSize();
 
     Ui::VocabBaseEntryWidget *ui;
     QFileInfo vocabFileInfo;
-    bool initialPaintDone;
     bool scrollBarDisplayed;
 };
 
@@ -56,9 +54,6 @@ private slots:
     void on_TitleButton_clicked() override;
     void on_checkBox_clicked(bool checked) override;
 
-protected :
-    void resizeEvent(QResizeEvent* event) override;
-
 private:
     void SetAndTrimCurDirLabel();
 };
@@ -76,9 +71,6 @@ public:
 
 private slots:
     void on_TitleButton_clicked() override;
-
-protected :
-    void resizeEvent(QResizeEvent* event) override;
 };
 
 #endif // VOCABBASEENTRYWIDGET_H

@@ -17,16 +17,18 @@
  ******************************************************************************************/
 
 VocabBaseEntryWidget::VocabBaseEntryWidget(QFileInfo fileInfo, QWidget *parent)
-    : QWidget(parent), ui(new Ui::VocabBaseEntryWidget), vocabFileInfo(fileInfo), initialPaintDone(false), scrollBarDisplayed(false)
+    : QWidget(parent), ui(new Ui::VocabBaseEntryWidget), vocabFileInfo(fileInfo), scrollBarDisplayed(false)
 {
     ui->setupUi(this);
+
+    ForceTitleButtonSize();
 
     ui->checkBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}").arg(VOCAB_FILE_ENTRY_TITLE_HEIGHT) );
     setMaximumHeight(VOCAB_FILE_ENTRY_TITLE_HEIGHT);
 }
 
 VocabBaseEntryWidget::VocabBaseEntryWidget(QWidget *parent)
-    : QWidget(parent), ui(new Ui::VocabBaseEntryWidget), vocabFileInfo(), initialPaintDone(false), scrollBarDisplayed(false)
+    : QWidget(parent), ui(new Ui::VocabBaseEntryWidget), vocabFileInfo(), scrollBarDisplayed(false)
 {
     ui->setupUi(this);
 }
@@ -47,16 +49,6 @@ void VocabBaseEntryWidget::on_TitleButton_clicked()
 
 void VocabBaseEntryWidget::on_checkBox_clicked(bool /*checked*/)
 { }
-
-void VocabBaseEntryWidget::resizeEvent(QResizeEvent *event)
-{
-    QWidget::resizeEvent(event);
-
-    if (!initialPaintDone)
-        ForceTitleButtonSize();
-
-    initialPaintDone = true;
-}
 
 void VocabBaseEntryWidget::ForceTitleButtonSize()
 {
@@ -194,12 +186,6 @@ void VocabFileEntryWidget::on_checkBox_clicked(bool checked)
     }
 }
 
-void VocabFileEntryWidget::resizeEvent(QResizeEvent *event)
-{
-    std::cout << "LOG: VocabFileUpDirWidget::resizeEvent() BEGIN" << std::endl;
-    VocabBaseEntryWidget::resizeEvent(event);
-}
-
 void VocabFileEntryWidget::SetAndTrimCurDirLabel()
 {
     QString curLabelText { ui->TitleButton->text() };
@@ -266,10 +252,4 @@ void VocabUpDirWidget::OnScrollbarEnabled()
 void VocabUpDirWidget::on_TitleButton_clicked()
 {
     GetMy::Instance().VocabExplorerPageInst().Populate(vocabFileInfo.filePath());
-}
-
-void VocabUpDirWidget::resizeEvent(QResizeEvent *event)
-{
-    std::cout << "LOG: VocabExplorerPage::resizeEvent() BEGIN" << std::endl;
-    VocabBaseEntryWidget::resizeEvent(event);
 }

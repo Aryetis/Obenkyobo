@@ -4,11 +4,8 @@
 #include <QString>
 #include <QSet>
 #include <QFont>
-#include <optional>
 #include "Src/QcmDataEntry.h"
 #include "Src/DefinesLand.h"
-#include "Src/GetMy.h"
-#include "Src/Pages/FntSettingsPage.h"
 
 // Everything marked as Lnk is a shortcut => isn't owned by this => isn't to be destroyed by this
 // SmartPointers ? What's that ?

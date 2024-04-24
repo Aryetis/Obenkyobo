@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# WORKING ON : - How do qcm handle double identical entries for kanjis ? should select the lower LS, make sure of it
+# WORKING ON : - Handle duplicates in VocabDataPool atm it doesn't check for anything
 #              - put date of launch in log file name so it doesn't overwrite the last one
 #              - fix packager with new QtCreator 13 workflow...
 #-------------------------------------------------
