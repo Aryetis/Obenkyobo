@@ -264,6 +264,5 @@ void VocabExplorerPage::OnValueChanged(int /*value*/) const
 
 void VocabExplorerPage::on_homeButton_clicked()
 {
-    currentDir = QDir(GetMy::Instance().AppSettingsPageInst().GetVocabExplorerHomePath());
-    Populate();
+    Populate(GetMy::Instance().AppSettingsPageInst().GetVocabExplorerHomePath());
 }
