@@ -83,12 +83,9 @@ VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fileInfo, QWidget *parent)
         ui->TitleButton->setText(""); // how tho ?
     else
     {
-        QString prefix { (vocabFileInfo.isDir() ) ? "[DIR] " : ""};
-
-        if (filename[0] == '.') // hidden file/folder
-            ui->TitleButton->setText(prefix+'.'+vocabFileInfo.completeSuffix());
-        else
-            ui->TitleButton->setText(prefix+vocabFileInfo.completeBaseName());
+        QString prefix { (vocabFileInfo.isDir()) ? "[DIR] " : ""};
+        QString fileName { (vocabFileInfo.suffix()=="oben") ? vocabFileInfo.completeBaseName() : vocabFileInfo.fileName()};
+        ui->TitleButton->setText(prefix+ fileName);
     }
 
     if  (vocabFileInfo.isFile())
