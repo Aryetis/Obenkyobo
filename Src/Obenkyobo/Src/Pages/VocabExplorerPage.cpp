@@ -200,11 +200,10 @@ void VocabExplorerPage::HomeButtonLongPressReleased()
 
 void VocabExplorerPage::HomeButtonLongPressAction()
 {
-    std::cout << "HOME LONG PRESS ACTION STUFF" << std::endl;
+    std::cout << "LOG: VocabExplorerPage::HomeButtonLongPressAction" << std::endl;
 
-    // TODO NOW set home path
-    GetMy::Instance().AppSettingsPageInst().SetVocabExplorerHomePath(currentVocabDirString);
-    GetMy::Instance().ToolsInst().DisplayPopup("Setting home path to :\n"+currentVocabDirString);
+    GetMy::Instance().AppSettingsPageInst().SetVocabExplorerHomePath(currentDir.path());
+    GetMy::Instance().ToolsInst().DisplayPopup("Setting home path to :\n"+currentDir.path());
 }
 
 VocabExplorerPage::~VocabExplorerPage()

@@ -1,6 +1,7 @@
 #-------------------------------------------------
 # WORKING ON : - How do qcm handle double identical entries for kanjis ? should select the lower LS, make sure of it
 #              - put date of launch in log file name so it doesn't overwrite the last one
+#              - fix packager with new QtCreator 13 workflow...
 #-------------------------------------------------
 # TODO (0.3.1) : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
 #                - Show last error's log in a popup on startup
