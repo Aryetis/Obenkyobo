@@ -48,7 +48,6 @@ private:
 
     bool initialPaintDone;
     bool selectAllStatus;
-    QString currentVocabDirString; // displayed string, not necessarily proper parth
     QDir currentDir;
 
     QTimer homeLongPressTimer;

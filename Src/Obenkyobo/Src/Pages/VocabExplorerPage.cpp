@@ -14,7 +14,7 @@ VocabExplorerPage::VocabExplorerPage(QWidget *parent) :
     ui->setupUi(this);
 
     // ************* currentDir stuff *************
-    currentVocabDirString = GetMy::Instance().SettingSerializerInst()->value("vocab/currentDirectory", QString(QCoreApplication::applicationDirPath() + "/vocab/")).toString();
+    QString currentVocabDirString = GetMy::Instance().SettingSerializerInst()->value("vocab/currentDirectory", QString(QCoreApplication::applicationDirPath() + "/vocab/")).toString();
     currentDir = QDir(currentVocabDirString);
 
     ui->VocabularyCfgListContentVLayout->addStretch(); // TODO : for some reasons storing and inserting/removing SpacerItem at each Populate does not work because reasons... It's good enough for now
@@ -30,8 +30,7 @@ VocabExplorerPage::VocabExplorerPage(QWidget *parent) :
 void VocabExplorerPage::Populate(QDir dir)
 {
     currentDir = dir;
-    currentVocabDirString = dir.path();
-    GetMy::Instance().SettingSerializerInst()->setValue("vocab/currentDirectory", currentVocabDirString);
+    GetMy::Instance().SettingSerializerInst()->setValue("vocab/currentDirectory", dir.path());
     Populate();
 }
 
@@ -59,10 +58,7 @@ void VocabExplorerPage::Populate()
 
     // ************* Sanity Check current Dir *************
     if (!currentDir.exists())
-    {
-        currentVocabDirString = QString(QCoreApplication::applicationDirPath());
-        currentDir = QDir(currentVocabDirString);
-    }
+        currentDir = QDir(QCoreApplication::applicationDirPath());
 
     // ************* Set and trim labels  *************
     if (initialPaintDone)
@@ -136,6 +132,7 @@ void VocabExplorerPage::Populate()
 
 void VocabExplorerPage::SetAndTrimCurDirLabel()
 {
+    QString currentVocabDirString = GetMy::Instance().SettingSerializerInst()->value("vocab/currentDirectory", QString(QCoreApplication::applicationDirPath() + "/vocab/")).toString();
     QString curDirLabelText {"Current Dir : "+currentVocabDirString};
 
     QFontMetricsF fm{ui->curDirLabel->font()};
@@ -267,8 +264,6 @@ void VocabExplorerPage::OnValueChanged(int /*value*/) const
 
 void VocabExplorerPage::on_homeButton_clicked()
 {
-    currentVocabDirString = GetMy::Instance().AppSettingsPageInst().GetVocabExplorerHomePath();
-    currentDir = QDir(currentVocabDirString);
-    GetMy::Instance().SettingSerializerInst()->setValue("vocab/currentDirectory", currentVocabDirString);
+    currentDir = QDir(GetMy::Instance().AppSettingsPageInst().GetVocabExplorerHomePath());
     Populate();
 }
