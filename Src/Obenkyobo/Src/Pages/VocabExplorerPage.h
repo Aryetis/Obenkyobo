@@ -4,6 +4,7 @@
 #include <vector>
 #include <QWidget>
 #include <QDir>
+#include <QTimer>
 
 namespace Ui
 {
@@ -18,7 +19,10 @@ class VocabExplorerPage : public QWidget
 public:
     explicit VocabExplorerPage(QWidget *parent = nullptr);
     ~VocabExplorerPage() override;
+
     void Populate(QDir dir);
+    void OnSleep() const;
+    void OnWakeUp() const;
 
     void InitializeVocabularyLearnEditSet();
     bool IsScrollBarDisplayed() const;
@@ -34,6 +38,8 @@ private slots:
 private:
     void Populate();
     void SetAndTrimCurDirLabel();
+    void HomeButtonLongPressReleased();
+    void HomeButtonLongPressAction();
 
     Ui::VocabExplorerPage *ui;
     std::vector<VocabBaseEntryWidget*> vocabWidgets;
@@ -44,6 +50,8 @@ private:
     bool selectAllStatus;
     QString currentVocabDirString;
     QDir currentDir;
+
+    QTimer homeLongPressTimer;
 };
 
 #endif // VOCABEXPLORERPAGE_H

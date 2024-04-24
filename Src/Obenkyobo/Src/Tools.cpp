@@ -16,6 +16,7 @@
 #include "Src/mainwindow.h"
 #include "Src/Pages/AppSettingsPage.h"
 #include "Src/KanasTables.h"
+#include "Src/Pages/VocabExplorerPage.h"
 
 
 //======================================================================
@@ -23,7 +24,7 @@
 //======================================================================
 void Tools::RegisterHandlers()
 {
-    for(const auto& sig : GetMy::Instance().ToolsInst()->handledErrors)
+    for(const auto& sig : GetMy::Instance().ToolsInst().handledErrors)
         signal(sig.first, Handler);
 }
 
@@ -64,10 +65,10 @@ void Tools::ParseKoboEreaderConf()
                 if (value.size()>=2)
                 {
                     value = parsed[1].mid(0,2);
-                    GetMy::Instance().ToolsInst()->isLocalTimeFormatUS = (value.compare("en") == 0) ? true : false;
+                    GetMy::Instance().ToolsInst().isLocalTimeFormatUS = (value.compare("en") == 0) ? true : false;
                 }
                 else
-                    GetMy::Instance().ToolsInst()->isLocalTimeFormatUS = false;
+                    GetMy::Instance().ToolsInst().isLocalTimeFormatUS = false;
             }
         }
     }
@@ -86,7 +87,7 @@ void Tools::ParseKoboEreaderConf()
     QString fileContent = stream.readAll();
     QStringList elements = fileContent.split(',');
     if (elements.size() >= 3)
-        GetMy::Instance().ToolsInst()->firmwareStr = elements[2].toStdString();
+        GetMy::Instance().ToolsInst().firmwareStr = elements[2].toStdString();
     inputFile.close();
 }
 
@@ -176,8 +177,10 @@ void Tools::RequestSleep() // needs to turn off wifi, stop printing stuff on scr
 
     // Moved here so the screen is updated immediately and not frozen by wifi process
     inactivityTimer.stop();
+    // TODO : should really just send a signal or figure out a proper way to do this... don't care enough for now
     GetMy::Instance().ScreenSettingsPageInst().OnSleep();
     GetMy::Instance().MainWindowInst().OnSleep();
+    GetMy::Instance().VocabExplorerPageInst().OnSleep();
 
     preSleepTimer.start(POWER_REQUEST_TIMER);
 }
@@ -229,7 +232,7 @@ void Tools::PreSleep()
     std::cout << "LOG: going to PreSleep  @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
     if(IsScreenSaverNeeded())
-        GetMy::Instance().ToolsInst()->DisplayPopup("Sleeping", true, false);
+        GetMy::Instance().ToolsInst().DisplayPopup("Sleeping", true, false);
 
     std::cout << "LOG: disabling WiFi" << std::endl;
     KoboPlatformFunctions::disableWiFiConnection(); // MANDATORY !!!!!
@@ -278,7 +281,7 @@ void Tools::Sleep()
         if (!stateExtendedFile2.open(QIODevice::WriteOnly | QIODevice::Text))
         {
             std::cerr << "ERROR: Couldn't open /sys/power/state-extended (2nd stage)" << std::endl;
-            GetMy::Instance().ToolsInst()->DisplayPopup("ERROR : couldn't go to sleep, please report the error and provide log.txt");
+            GetMy::Instance().ToolsInst().DisplayPopup("ERROR : couldn't go to sleep, please report the error and provide log.txt");
             sleepError = true;
         }
         else
@@ -321,8 +324,8 @@ void Tools::WakeUp()
 
     if (IsScreenSaverNeeded())
     {
-        GetMy::Instance().ToolsInst()->GetPopupInstance()->accept();
-        GetMy::Instance().ToolsInst()->DisplayPopup("Waking Up", true, false);
+        GetMy::Instance().ToolsInst().GetPopupInstance()->accept();
+        GetMy::Instance().ToolsInst().DisplayPopup("Waking Up", true, false);
     }
     GetMy::Instance().ScreenSettingsPageInst().OnWakeUp();  // TODO : replace with signals at some point
     GetMy::Instance().MainWindowInst().OnWakeUp();
@@ -386,7 +389,7 @@ void Tools::PostWakeUp()
     //-------------------------------------------------------------
     if (sleepError)
     {
-        GetMy::Instance().ToolsInst()->DisplayPopup("ERROR : Couldn't sleep/wake up properly, please report the error on Obenkyobo's github page and provide log.txt if possible");
+        GetMy::Instance().ToolsInst().DisplayPopup("ERROR : Couldn't sleep/wake up properly, please report the error on Obenkyobo's github page and provide log.txt if possible");
         return;
     }
 
@@ -394,7 +397,7 @@ void Tools::PostWakeUp()
     std::cout << "LOG: Woken up, ready to go" << std::endl;
     sleepError = false;
     if (IsScreenSaverNeeded())
-        GetMy::Instance().ToolsInst()->GetPopupInstance()->close();
+        GetMy::Instance().ToolsInst().GetPopupInstance()->close();
     std::cout << "!!! DEVICE STATE = AWAKE @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
     deviceState = DeviceState::awake;
     Tools::BumpInactivityTimer();
@@ -523,7 +526,7 @@ QTouchEventFilter::~QTouchEventFilter() {}
 //======================================================================
 bool QTouchEventFilter::eventFilter(QObject */*p_obj*/, QEvent *p_event)
 {
-    if (GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::awake &&
+    if (GetMy::Instance().ToolsInst().GetDeviceState() == DeviceState::awake &&
             (p_event->type() == QEvent::TouchBegin ||
              p_event->type() == QEvent::TouchUpdate ||
              p_event->type() == QEvent::TouchEnd ||
@@ -545,7 +548,7 @@ bool QTouchEventFilter::eventFilter(QObject */*p_obj*/, QEvent *p_event)
         p_event->type() == QEvent::MouseButtonRelease ||
         p_event->type() == QEvent::MouseButtonDblClick ||
         p_event->type() == QEvent::MouseMove
-        ) && (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::awake))
+        ) && (GetMy::Instance().ToolsInst().GetDeviceState() != DeviceState::awake))
     {
 //        std::cout << "!!! Touch||Mouse Event filtered during Busy state" << std::endl;
         return true; // I took care of it. Don't propagate it
@@ -553,7 +556,7 @@ bool QTouchEventFilter::eventFilter(QObject */*p_obj*/, QEvent *p_event)
     else if (p_event->type() == QEvent::KeyPress)
     {
         QKeyEvent* p_keyPressEvent = static_cast<QKeyEvent*>(p_event);
-        switch(GetMy::Instance().ToolsInst()->GetDeviceState())
+        switch(GetMy::Instance().ToolsInst().GetDeviceState())
         {
             case DeviceState::awake:
             {
@@ -590,10 +593,10 @@ bool QTouchEventFilter::eventFilter(QObject */*p_obj*/, QEvent *p_event)
     {
         QKeyEvent* p_keyPressEvent = static_cast<QKeyEvent*>(p_event);
         if (p_keyPressEvent->key() == KoboKey::Key_SleepCover &&
-            (  GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::asleep
-            || GetMy::Instance().ToolsInst()->GetDeviceState() == DeviceState::fakeSleeping))
+            (  GetMy::Instance().ToolsInst().GetDeviceState() == DeviceState::asleep
+            || GetMy::Instance().ToolsInst().GetDeviceState() == DeviceState::fakeSleeping))
         {
-            GetMy::Instance().ToolsInst()->RequestWakeUp();
+            GetMy::Instance().ToolsInst().RequestWakeUp();
             return true;
         }
     }

@@ -25,6 +25,7 @@
 #define SET_AND_TRIM_LOOPING_RAILGUARD 25
 #define VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT 0.84f
 #define VOCAB_FILE_ENTRY_TITLE_HEIGHT GetMy::Instance().Descriptor().height/20
+#define VOCAB_EXPLORER_HOME_SET_PATH_TIMER_MS 2000
 
 enum KanaFamilyEnum
 {

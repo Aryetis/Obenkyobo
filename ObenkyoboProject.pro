@@ -1,6 +1,5 @@
 #-------------------------------------------------
-# WORKING ON : - Make long press set a new "home" folder
-#              - How do qcm handle double identical entries for kanjis ? should select the lower LS, make sure of it
+# WORKING ON : - How do qcm handle double identical entries for kanjis ? should select the lower LS, make sure of it
 #              - put date of launch in log file name so it doesn't overwrite the last one
 #-------------------------------------------------
 # TODO (0.3.1) : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem

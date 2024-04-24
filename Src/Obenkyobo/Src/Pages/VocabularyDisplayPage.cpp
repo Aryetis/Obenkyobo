@@ -56,7 +56,7 @@ void VocabularyDisplayPage::InitializeGrid(VocabFileEntryWidget* vocab)
             popupMsg += QString::number(entry->GetLineNumber()) + ", " ;
         popupMsg.chop(2);
         popupMsg += '.';
-        GetMy::Instance().ToolsInst()->DisplayPopup(popupMsg);
+        GetMy::Instance().ToolsInst().DisplayPopup(popupMsg);
     }
     if (vdf->Entries().size() == 0)
         vdf->Entries().insert(new VocabDataEntry("EMPTY",".OBEN","FILE  :(", MAX_LEARNING_STATE_VALUE,  nullptr, -1, KanaFamilyEnum::hiragana));
@@ -101,7 +101,7 @@ void VocabularyDisplayPage::PopulateGrid(bool random /*= false*/, int turnPage /
     QList<VocabDataEntry*> vdfEntriesList = vdf->Entries().values();
     if (random)
     {
-        std::shuffle(vdfEntriesList.begin(), vdfEntriesList.end(), GetMy::Instance().ToolsInst()->MT());
+        std::shuffle(vdfEntriesList.begin(), vdfEntriesList.end(), GetMy::Instance().ToolsInst().MT());
         curPage = 0;
     }
     else

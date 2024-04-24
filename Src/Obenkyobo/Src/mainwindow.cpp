@@ -94,7 +94,7 @@ void MainWindow::DisplayFirstTimeMainWindowPagePopup()
 {
     if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeMainWindowPage", true).toBool() )
     {
-        GetMy::Instance().ToolsInst()->DisplayPopup("This software is still in development, some functionalities will be added in the future.\n\n"
+        GetMy::Instance().ToolsInst().DisplayPopup("This software is still in development, some functionalities will be added in the future.\n\n"
                                           "Each popup will be used only once and sparingly to introduce each functionality.\n"
                                           "You can reread popups again by clicking Settings→Application→Reset Help Popup\n\n"
                                           "Thanks for reading, enjoy.", true);
@@ -106,7 +106,7 @@ void MainWindow::DisplayFirstTimeKanasEditPagePopup()
 {
     if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeKanasEditPage", true).toBool() )
     {
-        GetMy::Instance().ToolsInst()->DisplayPopup("Here you can add/remove kanas from the related MCQ's guesses.\n"
+        GetMy::Instance().ToolsInst().DisplayPopup("Here you can add/remove kanas from the related MCQ's guesses.\n"
                                           "The background color and circle gyzmo indicate their status.\n"
                                           "The number at the bottom right corner indicates its Learning Score (LS).\n"
                                           "It reflects your progress, ranging from 0 to 5.\n"
@@ -117,7 +117,7 @@ void MainWindow::DisplayFirstTimeKanasEditPagePopup()
 
 void MainWindow::OnSleep() const
 {
-    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::fakeSleeping)
+    if (GetMy::Instance().ToolsInst().GetDeviceState() != DeviceState::fakeSleeping)
         return;
 
     std::cout << "LOG: MainWindow::OnSleep()" << std::endl;
@@ -131,7 +131,7 @@ void MainWindow::OnSleep() const
 
 void MainWindow::OnWakeUp()
 {
-    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::busy)
+    if (GetMy::Instance().ToolsInst().GetDeviceState() != DeviceState::busy)
         return;
 
     std::cout << "LOG: MainWindow::OnWakeUp()" << std::endl;
@@ -168,7 +168,7 @@ void MainWindow::on_refresh_hovered()
 
 void MainWindow::refreshTimeAndBattery()
 {
-    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::awake)
+    if (GetMy::Instance().ToolsInst().GetDeviceState() != DeviceState::awake)
         return;
 
     bool ugly = false;
@@ -284,7 +284,7 @@ void MainWindow::on_actionHiragana_to_Romanji_MCQ_triggered()
         AggressiveClearScreen();
     }
     else
-        GetMy::Instance().ToolsInst()->DisplayPopup(
+        GetMy::Instance().ToolsInst().DisplayPopup(
                 "Not enough enabled Hiragana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry()) +
                 " at : Main→Hiragana→Edit Hiragana Set\n"
@@ -300,7 +300,7 @@ void MainWindow::on_actionRomanji_to_Hiragana_MCQ_triggered()
         AggressiveClearScreen();
     }
     else
-        GetMy::Instance().ToolsInst()->DisplayPopup(
+        GetMy::Instance().ToolsInst().DisplayPopup(
                 "Not enough enabled Hiragana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry()) +
                 " at : Main→Hiragana→Edit Hiragana Set\n"
@@ -336,7 +336,7 @@ void MainWindow::on_actionKatakana_to_Romanji_MCQ_triggered()
         AggressiveClearScreen();
     }
     else
-        GetMy::Instance().ToolsInst()->DisplayPopup(
+        GetMy::Instance().ToolsInst().DisplayPopup(
                 "Not enough enabled Katakana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry()) +
                 " at : Main→Hiragana→Edit Hiragana Set\n"
@@ -352,7 +352,7 @@ void MainWindow::on_actionRomanji_to_Katakana_MCQ_triggered()
         AggressiveClearScreen();
     }
     else
-        GetMy::Instance().ToolsInst()->DisplayPopup(
+        GetMy::Instance().ToolsInst().DisplayPopup(
                 "Not enough enabled Katakana,\nplease enable at least " +
                 QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry()) +
                 " at : Main→Hiragana->Edit Hiragana Set\n"
@@ -415,13 +415,14 @@ void MainWindow::on_actionVocabulary_to_Romanji_MCQ_triggered()
         AggressiveClearScreen();
     }
     else
-        GetMy::Instance().ToolsInst()->DisplayPopup(
+        GetMy::Instance().ToolsInst().DisplayPopup(
                 "You need more Vocabulary Sheet Entries to start a Vocabulary MCQ.\n"
                 "Please enable more at Main→Vocabulary→Learn / Edit words Set\n"
                 "At least "+QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry())+
                 " entries / Vocabulary Lines across all the Sheets/.oben files are required.");
 }
 
+//===========================================================================
 void MainWindow::on_actionRomanji_to_Vocabulary_MCQ_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionVocabulary_to_Romanji_triggered()" << std::endl;
@@ -431,7 +432,7 @@ void MainWindow::on_actionRomanji_to_Vocabulary_MCQ_triggered()
         AggressiveClearScreen();
     }
     else
-        GetMy::Instance().ToolsInst()->DisplayPopup(
+        GetMy::Instance().ToolsInst().DisplayPopup(
                 "You need more Vocabulary Sheet Entries to start a Vocabulary MCQ.\n"
                 "Please enable more at Main→Vocabulary→Learn / Edit words Set\n"
                 "At least "+QString::number(GetMy::Instance().AppSettingsPageInst().GetNumberOfEntry())+
@@ -441,13 +442,13 @@ void MainWindow::on_actionRomanji_to_Vocabulary_MCQ_triggered()
 void MainWindow::on_actionLearn_Edit_Set_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionLearn_Edit_Set_triggered()" << std::endl;
-    GetMy::Instance().VocabExplorerPageInst()->InitializeVocabularyLearnEditSet();
+    GetMy::Instance().VocabExplorerPageInst().InitializeVocabularyLearnEditSet();
     ui->ContentStackedWidget->setCurrentIndex(7);
     AggressiveClearScreen();
 
     if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeVocabListPage", true).toBool() )
     {
-        GetMy::Instance().ToolsInst()->DisplayPopup("Here are displayed your \"Vocabulary Sheets\". Please check Obenkyobo's github page to learn how to create your owns.\n"
+        GetMy::Instance().ToolsInst().DisplayPopup("Here are displayed your \"Vocabulary Sheets\". Please check Obenkyobo's github page to learn how to create your owns.\n"
 "Sitting down and writing your own sheets is also part of the learning proces.\n\n"
                                           "Click on any entry to display its content and start learning.\n");
         GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->setValue("AppSettings/firstTimeVocabListPage", false);
@@ -455,7 +456,6 @@ void MainWindow::on_actionLearn_Edit_Set_triggered()
 }
 
 //===========================================================================
-
 void MainWindow::on_actionStatistics_triggered()
 {
     GetMy::Instance().StatisticsInst()->UpdateScoreCounters();

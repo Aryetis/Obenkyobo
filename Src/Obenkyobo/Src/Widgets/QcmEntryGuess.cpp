@@ -138,7 +138,7 @@ bool QcmEntryGuess::ApplyGuessTextAndCorrection(int guessWidth, int guessHeight)
         {
             continuousFntResizeCounter = 0;
 
-            GetMy::Instance().ToolsInst()->DisplayPopup(
+            GetMy::Instance().ToolsInst().DisplayPopup(
                     "MCQ Answers size ("+QString::number(originalFntSize)+") seems too big (cf :Settings->Fonts),\n"
                     "Changing it to " + QString::number(correctedFnt.pointSizeF()));
             switch (qcmType)

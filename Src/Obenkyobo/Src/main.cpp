@@ -9,11 +9,11 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     GetMy::Instance().SetToolsInst(new Tools());
-    GetMy::Instance().ToolsInst()->RegisterHandlers();
-    GetMy::Instance().ToolsInst()->ParseKoboEreaderConf();
+    GetMy::Instance().ToolsInst().RegisterHandlers();
+    GetMy::Instance().ToolsInst().ParseKoboEreaderConf();
 
     std::cout << "Kobo model: (" << GetMy::Instance().Descriptor().modelName.toStdString() << ","
-              << GetMy::Instance().Descriptor().modelNumber << "), firmware: " << GetMy::Instance().ToolsInst()->GetFirmwareStr() << std::endl;
+              << GetMy::Instance().Descriptor().modelNumber << "), firmware: " << GetMy::Instance().ToolsInst().GetFirmwareStr() << std::endl;
     std::cout <<"Obenkyobo build: "<<__DATE__<<"@"<<__TIME__<<", cpp: "<<__cplusplus<<", Qt: "<<QT_VERSION<< std::endl;
     std::cout <<"Started at: " << QDateTime::currentDateTime().toString("dd-MM-yyyy HH:mm:ss").toStdString() << std::endl;
 

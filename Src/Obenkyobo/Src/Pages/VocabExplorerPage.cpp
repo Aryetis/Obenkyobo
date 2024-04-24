@@ -5,11 +5,11 @@
 #include "Src/mainwindow.h"
 #include "Src/VocabularyParser.h"
 #include "Src/Widgets/VocabBaseEntryWidget.h"
-
+#include "Src/Tools.h"
 #include "Src/Pages/AppSettingsPage.h"
 
 VocabExplorerPage::VocabExplorerPage(QWidget *parent) :
-    QWidget(parent), ui(new Ui::VocabExplorerPage), initialPaintDone(false), selectAllStatus(false)
+    QWidget(parent), ui(new Ui::VocabExplorerPage), initialPaintDone(false), selectAllStatus(false), homeLongPressTimer()
 {
     ui->setupUi(this);
 
@@ -18,6 +18,11 @@ VocabExplorerPage::VocabExplorerPage(QWidget *parent) :
     currentDir = QDir(currentVocabDirString);
 
     ui->VocabularyCfgListContentVLayout->addStretch(); // TODO : for some reasons storing and inserting/removing SpacerItem at each Populate does not work because reasons... It's good enough for now
+
+    homeLongPressTimer.setSingleShot(true); // TODO : turn off timer for sleep ?
+    connect(ui->homeButton, &QPushButton::pressed, [&]{ homeLongPressTimer.start(VOCAB_EXPLORER_HOME_SET_PATH_TIMER_MS); });
+    connect(ui->homeButton, &QPushButton::released, this, &VocabExplorerPage::HomeButtonLongPressReleased);
+    connect(&homeLongPressTimer, &QTimer::timeout, this, &VocabExplorerPage::HomeButtonLongPressAction);
 
     GetMy::Instance().SetVocabExplorerPageInst(this);
 }
@@ -28,6 +33,24 @@ void VocabExplorerPage::Populate(QDir dir)
     currentVocabDirString = dir.path();
     GetMy::Instance().SettingSerializerInst()->setValue("vocab/currentDirectory", currentVocabDirString);
     Populate();
+}
+
+void VocabExplorerPage::OnSleep() const
+{
+    if (GetMy::Instance().ToolsInst().GetDeviceState() != DeviceState::fakeSleeping)
+        return;
+
+    std::cout << "LOG: VocabExplorerPage::OnSleep()" << std::endl;
+    disconnect(&homeLongPressTimer, nullptr, nullptr, nullptr);
+}
+
+void VocabExplorerPage::OnWakeUp() const
+{
+    if (GetMy::Instance().ToolsInst().GetDeviceState() != DeviceState::busy)
+        return;
+
+    std::cout << "LOG: VocabExplorerPage::OnWakeUp()" << std::endl;
+    connect(&homeLongPressTimer, &QTimer::timeout, this, &VocabExplorerPage::HomeButtonLongPressAction);
 }
 
 void VocabExplorerPage::Populate()
@@ -169,6 +192,21 @@ void VocabExplorerPage::SetAndTrimCurDirLabel()
     ui->curDirLabel->setText(curDirLabelText);
 }
 
+void VocabExplorerPage::HomeButtonLongPressReleased()
+{
+    if(homeLongPressTimer.isActive())
+        homeLongPressTimer.stop();
+}
+
+void VocabExplorerPage::HomeButtonLongPressAction()
+{
+    std::cout << "HOME LONG PRESS ACTION STUFF" << std::endl;
+
+    // TODO NOW set home path
+    GetMy::Instance().AppSettingsPageInst().SetVocabExplorerHomePath(currentVocabDirString);
+    GetMy::Instance().ToolsInst().DisplayPopup("Setting home path to :\n"+currentVocabDirString);
+}
+
 VocabExplorerPage::~VocabExplorerPage()
 {
     for(VocabBaseEntryWidget* vw : vocabWidgets)
@@ -230,7 +268,7 @@ void VocabExplorerPage::OnValueChanged(int /*value*/) const
 
 void VocabExplorerPage::on_homeButton_clicked()
 {
-    currentVocabDirString = QString(QCoreApplication::applicationDirPath() + "/vocab/");
+    currentVocabDirString = GetMy::Instance().AppSettingsPageInst().GetVocabExplorerHomePath();
     currentDir = QDir(currentVocabDirString);
     GetMy::Instance().SettingSerializerInst()->setValue("vocab/currentDirectory", currentVocabDirString);
     Populate();

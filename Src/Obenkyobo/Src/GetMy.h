@@ -42,16 +42,16 @@ public:
     ScreenSettingsPage& ScreenSettingsPageInst() { return *screenSettingsInstance; }
 
     void SetVocabExplorerPageInst(VocabExplorerPage* vocab) { vocabularyLearnEditSetInstance = vocab; }
-    VocabExplorerPage* VocabExplorerPageInst() { return vocabularyLearnEditSetInstance; }
+    VocabExplorerPage& VocabExplorerPageInst() { return *vocabularyLearnEditSetInstance; }
 
     void SetVocabularyDisplayPageInst(VocabularyDisplayPage* vocab) { vocabularyDisplayInstance = vocab; }
-    VocabularyDisplayPage* VocabularyDisplayPageInst() { return vocabularyDisplayInstance; }
+    VocabularyDisplayPage& VocabularyDisplayPageInst() { return *vocabularyDisplayInstance; }
 
     void SetSettingSerialierInst(QSettings* settingSerializer) { settingSerializerInstance = settingSerializer; }
     QSettings* SettingSerializerInst() { return settingSerializerInstance; }
 
     void SetToolsInst(Tools* tools) { toolsInstance = tools; }
-    Tools* ToolsInst() { return toolsInstance; }
+    Tools& ToolsInst() { return *toolsInstance; }
 
     void SetStatisticsInst(StatisticsPage* stats) { statisticsInstance = stats; }
     StatisticsPage* StatisticsInst() { return statisticsInstance; }

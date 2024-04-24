@@ -29,7 +29,7 @@ VocabDataFile::VocabDataFile(QString sheetPath, VocabDataPool* pool_) : vocabShe
         vocabFile.close();
     }
     else
-        GetMy::Instance().ToolsInst()->DisplayPopup("Could not open file : "+vocabSheetPath);
+        GetMy::Instance().ToolsInst().DisplayPopup("Could not open file : "+vocabSheetPath);
 }
 
 VocabDataFile::~VocabDataFile()

@@ -33,7 +33,7 @@ void AppSettingsPage::ParseConfigFile()
     randomChoiceIdx = settingsSerializer->value("AppSettings/randomChoiceIdx", 1).toInt();
     hardRefreshFreqIdx = settingsSerializer->value("AppSettings/hardRefreshFreqIdx", 3).toInt();
     batteryFormatIdx = settingsSerializer->value("AppSettings/batteryFormatIdx", 0).toInt();
-    dateFormatIdx = settingsSerializer->value("AppSettings/dateFormatIdx", (GetMy::Instance().ToolsInst()->IsLocalTimeFormatUS()) ? 1 : 0).toInt();
+    dateFormatIdx = settingsSerializer->value("AppSettings/dateFormatIdx", (GetMy::Instance().ToolsInst().IsLocalTimeFormatUS()) ? 1 : 0).toInt();
     nbrOfRowPerVocabIdx = settingsSerializer->value("AppSettings/rowPerVocabPage", 1).toInt();
     QList<KoboDevice> badScreenList { KoboDevice::KoboTouchAB, KoboDevice::KoboTouchC, KoboDevice::KoboGlo, KoboDevice::KoboMini, KoboDevice::KoboTouch2, KoboDevice::KoboAura, KoboDevice::KoboAuraHD }; // Wild guess ... meh
     kanaHardRefresh = settingsSerializer->value("AppSettings/kanaHardRefresh", badScreenList.contains(GetMy::Instance().Descriptor().device)).toBool();
@@ -41,6 +41,7 @@ void AppSettingsPage::ParseConfigFile()
     displayLS = static_cast<DisplayLSEnum>(settingsSerializer->value("AppSettings/displayLSIdx", 0).toInt());
     screenSaverIdx = settingsSerializer->value("AppSettings/screenSaverIdx", 2).toInt();
     sleepTimerIdx = settingsSerializer->value("AppSettings/sleepTimerIdx", 1).toInt();
+    vocabExplorerHomePath = settingsSerializer->value("AppSettings/vocabExplorerHomePath", QCoreApplication::applicationDirPath() + "/vocab/").toString();
 
 #ifdef QT_NO_DEBUG // App doesn't like loosing contact with QtCreator debugger btw
     wifiStatus = settingsSerializer->value("AppSettings/wifi", false).toBool();
@@ -105,15 +106,15 @@ void AppSettingsPage::on_WifiCheckBox_clicked(bool checked)
     // TODO rewrite the whole wifi script... it's a mess
     if (wifiStatus)
     {
-        GetMy::Instance().ToolsInst()->DisplayPopup("Enabling wifi, please wait...", false, false);
+        GetMy::Instance().ToolsInst().DisplayPopup("Enabling wifi, please wait...", false, false);
         KoboPlatformFunctions::enableWiFiConnection(); // blocking code ! => warn user with popup
-        GetMy::Instance().ToolsInst()->GetPopupInstance()->accept();
+        GetMy::Instance().ToolsInst().GetPopupInstance()->accept();
     }
     else
     {
-        GetMy::Instance().ToolsInst()->DisplayPopup("Disabling wifi, please wait...", false, false);
+        GetMy::Instance().ToolsInst().DisplayPopup("Disabling wifi, please wait...", false, false);
         KoboPlatformFunctions::disableWiFiConnection(); // blocking code ! => warn user with popup
-        GetMy::Instance().ToolsInst()->GetPopupInstance()->accept();
+        GetMy::Instance().ToolsInst().GetPopupInstance()->accept();
     }
 }
 
@@ -196,6 +197,12 @@ int AppSettingsPage::GetSleepTimerMins() const
         case 4 : return -1;
         default : return 10;
     }
+}
+
+void AppSettingsPage::SetVocabExplorerHomePath(QString path)
+{
+    vocabExplorerHomePath = path;
+    settingsSerializer->setValue("AppSettings/vocabExplorerHomePath", path);
 }
 
 void AppSettingsPage::on_ScreenSaverDropdown_currentIndexChanged(int index)

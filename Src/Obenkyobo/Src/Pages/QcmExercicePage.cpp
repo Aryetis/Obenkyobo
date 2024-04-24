@@ -17,7 +17,7 @@ QcmExercicePage::QcmExercicePage(QWidget *parent) :
     QWidget(parent), ui(new Ui::QcmExercicePage), scoreCounter(0), errorCounter(0),
     currentQcmType(QcmExerciceType::Vocabulary_to_Romanji_MCQ),
     refreshCounter(0), curHiraganaNonSized(), curKatakanaNonSized(), curRomanjiNonSized(), stemFont(),
-    settingsSerializer(GetMy::Instance().SettingSerializerInst()),
+    settingsSerializer(*GetMy::Instance().SettingSerializerInst()),
     stemDisplayKanji(false), entriesPool({}), vdp(nullptr), initialPaintDone(false), qcmConfigChanged(false)
 {
     ui->setupUi(this);
@@ -58,7 +58,7 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
             }
             default:
             {
-                if (!GetMy::Instance().ToolsInst()->IsThereEnough(qcmType))
+                if (!GetMy::Instance().ToolsInst().IsThereEnough(qcmType))
                     return false;
                 break;
             }
@@ -127,7 +127,7 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
                 if (vdp != nullptr)
                     delete vdp;
                 vdp = new VocabDataPool{GetMy::Instance().GetEnabledVocabSheets()}; // TODO NOW, check for doubles in kanjis, get the lowest LS in prio
-                if (!GetMy::Instance().ToolsInst()->IsThereEnough(qcmType, vdp->AllEntries().size()))
+                if (!GetMy::Instance().ToolsInst().IsThereEnough(qcmType, vdp->AllEntries().size()))
                     return false;
                 entriesPool.insert(entriesPool.end(), vdp->AllEntries().begin(), vdp->AllEntries().end());
                 break;
@@ -162,7 +162,7 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
     std::vector<QcmDataEntry*> shuffledSymbols{};
     shuffledSymbols.reserve(entriesPool.size()-1);
     std::remove_copy(entriesPool.begin(), entriesPool.end(), std::back_inserter(shuffledSymbols), stem);
-    std::shuffle(std::begin(shuffledSymbols), std::end(shuffledSymbols), GetMy::Instance().ToolsInst()->Rng_Engine());
+    std::shuffle(std::begin(shuffledSymbols), std::end(shuffledSymbols), GetMy::Instance().ToolsInst().Rng_Engine());
 
     //************************ Initialize Stem  ************************
     if (GetMy::Instance().AppSettingsPageInst().IsWeightedRandomEnabled())
@@ -172,10 +172,10 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
             weights.push_back(symbol->LearningScore());
 
         std::discrete_distribution<size_t> distr(weights.begin(), weights.end());
-        stem = shuffledSymbols[distr(GetMy::Instance().ToolsInst()->MT())];
+        stem = shuffledSymbols[distr(GetMy::Instance().ToolsInst().MT())];
     }
     else
-        stem = *GetMy::Instance().ToolsInst()->GetRandom(shuffledSymbols.begin(), shuffledSymbols.end());
+        stem = *GetMy::Instance().ToolsInst().GetRandom(shuffledSymbols.begin(), shuffledSymbols.end());
 
     assert(stem != nullptr);
 
@@ -204,7 +204,7 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
     }
 
     //************************ Initialize Entries board ************************
-    int stemSlot = GetMy::Instance().ToolsInst()->GetRandomInt(0, (NbrOfEntriesLine*NbrOfEntriesRow)-1);
+    int stemSlot = GetMy::Instance().ToolsInst().GetRandomInt(0, (NbrOfEntriesLine*NbrOfEntriesRow)-1);
     QcmDataEntry* joker = shuffledSymbols[static_cast<std::vector<QcmDataEntry>::size_type>(stemSlot)]; // Symbol replaced by stem
     for(int i= 0; i<NbrOfEntriesLine*NbrOfEntriesRow; ++i)
     {
@@ -256,8 +256,8 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
     if ( correct )
     {
         ++scoreCounter;
-        int appStatisticsScore = settingsSerializer->value("AppStatistics/score", 0).toInt();
-        settingsSerializer->setValue("AppStatistics/score", ++appStatisticsScore);
+        int appStatisticsScore = settingsSerializer.value("AppStatistics/score", 0).toInt();
+        settingsSerializer.setValue("AppStatistics/score", ++appStatisticsScore);
         int EntryGuessLearningState = entryGuess->GetDataEntry()->LearningScore();
         if ( EntryGuessLearningState > 0 )
             entryGuess->GetDataEntry()->LearningScore(EntryGuessLearningState-1);
@@ -265,8 +265,8 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
     else
     {
         ++errorCounter;
-        int appStatisticsError = settingsSerializer->value("AppStatistics/error", 0).toInt();
-        settingsSerializer->setValue("AppStatistics/error", ++appStatisticsError);
+        int appStatisticsError = settingsSerializer.value("AppStatistics/error", 0).toInt();
+        settingsSerializer.setValue("AppStatistics/error", ++appStatisticsError);
         int EntryGuessLearningState = entryGuess->GetDataEntry()->LearningScore();
         std::vector<std::pair<int, QcmDataEntry*> > transaction;
         if ( EntryGuessLearningState < MAX_LEARNING_STATE_VALUE )
@@ -556,7 +556,7 @@ void QcmExercicePage::ApplyCorrectStemFontSize()
             }
         }
 
-        GetMy::Instance().ToolsInst()->DisplayPopup(
+        GetMy::Instance().ToolsInst().DisplayPopup(
                 "Stem size ("+QString::number(originalSize)+") seems too big (cf :Settings->Fonts),\n"
                 "Changing it to " + QString::number(newSize));
     }

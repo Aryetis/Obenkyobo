@@ -81,7 +81,7 @@ private:
     int vocabAnswerRmjKanaSize;
     int vocabAnswerKanaRmjSize;
 
-    QSettings* settingsSerializer;
+    QSettings& settingsSerializer;
 };
 
 #endif // FNTSETTINGSPAGE_H

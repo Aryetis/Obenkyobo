@@ -34,7 +34,7 @@ private:
     bool                 lightToggleStatus;
     const KoboDeviceDescriptor& desc;
 
-    QSettings* settingsSerializer;
+    QSettings& settingsSerializer;
 };
 
 #endif // SCREENSETTINGSPAGE_H

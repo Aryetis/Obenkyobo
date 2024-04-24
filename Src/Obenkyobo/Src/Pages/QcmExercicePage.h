@@ -46,7 +46,7 @@ private:
     QcmDataEntry* stem; // Answer to guess
     int refreshCounter;
     QFont curHiraganaNonSized, curKatakanaNonSized, curRomanjiNonSized, curKanjiNonSized, stemFont;
-    QSettings* settingsSerializer;
+    QSettings& settingsSerializer;
     bool stemDisplayKanji;
     std::vector<QcmDataEntry*> entriesPool; // DO NOT own its data => don't delete its content
     VocabDataPool* vdp;                     // holds entriesPool's data for vocab QCM (kana ones being hardcoded in KanasTables)

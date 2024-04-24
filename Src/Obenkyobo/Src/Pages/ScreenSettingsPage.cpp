@@ -9,7 +9,7 @@ ScreenSettingsPage::ScreenSettingsPage(QWidget *parent) :
     luminosity(0), tint(0), settingAvailable(false),
     lightToggleStatus(true),
     desc(GetMy::Instance().Descriptor()),
-    settingsSerializer(GetMy::Instance().SettingSerializerInst())
+    settingsSerializer(*GetMy::Instance().SettingSerializerInst())
 {
     ui->setupUi(this);
 
@@ -17,7 +17,7 @@ ScreenSettingsPage::ScreenSettingsPage(QWidget *parent) :
     // => don't delay the initialization
     if (desc.frontlightSettings.hasFrontLight)
     {
-        luminosity = settingsSerializer->value("ScreenSettings/luminosity", desc.frontlightSettings.frontlightMax / 2.0).toInt();
+        luminosity = settingsSerializer.value("ScreenSettings/luminosity", desc.frontlightSettings.frontlightMax / 2.0).toInt();
         ui->LuminositySlider->setValue(luminosity);
         ui->LuminositySlider->setMinimum(desc.frontlightSettings.frontlightMin);
         ui->LuminositySlider->setMaximum(desc.frontlightSettings.frontlightMax);
@@ -34,7 +34,7 @@ ScreenSettingsPage::ScreenSettingsPage(QWidget *parent) :
 
     if (desc.frontlightSettings.hasNaturalLight)
     {
-        tint = settingsSerializer->value("ScreenSettings/tint", desc.frontlightSettings.naturalLightMax / 2.0).toInt();
+        tint = settingsSerializer.value("ScreenSettings/tint", desc.frontlightSettings.naturalLightMax / 2.0).toInt();
         ui->TintSlider->setValue(static_cast<int>(tint));
         ui->TintSlider->setMinimum(desc.frontlightSettings.naturalLightMin);
         ui->TintSlider->setMaximum(desc.frontlightSettings.naturalLightMax);
@@ -64,7 +64,7 @@ bool ScreenSettingsPage::AreSettingsAvailablePopup() const
 {
     if(!settingAvailable)
     {
-        GetMy::Instance().ToolsInst()->DisplayPopup("Sorry,\nno Screen Settings (luminosity, tint) available for your ereader");
+        GetMy::Instance().ToolsInst().DisplayPopup("Sorry,\nno Screen Settings (luminosity, tint) available for your ereader");
         return false;
     }
     return true;
@@ -72,7 +72,7 @@ bool ScreenSettingsPage::AreSettingsAvailablePopup() const
 
 void ScreenSettingsPage::OnSleep() const
 {
-    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::fakeSleeping)
+    if (GetMy::Instance().ToolsInst().GetDeviceState() != DeviceState::fakeSleeping)
         return;
 
     if(settingAvailable)
@@ -81,7 +81,7 @@ void ScreenSettingsPage::OnSleep() const
 
 void ScreenSettingsPage::OnWakeUp() const
 {
-    if (GetMy::Instance().ToolsInst()->GetDeviceState() != DeviceState::busy)
+    if (GetMy::Instance().ToolsInst().GetDeviceState() != DeviceState::busy)
         return;
 
     if(settingAvailable)
@@ -97,7 +97,7 @@ void ScreenSettingsPage::ToggleLight()
 void ScreenSettingsPage::on_LuminositySlider_valueChanged(int value)
 {
     luminosity = value;
-    settingsSerializer->setValue("ScreenSettings/luminosity", value);
+    settingsSerializer.setValue("ScreenSettings/luminosity", value);
     ui->LuminosityValue->setText(QString::number(luminosity));
     KoboPlatformFunctions::setFrontlightLevel(luminosity, tint);
 }
@@ -105,7 +105,7 @@ void ScreenSettingsPage::on_LuminositySlider_valueChanged(int value)
 void ScreenSettingsPage::on_TintSlider_valueChanged(int value)
 {
     tint = value;
-    settingsSerializer->setValue("ScreenSettings/tint", value);
+    settingsSerializer.setValue("ScreenSettings/tint", value);
     ui->TintValue->setText(QString::number(tint));
     KoboPlatformFunctions::setFrontlightLevel(luminosity, tint);
 }

@@ -36,6 +36,8 @@ public:
     DisplayLSEnum GetDisplayLSSetting() const { return displayLS; }
     int GetSleepTimerMins() const;
     bool IsDateAmPmFormat() const { return dateFormatIdx == 1; }
+    QString GetVocabExplorerHomePath() const { return vocabExplorerHomePath; }
+    void SetVocabExplorerHomePath(QString path);
     ScreenSaverSetting GetScreenSaverSetting() const { return static_cast<ScreenSaverSetting>(screenSaverIdx); }
 
     QSettings* GetSettingsSerializer() const { return settingsSerializer; }
@@ -69,6 +71,7 @@ private:
     int dateFormatIdx;
     int screenSaverIdx;
     int sleepTimerIdx;
+    QString vocabExplorerHomePath;
     int nbrOfRowPerVocabIdx;
     bool kanaHardRefresh;
     int vocabFntSizeIdx;

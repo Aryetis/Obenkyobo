@@ -150,16 +150,16 @@ void VocabFileEntryWidget::on_TitleButton_clicked()
 {
     if (vocabFileInfo.isDir())
     {
-        GetMy::Instance().VocabExplorerPageInst()->Populate(vocabFileInfo.filePath());
+        GetMy::Instance().VocabExplorerPageInst().Populate(vocabFileInfo.filePath());
     }
     else
     {
-        GetMy::Instance().VocabularyDisplayPageInst()->InitializeGrid(this);
+        GetMy::Instance().VocabularyDisplayPageInst().InitializeGrid(this);
         GetMy::Instance().MainWindowInst().SwitchStackedWidgetIndex(8);
 
         if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeVocabDisplayPage", true).toBool() )
         {
-            GetMy::Instance().ToolsInst()->DisplayPopup("You can click the top row buttons to hide/show each associated column.\n"
+            GetMy::Instance().ToolsInst().DisplayPopup("You can click the top row buttons to hide/show each associated column.\n"
                                                         "Each cell is also independently clickable.\n"
                                                         "Combine those with the \"Randomize\" button to memorize faster.\n"
                                                         "\"Reset LS\" will the reset the whole Sheet's Learning Score (LS)");
@@ -265,7 +265,7 @@ void VocabUpDirWidget::OnScrollbarEnabled()
 
 void VocabUpDirWidget::on_TitleButton_clicked()
 {
-    GetMy::Instance().VocabExplorerPageInst()->Populate(vocabFileInfo.filePath());
+    GetMy::Instance().VocabExplorerPageInst().Populate(vocabFileInfo.filePath());
 }
 
 void VocabUpDirWidget::resizeEvent(QResizeEvent *event)
