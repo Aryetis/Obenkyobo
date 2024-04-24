@@ -17,7 +17,7 @@
  ******************************************************************************************/
 
 VocabBaseEntryWidget::VocabBaseEntryWidget(QFileInfo fileInfo, QWidget *parent)
-    : QWidget(parent), ui(new Ui::VocabBaseEntryWidget), vocabFileInfo(fileInfo), scrollBarDisplayed(false)
+    : QWidget(parent), ui(new Ui::VocabBaseEntryWidget), vocabFileInfo(fileInfo)
 {
     ui->setupUi(this);
 
@@ -28,7 +28,7 @@ VocabBaseEntryWidget::VocabBaseEntryWidget(QFileInfo fileInfo, QWidget *parent)
 }
 
 VocabBaseEntryWidget::VocabBaseEntryWidget(QWidget *parent)
-    : QWidget(parent), ui(new Ui::VocabBaseEntryWidget), vocabFileInfo(), scrollBarDisplayed(false)
+    : QWidget(parent), ui(new Ui::VocabBaseEntryWidget), vocabFileInfo()
 {
     ui->setupUi(this);
 }
@@ -41,7 +41,7 @@ VocabBaseEntryWidget::~VocabBaseEntryWidget()
 void VocabBaseEntryWidget::SetLearningScoreText(QString /*learningScoreText*/)
 { }
 
-void VocabBaseEntryWidget::OnScrollbarEnabled()
+void VocabBaseEntryWidget::OnScrollbarToggled()
 { }
 
 void VocabBaseEntryWidget::on_TitleButton_clicked()
@@ -53,8 +53,9 @@ void VocabBaseEntryWidget::on_checkBox_clicked(bool /*checked*/)
 void VocabBaseEntryWidget::ForceTitleButtonSize()
 {
     // Hack to prevent the TitleButton from expanding the whole VocabularyCfgListContentVLayout, fuck qt
+    bool isScrollbarDisplayed = GetMy::Instance().VocabExplorerPageInst().IsScrollBarDisplayed();
     int correctHeight { VOCAB_FILE_ENTRY_TITLE_HEIGHT };
-    int correctedWidth { static_cast<int>((GetMy::Instance().Descriptor().width - (scrollBarDisplayed ? GetMy::Instance().GetScrollBarSize() : 0))
+    int correctedWidth { static_cast<int>((GetMy::Instance().Descriptor().width - (isScrollbarDisplayed ? GetMy::Instance().GetScrollBarSize() : 0))
                                         * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT) };
 
     ui->TitleButton->setSizePolicy({QSizePolicy::Fixed, QSizePolicy::Fixed});
@@ -124,10 +125,9 @@ void VocabFileEntryWidget::SetLearningScoreText(QString learningScoreText)
     ui->checkBox->setText(learningScoreText);
 }
 
-void VocabFileEntryWidget::OnScrollbarEnabled()
+void VocabFileEntryWidget::OnScrollbarToggled()
 {
     std::cout << "LOG: VocabExplorerPage::VocabFileEntryWidget::OnScrollbarEnabled()" << std::endl;
-    scrollBarDisplayed = true;
     SetAndTrimCurDirLabel();
     ForceTitleButtonSize();
 }
@@ -195,7 +195,8 @@ void VocabFileEntryWidget::SetAndTrimCurDirLabel()
         QRect(0, 0, GetMy::Instance().Descriptor().width * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT
               , ui->TitleButton->rect().height()), boundingRectFlags, curLabelText) };
     qreal curFmRectWidth { newLabelRect.width() };
-    int correctedWidth { static_cast<int>((GetMy::Instance().Descriptor().width - (scrollBarDisplayed ? GetMy::Instance().GetScrollBarSize() : 0))
+    bool isScrollbarDisplayed = GetMy::Instance().VocabExplorerPageInst().IsScrollBarDisplayed();
+    int correctedWidth { static_cast<int>((GetMy::Instance().Descriptor().width - (isScrollbarDisplayed ? GetMy::Instance().GetScrollBarSize() : 0))
                                         * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT) };
     if (curFmRectWidth > correctedWidth)
     {
@@ -242,10 +243,9 @@ VocabUpDirWidget::VocabUpDirWidget(QFileInfo fileInfo, QWidget *parent) :
     ui->checkBox->setText("-");
 }
 
-void VocabUpDirWidget::OnScrollbarEnabled()
+void VocabUpDirWidget::OnScrollbarToggled()
 {
     std::cout << "LOG: VocabExplorerPage::VocabUpDirWidget::OnScrollbarEnabled()" << std::endl;
-    scrollBarDisplayed = true;
     ForceTitleButtonSize();
 }
 

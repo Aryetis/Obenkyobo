@@ -2,6 +2,7 @@
 # WORKING ON : - Handle duplicates in VocabDataPool atm it doesn't check for anything
 #              - put date of launch in log file name so it doesn't overwrite the last one
 #              - fix packager with new QtCreator 13 workflow...
+#              - home -> home in a folder with scroll => break resize
 #-------------------------------------------------
 # TODO (0.3.1) : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
 #                - Show last error's log in a popup on startup

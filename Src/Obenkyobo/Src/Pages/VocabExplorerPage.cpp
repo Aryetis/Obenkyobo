@@ -216,11 +216,11 @@ VocabExplorerPage::~VocabExplorerPage()
 
 bool VocabExplorerPage::eventFilter(QObject *obj, QEvent *event)
 {
-    if (obj == ui->VocabularyCfgList->verticalScrollBar() && event->type() == QEvent::Type::Show)
+    if (obj == ui->VocabularyCfgList->verticalScrollBar() && (event->type() == QEvent::Type::Show || event->type() == QEvent::Type::Hide))
     {
         GetMy::Instance().MainWindowInst().AggressiveClearScreen();
         for(VocabBaseEntryWidget* vw : vocabWidgets)
-            vw->OnScrollbarEnabled();
+            vw->OnScrollbarToggled();
     }
 
     return false;

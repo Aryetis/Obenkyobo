@@ -22,7 +22,7 @@ public :
 
     QFileInfo const& VocabFileInfo() { return vocabFileInfo; }
     virtual void SetLearningScoreText(QString learningScoreText);
-    virtual void OnScrollbarEnabled() = 0;
+    virtual void OnScrollbarToggled() = 0;
     virtual void FakeClick(bool checked);
 
 private slots:
@@ -34,7 +34,6 @@ protected :
 
     Ui::VocabBaseEntryWidget *ui;
     QFileInfo vocabFileInfo;
-    bool scrollBarDisplayed;
 };
 
 class VocabFileEntryWidget : public VocabBaseEntryWidget
@@ -47,7 +46,7 @@ public:
     ~VocabFileEntryWidget() = default;
 
     void SetLearningScoreText(QString learningScoreText) override;
-    void OnScrollbarEnabled() override;
+    void OnScrollbarToggled() override;
     void FakeClick(bool checked) override;
 
 private slots:
@@ -67,7 +66,7 @@ public:
     VocabUpDirWidget(QFileInfo fileInfo, QWidget *parent = nullptr);
     ~VocabUpDirWidget() = default;
 
-    void OnScrollbarEnabled() override;
+    void OnScrollbarToggled() override;
 
 private slots:
     void on_TitleButton_clicked() override;
