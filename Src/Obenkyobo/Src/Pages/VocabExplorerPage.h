@@ -10,7 +10,7 @@ namespace Ui
     class VocabExplorerPage;
 }
 
-class VocabFileEntryWidget;
+class VocabBaseEntryWidget;
 class VocabExplorerPage : public QWidget
 {
     Q_OBJECT
@@ -36,7 +36,7 @@ private:
     void SetAndTrimCurDirLabel();
 
     Ui::VocabExplorerPage *ui;
-    std::vector<VocabFileEntryWidget*> vocabFileWidgets;
+    std::vector<VocabBaseEntryWidget*> vocabWidgets;
     void OnSliderReleased() const;
     void OnValueChanged(int /*value*/) const;
 

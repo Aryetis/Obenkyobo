@@ -4,7 +4,7 @@
 #include "Src/GetMy.h"
 #include "Src/mainwindow.h"
 #include "Src/VocabularyParser.h"
-#include "Src/Widgets/VocabFileEntryWidget.h"
+#include "Src/Widgets/VocabBaseEntryWidget.h"
 
 #include "Src/Pages/AppSettingsPage.h"
 
@@ -48,22 +48,22 @@ void VocabExplorerPage::Populate()
     }
 
     // ************* Clearing *************
-    qDeleteAll(vocabFileWidgets);
-    vocabFileWidgets.clear();
+    qDeleteAll(vocabWidgets);
+    vocabWidgets.clear();
 
     // ************* dirs *************
     QDir upDir = currentDir;
     if (upDir.cdUp())
     {
-        VocabFileUpDirWidget* foo = new VocabFileUpDirWidget(QFileInfo(upDir, upDir.path()));
-        vocabFileWidgets.push_back(foo);
+        VocabUpDirWidget* foo = new VocabUpDirWidget(QFileInfo(upDir, upDir.path()));
+        vocabWidgets.push_back(foo);
         ui->VocabularyCfgListContentVLayout->insertWidget(0, foo);
     }
 
     foreach(const QFileInfo& dirInfo, currentDir.entryInfoList(QStringList() << "*", QDir::Dirs | QDir::Hidden | QDir::NoDotAndDotDot | QDir::NoSymLinks))
     {
         VocabFileEntryWidget* bar = new VocabFileEntryWidget(dirInfo);
-        vocabFileWidgets.push_back(bar);
+        vocabWidgets.push_back(bar);
 
         if (displayLsSetting == DisplayLSEnum::FilesAndDirs)
         {
@@ -90,7 +90,7 @@ void VocabExplorerPage::Populate()
     foreach(const QFileInfo& fileInfo, currentDir.entryInfoList(QStringList() << "*.oben", QDir::Files))
     {
         VocabFileEntryWidget* bar = new VocabFileEntryWidget(fileInfo);
-        vocabFileWidgets.push_back(bar);
+        vocabWidgets.push_back(bar);
 
         if (displayLsSetting != DisplayLSEnum::None)
         {
@@ -171,8 +171,8 @@ void VocabExplorerPage::SetAndTrimCurDirLabel()
 
 VocabExplorerPage::~VocabExplorerPage()
 {
-    for(VocabFileEntryWidget* vc : vocabFileWidgets)
-        delete vc;
+    for(VocabBaseEntryWidget* vw : vocabWidgets)
+        delete vw;
 
     delete ui;
 }
@@ -182,8 +182,8 @@ bool VocabExplorerPage::eventFilter(QObject *obj, QEvent *event)
     if (obj == ui->VocabularyCfgList->verticalScrollBar() && event->type() == QEvent::Type::Show)
     {
         GetMy::Instance().MainWindowInst().AggressiveClearScreen();
-        for(VocabFileEntryWidget* vc : vocabFileWidgets)
-            vc->OnScrollbarEnabled();
+        for(VocabBaseEntryWidget* vw : vocabWidgets)
+            vw->OnScrollbarEnabled();
     }
 
     return false;
@@ -213,8 +213,8 @@ void VocabExplorerPage::on_SelectAllButton_clicked()
 {
     selectAllStatus = !selectAllStatus;
 
-    for (int i = 1; i < static_cast<int>(vocabFileWidgets.size()); ++i) // skip [UP_DIR] entry // TODO handle [UP_DIR] correctly
-        vocabFileWidgets[i]->FakeClick(selectAllStatus);
+    for(VocabBaseEntryWidget* vw : vocabWidgets)
+        vw->FakeClick(selectAllStatus);
 }
 
 void VocabExplorerPage::OnSliderReleased() const

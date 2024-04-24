@@ -5,7 +5,7 @@
 #include "Src/Pages/FntSettingsPage.h"
 #include "Src/Pages/AppSettingsPage.h"
 #include "Src/mainwindow.h"
-#include "Src/Widgets/VocabFileEntryWidget.h"
+#include "Src/Widgets/VocabBaseEntryWidget.h"
 #include "Src/VocabularyParser.h"
 #include "Src/GetMy.h"
 #include "Src/Tools.h"
