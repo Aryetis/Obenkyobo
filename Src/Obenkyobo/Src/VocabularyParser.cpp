@@ -83,6 +83,7 @@ void VocabDataFile::ParseLine(const QString &line, int lineNumber_)
         else
             learningScore += learningScore_;
 
+        // TODO NOW check for duplicates
         entries.insert(new VocabDataEntry(kanas_, kanji_, trad_, learningScore_, this, lineNumber_, fontType_));
         return;
     }

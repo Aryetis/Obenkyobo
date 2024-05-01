@@ -45,7 +45,7 @@ class VocabDataEntry : public QcmDataEntry
 
     public :
         VocabDataEntry() = delete;
-        ~VocabDataEntry() {};
+        ~VocabDataEntry() = default;
         VocabDataEntry(QString kanas_, QString kanjis_, QString trad_, int ls_, VocabDataFile* vocabDataFile_, int lineNumber_, KanaFamilyEnum fontType_) :
             kanas(kanas_), kanjis(kanjis_), trad(trad_), learningScore(ls_), vocabDataFileLnk(vocabDataFile_), lineNumber(lineNumber_), fontType(fontType_) {} // TODO : don't copy, move instead... not quite sure if it's a good plan... will do for now
 
@@ -75,7 +75,13 @@ class VocabDataEntry : public QcmDataEntry
 };
 inline uint qHash(const VocabDataEntry &key, uint seed)
 {
-    return qHash(key.Kanas(), seed) ^ qHash(key.Kanjis(), seed+1) ^ qHash(key.Romanji(), seed+2) ^ qHash(key.GetPath(), seed+3);
+    // TODO NOW
+    // return qHash(key.Kanas(), seed) ^ qHash(key.Kanjis(), seed+1) ^ qHash(key.Romanji(), seed+2) ^ qHash(key.GetPath(), seed+3);
+    return qHash(key.Kanas(), seed) ^ qHash(key.Kanjis(), seed+1);
+}
+inline bool operator==(const VocabDataEntry& lhs, const VocabDataEntry& rhs)
+{
+    return lhs.Kanas() == rhs.Kanas() && lhs.Kanjis() == rhs.Kanjis();
 }
 
 class VocabDataPool

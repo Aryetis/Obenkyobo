@@ -5,7 +5,6 @@
 #-------------------------------------------------
 # TODO (0.3.1) : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
 #                - Show last error's log in a popup on startup
-#                - use a fontMetrics().boundingRect to determine max length of VocabExplorer entries text  
 #                - redo the Qmenu::right-arrow
 #                - Investigate weird hard refresh (Edit page) glitch on Kobo Glo HD under unknown circumstances
 #                - replace QList by QVector
