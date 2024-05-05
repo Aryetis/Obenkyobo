@@ -107,7 +107,7 @@ And big big thanks to <a href="https://github.com/Rain92/">@Rain92/OfficerAction
 ## Resources licensing (fonts, icons, pictures)
 
 Everything used in this software is "free-to-use and share in any way" (tldr version). Still, credit is given where credit is due. You can find the details about who made what in the following file 
-<a href="https://github.com/Aryetis/Obenkyobo/tree/master/Resources/LICENSES">Resources Licenses and Details</a>
+<a href="https://github.com/Aryetis/Obenkyobo/blob/master/Src/Obenkyobo/Resources/LICENSES">Resources Licenses and Details</a>
 
 ## For developpers, dummies, and future me. How to compile it ? And other dev related tricks and whatnot.
 
