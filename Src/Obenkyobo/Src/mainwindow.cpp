@@ -186,8 +186,8 @@ void MainWindow::refreshTimeAndBattery()
     int batteryDisplayFormat = GetMy::Instance().AppSettingsPageInst().GetBatteryFormatIdx();
     bool isBatteryIconVisible = (batteryDisplayFormat == 0 || batteryDisplayFormat == 1) ? true : false;
     bool isBatteryTextVisible = (batteryDisplayFormat == 0 || batteryDisplayFormat == 2) ? true : false;
-    bool isBatteryCharging = KoboPlatformFunctions::isBatteryCharging();
-    int batteryLvl = KoboPlatformFunctions::getBatteryLevel();
+    bool isBatteryCharging =  false; // TODO : write KoboExtra Lib // KoboPlatformFunctions::isBatteryCharging();
+    int batteryLvl = 200; // TODO : write KoboExtra Lib //KoboPlatformFunctions::getBatteryLevel();
 
     // TODO : refactor this using MainWindow::ToolButtonStyle --"
     if (isBatteryCharging != wasBatteryCharging || batteryLvl != wasBatteryLvl || batteryDisplayFormat != wasBatteryDisplayFormat)

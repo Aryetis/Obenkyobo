@@ -1,16 +1,17 @@
 export APPNAME=templateAppName
 export ADDSPATH=/mnt/onboard/.adds
 export APPPATH=${ADDSPATH}/${APPNAME}
-export QTPATH=${ADDSPATH}/qt-linux-5.15-kde-kobo
-export QTPLUGINOBENKYOBO=libkobo_obenkyobo
+export QTPATH=${ADDSPATH}/templateQtDir
+export QTPLUGINOBENKYOBO=kobo
 
 LOGFILE=${APPPATH}/log.txt
 
 # kill nickel
 source ${APPPATH}/exit_nickel.sh
 
+# koboplatformplugin input debug
+#export QT_QPA_EVDEV_DEBUG=true
+
 # export QT stuff
-export LD_LIBRARY_PATH=${QTPATH}/lib:lib:
-echo export LD_LIBRARY_PATH=${QTPATH}/lib:lib:
+export LD_LIBRARY_PATH=${QTPATH}/lib:${APPPATH}/lib:lib:
 export QT_QPA_PLATFORM=${QTPLUGINOBENKYOBO}:debug
-echo export QT_QPA_PLATFORM=${QTPLUGINOBENKYOBO}:debug

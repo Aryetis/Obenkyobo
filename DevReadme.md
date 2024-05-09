@@ -31,6 +31,7 @@ That should get you a working cross commpiler and qt binaries configured with a 
   <img src="DevReadme/KoboQtKit.jpg" width="807" height="528" >
 </p>
 
+- Because we're using kde's qt we also need to indicate qt5-kobo-platform-plugin to use our qt-linux-5.15-kde-kobo instead of qt-linux-5.15-kobo. Therefore run this in Obenkyobo's root folder `echo "CUSTOM_QTDIR = /mnt/onboard/.adds/qt-linux-5.15-kde-kobo" > Src/Libs/qt5-kobo-platform-plugin/koboplatformplugin.pri`
 - Once you've compiled Obenkyobo (and therefore qtpa too), time to run the `deploy_qt.sh QTPA_BUILD_FOLDER [KOBO_IP_DEVICE]` script with `QTPA_BUILD_FOLDER`as the folder holding libkobo.so and leave KOBO_IP_DEVICE empty as we'll ship everything using rsync/sftp directly from QtCreator. This should create the `/kobo-qt-setup-scripts/deploy/qt-linux-5.15-kde-kobo/` folder containing every qt binaries and libraries to be deployed on the kobo device. Make sure to fix the associated symbolic link `Obenkyobo/Src/Obenkyobo/OtherFiles/Dependencies/qt-linux-5.15-kde-kobo` so that it points towards `kobo-qt-setup-scripts/deploy/qt-linux-5.15-kde-kobo/` (that way packager.sh will be able to include it). 
 
 3. And finally, let's tweak a couple of things so you can use the packager.sh to compile and ship everything with a single press on the build button (also requires you to follow `Setup QtCreator` steps)
@@ -58,14 +59,12 @@ Projects->Kobo(Kit)->Run->Deployment->Deploy files and set flags for rsync : --c
 (can't pass more than one argument without everyhing breaking apart because of how they pass the arguments --")
 
 Projects->Kobo(Kit)->Run->Deployment-> Add Run custom remote command with :  
-/mnt/onboard/.adds/Obenkyobo/debugEnv.sh
-
-Projects->Kobo(Kit)->Run->Environment->(System Environment)->Add create new variable with at least 
-LD_LIBRARY_PATH = /mnt/onboard/.adds/qt-linux-5.15-kde-kobo/lib:lib:
-QT_QPA_PLATFORM = kobo
+source /mnt/onboard/.adds/Obenkyobo/debugEnv.sh
 ```
 
 The preparation of the files for sftp transfer (and creationg of a .zip file for release) should be handled by the `Src/Obenkyobo/OtherFiles/packager.sh` (triggered by Obenkyobo.pro's QMAKE_POST_LINK action)
+
+Meanwhile the environmental variables (`LD_LIBRARY_PATH`, `QT_QPA_PLATFORM`, etc) should be set by the Obenkyobo_launcher.sh and debugEnv.sh.
 
 And that's it! With all of that done, you should now be able to simply click the "Run" button to compile and send eveything necessary to your kobo device over the air.
 
