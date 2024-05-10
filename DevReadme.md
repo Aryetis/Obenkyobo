@@ -57,6 +57,10 @@ Projects->Kobo(Kit)->Run->Deployment->Deploy files and set flags for rsync : --c
 # Or instead 
 Projects->Kobo(Kit)->Run->Deployment->Upload files via SFTP instead of rsync
 
+# Killing nickel for our dev session (will need to relaunch it afterwards with start_nickel.sh or simply rebooting the device)
+Projects->Kobo(Kit)->Run->Deployment-> Add Run custom remote command with :  
+/mnt/onboard/.adds/Obenkyobo/exit_nickel.sh
+
 Projects->Kobo(Kit)->Run->Environment->(System Environment)->Add create new variable with at least 
 # everything in here is usually set at runtime by Obenkyobo_launcher.sh when running application from device itself. But because we can't source it from QtCreator, we set everything manually in here.
 LD_LIBRARY_PATH=/mnt/onboard/.adds/qt-linux-5.15-kde-kobo/lib:/mnt/onboard/.adds/Obenkyobo/liblib:
