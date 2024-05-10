@@ -12,4 +12,3 @@ sync
 
 killall -q -TERM nickel hindenburg sickel fickel adobehost dhcpcd-dbus dhcpcd fmon kfmon 2>/dev/null
 
-exit 0
