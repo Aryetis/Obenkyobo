@@ -52,19 +52,19 @@ For a better workflow and one click build+deploy+launch from within QtCreator :
 Settings->Build & Run->Default Build Properties->Default build directory  : 
 %{JS: Util.asciify("build-%{Project:Name}-%{Kit:FileSystemName}-%{BuildConfig:Name}")}
 
-# If QtCreator < 13
-Projects->Kobo(Kit)->Run->Deployment->Upload files via SFTP instead of rsync
-# If QtCreator == 13, install rsync and 
 Projects->Kobo(Kit)->Run->Deployment->Deploy files and set flags for rsync : --chown=root:root
-(can't pass more than one argument without everyhing breaking apart because of how they pass the arguments --")
+(can't pass more than one argument without everyhing breaking apart because of how they pass the arguments --", fix should be incoming https://codereview.qt-project.org/c/qt-creator/qt-creator/+/560541)
+# Or instead 
+Projects->Kobo(Kit)->Run->Deployment->Upload files via SFTP instead of rsync
 
-Projects->Kobo(Kit)->Run->Deployment-> Add Run custom remote command with :  
-source /mnt/onboard/.adds/Obenkyobo/debugEnv.sh
+Projects->Kobo(Kit)->Run->Environment->(System Environment)->Add create new variable with at least 
+# everything in here is usually set at runtime by Obenkyobo_launcher.sh when running application from device itself. But because we can't source it from QtCreator, we set everything manually in here.
+LD_LIBRARY_PATH=/mnt/onboard/.adds/qt-linux-5.15-kde-kobo/lib:/mnt/onboard/.adds/Obenkyobo/liblib:
+QT_QPA_PLATFORM=kobo
+QT_QPA_EVDEV_DEBUG=true # if you want to debug libkobo.so qpa inputs
 ```
 
 The preparation of the files for sftp transfer (and creationg of a .zip file for release) should be handled by the `Src/Obenkyobo/OtherFiles/packager.sh` (triggered by Obenkyobo.pro's QMAKE_POST_LINK action)
-
-Meanwhile the environmental variables (`LD_LIBRARY_PATH`, `QT_QPA_PLATFORM`, etc) should be set by the Obenkyobo_launcher.sh and debugEnv.sh.
 
 And that's it! With all of that done, you should now be able to simply click the "Run" button to compile and send eveything necessary to your kobo device over the air.
 
