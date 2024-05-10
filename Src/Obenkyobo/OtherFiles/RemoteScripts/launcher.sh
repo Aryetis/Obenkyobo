@@ -11,7 +11,7 @@ source ${APPPATH}/exit_nickel.sh
 
 # export QT stuff
 export LD_LIBRARY_PATH=${QTPATH}/lib:${APPPATH}/lib:lib:
-export QT_QPA_PLATFORM=${QTPLUGINOBENKYOBO}:experimentaltouchhandler
+export QT_QPA_PLATFORM=${QTPLUGINOBENKYOBO}:
 
 # start APP
 ${APPPATH}/${APPNAME} > $LOGFILE 2>&1
