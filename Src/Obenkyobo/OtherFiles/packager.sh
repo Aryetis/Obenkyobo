@@ -29,13 +29,6 @@ cp $2/OtherFiles/RemoteScripts/launcher.sh $BuildFolder/Output/.adds/$4/$Launche
 sed  -i "1s/.*/""export APPNAME=$4""/" $BuildFolder/Output/.adds/$4/$LauncherName
 sed  -i "4s/.*/""export QTPATH=\${ADDSPATH}\/$QtFolder/g" $BuildFolder/Output/.adds/$4/$LauncherName
 sed  -i "5s/.*/""export QTPLUGINOBENKYOBO=$QtPluginKobo/g" $BuildFolder/Output/.adds/$4/$LauncherName
-if [[ $1 == debug ]];
-then
-    cp $2/OtherFiles/RemoteScripts/debugEnv.sh $BuildFolder/Output/.adds/$4/debugEnv.sh
-    sed  -i "1s/.*/""export APPNAME=$4""/" $BuildFolder/Output/.adds/$4/debugEnv.sh
-    sed  -i "4s/.*/""export QTPATH=\${ADDSPATH}\/$QtFolder/g" $BuildFolder/Output/.adds/$4/debugEnv.sh
-    sed  -i "5s/.*/""export QTPLUGINOBENKYOBO=$QtPluginKobo/g" $BuildFolder/Output/.adds/$4/debugEnv.sh
-fi
 cp $2/OtherFiles/RemoteScripts/start_nickel.sh $BuildFolder/Output/.adds/$4/start_nickel.sh
 cp $2/OtherFiles/RemoteScripts/exit_nickel.sh $BuildFolder/Output/.adds/$4/exit_nickel.sh
 cp $2/OtherFiles/RemoteScripts/pic.png $BuildFolder/Output/$4.png
