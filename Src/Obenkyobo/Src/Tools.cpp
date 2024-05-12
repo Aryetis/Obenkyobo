@@ -235,8 +235,7 @@ void Tools::PreSleep()
         GetMy::Instance().ToolsInst().DisplayPopup("Sleeping", true, false);
 
     std::cout << "LOG: disabling WiFi" << std::endl;
-    // TODO : write KoboExtra Lib
-    // KoboPlatformFunctions::disableWiFiConnection(); // MANDATORY !!!!!
+    KoboPlatformExtra::DisableWiFiConnectionStatic(); // MANDATORY !!!!!
 
     sleepTimer.start(PRESLEEP_DURATION);  // MANDATORY !!!!! <= this is it.... without this there's some bullshit background kobo/ntx stuff preventing the device from actually going to sleep (cf: battery consumption for confirmation) => need to split sleep() into fakeSleep() and Sleep() or something alike...
 }
@@ -381,9 +380,8 @@ void Tools::WakeUp()
 
 void Tools::PostWakeUp()
 {
-    // TODO : write KoboExtra Lib
-    // if (GetMy::Instance().AppSettingsPageInst().GetWifiStatus())
-    //     KoboPlatformFunctions::enableWiFiConnection();
+    if (GetMy::Instance().AppSettingsPageInst().GetWifiStatus())
+        KoboPlatformExtra::EnableWiFiConnectionStatic();
 
     //-------------------------------------------------------------
     QApplication::processEvents(); // flush inputs sent during wifi wakeup

@@ -48,11 +48,10 @@ void AppSettingsPage::ParseConfigFile()
 #else
     wifiStatus = true;
 #endif
-    // TODO : write KoboExtra Lib
-    // if (wifiStatus)
-    //     KoboPlatformFunctions::enableWiFiConnection();
-    // else
-    //     KoboPlatformFunctions::disableWiFiConnection();
+    if (wifiStatus)
+        KoboPlatformExtra::EnableWiFiConnectionStatic();
+    else
+        KoboPlatformExtra::DisableWiFiConnectionStatic();
 }
 
 void AppSettingsPage::InitializeUIValues() const
@@ -108,15 +107,13 @@ void AppSettingsPage::on_WifiCheckBox_clicked(bool checked)
     if (wifiStatus)
     {
         GetMy::Instance().ToolsInst().DisplayPopup("Enabling wifi, please wait...", false, false);
-        // TODO : write KoboExtra Lib
-        // KoboPlatformFunctions::enableWiFiConnection(); // blocking code ! => warn user with popup
+        KoboPlatformExtra::EnableWiFiConnectionStatic(); // blocking code ! => warn user with popup
         GetMy::Instance().ToolsInst().GetPopupInstance()->accept();
     }
     else
     {
         GetMy::Instance().ToolsInst().DisplayPopup("Disabling wifi, please wait...", false, false);
-        // TODO : write KoboExtra Lib
-        // KoboPlatformFunctions::disableWiFiConnection(); // blocking code ! => warn user with popup
+        KoboPlatformExtra::DisableWiFiConnectionStatic(); // blocking code ! => warn user with popup
         GetMy::Instance().ToolsInst().GetPopupInstance()->accept();
     }
 }

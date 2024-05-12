@@ -1,13 +1,13 @@
 #-------------------------------------------------
 # WORKING ON : - Handle duplicates in VocabDataPool atm it doesn't check for anything
 #              - put date of launch in log file name so it doesn't overwrite the last one
-#              - qpa, add possibility for a custom QTDIR
 #              - qpa, add support for Kobo Libra Colour
 #              - qpa, add "default handler" in descriptor + legacytouchhandler parameter + rename experimentaltouchhandler into moderntouchhandler
 #              - qpa, rewrite readme to make it more comprehensible that invertX, Y etc is only available on "legacyHandler"
+#              - qpa, touchDev is gone ?!? so how does legacy handler handle cases such as Kobo Elipsa and its platform-0-0010-event ?!?
 #              - create KoboExtraFunk lib containing support for : Wifi, Battery, Screen tint, Screen luminosity, Screen color(?)
 #              - make better guess for "Row Per Page" default value
-#              - make every >=mk7 device default to 10 hard refresh by default
+#              - remove TestExtraFunk from main.cpp
 #-------------------------------------------------
 # TODO (0.3.1) : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
 #                - Show last error's log in a popup on startup

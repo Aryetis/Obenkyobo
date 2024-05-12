@@ -5,15 +5,9 @@
 #include "Src/GetMy.h"
 #include "Src/Tools.h"
 
-
-#include "TestExtraFunk.h" // TODO NOW
-
 int main(int argc, char *argv[])
 {
-    std::cout <<"Started at: " << QDateTime::currentDateTime().toString("dd-MM-yyyy HH:mm:ss").toStdString() << std::endl;
-
-    TestingStuff::Dodo(); // TODO NOW
-
+    std::cout <<"\nStarted at: " << QDateTime::currentDateTime().toString("dd-MM-yyyy HH:mm:ss").toStdString() << std::endl;
 
     QApplication a(argc, argv);
     GetMy::Instance().SetToolsInst(new Tools());

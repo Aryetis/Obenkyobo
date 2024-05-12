@@ -3,6 +3,7 @@
 
 #include <QSettings>
 #include "koboplatformfunctions.h"
+#include "KoboPlatformExtra.h"
 
 class QcmExercicePage;
 class FntSettingsPage;
@@ -60,6 +61,8 @@ public:
 
     KoboDeviceDescriptor const& Descriptor() { return desc; }
 
+    KoboPlatformExtra const& ExtraFunk() { return extraFunk; }
+
     QSet<QString> const& GetEnabledVocabSheets() const { return enabledSheets; }
     QSet<QString>& ModifyEnabledVocabSheets() { return enabledSheets; }
     void ClearEnabledVocabSheets();
@@ -81,7 +84,8 @@ private :
     Tools*                          toolsInstance;
     StatisticsPage*                 statisticsInstance;
 
-    KoboDeviceDescriptor desc =  KoboPlatformFunctions::getKoboDeviceDescriptor();
+    KoboDeviceDescriptor desc = KoboPlatformFunctions::getKoboDeviceDescriptor();
+    KoboPlatformExtra const& extraFunk = KoboPlatformExtra::Instance();
 
     QSet<QString> enabledSheets;
 
