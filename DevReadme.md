@@ -127,6 +127,10 @@ Install <a href="https://www.mobileread.com/forums/showthread.php?t=254214">Nilu
 
 How to read the backtrace logs : convert address to line using `addr2line -e [NonStrippedProgramBinary] [HexAddress]`
 
+How to snoop in a library : `nm -gD lib.so` `objdump -TC lib.so` `readelf -Ws lib.so` and Ghidra of course
+
+How to double check what kind of file I'm dealing with `file testFile`
+
 ### How to serial connect to Kobo ereader in WSL2 
 
 1. install usbipd on windows's side to share usb device through IP with WSL2, more info on <a href="https://github.com/dorssel/usbipd-win/wiki/WSL-support">WSL-support's page</a> and <a href="https://learn.microsoft.com/fr-fr/windows/wsl/connect-usb#attach-a-usb-device.">this windows's doc page</a>.

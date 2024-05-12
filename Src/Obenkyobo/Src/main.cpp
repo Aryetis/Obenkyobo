@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[])
 {
-    std::cout <<"\nStarted at: " << QDateTime::currentDateTime().toString("dd-MM-yyyy HH:mm:ss").toStdString() << std::endl;
+    std::cout <<"Started at: " << QDateTime::currentDateTime().toString("dd-MM-yyyy HH:mm:ss").toStdString() << std::endl;
 
     QApplication a(argc, argv);
     GetMy::Instance().SetToolsInst(new Tools());
