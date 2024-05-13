@@ -53,7 +53,7 @@ void VocabularyDisplayPage::InitializeGrid(VocabFileEntryWidget* vocab)
     {
         QString popupMsg = "Malformed Vocab sheet, errors on lines : ";
         for (VocabDataEntry const* entry : vdf->MalformedLines())
-            popupMsg += QString::number(entry->GetLineNumber()) + ", " ;
+            popupMsg += QString::number(entry->GetLineNumber()+1) + ", " ;
         popupMsg.chop(2);
         popupMsg += '.';
         GetMy::Instance().ToolsInst().DisplayPopup(popupMsg);

@@ -1,15 +1,12 @@
 #-------------------------------------------------
 # WORKING ON : - Handle duplicates in VocabDataPool atm it doesn't check for anything
+#              - bug, Randomize -> Next Page -> 2nd unrandomized page is displayed
 #              - put date of launch in log file name so it doesn't overwrite the last one
 #              - qpa, add support for Kobo Libra Colour
 #              - qpa, add "default handler" in descriptor + legacytouchhandler parameter + rename experimentaltouchhandler into moderntouchhandler
 #              - qpa, rewrite readme to make it more comprehensible that invertX, Y etc is only available on "legacyHandler"
-#              - qpa, touchDev is gone ?!? so how does legacy handler handle cases such as Kobo Elipsa and its platform-0-0010-event ?!?
-#              - create KoboExtraFunk lib containing support for : Wifi, Battery, Screen tint, Screen luminosity, Screen color(?)
-#              - make better guess for "Row Per Page" default value
-#              - remove TestExtraFunk from main.cpp
 #-------------------------------------------------
-# TODO (0.3.1) : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
+# TODO (0.3.2) : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
 #                - Show last error's log in a popup on startup
 #                - redo the Qmenu::right-arrow
 #                - Investigate weird hard refresh (Edit page) glitch on Kobo Glo HD under unknown circumstances
@@ -19,8 +16,6 @@
 #                - investigate the size fixing bug if POPUP_FNT_GUESSES_RESIZE_ERROR_CNT is lower than 9
 #                  (it's because of popup somehow)
 #                - charging ascii symbol ⚡ expand the top bar => sizing is not fucked up but still ...
-#                - How did I end up with an entry "[fontType=hiragana][jp=ひ][kanji=火][trad=feu][learningScore=6]"
-#                   ?!? maybe bad manipulation during some debug session ?
 #-------------------------------------------------
 
 TEMPLATE = subdirs

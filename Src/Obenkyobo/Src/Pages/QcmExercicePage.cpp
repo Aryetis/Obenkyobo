@@ -267,10 +267,9 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
         ++errorCounter;
         int appStatisticsError = settingsSerializer.value("AppStatistics/error", 0).toInt();
         settingsSerializer.setValue("AppStatistics/error", ++appStatisticsError);
-        int EntryGuessLearningState = entryGuess->GetDataEntry()->LearningScore();
         std::vector<std::pair<int, QcmDataEntry*> > transaction;
-        if ( EntryGuessLearningState < MAX_LEARNING_STATE_VALUE )
-            transaction.emplace_back(EntryGuessLearningState+1, entryGuess->GetDataEntry());
+        if ( entryGuess->GetDataEntry()->LearningScore() < MAX_LEARNING_STATE_VALUE )
+            transaction.emplace_back(entryGuess->GetDataEntry()->LearningScore()+1, entryGuess->GetDataEntry());
         if ( stem->LearningScore() < MAX_LEARNING_STATE_VALUE )
             transaction.emplace_back(stem->LearningScore()+1, stem);
         LearningScoreTransaction(transaction);
