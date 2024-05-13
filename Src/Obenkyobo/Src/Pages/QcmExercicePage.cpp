@@ -272,7 +272,7 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
         if ( EntryGuessLearningState < MAX_LEARNING_STATE_VALUE )
             transaction.emplace_back(EntryGuessLearningState+1, entryGuess->GetDataEntry());
         if ( stem->LearningScore() < MAX_LEARNING_STATE_VALUE )
-            transaction.emplace_back(EntryGuessLearningState+1, stem);
+            transaction.emplace_back(stem->LearningScore()+1, stem);
         LearningScoreTransaction(transaction);
     }
 
