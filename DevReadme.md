@@ -131,6 +131,8 @@ How to snoop in a library : `nm -gD lib.so` `objdump -TC lib.so` `readelf -Ws li
 
 How to double check what kind of file I'm dealing with `file testFile`
 
+How to check input sanity in qpa / LibKoboExtraFunk ? `evdev-dump /dev/input/event0`
+
 ### How to serial connect to Kobo ereader in WSL2 
 
 1. install usbipd on windows's side to share usb device through IP with WSL2, more info on <a href="https://github.com/dorssel/usbipd-win/wiki/WSL-support">WSL-support's page</a> and <a href="https://learn.microsoft.com/fr-fr/windows/wsl/connect-usb#attach-a-usb-device.">this windows's doc page</a>.
