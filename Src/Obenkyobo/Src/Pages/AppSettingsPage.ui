@@ -94,7 +94,7 @@
           </size>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <item>
           <property name="text">
@@ -109,6 +109,11 @@
          <item>
           <property name="text">
            <string>3x3</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>4x3</string>
           </property>
          </item>
         </widget>
