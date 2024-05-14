@@ -229,7 +229,7 @@ void Tools::InstallGlobalEventFilter(bool enable)
 //======================================================================
 void Tools::PreSleep()
 {
-    std::cout << "LOG: going to PreSleep  @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
+    std::cout << "LOG: going to PreSleep @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
     if(IsScreenSaverNeeded())
         GetMy::Instance().ToolsInst().DisplayPopup("Sleeping", true, false);
@@ -560,7 +560,7 @@ bool QTouchEventFilter::eventFilter(QObject */*p_obj*/, QEvent *p_event)
         {
             case DeviceState::awake:
             {
-                if (p_keyPressEvent->key() == KoboKey::Key_Power || p_keyPressEvent->key() == KoboKey::Key_SleepCover)
+            if (p_keyPressEvent->key() == KoboKey::Key_Power || (!p_keyPressEvent->isAutoRepeat() && p_keyPressEvent->key() == KoboKey::Key_SleepCover))
                 {
                     Tools::RequestSleep();
                     return true;
@@ -592,7 +592,7 @@ bool QTouchEventFilter::eventFilter(QObject */*p_obj*/, QEvent *p_event)
     else if (p_event->type() == QEvent::KeyRelease)
     {
         QKeyEvent* p_keyPressEvent = static_cast<QKeyEvent*>(p_event);
-        if (p_keyPressEvent->key() == KoboKey::Key_SleepCover &&
+        if (!p_keyPressEvent->isAutoRepeat() && p_keyPressEvent->key() == KoboKey::Key_SleepCover &&
             (  GetMy::Instance().ToolsInst().GetDeviceState() == DeviceState::asleep
             || GetMy::Instance().ToolsInst().GetDeviceState() == DeviceState::fakeSleeping))
         {
