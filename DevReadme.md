@@ -139,7 +139,7 @@ How to check input sanity in qpa / LibKoboExtraFunk ? `evdev-dump /dev/input/eve
 2. install bunch of necessary software in WSL2 with : 
 `sudo apt install usbip hwdata usbutils setserial`
 3. In some Admin Powershell (urgh), lis usb devices busids with : `usbipd list`
-4. link usb device to WSL2 with `usbipd wsl attach --busid [BUS_ID]; usbipd attach --wsl --busid [BUS_ID]`
+4. link usb device to WSL2 with `usbipd bind --busid=[BUS_ID]` then `usbipd attach --wsl --busid=[BUS_ID]`
 5. check with `lsusb` if you're device shows up and if `/dev/ttyUSBxxx` entry is created. If not ... guess what ... WSL2 kernel probably doesn't have your device's driver. To be sure, check it out with `ls -l /sys/bus/usb-serial/drivers`. You'll have to build your own kernel then, cf section below.
 
 ### How to build custom WSL2 kernel 
