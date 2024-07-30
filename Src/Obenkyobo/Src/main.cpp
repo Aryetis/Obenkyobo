@@ -7,6 +7,8 @@
 
 int main(int argc, char *argv[])
 {
+    std::cout <<"Started at: " << QDateTime::currentDateTime().toString("dd-MM-yyyy HH:mm:ss").toStdString() << std::endl;
+
     QApplication a(argc, argv);
     GetMy::Instance().SetToolsInst(new Tools());
     GetMy::Instance().ToolsInst().RegisterHandlers();
@@ -15,7 +17,6 @@ int main(int argc, char *argv[])
     std::cout << "Kobo model: (" << GetMy::Instance().Descriptor().modelName.toStdString() << ","
               << GetMy::Instance().Descriptor().modelNumber << "), firmware: " << GetMy::Instance().ToolsInst().GetFirmwareStr() << std::endl;
     std::cout <<"Obenkyobo build: "<<__DATE__<<"@"<<__TIME__<<", cpp: "<<__cplusplus<<", Qt: "<<QT_VERSION<< std::endl;
-    std::cout <<"Started at: " << QDateTime::currentDateTime().toString("dd-MM-yyyy HH:mm:ss").toStdString() << std::endl;
 
     // Needed to save .cfg next to application...
     QSettings serializer = QSettings(QString(QCoreApplication::applicationDirPath() + "/config.cfg"), QSettings::IniFormat);

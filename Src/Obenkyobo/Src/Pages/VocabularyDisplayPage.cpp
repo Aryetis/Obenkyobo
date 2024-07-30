@@ -6,12 +6,11 @@
 #include "Src/Pages/AppSettingsPage.h"
 #include "Src/mainwindow.h"
 #include "Src/Widgets/VocabBaseEntryWidget.h"
-#include "Src/VocabularyParser.h"
 #include "Src/GetMy.h"
 #include "Src/Tools.h"
 
 VocabularyDisplayPage::VocabularyDisplayPage(QWidget *parent) :
-    QWidget(parent), vdf(nullptr), ui(new Ui::VocabularyDisplayPage)
+    QWidget(parent), vdf(nullptr), ui(new Ui::VocabularyDisplayPage), randomized(false)
 {
     ui->setupUi(this);
 
@@ -28,7 +27,7 @@ VocabularyDisplayPage::VocabularyDisplayPage(QWidget *parent) :
 
 VocabularyDisplayPage::~VocabularyDisplayPage()
 {
-    for(auto lineLabels : gridLabels)
+    for(auto& lineLabels : gridLabels)
         qDeleteAll(lineLabels);
     gridLabels.clear();
     if (vdf != nullptr)
@@ -46,6 +45,7 @@ void VocabularyDisplayPage::InitializeGrid(VocabFileEntryWidget* vocab)
     kanjiShow = true;
     traductionShow = true;
     lsShow = true;
+    randomized = false;
 
     /************************ Parsing Vocab File ************************/
     vdf = new VocabDataFile(vocab->VocabFileInfo().filePath());
@@ -53,7 +53,7 @@ void VocabularyDisplayPage::InitializeGrid(VocabFileEntryWidget* vocab)
     {
         QString popupMsg = "Malformed Vocab sheet, errors on lines : ";
         for (VocabDataEntry const* entry : vdf->MalformedLines())
-            popupMsg += QString::number(entry->GetLineNumber()) + ", " ;
+            popupMsg += QString::number(entry->GetLineNumber()+1) + ", " ;
         popupMsg.chop(2);
         popupMsg += '.';
         GetMy::Instance().ToolsInst().DisplayPopup(popupMsg);
@@ -61,7 +61,7 @@ void VocabularyDisplayPage::InitializeGrid(VocabFileEntryWidget* vocab)
     if (vdf->Entries().size() == 0)
         vdf->Entries().insert(new VocabDataEntry("EMPTY",".OBEN","FILE  :(", MAX_LEARNING_STATE_VALUE,  nullptr, -1, KanaFamilyEnum::hiragana));
 
-
+    vdfEntriesList = vdf->Entries().values();
     maxPage = std::ceil(static_cast<float>(vdf->Entries().count()) / GetMy::Instance().AppSettingsPageInst().GetNumberOfRowPerVocabPage());
 
     /************************ Popuplating VocabGrid ************************/
@@ -98,13 +98,13 @@ void VocabularyDisplayPage::PopulateGrid(bool random /*= false*/, int turnPage /
     CleanGrid();
 
     // Sort / Randomize
-    QList<VocabDataEntry*> vdfEntriesList = vdf->Entries().values();
     if (random)
     {
         std::shuffle(vdfEntriesList.begin(), vdfEntriesList.end(), GetMy::Instance().ToolsInst().MT());
         curPage = 0;
+        randomized = true;
     }
-    else
+    else if (!randomized) // if grid has been randomized and we're just turning page
         std::sort(vdfEntriesList.begin(), vdfEntriesList.end(),
                   [](VocabDataEntry* a, VocabDataEntry* b)
                     {return a->GetLineNumber() < b->GetLineNumber();});

@@ -10,6 +10,7 @@
 #include "Src/Pages/KanaEditPage.h"
 #include "koboplatformfunctions.h"
 #include "Src/Widgets/KanaEditButtonWidget.h"
+#include "KoboPlatformExtra.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow),
@@ -186,8 +187,8 @@ void MainWindow::refreshTimeAndBattery()
     int batteryDisplayFormat = GetMy::Instance().AppSettingsPageInst().GetBatteryFormatIdx();
     bool isBatteryIconVisible = (batteryDisplayFormat == 0 || batteryDisplayFormat == 1) ? true : false;
     bool isBatteryTextVisible = (batteryDisplayFormat == 0 || batteryDisplayFormat == 2) ? true : false;
-    bool isBatteryCharging = KoboPlatformFunctions::isBatteryCharging();
-    int batteryLvl = KoboPlatformFunctions::getBatteryLevel();
+    bool isBatteryCharging = KoboPlatformExtra::IsBatteryChargingStatic();
+    int batteryLvl = KoboPlatformExtra::GetBatteryLevelStatic() ;
 
     // TODO : refactor this using MainWindow::ToolButtonStyle --"
     if (isBatteryCharging != wasBatteryCharging || batteryLvl != wasBatteryLvl || batteryDisplayFormat != wasBatteryDisplayFormat)

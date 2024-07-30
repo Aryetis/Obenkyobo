@@ -2,7 +2,7 @@
 #define SCREENSETTINGSPAGE_H
 
 #include <QWidget>
-#include "kobodevicedescriptor.h"
+#include "KoboPlatformExtra.h"
 
 namespace Ui
 {
@@ -32,7 +32,7 @@ private:
     int                  tint;
     bool                 settingAvailable;
     bool                 lightToggleStatus;
-    const KoboDeviceDescriptor& desc;
+    KoboPlatformExtra const& extraFunk;
 
     QSettings& settingsSerializer;
 };

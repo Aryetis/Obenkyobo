@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QList>
 #include <QPushButton>
+#include <Src/VocabularyParser.h>
 
 namespace Ui
 {
@@ -40,6 +41,7 @@ private:
     VocabDataFile* vdf;
     Ui::VocabularyDisplayPage *ui;
     std::vector<std::vector<QPushButton*>> gridLabels; // std::vector<std::vector<{kana, kanji, trad, LS}>>
+    QList<VocabDataEntry*> vdfEntriesList;
 
     int curPage;
     int maxPage;
@@ -47,6 +49,7 @@ private:
     bool kanjiShow;
     bool traductionShow;
     bool lsShow;
+    bool randomized;
 
     bool initialPaintDone;
 };

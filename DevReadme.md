@@ -31,6 +31,7 @@ That should get you a working cross commpiler and qt binaries configured with a 
   <img src="DevReadme/KoboQtKit.jpg" width="807" height="528" >
 </p>
 
+- Because we're using kde's qt we also need to indicate qt5-kobo-platform-plugin to use our qt-linux-5.15-kde-kobo instead of qt-linux-5.15-kobo. Therefore run this in Obenkyobo's root folder `echo "CUSTOM_QTDIR = /mnt/onboard/.adds/qt-linux-5.15-kde-kobo" > Src/Libs/qt5-kobo-platform-plugin/koboplatformplugin.pri`
 - Once you've compiled Obenkyobo (and therefore qtpa too), time to run the `deploy_qt.sh QTPA_BUILD_FOLDER [KOBO_IP_DEVICE]` script with `QTPA_BUILD_FOLDER`as the folder holding libkobo.so and leave KOBO_IP_DEVICE empty as we'll ship everything using rsync/sftp directly from QtCreator. This should create the `/kobo-qt-setup-scripts/deploy/qt-linux-5.15-kde-kobo/` folder containing every qt binaries and libraries to be deployed on the kobo device. Make sure to fix the associated symbolic link `Obenkyobo/Src/Obenkyobo/OtherFiles/Dependencies/qt-linux-5.15-kde-kobo` so that it points towards `kobo-qt-setup-scripts/deploy/qt-linux-5.15-kde-kobo/` (that way packager.sh will be able to include it). 
 
 3. And finally, let's tweak a couple of things so you can use the packager.sh to compile and ship everything with a single press on the build button (also requires you to follow `Setup QtCreator` steps)
@@ -51,18 +52,20 @@ For a better workflow and one click build+deploy+launch from within QtCreator :
 Settings->Build & Run->Default Build Properties->Default build directory  : 
 %{JS: Util.asciify("build-%{Project:Name}-%{Kit:FileSystemName}-%{BuildConfig:Name}")}
 
-# If QtCreator < 13
-Projects->Kobo(Kit)->Run->Deployment->Upload files via SFTP instead of rsync
-# If QtCreator == 13, install rsync and 
 Projects->Kobo(Kit)->Run->Deployment->Deploy files and set flags for rsync : --chown=root:root
-(can't pass more than one argument without everyhing breaking apart because of how they pass the arguments --")
+(can't pass more than one argument without everyhing breaking apart because of how they pass the arguments --", fix should be incoming https://codereview.qt-project.org/c/qt-creator/qt-creator/+/560541)
+# Or instead 
+Projects->Kobo(Kit)->Run->Deployment->Upload files via SFTP instead of rsync
 
+# Killing nickel for our dev session (will need to relaunch it afterwards with start_nickel.sh or simply rebooting the device)
 Projects->Kobo(Kit)->Run->Deployment-> Add Run custom remote command with :  
-/mnt/onboard/.adds/Obenkyobo/debugEnv.sh
+/mnt/onboard/.adds/Obenkyobo/exit_nickel.sh || true
 
 Projects->Kobo(Kit)->Run->Environment->(System Environment)->Add create new variable with at least 
-LD_LIBRARY_PATH = /mnt/onboard/.adds/qt-linux-5.15-kde-kobo/lib:lib:
-QT_QPA_PLATFORM = kobo
+# everything in here is usually set at runtime by Obenkyobo_launcher.sh when running application from device itself. But because we can't source it from QtCreator, we set everything manually in here.
+LD_LIBRARY_PATH=/mnt/onboard/.adds/qt-linux-5.15-kde-kobo/lib:/mnt/onboard/.adds/Obenkyobo/liblib:
+QT_QPA_PLATFORM=kobo
+QT_QPA_EVDEV_DEBUG=true # if you want to debug libkobo.so qpa inputs
 ```
 
 The preparation of the files for sftp transfer (and creationg of a .zip file for release) should be handled by the `Src/Obenkyobo/OtherFiles/packager.sh` (triggered by Obenkyobo.pro's QMAKE_POST_LINK action)
@@ -124,13 +127,19 @@ Install <a href="https://www.mobileread.com/forums/showthread.php?t=254214">Nilu
 
 How to read the backtrace logs : convert address to line using `addr2line -e [NonStrippedProgramBinary] [HexAddress]`
 
+How to snoop in a library : `nm -gD lib.so` `objdump -TC lib.so` `readelf -Ws lib.so` and Ghidra of course
+
+How to double check what kind of file I'm dealing with `file testFile`
+
+How to check input sanity in qpa / LibKoboExtraFunk ? `evdev-dump /dev/input/event0`
+
 ### How to serial connect to Kobo ereader in WSL2 
 
 1. install usbipd on windows's side to share usb device through IP with WSL2, more info on <a href="https://github.com/dorssel/usbipd-win/wiki/WSL-support">WSL-support's page</a> and <a href="https://learn.microsoft.com/fr-fr/windows/wsl/connect-usb#attach-a-usb-device.">this windows's doc page</a>.
 2. install bunch of necessary software in WSL2 with : 
 `sudo apt install usbip hwdata usbutils setserial`
 3. In some Admin Powershell (urgh), lis usb devices busids with : `usbipd list`
-4. link usb device to WSL2 with `usbipd wsl attach --busid [BUS_ID]; usbipd attach --wsl --busid [BUS_ID]`
+4. link usb device to WSL2 with `usbipd bind --busid=[BUS_ID]` then `usbipd attach --wsl --busid=[BUS_ID]`
 5. check with `lsusb` if you're device shows up and if `/dev/ttyUSBxxx` entry is created. If not ... guess what ... WSL2 kernel probably doesn't have your device's driver. To be sure, check it out with `ls -l /sys/bus/usb-serial/drivers`. You'll have to build your own kernel then, cf section below.
 
 ### How to build custom WSL2 kernel 
@@ -239,9 +248,5 @@ rm /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qhelpgenerator
 - The lazy way, use the compiled .qch (for qt 5.15.14) I've put in the <a href="DevReadme/qt-docs-5.15.13">DevReadme folder</a>
 
 Now when selecting a QtClass in your code and pressing f1 it should display the local doc associated to said QtClass.
-
-QtCreator freezes a lot when loading some huge documentation page (eg : QString) ? Congratulations you've encountered yet another qt/wsl bug. To counter this bug this one : Edit->Preferences->Help->Viewer Backend : QTextBrowser. 
-
-Oh ? What's that ? Now every doc page is flashbang white ? To counter this one you'll simply have to change the stylsheet used by QtCreator using an undocumented launch argument :D. `qtcreator -stylesheet blabla.css/blabla.qss` but don't worry it gets even more stupid! The stylesheet can even be a blank file and it should still override whatever the default stylesheet is and work just fine. So if you're using wsl2 like me, run `touch EmptyTheme.css` along qtcreator binary, right click your windows qtcreator shortcut/startbar pin->properties->target : `"C:\Program Files\WSL\wslg.exe" -d Debian --cd "~" -- "~/qtcreator-13.0.0/bin/qtcreator" -stylesheet ~/qtcreator-13.0.0/bin/EmptyTheme.css`
 
 Fonts and size fonts randomly reset now ? Yes it's a known bug, <a href="https://bugreports.qt.io/browse/QTCREATORBUG-12271">it's been known for at least 10 years</a>. Simply zooming in/out (with ctrl+mousewheel for instance) should reset everything to its correct state. It's fugly but I'm done jumping through hoops, so I call it "good enough" for now.

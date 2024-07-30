@@ -1,7 +1,7 @@
 export APPNAME=templateAppName
 export ADDSPATH=/mnt/onboard/.adds
 export APPPATH=${ADDSPATH}/${APPNAME}
-export QTPATH=${ADDSPATH}/qt-linux-5.15-kde-kobo
+export QTPATH=${ADDSPATH}/templateQtDir
 export QTPLUGINOBENKYOBO=kobo
 
 LOGFILE=${APPPATH}/log.txt
@@ -10,7 +10,7 @@ LOGFILE=${APPPATH}/log.txt
 source ${APPPATH}/exit_nickel.sh
 
 # export QT stuff
-export LD_LIBRARY_PATH=${QTPATH}/lib:lib:
+export LD_LIBRARY_PATH=${QTPATH}/lib:${APPPATH}/lib:lib:
 export QT_QPA_PLATFORM=${QTPLUGINOBENKYOBO}:
 
 # start APP
