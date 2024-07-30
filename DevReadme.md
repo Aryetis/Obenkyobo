@@ -52,9 +52,8 @@ For a better workflow and one click build+deploy+launch from within QtCreator :
 Settings->Build & Run->Default Build Properties->Default build directory  : 
 %{JS: Util.asciify("build-%{Project:Name}-%{Kit:FileSystemName}-%{BuildConfig:Name}")}
 
-Projects->Kobo(Kit)->Run->Deployment->Deploy files and set flags for rsync : --chown=root:root
-(can't pass more than one argument without everyhing breaking apart because of how they pass the arguments --", fix should be incoming https://codereview.qt-project.org/c/qt-creator/qt-creator/+/560541)
-# Or instead 
+Projects->Kobo(Kit)->Run->Deployment->Deploy files and set flags for rsync : --chown=root:root -av
+(prior to QtCreator 14.0.1 you can't pass more than one argument without breaking rsync, therefore skip -av)
 Projects->Kobo(Kit)->Run->Deployment->Upload files via SFTP instead of rsync
 
 # Killing nickel for our dev session (will need to relaunch it afterwards with start_nickel.sh or simply rebooting the device)
@@ -63,7 +62,7 @@ Projects->Kobo(Kit)->Run->Deployment-> Add Run custom remote command with :
 
 Projects->Kobo(Kit)->Run->Environment->(System Environment)->Add create new variable with at least 
 # everything in here is usually set at runtime by Obenkyobo_launcher.sh when running application from device itself. But because we can't source it from QtCreator, we set everything manually in here.
-LD_LIBRARY_PATH=/mnt/onboard/.adds/qt-linux-5.15-kde-kobo/lib:/mnt/onboard/.adds/Obenkyobo/liblib:
+LD_LIBRARY_PATH=/mnt/onboard/.adds/qt-linux-5.15-kde-kobo/lib:/mnt/onboard/.adds/Obenkyobo/lib:
 QT_QPA_PLATFORM=kobo
 QT_QPA_EVDEV_DEBUG=true # if you want to debug libkobo.so qpa inputs
 ```
