@@ -49,8 +49,8 @@ scripts.path = /mnt/onboard/.adds/$${PROJECT_APP_NAME}
 scripts.files = $$files($${OUT_PWD}/Output/.adds/$${PROJECT_APP_NAME}/*.sh)
 
 ##################### REMEMBER TO DEPLOY EVERYTHING THE FIRST TIME #####################
-#INSTALLS += everything
-INSTALLS += scripts
+INSTALLS += everything
+#INSTALLS += scripts
 
 OTHER_FILES += \
     Readme.md \
