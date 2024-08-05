@@ -2,6 +2,7 @@
 # WORKING ON : - Handle duplicates in VocabDataPool atm it doesn't check for anything
 #              - bug, Randomize -> Next Page -> 2nd unrandomized page is displayed
 #              - put date of launch in log file name so it doesn't overwrite the last one
+#              - NoteDisplay/Explorer markdown+txt
 #              - qpa, add support for Kobo Libra Colour
 #              - qpa, add "default handler" in descriptor + legacytouchhandler parameter + rename experimentaltouchhandler into moderntouchhandler
 #              - qpa, rewrite readme to make it more comprehensible that invertX, Y etc is only available on "legacyHandler"

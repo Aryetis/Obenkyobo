@@ -58,6 +58,8 @@ private slots:
     //===========================================================================
     void refreshTimeAndBattery();
 
+    void on_actionNotes_triggered();
+
 private:
     void DisplayFirstTimeMainWindowPagePopup();
     void DisplayFirstTimeKanasEditPagePopup();

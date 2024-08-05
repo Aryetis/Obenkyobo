@@ -62,7 +62,7 @@
       <item>
        <widget class="QStackedWidget" name="ContentStackedWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>10</number>
         </property>
         <widget class="WelcomePage" name="WelcomePg"/>
         <widget class="QcmExercicePage" name="QcmExcPg"/>
@@ -74,6 +74,7 @@
         <widget class="VocabExplorerPage" name="VocabExplorerPg"/>
         <widget class="VocabularyDisplayPage" name="VocabularyDisplayPg"/>
         <widget class="StatisticsPage" name="StatisticsPg"/>
+        <widget class="NoteDisplayPage" name="NotesPg"/>
        </widget>
       </item>
      </layout>
@@ -89,7 +90,7 @@
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
    <property name="font">
@@ -191,6 +192,7 @@
     <addaction name="menuHiragana"/>
     <addaction name="menuKatakana"/>
     <addaction name="menuVocabulary"/>
+    <addaction name="actionNotes"/>
     <addaction name="actionAbout"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
@@ -422,6 +424,11 @@
     <string>Statistics</string>
    </property>
   </action>
+  <action name="actionNotes">
+   <property name="text">
+    <string>Notes</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -483,6 +490,12 @@
    <class>StatisticsPage</class>
    <extends>QWidget</extends>
    <header>Src/Pages/StatisticsPage.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NoteDisplayPage</class>
+   <extends>QWidget</extends>
+   <header>Src/Pages/NoteDisplayPage.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -462,3 +462,10 @@ void MainWindow::on_actionStatistics_triggered()
     GetMy::Instance().StatisticsInst()->UpdateScoreCounters();
     ui->ContentStackedWidget->setCurrentIndex(9);
 }
+
+//===========================================================================
+void MainWindow::on_actionNotes_triggered()
+{
+    ui->ContentStackedWidget->setCurrentIndex(10);
+}
+
