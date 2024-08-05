@@ -10,6 +10,13 @@ NoteDisplayPage::NoteDisplayPage(QWidget *parent) :
     ui->NoteDisplayScrollArea->setFocus();
     /////////////////////////////////////////////////////////////////////
 
+    QColor baseBackgroundColor = QApplication::palette().window().color();
+    QString textAreaStylesheet = QString("background-color:rgb(%1,%2,%3)").arg(
+        QString::number(baseBackgroundColor.red()),
+        QString::number(baseBackgroundColor.green()),
+        QString::number(baseBackgroundColor.blue()));
+    ui->TextWidget->setStyleSheet(textAreaStylesheet);
+
     ui->TextWidget->setReadOnly(true);
     ui->TextWidget->setTextInteractionFlags(Qt::NoTextInteraction);
     ui->TextWidget->setMarkdown("\n"
