@@ -12,6 +12,8 @@ class KanaEditPage;
 class ScreenSettingsPage;
 class MainWindow;
 class VocabExplorerPage;
+class NoteExplorerPage;
+class NoteDisplayPage;
 class VocabularyDisplayPage;
 class Tools;
 class StatisticsPage;
@@ -48,6 +50,12 @@ public:
     void SetVocabularyDisplayPageInst(VocabularyDisplayPage* vocab) { vocabularyDisplayInstance = vocab; }
     VocabularyDisplayPage& VocabularyDisplayPageInst() { return *vocabularyDisplayInstance; }
 
+    void SetNoteExplorerPageInst(NoteExplorerPage* note) { noteExplorerInstance = note; }
+    NoteExplorerPage& NoteExplorerPageInst() { return *noteExplorerInstance; }
+
+    void SetNoteDisplayPageInst(NoteDisplayPage* note) { noteDisplayInstance = note; }
+    NoteDisplayPage& NoteDisplayPageInst() { return *noteDisplayInstance; }
+
     void SetSettingSerialierInst(QSettings* settingSerializer) { settingSerializerInstance = settingSerializer; }
     QSettings* SettingSerializerInst() { return settingSerializerInstance; }
 
@@ -81,6 +89,8 @@ private :
     KanaEditPage*                   KanaEditInstance;
     VocabExplorerPage*              vocabularyLearnEditSetInstance;
     VocabularyDisplayPage*          vocabularyDisplayInstance;
+    NoteExplorerPage*               noteExplorerInstance;
+    NoteDisplayPage*                noteDisplayInstance;
     Tools*                          toolsInstance;
     StatisticsPage*                 statisticsInstance;
 

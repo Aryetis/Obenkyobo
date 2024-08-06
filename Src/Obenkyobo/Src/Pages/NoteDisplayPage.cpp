@@ -1,4 +1,5 @@
 #include "Src/Pages/NoteDisplayPage.h"
+#include "Src/GetMy.h"
 #include <ui_NoteDisplayPage.h>
 
 NoteDisplayPage::NoteDisplayPage(QWidget *parent) :
@@ -19,6 +20,9 @@ NoteDisplayPage::NoteDisplayPage(QWidget *parent) :
 
     ui->TextWidget->setReadOnly(true);
     ui->TextWidget->setTextInteractionFlags(Qt::NoTextInteraction);
+
+    GetMy::Instance().SetNoteDisplayPageInst(this);
+
     ui->TextWidget->setMarkdown("\n"
 "---\n"
 "__Advertisement :)__\n"

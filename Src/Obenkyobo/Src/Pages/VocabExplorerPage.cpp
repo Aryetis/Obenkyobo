@@ -20,7 +20,7 @@ VocabExplorerPage::VocabExplorerPage(QWidget *parent) :
     ui->VocabularyCfgListContentVLayout->addStretch(); // TODO : for some reasons storing and inserting/removing SpacerItem at each Populate does not work because reasons... It's good enough for now
 
     homeLongPressTimer.setSingleShot(true);
-    connect(ui->homeButton, &QPushButton::pressed, [&]{ homeLongPressTimer.start(VOCAB_EXPLORER_HOME_SET_PATH_TIMER_MS); });
+    connect(ui->homeButton, &QPushButton::pressed, [&]{ homeLongPressTimer.start(HOME_SET_PATH_TIMER_MS); });
     connect(ui->homeButton, &QPushButton::released, this, &VocabExplorerPage::HomeButtonLongPressReleased);
     connect(&homeLongPressTimer, &QTimer::timeout, this, &VocabExplorerPage::HomeButtonLongPressAction);
 

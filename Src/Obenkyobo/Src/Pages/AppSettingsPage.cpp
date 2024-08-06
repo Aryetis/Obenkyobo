@@ -208,6 +208,12 @@ void AppSettingsPage::SetVocabExplorerHomePath(QString path)
     settingsSerializer->setValue("AppSettings/vocabExplorerHomePath", path);
 }
 
+void AppSettingsPage::SetNoteExplorerHomePath(QString path)
+{
+    noteExplorerHomePath = path;
+    settingsSerializer->setValue("AppSettings/noteExplorerHomePath", path);
+}
+
 void AppSettingsPage::on_ScreenSaverDropdown_currentIndexChanged(int index)
 {
     screenSaverIdx = index;

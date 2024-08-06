@@ -38,6 +38,8 @@ public:
     bool IsDateAmPmFormat() const { return dateFormatIdx == 1; }
     QString GetVocabExplorerHomePath() const { return vocabExplorerHomePath; }
     void SetVocabExplorerHomePath(QString path);
+    QString GetNoteExplorerHomePath() const { return noteExplorerHomePath; }
+    void SetNoteExplorerHomePath(QString path);
     ScreenSaverSetting GetScreenSaverSetting() const { return static_cast<ScreenSaverSetting>(screenSaverIdx); }
 
     QSettings* GetSettingsSerializer() const { return settingsSerializer; }
@@ -72,6 +74,7 @@ private:
     int screenSaverIdx;
     int sleepTimerIdx;
     QString vocabExplorerHomePath;
+    QString noteExplorerHomePath;
     int nbrOfRowPerVocabIdx;
     bool kanaHardRefresh;
     int vocabFntSizeIdx;
