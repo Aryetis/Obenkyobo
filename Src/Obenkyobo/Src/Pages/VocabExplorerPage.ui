@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>549</width>
-    <height>696</height>
+    <height>518</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="contextMenuPolicy">
-   <enum>Qt::PreventContextMenu</enum>
+   <enum>Qt::ContextMenuPolicy::PreventContextMenu</enum>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -52,7 +52,7 @@
         <string>TextLabel</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignmentFlag::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -67,16 +67,16 @@
       </sizepolicy>
      </property>
      <property name="frameShape">
-      <enum>QFrame::NoFrame</enum>
+      <enum>QFrame::Shape::NoFrame</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
+      <enum>QFrame::Shadow::Plain</enum>
      </property>
      <property name="lineWidth">
       <number>0</number>
      </property>
      <property name="sizeAdjustPolicy">
-      <enum>QAbstractScrollArea::AdjustIgnored</enum>
+      <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
      </property>
      <property name="widgetResizable">
       <bool>true</bool>
@@ -87,7 +87,7 @@
         <x>0</x>
         <y>0</y>
         <width>549</width>
-        <height>644</height>
+        <height>466</height>
        </rect>
       </property>
       <property name="sizePolicy">

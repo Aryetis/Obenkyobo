@@ -62,7 +62,7 @@
       <item>
        <widget class="QStackedWidget" name="ContentStackedWidget">
         <property name="currentIndex">
-         <number>10</number>
+         <number>0</number>
         </property>
         <widget class="WelcomePage" name="WelcomePg"/>
         <widget class="QcmExercicePage" name="QcmExcPg"/>
@@ -74,7 +74,7 @@
         <widget class="VocabExplorerPage" name="VocabExplorerPg"/>
         <widget class="VocabularyDisplayPage" name="VocabularyDisplayPg"/>
         <widget class="StatisticsPage" name="StatisticsPg"/>
-        <widget class="NoteDisplayPage" name="NotesPg"/>
+        <widget class="NoteExplorerPage" name="NotesPg"/>
        </widget>
       </item>
      </layout>
@@ -493,9 +493,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>NoteDisplayPage</class>
+   <class>NoteExplorerPage</class>
    <extends>QWidget</extends>
-   <header>Src/Pages/NoteDisplayPage.h</header>
+   <header>Src/Pages/NoteExplorerPage.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
