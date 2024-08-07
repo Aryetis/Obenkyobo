@@ -20,6 +20,10 @@ public:
     explicit NoteExplorerPage(QWidget *parent = nullptr);
     ~NoteExplorerPage() override;
 
+    void Populate(QDir dir);
+    void OnSleep() const;
+    void OnWakeUp() const;
+
     void InitializeNoteExplorerPage();
     QDir currentDir;
 

@@ -130,7 +130,7 @@ void NoteExplorerPage::SetAndTrimCurDirLabel()
                     }
                 }
                 if (railguard >= SET_AND_TRIM_LOOPING_RAILGUARD)
-                    std::cerr << "VocabFileEntryWidget::SetAndTrimCurDirLabel IS STUCK LOOPING" << std::endl;
+                    std::cerr << "NoteExplorerPage::SetAndTrimCurDirLabel IS STUCK LOOPING" << std::endl;
                 finalCut = true;
             }
             else // remove directory from path one by one (starting left)
