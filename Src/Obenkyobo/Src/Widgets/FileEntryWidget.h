@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QSettings>
 #include <QFileInfo>
+#include <QPushButton>
 
 namespace Ui
 {
@@ -15,30 +16,25 @@ namespace Ui
     class NoteFileUpWidget;
 }
 
-class BaseFileEntryWidget : public QWidget
+class BaseFileEntryWidget
 {
-    Q_OBJECT
-
 public :
     QFileInfo const& FileInfo() { return fileInfo; }
     virtual void OnScrollbarToggled() = 0;
     virtual void FakeClick(bool /*checked*/) {};
 
 protected :
-    BaseFileEntryWidget(QWidget *parent = nullptr);
+    BaseFileEntryWidget() = default;
     ~BaseFileEntryWidget() = default;
 
     virtual void ForceTitleButtonSize() = 0;
 
     QFileInfo fileInfo;
-
-private slots:
-    virtual void on_TitleButton_clicked() = 0;
 };
 
 /********************** VOCAB FILES **********************/
 
-class BaseVocabFileEntryWidget : public BaseFileEntryWidget
+class BaseVocabFileEntryWidget : public QWidget, public BaseFileEntryWidget
 {
     Q_OBJECT
 
@@ -54,6 +50,7 @@ protected :
     Ui::BaseVocabFileEntryWidget *ui;
 
 private slots:
+    virtual void on_TitleButton_clicked() = 0;
     virtual void on_checkBox_clicked(bool checked);
 };
 
@@ -93,15 +90,20 @@ private slots:
 
 /********************** NOTES FILES **********************/
 
-class BaseNoteFileEntryWidget : public BaseFileEntryWidget
+class BaseNoteFileEntryWidget : public QPushButton, public BaseFileEntryWidget
 {
     Q_OBJECT
 
 protected :
-    BaseNoteFileEntryWidget(QWidget */*parent*/ = nullptr) {};
-    ~BaseNoteFileEntryWidget() {};
+    BaseNoteFileEntryWidget(QWidget *parent = nullptr) : QPushButton(parent)
+    { };
+    ~BaseNoteFileEntryWidget()
+    { };
 
     void ForceTitleButtonSize() override {};
+
+private slots:
+    virtual void on_TitleButton_clicked() = 0;
 };
 
 class NoteFileEntryWidget : public BaseNoteFileEntryWidget
@@ -109,7 +111,12 @@ class NoteFileEntryWidget : public BaseNoteFileEntryWidget
     Q_OBJECT
 
 public:
-    NoteFileEntryWidget(QFileInfo /*fileInfo*/, QWidget */*parent*/ = nullptr) {};
+    NoteFileEntryWidget(QFileInfo fileInfo_, QWidget *parent = nullptr)
+        : BaseNoteFileEntryWidget(parent)
+    {
+        fileInfo = fileInfo_;
+        setText(fileInfo.fileName());
+    };
     ~NoteFileEntryWidget() = default;
 
     void OnScrollbarToggled() override {}
@@ -123,7 +130,12 @@ class NoteFileUpDirWidget : public BaseNoteFileEntryWidget
     Q_OBJECT
 
 public:
-    NoteFileUpDirWidget(QFileInfo /*fileInfo*/, QWidget */*parent*/ = nullptr) {};
+    NoteFileUpDirWidget(QFileInfo fileInfo_, QWidget *parent = nullptr)
+        : BaseNoteFileEntryWidget(parent)
+    {
+        fileInfo = fileInfo_;
+        setText("[UP_DIR] ..");
+    };
     ~NoteFileUpDirWidget() = default;
 
     void OnScrollbarToggled() override {}

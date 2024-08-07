@@ -13,19 +13,11 @@
 #include "Src/Tools.h"
 
 /******************************************************************************************
- *                                BaseFileEntryWidget                                     *
- ******************************************************************************************/
-
-BaseFileEntryWidget::BaseFileEntryWidget(QWidget *parent)
-    : QWidget(parent), fileInfo()
-{ }
-
-/******************************************************************************************
  *                                BaseVocabFileEntryWidget                                *
  ******************************************************************************************/
 
 BaseVocabFileEntryWidget::BaseVocabFileEntryWidget(QWidget *parent)
-    : BaseFileEntryWidget(parent), ui(new Ui::BaseVocabFileEntryWidget)
+    : QWidget(parent), BaseFileEntryWidget(), ui(new Ui::BaseVocabFileEntryWidget)
 {
     ui->setupUi(this);
 
