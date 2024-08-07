@@ -3,6 +3,7 @@
 #              - bug, Randomize -> Next Page -> 2nd unrandomized page is displayed
 #              - put date of launch in log file name so it doesn't overwrite the last one
 #              - NoteDisplay/Explorer markdown+txt
+#              - cap the number of "error on lines" log so it doesn't hide the ok button
 #              - qpa, add support for Kobo Libra Colour
 #              - qpa, add "default handler" in descriptor + legacytouchhandler parameter + rename experimentaltouchhandler into moderntouchhandler
 #              - qpa, rewrite readme to make it more comprehensible that invertX, Y etc is only available on "legacyHandler"

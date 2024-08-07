@@ -47,7 +47,7 @@ SOURCES += \
     Src/Widgets/KanaEditSectionWidget.cpp \
     Src/Widgets/PopupWidget.cpp \
     Src/Widgets/QcmEntryGuess.cpp \
-    Src/Widgets/VocabBaseEntryWidget.cpp \
+    Src/Widgets/FileEntryWidget.cpp \
     Src/main.cpp \
     Src/mainwindow.cpp
 
@@ -84,7 +84,7 @@ HEADERS += \
     Src/Widgets/KanaEditSectionWidget.h \
     Src/Widgets/PopupWidget.h \
     Src/Widgets/QcmEntryGuess.h \
-    Src/Widgets/VocabBaseEntryWidget.h \
+    Src/Widgets/FileEntryWidget.h \
     Src/mainwindow.h
 
 OTHER_FILES += \
@@ -110,7 +110,7 @@ FORMS += \
     Src/Widgets/KanaEditSectionWidget.ui \
     Src/Widgets/PopupWidget.ui \
     Src/Widgets/QcmEntryGuess.ui \
-    Src/Widgets/VocabBaseEntryWidget.ui \
+    Src/Widgets/VocabFileEntryWidget.ui \
     Src/mainwindow.ui
 
 target.path = /mnt/onboard/.adds/$${TARGET}

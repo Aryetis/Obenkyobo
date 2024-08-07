@@ -3,8 +3,8 @@
 #include <QStringList>
 #include <QDir>
 #include <QDirIterator>
-#include "Src/Widgets/VocabBaseEntryWidget.h"
-#include "ui_VocabBaseEntryWidget.h"
+#include "Src/Widgets/FileEntryWidget.h"
+#include "ui_VocabFileEntryWidget.h"
 #include "Src/GetMy.h"
 #include "Src/mainwindow.h"
 #include "Src/Pages/VocabularyDisplayPage.h"
@@ -13,11 +13,19 @@
 #include "Src/Tools.h"
 
 /******************************************************************************************
- *                                VocabBaseEntryWidget                                    *
+ *                                BaseFileEntryWidget                                     *
  ******************************************************************************************/
 
-VocabBaseEntryWidget::VocabBaseEntryWidget(QFileInfo fileInfo, QWidget *parent)
-    : QWidget(parent), ui(new Ui::VocabBaseEntryWidget), vocabFileInfo(fileInfo)
+BaseFileEntryWidget::BaseFileEntryWidget(QWidget *parent)
+    : QWidget(parent), fileInfo()
+{ }
+
+/******************************************************************************************
+ *                                BaseVocabFileEntryWidget                                *
+ ******************************************************************************************/
+
+BaseVocabFileEntryWidget::BaseVocabFileEntryWidget(QWidget *parent)
+    : BaseFileEntryWidget(parent), ui(new Ui::BaseVocabFileEntryWidget)
 {
     ui->setupUi(this);
 
@@ -27,30 +35,12 @@ VocabBaseEntryWidget::VocabBaseEntryWidget(QFileInfo fileInfo, QWidget *parent)
     setMaximumHeight(VOCAB_FILE_ENTRY_TITLE_HEIGHT);
 }
 
-VocabBaseEntryWidget::VocabBaseEntryWidget(QWidget *parent)
-    : QWidget(parent), ui(new Ui::VocabBaseEntryWidget), vocabFileInfo()
-{
-    ui->setupUi(this);
-}
-
-VocabBaseEntryWidget::~VocabBaseEntryWidget()
+BaseVocabFileEntryWidget::~BaseVocabFileEntryWidget()
 {
     delete ui;
 }
 
-void VocabBaseEntryWidget::SetLearningScoreText(QString /*learningScoreText*/)
-{ }
-
-void VocabBaseEntryWidget::OnScrollbarToggled()
-{ }
-
-void VocabBaseEntryWidget::on_TitleButton_clicked()
-{ }
-
-void VocabBaseEntryWidget::on_checkBox_clicked(bool /*checked*/)
-{ }
-
-void VocabBaseEntryWidget::ForceTitleButtonSize()
+void BaseVocabFileEntryWidget::ForceTitleButtonSize()
 {
     // Hack to prevent the TitleButton from expanding the whole VocabularyCfgListContentVLayout, fuck qt
     bool isScrollbarDisplayed = GetMy::Instance().VocabExplorerPageInst().IsScrollBarDisplayed();
@@ -62,39 +52,38 @@ void VocabBaseEntryWidget::ForceTitleButtonSize()
     ui->TitleButton->setFixedSize(correctedWidth, correctHeight);
 }
 
-void VocabBaseEntryWidget::FakeClick(bool /*checked*/)
+void BaseVocabFileEntryWidget::SetLearningScoreText(QString /*learningScoreText*/)
+{ }
+
+void BaseVocabFileEntryWidget::on_checkBox_clicked(bool /*checked*/)
 { }
 
 /******************************************************************************************
  *                                VocabFileEntryWidget                                    *
  ******************************************************************************************/
 
-VocabFileEntryWidget::VocabFileEntryWidget(QWidget *parent /*= nullptr*/) :
-    VocabBaseEntryWidget(parent)
+VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fileInfo_, QWidget *parent)
+    : BaseVocabFileEntryWidget(parent)
 {
-    ui->setupUi(this);
-}
+    fileInfo = fileInfo_;
 
-VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fileInfo, QWidget *parent)
-    : VocabBaseEntryWidget(fileInfo, parent)
-{
-    QString filename = vocabFileInfo.fileName();
+    QString filename = fileInfo.fileName();
     if (filename.isEmpty())
         ui->TitleButton->setText(""); // how tho ?
     else
     {
-        QString prefix { (vocabFileInfo.isDir()) ? "[DIR] " : ""};
-        QString fileName { (vocabFileInfo.suffix()=="oben") ? vocabFileInfo.completeBaseName() : vocabFileInfo.fileName()};
+        QString prefix { (fileInfo.isDir()) ? "[DIR] " : ""};
+        QString fileName { (fileInfo.suffix()=="oben") ? fileInfo.completeBaseName() : fileInfo.fileName()};
         ui->TitleButton->setText(prefix+ fileName);
     }
 
-    if  (vocabFileInfo.isFile())
-        ui->checkBox->setChecked(GetMy::Instance().GetEnabledVocabSheets().contains(vocabFileInfo.absoluteFilePath()));
+    if  (fileInfo.isFile())
+        ui->checkBox->setChecked(GetMy::Instance().GetEnabledVocabSheets().contains(fileInfo.absoluteFilePath()));
     else
     {
         ui->checkBox->setTristate(true);
 
-        QDirIterator it(vocabFileInfo.absoluteFilePath(), {"*.oben"}, QDir::Files, QDirIterator::Subdirectories);
+        QDirIterator it(fileInfo.absoluteFilePath(), {"*.oben"}, QDir::Files, QDirIterator::Subdirectories);
         bool foundOne = false, missedOne = false;
         while (it.hasNext())
         {
@@ -137,9 +126,9 @@ void VocabFileEntryWidget::FakeClick(bool checked)
 
 void VocabFileEntryWidget::on_TitleButton_clicked()
 {
-    if (vocabFileInfo.isDir())
+    if (fileInfo.isDir())
     {
-        GetMy::Instance().VocabExplorerPageInst().Populate(vocabFileInfo.filePath());
+        GetMy::Instance().VocabExplorerPageInst().Populate(fileInfo.filePath());
     }
     else
     {
@@ -160,19 +149,19 @@ void VocabFileEntryWidget::on_TitleButton_clicked()
 void VocabFileEntryWidget::on_checkBox_clicked(bool checked)
 {
     std::cout << "DEBUG: ON_CLIC : contentsRect().width():" << ui->TitleButton->rect().width() << std::endl;
-    if ( vocabFileInfo.isFile() )
+    if ( fileInfo.isFile() )
     {
         ui->checkBox->setChecked(checked);
         if (checked)
-            GetMy::Instance().AddEnabledVocabSheet(vocabFileInfo.absoluteFilePath());
+            GetMy::Instance().AddEnabledVocabSheet(fileInfo.absoluteFilePath());
         else
-            GetMy::Instance().RemoveEnabledVocabSheet(vocabFileInfo.absoluteFilePath());
+            GetMy::Instance().RemoveEnabledVocabSheet(fileInfo.absoluteFilePath());
     }
     else
     {
         ui->checkBox->setCheckState(checked ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
         QSet<QString> sheetSet;
-        QDirIterator it(vocabFileInfo.absoluteFilePath(), {"*.oben"}, QDir::Files, QDirIterator::Subdirectories);
+        QDirIterator it(fileInfo.absoluteFilePath(), {"*.oben"}, QDir::Files, QDirIterator::Subdirectories);
         while (it.hasNext())
             sheetSet << it.next();
 
@@ -229,24 +218,26 @@ void VocabFileEntryWidget::SetAndTrimCurDirLabel()
 }
 
 /******************************************************************************************
- *                                  VocabUpDirWidget                                      *
+ *                                  VocabFileUpDirWidget                                  *
  ******************************************************************************************/
 
-VocabUpDirWidget::VocabUpDirWidget(QFileInfo fileInfo, QWidget *parent) :
-    VocabBaseEntryWidget(fileInfo, parent)
+VocabFileUpDirWidget::VocabFileUpDirWidget(QFileInfo fileInfo_, QWidget *parent) :
+    BaseVocabFileEntryWidget(parent)
 {
+    fileInfo = fileInfo_;
+
     ui->TitleButton->setText("[UP_DIR] ..");
     ui->checkBox->setDisabled(true);
     ui->checkBox->setText("-");
 }
 
-void VocabUpDirWidget::OnScrollbarToggled()
+void VocabFileUpDirWidget::OnScrollbarToggled()
 {
-    std::cout << "LOG: VocabExplorerPage::VocabUpDirWidget::OnScrollbarEnabled()" << std::endl;
+    std::cout << "LOG: VocabExplorerPage::VocabFileUpDirWidget::OnScrollbarEnabled()" << std::endl;
     ForceTitleButtonSize();
 }
 
-void VocabUpDirWidget::on_TitleButton_clicked()
+void VocabFileUpDirWidget::on_TitleButton_clicked()
 {
-    GetMy::Instance().VocabExplorerPageInst().Populate(vocabFileInfo.filePath());
+    GetMy::Instance().VocabExplorerPageInst().Populate(fileInfo.filePath());
 }

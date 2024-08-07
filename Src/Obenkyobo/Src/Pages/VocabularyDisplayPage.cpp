@@ -5,7 +5,7 @@
 #include "Src/Pages/FntSettingsPage.h"
 #include "Src/Pages/AppSettingsPage.h"
 #include "Src/mainwindow.h"
-#include "Src/Widgets/VocabBaseEntryWidget.h"
+#include "Src/Widgets/FileEntryWidget.h"
 #include "Src/GetMy.h"
 #include "Src/Tools.h"
 
@@ -48,7 +48,7 @@ void VocabularyDisplayPage::InitializeGrid(VocabFileEntryWidget* vocab)
     randomized = false;
 
     /************************ Parsing Vocab File ************************/
-    vdf = new VocabDataFile(vocab->VocabFileInfo().filePath());
+    vdf = new VocabDataFile(vocab->FileInfo().filePath());
     if (vdf->MalformedLines().size() > 0)
     {
         QString popupMsg = "Malformed Vocab sheet, errors on lines : ";

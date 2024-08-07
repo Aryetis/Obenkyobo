@@ -4,7 +4,7 @@
 #include "Src/GetMy.h"
 #include "Src/mainwindow.h"
 #include "Src/VocabularyParser.h"
-#include "Src/Widgets/VocabBaseEntryWidget.h"
+#include "Src/Widgets/FileEntryWidget.h"
 #include "Src/Tools.h"
 #include "Src/Pages/AppSettingsPage.h"
 
@@ -67,14 +67,14 @@ void VocabExplorerPage::Populate()
     }
 
     // ************* Clearing *************
-    qDeleteAll(vocabWidgets);
+    DeleteVocabWidgets();
     vocabWidgets.clear();
 
     // ************* dirs *************
     QDir upDir = currentDir;
     if (upDir.cdUp())
     {
-        VocabUpDirWidget* foo = new VocabUpDirWidget(QFileInfo(upDir, upDir.path()));
+        VocabFileUpDirWidget* foo = new VocabFileUpDirWidget(QFileInfo(upDir, upDir.path()));
         vocabWidgets.push_back(foo);
         ui->VocabularyCfgListContentVLayout->insertWidget(0, foo);
     }
@@ -203,11 +203,22 @@ void VocabExplorerPage::HomeButtonLongPressAction()
     GetMy::Instance().ToolsInst().DisplayPopup("Setting home path to :\n"+currentDir.path());
 }
 
+void VocabExplorerPage::DeleteVocabWidgets()
+{
+    for(BaseVocabFileEntryWidget* vw : vocabWidgets)
+    {
+        if (VocabFileEntryWidget* vfew = dynamic_cast<VocabFileEntryWidget*>(vw))
+            delete vfew;
+        else if (VocabFileUpDirWidget* vfuw = dynamic_cast<VocabFileUpDirWidget*>(vw))
+            delete vfuw;
+        else
+            std::cerr << "VocabExplorerPage's vocabWidget is filled with junk,  won't be cleared properly";
+    }
+}
+
 VocabExplorerPage::~VocabExplorerPage()
 {
-    for(VocabBaseEntryWidget* vw : vocabWidgets)
-        delete vw;
-
+    DeleteVocabWidgets();
     delete ui;
 }
 
@@ -216,7 +227,7 @@ bool VocabExplorerPage::eventFilter(QObject *obj, QEvent *event)
     if (obj == ui->VocabularyCfgList->verticalScrollBar() && (event->type() == QEvent::Type::Show || event->type() == QEvent::Type::Hide))
     {
         GetMy::Instance().MainWindowInst().AggressiveClearScreen();
-        for(VocabBaseEntryWidget* vw : vocabWidgets)
+        for(BaseVocabFileEntryWidget* vw : vocabWidgets)
             vw->OnScrollbarToggled();
     }
 
@@ -247,7 +258,7 @@ void VocabExplorerPage::on_SelectAllButton_clicked()
 {
     selectAllStatus = !selectAllStatus;
 
-    for(VocabBaseEntryWidget* vw : vocabWidgets)
+    for(BaseVocabFileEntryWidget* vw : vocabWidgets)
         vw->FakeClick(selectAllStatus);
 }
 

@@ -1,14 +1,17 @@
 #ifndef NOTEEXPLORERPAGE_H
 #define NOTEEXPLORERPAGE_H
+
 #include <QWidget>
 #include <QDir>
 #include <QTimer>
+#include <QPushButton>
 
 namespace Ui
 {
     class NoteExplorerPage;
 }
 
+class BaseNoteFileEntryWidget;
 class NoteExplorerPage : public QWidget
 {
     Q_OBJECT
@@ -18,15 +21,22 @@ public:
     ~NoteExplorerPage() override;
 
     void InitializeNoteExplorerPage();
-
     QDir currentDir;
 
 private:
     void HomeButtonLongPressReleased();
     void HomeButtonLongPressAction();
+    void Populate(QDir dir);
+    void Populate();
+    void SetAndTrimCurDirLabel();
+    void OnSliderReleased() const;
+    void OnValueChanged(int) const;
+    void DeleteEntryWidgets();
 
     Ui::NoteExplorerPage *ui;
+    std::vector<BaseNoteFileEntryWidget*> entryWidgets;
 
+    bool initialPaintDone;
     QTimer homeLongPressTimer;
 };
 

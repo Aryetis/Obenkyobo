@@ -16,6 +16,9 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::ContextMenuPolicy::PreventContextMenu</enum>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -60,6 +63,12 @@
    </item>
    <item>
     <widget class="QScrollArea" name="NoteList">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="frameShape">
       <enum>QFrame::Shape::NoFrame</enum>
      </property>
@@ -116,6 +125,9 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="BotLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item>
       <widget class="QPushButton" name="HomeButton">
        <property name="text">
