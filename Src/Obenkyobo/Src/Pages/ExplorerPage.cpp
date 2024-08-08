@@ -235,14 +235,14 @@ void VocabExplorerPage::Populate()
     QDir upDir = currentDir;
     if (upDir.cdUp())
     {
-        VocabFileUpDirWidget* foo = new VocabFileUpDirWidget(QFileInfo(upDir, upDir.path()));
+        VocabFileUpDirWidget* foo = new VocabFileUpDirWidget(QFileInfo(upDir, upDir.path()), this);
         entryWidgets.push_back(foo);
         ui->FileListContentVLayout->insertWidget(0, foo);
     }
 
     foreach(const QFileInfo& dirInfo, currentDir.entryInfoList(QStringList() << "*", QDir::Dirs | QDir::Hidden | QDir::NoDotAndDotDot | QDir::NoSymLinks))
     {
-        VocabFileEntryWidget* bar = new VocabFileEntryWidget(dirInfo);
+        VocabFileEntryWidget* bar = new VocabFileEntryWidget(dirInfo, this);
         entryWidgets.push_back(bar);
 
         if (displayLsSetting == DisplayLSEnum::FilesAndDirs)
@@ -341,14 +341,14 @@ void NoteExplorerPage::Populate()
     QDir upDir = currentDir;
     if (upDir.cdUp())
     {
-        NoteFileUpDirWidget* foo = new NoteFileUpDirWidget(QFileInfo(upDir, upDir.path()));
+        NoteFileUpDirWidget* foo = new NoteFileUpDirWidget(QFileInfo(upDir, upDir.path()), this);
         entryWidgets.push_back(foo);
         ui->FileListContentVLayout->insertWidget(0, foo);
     }
 
     foreach(const QFileInfo& dirInfo, currentDir.entryInfoList(QStringList() << "*", QDir::Dirs | QDir::Hidden | QDir::NoDotAndDotDot | QDir::NoSymLinks))
     {
-        NoteFileEntryWidget* bar = new NoteFileEntryWidget(dirInfo);
+        NoteFileEntryWidget* bar = new NoteFileEntryWidget(dirInfo, this);
         entryWidgets.push_back(bar);
         ui->FileListContentVLayout->insertWidget(ui->FileListContentVLayout->count()-1, bar);
     }

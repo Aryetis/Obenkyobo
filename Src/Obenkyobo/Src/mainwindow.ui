@@ -74,7 +74,8 @@
         <widget class="VocabExplorerPage" name="VocabExplorerPg"/>
         <widget class="VocabularyDisplayPage" name="VocabularyDisplayPg"/>
         <widget class="StatisticsPage" name="StatisticsPg"/>
-        <widget class="NoteExplorerPage" name="NotesPg"/>
+        <widget class="NoteExplorerPage" name="NoteExplorerPg"/>
+        <widget class="NoteDisplayPage" name="NoteDisplayPg"/>
        </widget>
       </item>
      </layout>
@@ -496,6 +497,12 @@
    <class>NoteExplorerPage</class>
    <extends>QWidget</extends>
    <header>Src/Pages/ExplorerPage.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NoteDisplayPage</class>
+   <extends>QWidget</extends>
+   <header>Src/Pages/NoteDisplayPage.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

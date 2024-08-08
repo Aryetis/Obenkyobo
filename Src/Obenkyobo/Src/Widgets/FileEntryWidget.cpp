@@ -233,3 +233,78 @@ void VocabFileUpDirWidget::on_TitleButton_clicked()
 {
     static_cast<BaseExplorerPage&>(GetMy::Instance().VocabExplorerPageInst()).Populate(fileInfo.filePath());
 }
+
+/******************************************************************************************
+ *                                 BaseNoteFileEntryWidget                                    *
+ ******************************************************************************************/
+
+BaseNoteFileEntryWidget::BaseNoteFileEntryWidget(QWidget *parent /*= nullptr*/) : QPushButton(parent)
+{
+    connect(this, &QPushButton::released, this, &BaseNoteFileEntryWidget::OnClick);
+};
+
+BaseNoteFileEntryWidget::~BaseNoteFileEntryWidget()
+{
+    disconnect(this);
+};
+
+/******************************************************************************************
+ *                                 NoteFileEntryWidget                                    *
+ ******************************************************************************************/
+
+NoteFileEntryWidget::NoteFileEntryWidget(QFileInfo fileInfo_, QWidget *parent /*= nullptr*/)
+    : BaseNoteFileEntryWidget(parent)
+{
+    fileInfo = fileInfo_;
+    setText(fileInfo.fileName());
+};
+
+void NoteFileEntryWidget::OnScrollbarToggled()
+{
+    std::cout << "LOG: NoteExplorerPage::NoteFileEntryWidget::OnScrollbarToggled()" << std::endl;
+    // SetAndTrimCurDirLabel(); // TODO NOW
+    ForceTitleButtonSize();
+}
+
+void NoteFileEntryWidget::OnClick()
+{
+    if (fileInfo.isDir())
+    {
+        static_cast<BaseExplorerPage&>(GetMy::Instance().NoteExplorerPageInst()).Populate(fileInfo.filePath());
+    }
+    else
+    {
+        // TODO NOW initialize NoteDisplayPage
+        GetMy::Instance().MainWindowInst().SwitchStackedWidgetIndex(11);
+
+        if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeNoteDisplayPage", true).toBool() )
+        {
+            GetMy::Instance().ToolsInst().DisplayPopup("TODO NOW TUTORIAL FOR NOTES"); // TODO NOW
+            GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->setValue("AppSettings/firstTimeNoteDisplayPage", false);
+        }
+    }
+}
+
+
+/******************************************************************************************
+ *                                   NoteFileUpDirWidget                                  *
+ ******************************************************************************************/
+
+NoteFileUpDirWidget::NoteFileUpDirWidget(QFileInfo fileInfo_, QWidget *parent /*= nullptr*/)
+    : BaseNoteFileEntryWidget(parent)
+{
+    fileInfo = fileInfo_;
+    setText("[UP_DIR] ..");
+};
+
+void NoteFileUpDirWidget::OnScrollbarToggled()
+{
+    std::cout << "LOG: NoteExplorerPage::NoteFileUpDirWidget::OnScrollbarToggled()" << std::endl;
+    // SetAndTrimCurDirLabel(); // TODO NOW
+    ForceTitleButtonSize();
+}
+
+void NoteFileUpDirWidget::OnClick()
+{
+    static_cast<BaseExplorerPage&>(GetMy::Instance().NoteExplorerPageInst()).Populate(fileInfo.filePath());
+}
