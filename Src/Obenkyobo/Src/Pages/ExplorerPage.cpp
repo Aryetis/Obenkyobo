@@ -9,18 +9,17 @@
 #include "Src/Pages/AppSettingsPage.h"
 
 BaseExplorerPage::BaseExplorerPage( QString curDirSerializedAdress_,
-                                     QList<QString> extensions_,
                                      QWidget *parent /*= nullptr*/) :
     QWidget(parent), ui(new Ui::ExplorerPage), initialPaintDone(false), selectAllStatus(false), homeLongPressTimer(),
-    curDirSerializedAdress(curDirSerializedAdress_), extensions(extensions_)
+    curDirSerializedAdress(curDirSerializedAdress_)
 {
     ui->setupUi(this);
 
     // ************* currentDir stuff *************
-    QString currentVocabDirString = GetMy::Instance().SettingSerializerInst()->value("vocab/currentDirectory", QString(QCoreApplication::applicationDirPath() + "/vocab/")).toString();
+    QString currentVocabDirString = GetMy::Instance().SettingSerializerInst()->value(curDirSerializedAdress, QString(QCoreApplication::applicationDirPath() + "/vocab/")).toString();
     currentDir = QDir(currentVocabDirString);
 
-    ui->VocabularyCfgListContentVLayout->addStretch(); // TODO : for some reasons storing and inserting/removing SpacerItem at each Populate does not work because reasons... It's good enough for now
+    ui->FileListContentVLayout->addStretch(); // TODO : for some reasons storing and inserting/removing SpacerItem at each Populate does not work because reasons... It's good enough for now
 
     homeLongPressTimer.setSingleShot(true);
     connect(ui->homeButton, &QPushButton::pressed, [&]{ homeLongPressTimer.start(HOME_SET_PATH_TIMER_MS); });
@@ -31,7 +30,7 @@ BaseExplorerPage::BaseExplorerPage( QString curDirSerializedAdress_,
 void BaseExplorerPage::Populate(QDir dir)
 {
     currentDir = dir;
-    GetMy::Instance().SettingSerializerInst()->setValue("vocab/currentDirectory", dir.path());
+    GetMy::Instance().SettingSerializerInst()->setValue(curDirSerializedAdress, dir.path());
     Populate();
 }
 
@@ -53,87 +52,9 @@ void BaseExplorerPage::OnWakeUp() const
     connect(&homeLongPressTimer, &QTimer::timeout, this, &BaseExplorerPage::HomeButtonLongPressAction);
 }
 
-void BaseExplorerPage::Populate()
-{
-    DisplayLSEnum displayLsSetting = GetMy::Instance().AppSettingsPageInst().GetDisplayLSSetting();
-
-    // ************* Sanity Check current Dir *************
-    if (!currentDir.exists())
-        currentDir = QDir(QCoreApplication::applicationDirPath());
-
-    // ************* Set and trim labels  *************
-    if (initialPaintDone)
-    {
-        SetAndTrimCurDirLabel();
-    }
-
-    // ************* Clearing *************
-    DeleteVocabWidgets();
-    vocabWidgets.clear();
-
-    // ************* dirs *************
-    QDir upDir = currentDir;
-    if (upDir.cdUp())
-    {
-        VocabFileUpDirWidget* foo = new VocabFileUpDirWidget(QFileInfo(upDir, upDir.path()));
-        vocabWidgets.push_back(foo);
-        ui->VocabularyCfgListContentVLayout->insertWidget(0, foo);
-    }
-
-    foreach(const QFileInfo& dirInfo, currentDir.entryInfoList(QStringList() << "*", QDir::Dirs | QDir::Hidden | QDir::NoDotAndDotDot | QDir::NoSymLinks))
-    {
-        VocabFileEntryWidget* bar = new VocabFileEntryWidget(dirInfo);
-        vocabWidgets.push_back(bar);
-
-        if (displayLsSetting == DisplayLSEnum::FilesAndDirs)
-        {
-            int avgLS = 0, fndOben = 0;
-            QDirIterator it(dirInfo.absoluteFilePath(), QStringList() << "*.oben", QDir::Files, QDirIterator::Subdirectories);
-            while (it.hasNext())
-            {
-                VocabDataFile vdf(it.next());
-                avgLS += vdf.GetLearningScore();
-                ++fndOben;
-            }
-            if (fndOben != 0)
-                bar->SetLearningScoreText(QString::number(MAX_LEARNING_STATE_VALUE - avgLS/fndOben));
-            else
-                bar->SetLearningScoreText("-");
-        }
-        else
-            bar->SetLearningScoreText("-");
-
-        ui->VocabularyCfgListContentVLayout->insertWidget(ui->VocabularyCfgListContentVLayout->count()-1, bar);
-    }
-
-    // ************* *.oben *************
-    foreach(const QFileInfo& fileInfo, currentDir.entryInfoList(QStringList() << "*.oben", QDir::Files))
-    {
-        VocabFileEntryWidget* bar = new VocabFileEntryWidget(fileInfo);
-        vocabWidgets.push_back(bar);
-
-        if (displayLsSetting != DisplayLSEnum::None)
-        {
-            VocabDataFile vdf(fileInfo.absoluteFilePath());
-            bar->SetLearningScoreText(QString::number(MAX_LEARNING_STATE_VALUE - vdf.GetLearningScore()));
-        }
-        else
-            bar->SetLearningScoreText("-");
-
-        ui->VocabularyCfgListContentVLayout->insertWidget(ui->VocabularyCfgListContentVLayout->count()-1, (bar));
-    }
-
-    // ************* UI touch inputs stuff *************
-    connect( ui->VocabularyCfgList->verticalScrollBar(), &QScrollBar::sliderReleased, this, &BaseExplorerPage::OnSliderReleased);
-    connect( ui->VocabularyCfgList->verticalScrollBar(), &QScrollBar::valueChanged, this, &BaseExplorerPage::OnValueChanged);
-    ui->VocabularyCfgList->verticalScrollBar()->installEventFilter(this);
-
-    ui->VocabularyCfgList->setFocus(); // force focus on scrollbar so it handles physical buttons
-}
-
 void BaseExplorerPage::SetAndTrimCurDirLabel()
 {
-    QString currentVocabDirString = GetMy::Instance().SettingSerializerInst()->value("vocab/currentDirectory", QString(QCoreApplication::applicationDirPath() + "/vocab/")).toString();
+    QString currentVocabDirString = GetMy::Instance().SettingSerializerInst()->value(curDirSerializedAdress, QString(QCoreApplication::applicationDirPath())).toString();
     QString curDirLabelText {"Current Dir : "+currentVocabDirString};
 
     QFontMetricsF fm{ui->curDirLabel->font()};
@@ -204,31 +125,17 @@ void BaseExplorerPage::HomeButtonLongPressAction()
     GetMy::Instance().ToolsInst().DisplayPopup("Setting home path to :\n"+currentDir.path());
 }
 
-void BaseExplorerPage::DeleteVocabWidgets()
-{
-    for(BaseVocabFileEntryWidget* vw : vocabWidgets)
-    {
-        if (VocabFileEntryWidget* vfew = dynamic_cast<VocabFileEntryWidget*>(vw))
-            delete vfew;
-        else if (VocabFileUpDirWidget* vfuw = dynamic_cast<VocabFileUpDirWidget*>(vw))
-            delete vfuw;
-        else
-            std::cerr << "VocabExplorerPage's vocabWidget is filled with junk,  won't be cleared properly";
-    }
-}
-
 BaseExplorerPage::~BaseExplorerPage()
 {
-    DeleteVocabWidgets();
     delete ui;
 }
 
 bool BaseExplorerPage::eventFilter(QObject *obj, QEvent *event)
 {
-    if (obj == ui->VocabularyCfgList->verticalScrollBar() && (event->type() == QEvent::Type::Show || event->type() == QEvent::Type::Hide))
+    if (obj == ui->FileList->verticalScrollBar() && (event->type() == QEvent::Type::Show || event->type() == QEvent::Type::Hide))
     {
         GetMy::Instance().MainWindowInst().AggressiveClearScreen();
-        for(BaseVocabFileEntryWidget* vw : vocabWidgets)
+        for(BaseFileEntryWidget* vw : entryWidgets)
             vw->OnScrollbarToggled();
     }
 
@@ -252,14 +159,14 @@ void BaseExplorerPage::InitializePage()
 
 bool BaseExplorerPage::IsScrollBarDisplayed() const
 {
-    return ui->VocabularyCfgList->verticalScrollBar()->isVisible();
+    return ui->FileList->verticalScrollBar()->isVisible();
 }
 
 void BaseExplorerPage::on_SelectAllButton_clicked()
 {
     selectAllStatus = !selectAllStatus;
 
-    for(BaseVocabFileEntryWidget* vw : vocabWidgets)
+    for(BaseFileEntryWidget* vw : entryWidgets)
         vw->FakeClick(selectAllStatus);
 }
 
@@ -270,7 +177,7 @@ void BaseExplorerPage::OnSliderReleased() const
 
 void BaseExplorerPage::OnValueChanged(int /*value*/) const
 {
-    if (!ui->VocabularyCfgList->verticalScrollBar()->isSliderDown())
+    if (!ui->FileList->verticalScrollBar()->isSliderDown())
         GetMy::Instance().MainWindowInst().AggressiveClearScreen();
 }
 
@@ -279,17 +186,185 @@ void BaseExplorerPage::on_homeButton_clicked()
     Populate(GetMy::Instance().AppSettingsPageInst().GetVocabExplorerHomePath());
 }
 
-/************************************* VocabExplorerPage ******************************************/
-
+/************************************************************************************************
+ ************************************ VocabExplorerPage *****************************************
+ ************************************************************************************************/
 VocabExplorerPage::VocabExplorerPage(QWidget *parent)
-    : BaseExplorerPage("vocab/currentDirectory", {{".oben"}}, parent)
+    : BaseExplorerPage("vocab/currentDirectory", parent)
 {
     GetMy::Instance().SetVocabExplorerPageInst(this);
 }
 
-/************************************* NoteExplorerPage ******************************************/
-NoteExplorerPage::NoteExplorerPage(QWidget *parent)
-    : BaseExplorerPage("note/currentDirectory", {{".txt"}, {".md"}}, parent)
+VocabExplorerPage::~VocabExplorerPage()
 {
+    DeleteEntryWidgets();
+}
+
+void VocabExplorerPage::DeleteEntryWidgets()
+{
+    for(BaseFileEntryWidget* vw : entryWidgets)
+    {
+        if (VocabFileEntryWidget* vfew = dynamic_cast<VocabFileEntryWidget*>(vw))
+            delete vfew;
+        else if (VocabFileUpDirWidget* vfuw = dynamic_cast<VocabFileUpDirWidget*>(vw))
+            delete vfuw;
+        else
+            std::cerr << "VocabExplorerPage's entryWidgets is filled with junk,  won't be cleared properly";
+    }
+}
+
+void VocabExplorerPage::Populate()
+{
+    DisplayLSEnum displayLsSetting = GetMy::Instance().AppSettingsPageInst().GetDisplayLSSetting();
+
+    // ************* Sanity Check current Dir *************
+    if (!currentDir.exists())
+        currentDir = QDir(QCoreApplication::applicationDirPath());
+
+    // ************* Set and trim labels  *************
+    if (initialPaintDone)
+    {
+        SetAndTrimCurDirLabel();
+    }
+
+    // ************* Clearing *************
+    DeleteEntryWidgets();
+    entryWidgets.clear();
+
+    // ************* dirs *************
+    QDir upDir = currentDir;
+    if (upDir.cdUp())
+    {
+        VocabFileUpDirWidget* foo = new VocabFileUpDirWidget(QFileInfo(upDir, upDir.path()));
+        entryWidgets.push_back(foo);
+        ui->FileListContentVLayout->insertWidget(0, foo);
+    }
+
+    foreach(const QFileInfo& dirInfo, currentDir.entryInfoList(QStringList() << "*", QDir::Dirs | QDir::Hidden | QDir::NoDotAndDotDot | QDir::NoSymLinks))
+    {
+        VocabFileEntryWidget* bar = new VocabFileEntryWidget(dirInfo);
+        entryWidgets.push_back(bar);
+
+        if (displayLsSetting == DisplayLSEnum::FilesAndDirs)
+        {
+            int avgLS = 0, fndOben = 0;
+            QDirIterator it(dirInfo.absoluteFilePath(), QStringList() << "*.oben", QDir::Files, QDirIterator::Subdirectories);
+            while (it.hasNext())
+            {
+                VocabDataFile vdf(it.next());
+                avgLS += vdf.GetLearningScore();
+                ++fndOben;
+            }
+            if (fndOben != 0)
+                bar->SetLearningScoreText(QString::number(MAX_LEARNING_STATE_VALUE - avgLS/fndOben));
+            else
+                bar->SetLearningScoreText("-");
+        }
+        else
+            bar->SetLearningScoreText("-");
+
+        ui->FileListContentVLayout->insertWidget(ui->FileListContentVLayout->count()-1, bar);
+    }
+
+    // ************* *.oben *************
+    foreach(const QFileInfo& fileInfo, currentDir.entryInfoList(QStringList() << "*.oben", QDir::Files))
+    {
+        VocabFileEntryWidget* bar = new VocabFileEntryWidget(fileInfo);
+        entryWidgets.push_back(bar);
+
+        if (displayLsSetting != DisplayLSEnum::None)
+        {
+            VocabDataFile vdf(fileInfo.absoluteFilePath());
+            bar->SetLearningScoreText(QString::number(MAX_LEARNING_STATE_VALUE - vdf.GetLearningScore()));
+        }
+        else
+            bar->SetLearningScoreText("-");
+
+        ui->FileListContentVLayout->insertWidget(ui->FileListContentVLayout->count()-1, (bar));
+    }
+
+    // ************* UI touch inputs stuff *************
+    connect( ui->FileList->verticalScrollBar(), &QScrollBar::sliderReleased, this, &BaseExplorerPage::OnSliderReleased);
+    connect( ui->FileList->verticalScrollBar(), &QScrollBar::valueChanged, this, &BaseExplorerPage::OnValueChanged);
+    ui->FileList->verticalScrollBar()->installEventFilter(this);
+
+    ui->FileList->setFocus(); // force focus on scrollbar so it handles physical buttons
+}
+
+/************************************************************************************************
+ ************************************ NoteExplorerPage ******************************************
+ ************************************************************************************************/
+NoteExplorerPage::NoteExplorerPage(QWidget *parent)
+    : BaseExplorerPage("note/currentDirectory", parent)
+{
+    ui->SelectAllButton->hide();
+
     GetMy::Instance().SetNoteExplorerPageInst(this);
+}
+
+NoteExplorerPage::~NoteExplorerPage()
+{
+    DeleteEntryWidgets();
+}
+
+void NoteExplorerPage::DeleteEntryWidgets()
+{
+    for(BaseFileEntryWidget* ew : entryWidgets)
+    {
+        if (NoteFileEntryWidget* nfew = dynamic_cast<NoteFileEntryWidget*>(ew))
+            delete nfew;
+        else if (NoteFileUpDirWidget* nfuw = dynamic_cast<NoteFileUpDirWidget*>(ew))
+            delete nfuw;
+        else
+            std::cerr << "NoteExplorerPage's entryWidgets is filled with junk, won't be cleared properly";
+    }
+
+}
+
+void NoteExplorerPage::Populate()
+{
+    // ************* Sanity Check current Dir *************
+    if (!currentDir.exists())
+        currentDir = QDir(QCoreApplication::applicationDirPath());
+
+    // ************* Set and trim labels  *************
+    if (initialPaintDone)
+    {
+        SetAndTrimCurDirLabel();
+    }
+
+    // ************* Clearing *************
+    DeleteEntryWidgets();
+    entryWidgets.clear();
+
+    // ************* dirs *************
+    QDir upDir = currentDir;
+    if (upDir.cdUp())
+    {
+        NoteFileUpDirWidget* foo = new NoteFileUpDirWidget(QFileInfo(upDir, upDir.path()));
+        entryWidgets.push_back(foo);
+        ui->FileListContentVLayout->insertWidget(0, foo);
+    }
+
+    foreach(const QFileInfo& dirInfo, currentDir.entryInfoList(QStringList() << "*", QDir::Dirs | QDir::Hidden | QDir::NoDotAndDotDot | QDir::NoSymLinks))
+    {
+        NoteFileEntryWidget* bar = new NoteFileEntryWidget(dirInfo);
+        entryWidgets.push_back(bar);
+        ui->FileListContentVLayout->insertWidget(ui->FileListContentVLayout->count()-1, bar);
+    }
+
+    // ************* *.txt || *.md *************
+    foreach(const QFileInfo& fileInfo, currentDir.entryInfoList(QStringList() << "*.txt" << "*.md", QDir::Files))
+    {
+        NoteFileEntryWidget* bar = new NoteFileEntryWidget(fileInfo);
+        entryWidgets.push_back(bar);
+        ui->FileListContentVLayout->insertWidget(ui->FileListContentVLayout->count()-1, (bar));
+    }
+
+    // ************* UI touch inputs stuff *************
+    connect( ui->FileList->verticalScrollBar(), &QScrollBar::sliderReleased, this, &BaseExplorerPage::OnSliderReleased);
+    connect( ui->FileList->verticalScrollBar(), &QScrollBar::valueChanged, this, &BaseExplorerPage::OnValueChanged);
+    ui->FileList->verticalScrollBar()->installEventFilter(this);
+
+    ui->FileList->setFocus(); // force focus on scrollbar so it handles physical buttons
 }

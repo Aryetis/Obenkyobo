@@ -59,7 +59,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QScrollArea" name="VocabularyCfgList">
+    <widget class="QScrollArea" name="FileList">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -81,7 +81,7 @@
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
-     <widget class="QWidget" name="VocabularyCfgListContent">
+     <widget class="QWidget" name="FileListContent">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -113,7 +113,7 @@
         <number>0</number>
        </property>
        <item>
-        <layout class="QVBoxLayout" name="VocabularyCfgListContentVLayout">
+        <layout class="QVBoxLayout" name="FileListContentVLayout">
          <property name="spacing">
           <number>0</number>
          </property>

@@ -471,7 +471,7 @@
   <customwidget>
    <class>VocabExplorerPage</class>
    <extends>QWidget</extends>
-   <header>Src/Pages/VocabExplorerPage.h</header>
+   <header>Src/Pages/ExplorerPage.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -495,7 +495,7 @@
   <customwidget>
    <class>NoteExplorerPage</class>
    <extends>QWidget</extends>
-   <header>Src/Pages/NoteExplorerPage.h</header>
+   <header>Src/Pages/ExplorerPage.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

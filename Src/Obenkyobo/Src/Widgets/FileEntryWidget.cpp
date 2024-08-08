@@ -120,7 +120,7 @@ void VocabFileEntryWidget::on_TitleButton_clicked()
 {
     if (fileInfo.isDir())
     {
-        GetMy::Instance().VocabExplorerPageInst().Populate(fileInfo.filePath());
+        static_cast<BaseExplorerPage&>(GetMy::Instance().VocabExplorerPageInst()).Populate(fileInfo.filePath());
     }
     else
     {
@@ -231,5 +231,5 @@ void VocabFileUpDirWidget::OnScrollbarToggled()
 
 void VocabFileUpDirWidget::on_TitleButton_clicked()
 {
-    GetMy::Instance().VocabExplorerPageInst().Populate(fileInfo.filePath());
+    static_cast<BaseExplorerPage&>(GetMy::Instance().VocabExplorerPageInst()).Populate(fileInfo.filePath());
 }

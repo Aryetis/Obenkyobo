@@ -12,7 +12,7 @@ namespace Ui
     class ExplorerPage;
 }
 
-class BaseVocabFileEntryWidget;
+class BaseFileEntryWidget;
 
 class BaseExplorerPage : public QWidget
 {
@@ -25,40 +25,35 @@ public:
 
     void InitializePage();
     bool IsScrollBarDisplayed() const;
+    void OnSliderReleased() const;
+    void OnValueChanged(int /*value*/) const;
 
 protected:
-    BaseExplorerPage(QString curDirSerializedAdress_, QList<QString> extensions_, QWidget *parent = nullptr);
+    BaseExplorerPage(QString curDirSerializedAdress_, QWidget *parent = nullptr);
     ~BaseExplorerPage() override;
 
     bool eventFilter(QObject *obj, QEvent *ev) override;
     void resizeEvent(QResizeEvent* event) override;
+
+    Ui::ExplorerPage *ui;
+    bool initialPaintDone;
+    bool selectAllStatus;
+    QDir currentDir;
+    std::vector<BaseFileEntryWidget*> entryWidgets;
+
+    void SetAndTrimCurDirLabel();
 
 private slots:
     void on_SelectAllButton_clicked();
     void on_homeButton_clicked();
 
 private:
-    void Populate();
-    void SetAndTrimCurDirLabel();
+    virtual void Populate() = 0;
     void HomeButtonLongPressReleased();
     void HomeButtonLongPressAction();
-    void DeleteVocabWidgets();
-
-    Ui::ExplorerPage *ui;
-    std::vector<BaseVocabFileEntryWidget*> vocabWidgets;
-    void OnSliderReleased() const;
-    void OnValueChanged(int /*value*/) const;
-
-    bool initialPaintDone;
-    bool selectAllStatus;
-    QDir currentDir;
 
     QTimer homeLongPressTimer;
-
-    // Children specific
     QString curDirSerializedAdress;
-    QList<QString> extensions;
-    QString tutorial;
 };
 
 class VocabExplorerPage : public BaseExplorerPage
@@ -67,7 +62,12 @@ class VocabExplorerPage : public BaseExplorerPage
 
 public:
     VocabExplorerPage(QWidget *parent = nullptr);
-    ~VocabExplorerPage() override = default;
+    ~VocabExplorerPage() override;
+
+    void Populate() override;
+
+private:
+    void DeleteEntryWidgets();
 };
 
 class NoteExplorerPage : public BaseExplorerPage
@@ -76,7 +76,12 @@ class NoteExplorerPage : public BaseExplorerPage
 
 public:
     NoteExplorerPage(QWidget *parent = nullptr);
-    ~NoteExplorerPage() override = default;
+    ~NoteExplorerPage() override;
+
+    void Populate() override;
+
+private:
+    void DeleteEntryWidgets();
 };
 
 #endif // EXPLORERPAGE_H
