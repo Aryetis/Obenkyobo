@@ -1,33 +1,35 @@
-#ifndef VOCABEXPLORERPAGE_H
-#define VOCABEXPLORERPAGE_H
+#ifndef EXPLORERPAGE_H
+#define EXPLORERPAGE_H
 
 #include <vector>
 #include <QWidget>
 #include <QDir>
 #include <QTimer>
+#include <QList>
 
 namespace Ui
 {
-    class VocabExplorerPage;
+    class ExplorerPage;
 }
 
 class BaseVocabFileEntryWidget;
-class VocabExplorerPage : public QWidget
+
+class BaseExplorerPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit VocabExplorerPage(QWidget *parent = nullptr);
-    ~VocabExplorerPage() override;
-
     void Populate(QDir dir);
     void OnSleep() const;
     void OnWakeUp() const;
 
-    void InitializeVocabularyLearnEditSet();
+    void InitializePage();
     bool IsScrollBarDisplayed() const;
 
 protected:
+    BaseExplorerPage(QString curDirSerializedAdress_, QList<QString> extensions_, QWidget *parent = nullptr);
+    ~BaseExplorerPage() override;
+
     bool eventFilter(QObject *obj, QEvent *ev) override;
     void resizeEvent(QResizeEvent* event) override;
 
@@ -42,7 +44,7 @@ private:
     void HomeButtonLongPressAction();
     void DeleteVocabWidgets();
 
-    Ui::VocabExplorerPage *ui;
+    Ui::ExplorerPage *ui;
     std::vector<BaseVocabFileEntryWidget*> vocabWidgets;
     void OnSliderReleased() const;
     void OnValueChanged(int /*value*/) const;
@@ -52,6 +54,29 @@ private:
     QDir currentDir;
 
     QTimer homeLongPressTimer;
+
+    // Children specific
+    QString curDirSerializedAdress;
+    QList<QString> extensions;
+    QString tutorial;
 };
 
-#endif // VOCABEXPLORERPAGE_H
+class VocabExplorerPage : public BaseExplorerPage
+{
+    Q_OBJECT
+
+public:
+    VocabExplorerPage(QWidget *parent = nullptr);
+    ~VocabExplorerPage() override = default;
+};
+
+class NoteExplorerPage : public BaseExplorerPage
+{
+    Q_OBJECT
+
+public:
+    NoteExplorerPage(QWidget *parent = nullptr);
+    ~NoteExplorerPage() override = default;
+};
+
+#endif // EXPLORERPAGE_H

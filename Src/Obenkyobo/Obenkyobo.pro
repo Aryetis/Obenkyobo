@@ -28,6 +28,7 @@ SOURCES += \
     Src/GetMy.cpp \
     Src/KanasTables.cpp \
     Src/Pages/AppSettingsPage.cpp \
+    Src/Pages/ExplorerPage.cpp \
     Src/Pages/FntSettingsPage.cpp \
     Src/Pages/KanaEditPage.cpp \
     Src/Pages/KeyboardExercicePage.cpp \
@@ -36,7 +37,6 @@ SOURCES += \
     Src/Pages/QcmExercicePage.cpp \
     Src/Pages/ScreenSettingsPage.cpp \
     Src/Pages/StatisticsPage.cpp \
-    Src/Pages/VocabExplorerPage.cpp \
     Src/Pages/VocabularyDisplayPage.cpp \
     Src/Pages/WelcomePage.cpp \
     Src/QcmDataEntryKana.cpp \
@@ -64,6 +64,7 @@ HEADERS += \
     Src/GetMy.h \
     Src/KanasTables.h \
     Src/Pages/AppSettingsPage.h \
+    Src/Pages/ExplorerPage.h \
     Src/Pages/FntSettingsPage.h \
     Src/Pages/KanaEditPage.h \
     Src/Pages/KeyboardExercicePage.h \
@@ -72,7 +73,6 @@ HEADERS += \
     Src/Pages/QcmExercicePage.h \
     Src/Pages/ScreenSettingsPage.h \
     Src/Pages/StatisticsPage.h \
-    Src/Pages/VocabExplorerPage.h \
     Src/Pages/VocabularyDisplayPage.h \
     Src/Pages/WelcomePage.h \
     Src/QcmDataEntry.h \
@@ -95,13 +95,13 @@ OTHER_FILES += \
 
 FORMS += \
     Src/Pages/AppSettingsPage.ui \
+    Src/Pages/ExplorerPage.ui \
     Src/Pages/FntSettingsPage.ui \
     Src/Pages/KanaEditPage.ui \
     Src/Pages/KeyboardExercicePage.ui \
     Src/Pages/QcmExercicePage.ui \
     Src/Pages/ScreenSettingsPage.ui \
     Src/Pages/StatisticsPage.ui \
-    Src/Pages/VocabExplorerPage.ui \
     Src/Pages/VocabularyDisplayPage.ui \
     Src/Pages/NoteExplorerPage.ui \
     Src/Pages/NoteDisplayPage.ui \

@@ -443,7 +443,7 @@ void MainWindow::on_actionRomanji_to_Vocabulary_MCQ_triggered()
 void MainWindow::on_actionLearn_Edit_Set_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionLearn_Edit_Set_triggered()" << std::endl;
-    GetMy::Instance().VocabExplorerPageInst().InitializeVocabularyLearnEditSet();
+    GetMy::Instance().VocabExplorerPageInst().InitializePage();
     ui->ContentStackedWidget->setCurrentIndex(7);
     AggressiveClearScreen();
 
@@ -468,7 +468,7 @@ void MainWindow::on_actionStatistics_triggered()
 void MainWindow::on_actionNotes_triggered()
 {
     std::cout << "LOG: MainWindow::on_actionNotes_triggered()" << std::endl;
-    GetMy::Instance().NoteExplorerPageInst().InitializeNoteExplorerPage();
+    GetMy::Instance().NoteExplorerPageInst().InitializePage();
     ui->ContentStackedWidget->setCurrentIndex(10);
     AggressiveClearScreen();
 

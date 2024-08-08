@@ -1,6 +1,6 @@
 #include <QScrollBar>
-#include "Src/Pages/VocabExplorerPage.h"
-#include "ui_VocabExplorerPage.h"
+#include "Src/Pages/ExplorerPage.h"
+#include "ui_ExplorerPage.h"
 #include "Src/GetMy.h"
 #include "Src/mainwindow.h"
 #include "Src/VocabularyParser.h"
@@ -8,8 +8,11 @@
 #include "Src/Tools.h"
 #include "Src/Pages/AppSettingsPage.h"
 
-VocabExplorerPage::VocabExplorerPage(QWidget *parent) :
-    QWidget(parent), ui(new Ui::VocabExplorerPage), initialPaintDone(false), selectAllStatus(false), homeLongPressTimer()
+BaseExplorerPage::BaseExplorerPage( QString curDirSerializedAdress_,
+                                     QList<QString> extensions_,
+                                     QWidget *parent /*= nullptr*/) :
+    QWidget(parent), ui(new Ui::ExplorerPage), initialPaintDone(false), selectAllStatus(false), homeLongPressTimer(),
+    curDirSerializedAdress(curDirSerializedAdress_), extensions(extensions_)
 {
     ui->setupUi(this);
 
@@ -21,38 +24,36 @@ VocabExplorerPage::VocabExplorerPage(QWidget *parent) :
 
     homeLongPressTimer.setSingleShot(true);
     connect(ui->homeButton, &QPushButton::pressed, [&]{ homeLongPressTimer.start(HOME_SET_PATH_TIMER_MS); });
-    connect(ui->homeButton, &QPushButton::released, this, &VocabExplorerPage::HomeButtonLongPressReleased);
-    connect(&homeLongPressTimer, &QTimer::timeout, this, &VocabExplorerPage::HomeButtonLongPressAction);
-
-    GetMy::Instance().SetVocabExplorerPageInst(this);
+    connect(ui->homeButton, &QPushButton::released, this, &BaseExplorerPage::HomeButtonLongPressReleased);
+    connect(&homeLongPressTimer, &QTimer::timeout, this, &BaseExplorerPage::HomeButtonLongPressAction);
 }
 
-void VocabExplorerPage::Populate(QDir dir)
+void BaseExplorerPage::Populate(QDir dir)
 {
     currentDir = dir;
     GetMy::Instance().SettingSerializerInst()->setValue("vocab/currentDirectory", dir.path());
     Populate();
 }
 
-void VocabExplorerPage::OnSleep() const
+void BaseExplorerPage::OnSleep() const
 {
     if (GetMy::Instance().ToolsInst().GetDeviceState() != DeviceState::fakeSleeping)
         return;
 
-    std::cout << "LOG: VocabExplorerPage::OnSleep()" << std::endl;
+    std::cout << "LOG: BaseExplorerPage::OnSleep()" << std::endl;
     disconnect(&homeLongPressTimer, nullptr, nullptr, nullptr);
 }
 
-void VocabExplorerPage::OnWakeUp() const
+void BaseExplorerPage::OnWakeUp() const
 {
     if (GetMy::Instance().ToolsInst().GetDeviceState() != DeviceState::busy)
         return;
 
-    std::cout << "LOG: VocabExplorerPage::OnWakeUp()" << std::endl;
-    connect(&homeLongPressTimer, &QTimer::timeout, this, &VocabExplorerPage::HomeButtonLongPressAction);
+    std::cout << "LOG: BaseExplorerPage::OnWakeUp()" << std::endl;
+    connect(&homeLongPressTimer, &QTimer::timeout, this, &BaseExplorerPage::HomeButtonLongPressAction);
 }
 
-void VocabExplorerPage::Populate()
+void BaseExplorerPage::Populate()
 {
     DisplayLSEnum displayLsSetting = GetMy::Instance().AppSettingsPageInst().GetDisplayLSSetting();
 
@@ -123,14 +124,14 @@ void VocabExplorerPage::Populate()
     }
 
     // ************* UI touch inputs stuff *************
-    connect( ui->VocabularyCfgList->verticalScrollBar(), &QScrollBar::sliderReleased, this, &VocabExplorerPage::OnSliderReleased);
-    connect( ui->VocabularyCfgList->verticalScrollBar(), &QScrollBar::valueChanged, this, &VocabExplorerPage::OnValueChanged);
+    connect( ui->VocabularyCfgList->verticalScrollBar(), &QScrollBar::sliderReleased, this, &BaseExplorerPage::OnSliderReleased);
+    connect( ui->VocabularyCfgList->verticalScrollBar(), &QScrollBar::valueChanged, this, &BaseExplorerPage::OnValueChanged);
     ui->VocabularyCfgList->verticalScrollBar()->installEventFilter(this);
 
     ui->VocabularyCfgList->setFocus(); // force focus on scrollbar so it handles physical buttons
 }
 
-void VocabExplorerPage::SetAndTrimCurDirLabel()
+void BaseExplorerPage::SetAndTrimCurDirLabel()
 {
     QString currentVocabDirString = GetMy::Instance().SettingSerializerInst()->value("vocab/currentDirectory", QString(QCoreApplication::applicationDirPath() + "/vocab/")).toString();
     QString curDirLabelText {"Current Dir : "+currentVocabDirString};
@@ -189,21 +190,21 @@ void VocabExplorerPage::SetAndTrimCurDirLabel()
     ui->curDirLabel->setText(curDirLabelText);
 }
 
-void VocabExplorerPage::HomeButtonLongPressReleased()
+void BaseExplorerPage::HomeButtonLongPressReleased()
 {
     if(homeLongPressTimer.isActive())
         homeLongPressTimer.stop();
 }
 
-void VocabExplorerPage::HomeButtonLongPressAction()
+void BaseExplorerPage::HomeButtonLongPressAction()
 {
-    std::cout << "LOG: VocabExplorerPage::HomeButtonLongPressAction" << std::endl;
+    std::cout << "LOG: BaseExplorerPage::HomeButtonLongPressAction" << std::endl;
 
     GetMy::Instance().AppSettingsPageInst().SetVocabExplorerHomePath(currentDir.path());
     GetMy::Instance().ToolsInst().DisplayPopup("Setting home path to :\n"+currentDir.path());
 }
 
-void VocabExplorerPage::DeleteVocabWidgets()
+void BaseExplorerPage::DeleteVocabWidgets()
 {
     for(BaseVocabFileEntryWidget* vw : vocabWidgets)
     {
@@ -216,13 +217,13 @@ void VocabExplorerPage::DeleteVocabWidgets()
     }
 }
 
-VocabExplorerPage::~VocabExplorerPage()
+BaseExplorerPage::~BaseExplorerPage()
 {
     DeleteVocabWidgets();
     delete ui;
 }
 
-bool VocabExplorerPage::eventFilter(QObject *obj, QEvent *event)
+bool BaseExplorerPage::eventFilter(QObject *obj, QEvent *event)
 {
     if (obj == ui->VocabularyCfgList->verticalScrollBar() && (event->type() == QEvent::Type::Show || event->type() == QEvent::Type::Hide))
     {
@@ -234,9 +235,9 @@ bool VocabExplorerPage::eventFilter(QObject *obj, QEvent *event)
     return false;
 }
 
-void VocabExplorerPage::resizeEvent(QResizeEvent *event)
+void BaseExplorerPage::resizeEvent(QResizeEvent *event)
 {
-    std::cout << "LOG: VocabExplorerPage::resizeEvent() BEGIN" << std::endl;
+    std::cout << "LOG: BaseExplorerPage::resizeEvent() BEGIN" << std::endl;
     QWidget::resizeEvent(event);
 
     initialPaintDone = true;
@@ -244,17 +245,17 @@ void VocabExplorerPage::resizeEvent(QResizeEvent *event)
     SetAndTrimCurDirLabel();
 }
 
-void VocabExplorerPage::InitializeVocabularyLearnEditSet()
+void BaseExplorerPage::InitializePage()
 {
     Populate();
 }
 
-bool VocabExplorerPage::IsScrollBarDisplayed() const
+bool BaseExplorerPage::IsScrollBarDisplayed() const
 {
     return ui->VocabularyCfgList->verticalScrollBar()->isVisible();
 }
 
-void VocabExplorerPage::on_SelectAllButton_clicked()
+void BaseExplorerPage::on_SelectAllButton_clicked()
 {
     selectAllStatus = !selectAllStatus;
 
@@ -262,18 +263,33 @@ void VocabExplorerPage::on_SelectAllButton_clicked()
         vw->FakeClick(selectAllStatus);
 }
 
-void VocabExplorerPage::OnSliderReleased() const
+void BaseExplorerPage::OnSliderReleased() const
 {
     GetMy::Instance().MainWindowInst().AggressiveClearScreen();
 }
 
-void VocabExplorerPage::OnValueChanged(int /*value*/) const
+void BaseExplorerPage::OnValueChanged(int /*value*/) const
 {
     if (!ui->VocabularyCfgList->verticalScrollBar()->isSliderDown())
         GetMy::Instance().MainWindowInst().AggressiveClearScreen();
 }
 
-void VocabExplorerPage::on_homeButton_clicked()
+void BaseExplorerPage::on_homeButton_clicked()
 {
     Populate(GetMy::Instance().AppSettingsPageInst().GetVocabExplorerHomePath());
+}
+
+/************************************* VocabExplorerPage ******************************************/
+
+VocabExplorerPage::VocabExplorerPage(QWidget *parent)
+    : BaseExplorerPage("vocab/currentDirectory", {{".oben"}}, parent)
+{
+    GetMy::Instance().SetVocabExplorerPageInst(this);
+}
+
+/************************************* NoteExplorerPage ******************************************/
+NoteExplorerPage::NoteExplorerPage(QWidget *parent)
+    : BaseExplorerPage("note/currentDirectory", {{".txt"}, {".md"}}, parent)
+{
+    GetMy::Instance().SetNoteExplorerPageInst(this);
 }

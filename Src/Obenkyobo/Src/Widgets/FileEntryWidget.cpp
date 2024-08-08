@@ -9,7 +9,7 @@
 #include "Src/mainwindow.h"
 #include "Src/Pages/VocabularyDisplayPage.h"
 #include "Src/Pages/AppSettingsPage.h"
-#include "Src/Pages/VocabExplorerPage.h"
+#include "Src/Pages/ExplorerPage.h"
 #include "Src/Tools.h"
 
 /******************************************************************************************

@@ -16,7 +16,7 @@
 #include "Src/mainwindow.h"
 #include "Src/Pages/AppSettingsPage.h"
 #include "Src/KanasTables.h"
-#include "Src/Pages/VocabExplorerPage.h"
+#include "Src/Pages/ExplorerPage.h"
 
 
 //======================================================================
