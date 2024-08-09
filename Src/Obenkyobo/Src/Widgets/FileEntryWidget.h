@@ -28,8 +28,13 @@ protected :
     ~BaseFileEntryWidget() = default;
 
     virtual void ForceTitleButtonSize() = 0;
+    void ForceTitleButtonSize(QPushButton* target);
+    void SetAndTrimCurDirLabel(QPushButton* target);
 
     QFileInfo fileInfo;
+
+private:
+    virtual void SetAndTrimCurDirLabel() = 0;
 };
 
 /********************** VOCAB FILES **********************/
@@ -71,7 +76,7 @@ private slots:
     void on_checkBox_clicked(bool checked) override;
 
 private:
-    void SetAndTrimCurDirLabel();
+    void SetAndTrimCurDirLabel() override;
 };
 
 class VocabFileUpDirWidget : public BaseVocabFileEntryWidget
@@ -86,6 +91,9 @@ public:
 
 private slots:
     void on_TitleButton_clicked() override;
+
+private:
+    void SetAndTrimCurDirLabel() override;
 };
 
 /********************** NOTES FILES **********************/
@@ -101,7 +109,7 @@ protected :
     BaseNoteFileEntryWidget(QWidget *parent = nullptr);
     ~BaseNoteFileEntryWidget();
 
-    void ForceTitleButtonSize() override {}; // TODO NOW
+    void ForceTitleButtonSize() override;
 };
 
 class NoteFileEntryWidget : public BaseNoteFileEntryWidget
@@ -114,6 +122,9 @@ public:
 
     void OnScrollbarToggled() override;
     void OnClick() override;
+
+private:
+    void SetAndTrimCurDirLabel() override;
 };
 
 class NoteFileUpDirWidget : public BaseNoteFileEntryWidget
@@ -126,6 +137,9 @@ public:
 
     void OnScrollbarToggled() override;
     void OnClick() override;
+
+private:
+    void SetAndTrimCurDirLabel() override;
 };
 
 #endif // FileEntryWidget_H

@@ -3,6 +3,8 @@
 #              - bug, Randomize -> Next Page -> 2nd unrandomized page is displayed
 #              - put date of launch in log file name so it doesn't overwrite the last one
 #              - NoteDisplay/Explorer markdown+txt
+#              - check what's happening with markdown orderered list margin left
+#              - disable screensaver for NoteDisplayPage.cpp
 #              - cap the number of "error on lines" log so it doesn't hide the ok button
 #              - qpa, add support for Kobo Libra Colour
 #              - qpa, add "default handler" in descriptor + legacytouchhandler parameter + rename experimentaltouchhandler into moderntouchhandler
