@@ -18,13 +18,13 @@ namespace Ui
 
 class BaseFileEntryWidget
 {
-public :
+public:
     QFileInfo const& FileInfo() const { return fileInfo; }
     virtual void FakeClick(bool /*checked*/) {};
 
     void OnScrollbarToggled();
 
-protected :
+protected:
     BaseFileEntryWidget() = default;
     ~BaseFileEntryWidget() = default;
 
@@ -35,6 +35,7 @@ protected :
     QFileInfo fileInfo;
 
 private:
+    virtual bool IsScrollBarDisplayed() = 0;
     virtual void SetAndTrimCurDirLabel() = 0;
 };
 
@@ -44,16 +45,19 @@ class BaseVocabFileEntryWidget : public QWidget, public BaseFileEntryWidget
 {
     Q_OBJECT
 
-public :
+public:
     virtual void SetLearningScoreText(QString learningScoreText);
 
-protected :
+protected:
     BaseVocabFileEntryWidget(QWidget *parent = nullptr);
     ~BaseVocabFileEntryWidget();
 
     void ForceTitleButtonSize() override;
 
     Ui::BaseVocabFileEntryWidget *ui;
+
+private:
+    bool IsScrollBarDisplayed() override;
 
 private slots:
     virtual void on_TitleButton_clicked() = 0;
@@ -108,6 +112,9 @@ protected :
     ~BaseNoteFileEntryWidget();
 
     void ForceTitleButtonSize() override;
+
+private:
+    bool IsScrollBarDisplayed() override;
 };
 
 class NoteFileEntryWidget : public BaseNoteFileEntryWidget

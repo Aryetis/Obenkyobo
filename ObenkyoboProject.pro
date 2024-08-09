@@ -5,6 +5,7 @@
 #              - NoteDisplay/Explorer markdown+txt
 #              - check what's happening with markdown orderered list margin left
 #              - disable screensaver for NoteDisplayPage.cpp
+#              - fix missing [DIR], trimming and expanding of NoteExplorer Page
 #              - cap the number of "error on lines" log so it doesn't hide the ok button
 #              - qpa, add support for Kobo Libra Colour
 #              - qpa, add "default handler" in descriptor + legacytouchhandler parameter + rename experimentaltouchhandler into moderntouchhandler
