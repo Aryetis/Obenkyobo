@@ -73,7 +73,7 @@ enum ScreenSaverSetting
 {
     Off,
     OnEverywhere,
-    OnExceptVocab
+    OnExceptVocabAndNotes
 };
 
 #endif // DEFINESLAND_H

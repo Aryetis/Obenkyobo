@@ -48,7 +48,7 @@
         <string>MCQ Settings :</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignmentFlag::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -214,7 +214,7 @@
           </size>
          </property>
          <property name="sizeAdjustPolicy">
-          <enum>QComboBox::AdjustToContents</enum>
+          <enum>QComboBox::SizeAdjustPolicy::AdjustToContents</enum>
          </property>
          <item>
           <property name="text">
@@ -235,7 +235,7 @@
    <item>
     <widget class="Line" name="VocabLine">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
     </widget>
    </item>
@@ -258,7 +258,7 @@
         <string>Vocabulary Settings :</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignmentFlag::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -435,7 +435,7 @@
    <item>
     <widget class="Line" name="GlobalSettingsLine">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
     </widget>
    </item>
@@ -458,7 +458,7 @@
         <string>Global Settings :</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignmentFlag::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -571,7 +571,7 @@
           </sizepolicy>
          </property>
          <property name="layoutDirection">
-          <enum>Qt::RightToLeft</enum>
+          <enum>Qt::LayoutDirection::RightToLeft</enum>
          </property>
          <property name="text">
           <string/>
@@ -601,7 +601,7 @@
           </sizepolicy>
          </property>
          <property name="layoutDirection">
-          <enum>Qt::RightToLeft</enum>
+          <enum>Qt::LayoutDirection::RightToLeft</enum>
          </property>
          <property name="text">
           <string/>
@@ -645,7 +645,7 @@
          </item>
          <item>
           <property name="text">
-           <string>On (Except Vocab)</string>
+           <string>On (Exc. Vocab &amp; Note)</string>
           </property>
          </item>
         </widget>

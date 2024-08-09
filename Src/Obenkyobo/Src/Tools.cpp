@@ -407,8 +407,9 @@ void Tools::PostWakeUp()
 bool Tools::IsScreenSaverNeeded()
 {
     return (GetMy::Instance().AppSettingsPageInst().GetScreenSaverSetting() == ScreenSaverSetting::OnEverywhere
-       || (GetMy::Instance().AppSettingsPageInst().GetScreenSaverSetting() == ScreenSaverSetting::OnExceptVocab &&
-           GetMy::Instance().MainWindowInst().GetStackedWidgetIdx() != 8 // VocabDisplayPage
+       || (GetMy::Instance().AppSettingsPageInst().GetScreenSaverSetting() == ScreenSaverSetting::OnExceptVocabAndNotes &&
+           (   GetMy::Instance().MainWindowInst().GetStackedWidgetIdx() != 8 // VocabDisplayPage
+            && GetMy::Instance().MainWindowInst().GetStackedWidgetIdx() != 11) // NoteDisplayPage
       ));
 }
 
