@@ -33,7 +33,6 @@ SOURCES += \
     Src/Pages/KanaEditPage.cpp \
     Src/Pages/KeyboardExercicePage.cpp \
     Src/Pages/NoteDisplayPage.cpp \
-    Src/Pages/NoteExplorerPage.cpp \
     Src/Pages/QcmExercicePage.cpp \
     Src/Pages/ScreenSettingsPage.cpp \
     Src/Pages/StatisticsPage.cpp \
@@ -69,7 +68,6 @@ HEADERS += \
     Src/Pages/KanaEditPage.h \
     Src/Pages/KeyboardExercicePage.h \
     Src/Pages/NoteDisplayPage.h \
-    Src/Pages/NoteExplorerPage.h \
     Src/Pages/QcmExercicePage.h \
     Src/Pages/ScreenSettingsPage.h \
     Src/Pages/StatisticsPage.h \
@@ -105,7 +103,6 @@ FORMS += \
     Src/Pages/ScreenSettingsPage.ui \
     Src/Pages/StatisticsPage.ui \
     Src/Pages/VocabularyDisplayPage.ui \
-    Src/Pages/NoteExplorerPage.ui \
     Src/Pages/NoteDisplayPage.ui \
     Src/Pages/WelcomePage.ui \
     Src/Widgets/KanaEditEntryWidget.ui \
