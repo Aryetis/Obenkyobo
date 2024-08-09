@@ -137,7 +137,7 @@ VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fileInfo_, QWidget *parent)
     {
         QString prefix { (fileInfo.isDir()) ? "[DIR] " : ""};
         QString fileName { (fileInfo.suffix()=="oben") ? fileInfo.completeBaseName() : fileInfo.fileName()};
-        ui->TitleButton->setText(prefix+ fileName);
+        ui->TitleButton->setText(prefix + fileName);
     }
 
     if  (fileInfo.isFile())
@@ -297,6 +297,17 @@ NoteFileEntryWidget::NoteFileEntryWidget(QFileInfo fileInfo_, QWidget *parent /*
 {
     fileInfo = fileInfo_;
     setText(fileInfo.fileName());
+
+    QString filename = fileInfo.fileName();
+    if (filename.isEmpty())
+        setText(""); // how tho ?
+    else
+    {
+        QString prefix { (fileInfo.isDir()) ? "[DIR] " : ""};
+        setText(prefix + fileInfo.fileName()); // differentiate file with similar name but diff extensions
+    }
+
+    SetAndTrimCurDirLabel();
 };
 
 void NoteFileEntryWidget::OnClick()
