@@ -7,6 +7,7 @@
 #              - disable screensaver for NoteDisplayPage.cpp
 #              - set home button write to same var for Vocab and Note Explorer Page?
 #              - cap the number of "error on lines" log so it doesn't hide the ok button
+#              - fix use of virtual functions in constructor and destructor of Note Explorer
 #              - qpa, add support for Kobo Libra Colour
 #              - qpa, add "default handler" in descriptor + legacytouchhandler parameter + rename experimentaltouchhandler into moderntouchhandler
 #              - qpa, rewrite readme to make it more comprehensible that invertX, Y etc is only available on "legacyHandler"

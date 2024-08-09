@@ -45,12 +45,12 @@ protected:
 
 private slots:
     void on_SelectAllButton_clicked();
-    void on_homeButton_clicked();
+    virtual void on_homeButton_clicked() = 0;
 
 private:
     virtual void Populate() = 0;
     void HomeButtonLongPressReleased();
-    void HomeButtonLongPressAction();
+    virtual void HomeButtonLongPressAction() = 0;
 
     QTimer homeLongPressTimer;
     QString curDirSerializedAdress;
@@ -68,6 +68,10 @@ public:
 
 private:
     void DeleteEntryWidgets();
+    void HomeButtonLongPressAction() override;
+
+private slots:
+    void on_homeButton_clicked() override;
 };
 
 class NoteExplorerPage : public BaseExplorerPage
@@ -82,6 +86,10 @@ public:
 
 private:
     void DeleteEntryWidgets();
+    void HomeButtonLongPressAction() override;
+
+private slots:
+    void on_homeButton_clicked() override;
 };
 
 #endif // EXPLORERPAGE_H

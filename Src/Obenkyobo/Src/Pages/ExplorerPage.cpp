@@ -54,8 +54,8 @@ void BaseExplorerPage::OnWakeUp() const
 
 void BaseExplorerPage::SetAndTrimCurDirLabel()
 {
-    QString currentVocabDirString = GetMy::Instance().SettingSerializerInst()->value(curDirSerializedAdress, QString(QCoreApplication::applicationDirPath())).toString();
-    QString curDirLabelText {"Current Dir : "+currentVocabDirString};
+    QString currentVocabDirString = GetMy::Instance().SettingSerializerInst()->value(curDirSerializedAdress, QString(QCoreApplication::applicationDirPath())).toString(); // TODO VOCAB
+    QString curDirLabelText {"Current Dir : "+currentVocabDirString};  // TODO VOCAB
 
     QFontMetricsF fm{ui->curDirLabel->font()};
     int boundingRectFlags = ui->curDirLabel != nullptr ? (ui->curDirLabel->wordWrap() ? Qt::TextWordWrap : 0) | ui->curDirLabel->alignment() : 0;
@@ -66,11 +66,11 @@ void BaseExplorerPage::SetAndTrimCurDirLabel()
     {
         while (curW > ui->curDirLabel->width() && !finalCut) // remove directory from path one by one unti it fits (or had to cut last dir)
         {
-            int secondSlashPos = currentVocabDirString.indexOf('/', 1);
+            int secondSlashPos = currentVocabDirString.indexOf('/', 1); // TODO VOCAB
             if (secondSlashPos == -1) // if even the last directory by itself is still too big => cut it ...
             {
-                QString cutFileNameLeft = currentVocabDirString.left(static_cast<int>(currentVocabDirString.size()/2));
-                QString cutFileNameRight = currentVocabDirString.mid(static_cast<int>(currentVocabDirString.size()/2));
+                QString cutFileNameLeft = currentVocabDirString.left(static_cast<int>(currentVocabDirString.size()/2)); // TODO VOCAB
+                QString cutFileNameRight = currentVocabDirString.mid(static_cast<int>(currentVocabDirString.size()/2)); // TODO VOCAB
 
                 int railguard {0};
                 while (railguard++ < SET_AND_TRIM_LOOPING_RAILGUARD && cutFileNameLeft.size() != 1)
@@ -95,14 +95,14 @@ void BaseExplorerPage::SetAndTrimCurDirLabel()
                     }
                 }
                 if (railguard >= SET_AND_TRIM_LOOPING_RAILGUARD)
-                    std::cerr << "VocabFileEntryWidget::SetAndTrimCurDirLabel IS STUCK LOOPING" << std::endl;
+                    std::cerr << "VocabFileEntryWidget::SetAndTrimCurDirLabel IS STUCK LOOPING" << std::endl; // TODO VOCAB
                 finalCut = true;
             }
             else // remove directory from path one by one (starting left)
             {
-                currentVocabDirString = currentVocabDirString.right(currentVocabDirString.size()-secondSlashPos);
+                currentVocabDirString = currentVocabDirString.right(currentVocabDirString.size()-secondSlashPos); // TODO VOCAB
 
-                curDirLabelText = "Current Dir : [...]"+currentVocabDirString;
+                curDirLabelText = "Current Dir : [...]"+currentVocabDirString; // TODO VOCAB
                 newLabelRect = fm.boundingRect(ui->curDirLabel->rect(), boundingRectFlags, curDirLabelText);
                 curW = newLabelRect.width();
             }
@@ -117,13 +117,6 @@ void BaseExplorerPage::HomeButtonLongPressReleased()
         homeLongPressTimer.stop();
 }
 
-void BaseExplorerPage::HomeButtonLongPressAction()
-{
-    std::cout << "LOG: BaseExplorerPage::HomeButtonLongPressAction" << std::endl;
-
-    GetMy::Instance().AppSettingsPageInst().SetVocabExplorerHomePath(currentDir.path());
-    GetMy::Instance().ToolsInst().DisplayPopup("Setting home path to :\n"+currentDir.path());
-}
 
 BaseExplorerPage::~BaseExplorerPage()
 {
@@ -181,11 +174,6 @@ void BaseExplorerPage::OnValueChanged(int /*value*/) const
         GetMy::Instance().MainWindowInst().AggressiveClearScreen();
 }
 
-void BaseExplorerPage::on_homeButton_clicked()
-{
-    Populate(GetMy::Instance().AppSettingsPageInst().GetVocabExplorerHomePath());
-}
-
 /************************************************************************************************
  ************************************ VocabExplorerPage *****************************************
  ************************************************************************************************/
@@ -211,6 +199,14 @@ void VocabExplorerPage::DeleteEntryWidgets()
         else
             std::cerr << "VocabExplorerPage's entryWidgets is filled with junk,  won't be cleared properly";
     }
+}
+
+void VocabExplorerPage::HomeButtonLongPressAction()
+{
+    std::cout << "LOG: VocabExplorerPage::HomeButtonLongPressAction" << std::endl;
+
+    GetMy::Instance().AppSettingsPageInst().SetVocabExplorerHomePath(currentDir.path());
+    GetMy::Instance().ToolsInst().DisplayPopup("Setting Vocabulary home path to :\n"+currentDir.path());
 }
 
 void VocabExplorerPage::Populate()
@@ -291,6 +287,11 @@ void VocabExplorerPage::Populate()
     ui->FileList->setFocus(); // force focus on scrollbar so it handles physical buttons
 }
 
+void VocabExplorerPage::on_homeButton_clicked()
+{
+    BaseExplorerPage::Populate(GetMy::Instance().AppSettingsPageInst().GetVocabExplorerHomePath());
+}
+
 /************************************************************************************************
  ************************************ NoteExplorerPage ******************************************
  ************************************************************************************************/
@@ -319,6 +320,14 @@ void NoteExplorerPage::DeleteEntryWidgets()
             std::cerr << "NoteExplorerPage's entryWidgets is filled with junk, won't be cleared properly";
     }
 
+}
+
+void NoteExplorerPage::HomeButtonLongPressAction()
+{
+    std::cout << "LOG: NoteExplorerPage::HomeButtonLongPressAction" << std::endl;
+
+    GetMy::Instance().AppSettingsPageInst().SetNoteExplorerHomePath(currentDir.path());
+    GetMy::Instance().ToolsInst().DisplayPopup("Setting Notes home path to :\n"+currentDir.path());
 }
 
 void NoteExplorerPage::Populate()
@@ -368,3 +377,9 @@ void NoteExplorerPage::Populate()
 
     ui->FileList->setFocus(); // force focus on scrollbar so it handles physical buttons
 }
+
+void NoteExplorerPage::on_homeButton_clicked()
+{
+    BaseExplorerPage::Populate(GetMy::Instance().AppSettingsPageInst().GetNoteExplorerHomePath());
+}
+
