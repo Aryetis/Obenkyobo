@@ -7,6 +7,8 @@ namespace Ui
     class NoteDisplayPage;
 }
 
+class NoteFileEntryWidget;
+class QFileInfo;
 class NoteDisplayPage : public QWidget
 {
     Q_OBJECT
@@ -15,7 +17,11 @@ public:
     explicit NoteDisplayPage(QWidget *parent = nullptr);
     ~NoteDisplayPage() override;
 
+    void Populate(NoteFileEntryWidget const* nfew);
+
 private:
+    QString GetFileInString(QFileInfo const& fileInfo) const;
+
     Ui::NoteDisplayPage *ui;
 };
 

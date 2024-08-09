@@ -19,7 +19,7 @@ namespace Ui
 class BaseFileEntryWidget
 {
 public :
-    QFileInfo const& FileInfo() { return fileInfo; }
+    QFileInfo const& FileInfo() const { return fileInfo; }
     virtual void OnScrollbarToggled() = 0;
     virtual void FakeClick(bool /*checked*/) {};
 

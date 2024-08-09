@@ -10,6 +10,7 @@
 #include "Src/Pages/VocabularyDisplayPage.h"
 #include "Src/Pages/AppSettingsPage.h"
 #include "Src/Pages/ExplorerPage.h"
+#include "Src/Pages/NoteDisplayPage.h"
 #include "Src/Tools.h"
 
 /******************************************************************************************
@@ -274,7 +275,7 @@ void NoteFileEntryWidget::OnClick()
     }
     else
     {
-        // TODO NOW initialize NoteDisplayPage
+        GetMy::Instance().NoteDisplayPageInst().Populate(this);
         GetMy::Instance().MainWindowInst().SwitchStackedWidgetIndex(11);
 
         if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeNoteDisplayPage", true).toBool() )
