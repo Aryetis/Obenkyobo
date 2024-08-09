@@ -39,6 +39,11 @@ mkdir -p $BuildFolder/Output/.adds/$4/vocab
 cp $2/OtherFiles/vocab/* $BuildFolder/Output/.adds/$4/vocab/ -r
 echo Vocab files - Done
 
+#Notes files
+mkdir -p $BuildFolder/Output/.adds/$4/notes
+cp $2/OtherFiles/notes/* $BuildFolder/Output/.adds/$4/notes/ -r
+echo Notes files - Done
+
 #Dependencies
 for f in $2/OtherFiles/Dependencies/*;
 do

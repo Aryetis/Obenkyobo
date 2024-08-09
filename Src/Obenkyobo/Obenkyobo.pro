@@ -91,7 +91,9 @@ OTHER_FILES += \
     OtherFiles/resourcesListing.txt \
     OtherFiles/packager.sh \
     OtherFiles/RemoteScripts/* \
-    OtherFiles/vocab/*.oben
+    OtherFiles/vocab/*.oben \
+    OtherFiles/notes/*.txt \
+    OtherFiles/notes/*.md \
 
 FORMS += \
     Src/Pages/AppSettingsPage.ui \
