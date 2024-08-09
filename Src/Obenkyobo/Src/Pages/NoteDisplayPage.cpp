@@ -1,6 +1,8 @@
 #include "Src/Pages/NoteDisplayPage.h"
 #include "Src/GetMy.h"
 #include "Src/Widgets/FileEntryWidget.h"
+#include "Src/mainwindow.h"
+#include <QScrollBar>
 #include <ui_NoteDisplayPage.h>
 
 NoteDisplayPage::NoteDisplayPage(QWidget *parent) :
@@ -26,9 +28,23 @@ NoteDisplayPage::~NoteDisplayPage()
     delete ui;
 }
 
+bool NoteDisplayPage::eventFilter(QObject *obj, QEvent *event)
+{
+    if ( obj == ui->NoteDisplayScrollArea->verticalScrollBar()
+        && (event->type() == QEvent::Type::Show ||
+            event->type() == QEvent::Type::Hide))
+    {
+        GetMy::Instance().MainWindowInst().AggressiveClearScreen();
+        ui->NoteDisplayScrollArea->verticalScrollBar()->setFocus();
+
+    }
+
+    return false;
+}
+
 void NoteDisplayPage::Populate(NoteFileEntryWidget const* nfew)
 {
-    ui->NoteDisplayScrollArea->setFocus(); // TODO : fix me, probably called too early
+    ui->NoteDisplayScrollArea->verticalScrollBar()->installEventFilter(this);
 
     if (!nfew->FileInfo().isFile())
     {

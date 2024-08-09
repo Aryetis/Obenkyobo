@@ -19,6 +19,9 @@ public:
 
     void Populate(NoteFileEntryWidget const* nfew);
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *ev) override;
+
 private:
     QString GetFileInString(QFileInfo const& fileInfo) const;
 
