@@ -82,6 +82,9 @@ QString NoteDisplayPage::GetFileInString(QFileInfo const& fileInfo) const
     else
     {
         QTextStream fs(&file);
-        return fs.readAll();
+        QString content {fs.readAll()};
+        if (content.trimmed() == "")
+            content = "FILE IS EMPTY :(";
+        return content;
     }
 }
