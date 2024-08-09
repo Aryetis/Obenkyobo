@@ -20,8 +20,9 @@ class BaseFileEntryWidget
 {
 public :
     QFileInfo const& FileInfo() const { return fileInfo; }
-    virtual void OnScrollbarToggled() = 0;
     virtual void FakeClick(bool /*checked*/) {};
+
+    void OnScrollbarToggled();
 
 protected :
     BaseFileEntryWidget() = default;
@@ -68,7 +69,6 @@ public:
     ~VocabFileEntryWidget() = default;
 
     void SetLearningScoreText(QString learningScoreText) override;
-    void OnScrollbarToggled() override;
     void FakeClick(bool checked) override;
 
 private slots:
@@ -86,8 +86,6 @@ class VocabFileUpDirWidget : public BaseVocabFileEntryWidget
 public:
     VocabFileUpDirWidget(QFileInfo fileInfo, QWidget *parent = nullptr);
     ~VocabFileUpDirWidget() = default;
-
-    void OnScrollbarToggled() override;
 
 private slots:
     void on_TitleButton_clicked() override;
@@ -120,7 +118,6 @@ public:
     NoteFileEntryWidget(QFileInfo fileInfo_, QWidget *parent = nullptr);
     ~NoteFileEntryWidget() = default;
 
-    void OnScrollbarToggled() override;
     void OnClick() override;
 
 private:
@@ -135,7 +132,6 @@ public:
     NoteFileUpDirWidget(QFileInfo fileInfo_, QWidget *parent = nullptr);
     ~NoteFileUpDirWidget() = default;
 
-    void OnScrollbarToggled() override;
     void OnClick() override;
 
 private:
