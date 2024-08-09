@@ -42,6 +42,7 @@ void AppSettingsPage::ParseConfigFile()
     screenSaverIdx = settingsSerializer->value("AppSettings/screenSaverIdx", 2).toInt();
     sleepTimerIdx = settingsSerializer->value("AppSettings/sleepTimerIdx", 1).toInt();
     vocabExplorerHomePath = settingsSerializer->value("AppSettings/vocabExplorerHomePath", QCoreApplication::applicationDirPath() + "/vocab/").toString();
+    noteExplorerHomePath = settingsSerializer->value("AppSettings/noteExplorerHomePath", QCoreApplication::applicationDirPath() + "/notes/").toString();
 
 #ifdef QT_NO_DEBUG // App doesn't like loosing contact with QtCreator debugger btw
     wifiStatus = settingsSerializer->value("AppSettings/wifi", false).toBool();

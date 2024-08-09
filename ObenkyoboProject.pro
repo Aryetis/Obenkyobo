@@ -2,10 +2,8 @@
 # WORKING ON : - Handle duplicates in VocabDataPool atm it doesn't check for anything
 #              - bug, Randomize -> Next Page -> 2nd unrandomized page is displayed
 #              - put date of launch in log file name so it doesn't overwrite the last one
-#              - NoteDisplay/Explorer markdown+txt
 #              - check what's happening with markdown orderered list margin left
 #              - disable screensaver for NoteDisplayPage.cpp
-#              - set home button write to same var for Vocab and Note Explorer Page?
 #              - cap the number of "error on lines" log so it doesn't hide the ok button
 #              - fix use of virtual functions in constructor and destructor of Note Explorer
 #              - qpa, add support for Kobo Libra Colour
