@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <QSizePolicy>
+#include "Src/DefinesLand.h"
 #include "Src/Pages/VocabularyDisplayPage.h"
 #include "ui_VocabularyDisplayPage.h"
 #include "Src/Pages/FntSettingsPage.h"
@@ -52,8 +53,14 @@ void VocabularyDisplayPage::InitializeGrid(VocabFileEntryWidget* vocab)
     if (vdf->MalformedLines().size() > 0)
     {
         QString popupMsg = "Malformed Vocab sheet, errors on lines : ";
+        int railguard = 0;
         for (VocabDataEntry const* entry : vdf->MalformedLines())
-        { // TODO CAP AT 20 ERRORS
+        {
+            if (++railguard > MAX_ERRORS_ON_LINE_LOG)
+            {
+                popupMsg += "etc  ";
+                break;
+            }
             popupMsg += QString::number(entry->GetLineNumber()+1) + ", " ;
         }
         popupMsg.chop(2);

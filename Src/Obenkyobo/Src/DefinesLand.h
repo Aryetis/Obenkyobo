@@ -26,6 +26,7 @@
 #define VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT 0.84f
 #define FILE_ENTRY_TITLE_HEIGHT GetMy::Instance().Descriptor().height/20
 #define HOME_SET_PATH_TIMER_MS 2000
+#define MAX_ERRORS_ON_LINE_LOG 30
 
 enum KanaFamilyEnum
 {

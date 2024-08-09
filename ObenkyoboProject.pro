@@ -4,7 +4,6 @@
 #              - put date of launch in log file name so it doesn't overwrite the last one
 #              - check what's happening with markdown orderered list margin left
 #              - disable screensaver for NoteDisplayPage.cpp
-#              - cap the number of "error on lines" log so it doesn't hide the ok button
 #              - fix use of virtual functions in constructor and destructor of Note Explorer
 #              - qpa, add support for Kobo Libra Colour
 #              - qpa, add "default handler" in descriptor + legacytouchhandler parameter + rename experimentaltouchhandler into moderntouchhandler
