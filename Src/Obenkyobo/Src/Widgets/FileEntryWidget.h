@@ -35,6 +35,7 @@ protected:
     QFileInfo fileInfo;
 
 private:
+    virtual float EntryWidth() = 0;
     virtual bool IsScrollBarDisplayed() = 0;
     virtual void SetAndTrimCurDirLabel() = 0;
 };
@@ -57,6 +58,7 @@ protected:
     Ui::BaseVocabFileEntryWidget *ui;
 
 private:
+    float EntryWidth() override;
     bool IsScrollBarDisplayed() override;
 
 private slots:
@@ -114,6 +116,7 @@ protected :
     void ForceTitleButtonSize() override;
 
 private:
+    float EntryWidth() override;
     bool IsScrollBarDisplayed() override;
 };
 

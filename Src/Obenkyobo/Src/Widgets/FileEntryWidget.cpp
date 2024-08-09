@@ -27,10 +27,10 @@ void BaseFileEntryWidget::OnScrollbarToggled()
 
 void BaseFileEntryWidget::ForceTitleButtonSize(QPushButton* target)
 {
-    // Hack to prevent the TitleButton from expanding the whole VocabularyCfgListContentVLayout, fuck qt
+    // Hack to prevent the TitleButton from expanding the whole ListContentVLayout, fuck qt
     int correctHeight { FILE_ENTRY_TITLE_HEIGHT };
     int correctedWidth { static_cast<int>((GetMy::Instance().Descriptor().width - (IsScrollBarDisplayed() ? GetMy::Instance().GetScrollBarSize() : 0))
-                                        * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT) }; // TODO VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT
+                                        * EntryWidth()) };
 
     target->setSizePolicy({QSizePolicy::Fixed, QSizePolicy::Fixed});
     target->setFixedSize(correctedWidth, correctHeight);
@@ -42,11 +42,11 @@ void BaseFileEntryWidget::SetAndTrimCurDirLabel(QPushButton* target)
     QFontMetricsF fm { target->font() };
     int boundingRectFlags { 0 };
     QRectF newLabelRect { fm.boundingRect(
-        QRect(0, 0, GetMy::Instance().Descriptor().width * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT // TODO HARD CODED VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT
+        QRect(0, 0, GetMy::Instance().Descriptor().width * EntryWidth()
               , target->rect().height()), boundingRectFlags, curLabelText) };
     qreal curFmRectWidth { newLabelRect.width() };
     int correctedWidth { static_cast<int>((GetMy::Instance().Descriptor().width - (IsScrollBarDisplayed() ? GetMy::Instance().GetScrollBarSize() : 0))
-                                        * VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT) }; // TODO HARD CODED VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT
+                                        * EntryWidth()) };
     if (curFmRectWidth > correctedWidth)
     {
         QString cutFileNameLeft = curLabelText.left(static_cast<int>(curLabelText.size()/2));
@@ -103,6 +103,11 @@ BaseVocabFileEntryWidget::~BaseVocabFileEntryWidget()
 void BaseVocabFileEntryWidget::ForceTitleButtonSize()
 {
     BaseFileEntryWidget::ForceTitleButtonSize(ui->TitleButton);
+}
+
+float BaseVocabFileEntryWidget::EntryWidth()
+{
+    return VOCAB_FILE_ENTRY_TITLE_WIDTH_PCT;
 }
 
 bool BaseVocabFileEntryWidget::IsScrollBarDisplayed()
@@ -271,6 +276,11 @@ BaseNoteFileEntryWidget::~BaseNoteFileEntryWidget()
 void BaseNoteFileEntryWidget::ForceTitleButtonSize()
 {
     BaseFileEntryWidget::ForceTitleButtonSize(this);
+}
+
+float BaseNoteFileEntryWidget::EntryWidth()
+{
+    return 1.f;
 };
 
 bool BaseNoteFileEntryWidget::IsScrollBarDisplayed()
