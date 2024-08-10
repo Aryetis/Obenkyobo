@@ -36,7 +36,7 @@ void BaseFileEntryWidget::ForceTitleButtonSize(QPushButton* target)
     target->setFixedSize(correctedWidth, correctHeight);
 }
 
-void BaseFileEntryWidget::SetAndTrimCurDirLabel(QPushButton* target)
+void BaseFileEntryWidget::BaseSetAndTrimCurDirLabel(QPushButton* target)
 {
     QString curLabelText { target->text() };
     QFontMetricsF fm { target->font() };
@@ -89,8 +89,6 @@ BaseVocabFileEntryWidget::BaseVocabFileEntryWidget(QWidget *parent)
 {
     ui->setupUi(this);
 
-    ForceTitleButtonSize();
-
     ui->checkBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}").arg(FILE_ENTRY_TITLE_HEIGHT) );
     setMaximumHeight(FILE_ENTRY_TITLE_HEIGHT);
 }
@@ -128,6 +126,8 @@ void BaseVocabFileEntryWidget::on_checkBox_clicked(bool /*checked*/)
 VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fileInfo_, QWidget *parent)
     : BaseVocabFileEntryWidget(parent)
 {
+    ForceTitleButtonSize();
+
     fileInfo = fileInfo_;
 
     QString filename = fileInfo.fileName();
@@ -166,7 +166,9 @@ VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fileInfo_, QWidget *parent)
             ui->checkBox->setCheckState(Qt::CheckState::Unchecked);
     }
 
-    SetAndTrimCurDirLabel();
+    // can't call SetAndTrimCurDirLabel(); because it's virtual, ugly
+    // TODO : bring down the SetAndTrimCurDirLabel from grand mother class
+    BaseFileEntryWidget::BaseSetAndTrimCurDirLabel(ui->TitleButton);
 }
 
 void VocabFileEntryWidget::SetLearningScoreText(QString learningScoreText)
@@ -230,7 +232,7 @@ void VocabFileEntryWidget::on_checkBox_clicked(bool checked)
 
 void VocabFileEntryWidget::SetAndTrimCurDirLabel()
 {
-    BaseFileEntryWidget::SetAndTrimCurDirLabel(ui->TitleButton);
+    BaseFileEntryWidget::BaseSetAndTrimCurDirLabel(ui->TitleButton);
 }
 
 /******************************************************************************************
@@ -240,6 +242,8 @@ void VocabFileEntryWidget::SetAndTrimCurDirLabel()
 VocabFileUpDirWidget::VocabFileUpDirWidget(QFileInfo fileInfo_, QWidget *parent) :
     BaseVocabFileEntryWidget(parent)
 {
+    ForceTitleButtonSize();
+
     fileInfo = fileInfo_;
 
     ui->TitleButton->setText("[UP_DIR] ..");
@@ -261,8 +265,6 @@ void VocabFileUpDirWidget::SetAndTrimCurDirLabel()
 
 BaseNoteFileEntryWidget::BaseNoteFileEntryWidget(QWidget *parent /*= nullptr*/) : QPushButton(parent)
 {
-    ForceTitleButtonSize();
-
     setMaximumHeight(FILE_ENTRY_TITLE_HEIGHT);
 
     connect(this, &QPushButton::released, this, &BaseNoteFileEntryWidget::OnClick);
@@ -295,6 +297,8 @@ bool BaseNoteFileEntryWidget::IsScrollBarDisplayed()
 NoteFileEntryWidget::NoteFileEntryWidget(QFileInfo fileInfo_, QWidget *parent /*= nullptr*/)
     : BaseNoteFileEntryWidget(parent)
 {
+    ForceTitleButtonSize();
+
     fileInfo = fileInfo_;
     setText(fileInfo.fileName());
 
@@ -307,7 +311,9 @@ NoteFileEntryWidget::NoteFileEntryWidget(QFileInfo fileInfo_, QWidget *parent /*
         setText(prefix + fileInfo.fileName()); // differentiate file with similar name but diff extensions
     }
 
-    SetAndTrimCurDirLabel();
+    // can't call SetAndTrimCurDirLabel(); because it's virtual, ugly
+    // TODO : bring down the SetAndTrimCurDirLabel from grand mother class
+    BaseFileEntryWidget::BaseSetAndTrimCurDirLabel(this);
 };
 
 void NoteFileEntryWidget::OnClick()
@@ -331,7 +337,7 @@ void NoteFileEntryWidget::OnClick()
 
 void NoteFileEntryWidget::SetAndTrimCurDirLabel()
 {
-    BaseFileEntryWidget::SetAndTrimCurDirLabel(this);
+    BaseFileEntryWidget::BaseSetAndTrimCurDirLabel(this);
 }
 
 
@@ -342,6 +348,8 @@ void NoteFileEntryWidget::SetAndTrimCurDirLabel()
 NoteFileUpDirWidget::NoteFileUpDirWidget(QFileInfo fileInfo_, QWidget *parent /*= nullptr*/)
     : BaseNoteFileEntryWidget(parent)
 {
+    ForceTitleButtonSize();
+
     fileInfo = fileInfo_;
     setText("[UP_DIR] ..");
 };

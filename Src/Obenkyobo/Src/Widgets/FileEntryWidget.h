@@ -30,7 +30,7 @@ protected:
 
     virtual void ForceTitleButtonSize() = 0;
     void ForceTitleButtonSize(QPushButton* target);
-    void SetAndTrimCurDirLabel(QPushButton* target);
+    void BaseSetAndTrimCurDirLabel(QPushButton* target);
 
     QFileInfo fileInfo;
 
