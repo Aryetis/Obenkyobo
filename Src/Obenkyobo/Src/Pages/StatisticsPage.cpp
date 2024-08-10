@@ -34,7 +34,7 @@ void StatisticsPage::on_ResetPopups_clicked()
     GetMy::Instance().SettingSerializerInst()->setValue("AppSettings/firstTimeNoteListPage", true);
     GetMy::Instance().SettingSerializerInst()->setValue("AppSettings/firstTimeVocabListPage", true);
     GetMy::Instance().SettingSerializerInst()->setValue("AppSettings/firstTimeVocabDisplayPage", true);
-    GetMy::Instance().SettingSerializerInst()->setValue("AppSettings/firstTimeNoteDisplayPage", true);
+    GetMy::Instance().SettingSerializerInst()->setValue("AppSettings/firstTimeVocabListPage", true);
     GetMy::Instance().SettingSerializerInst()->setValue("AppSettings/firstTimeKanasEditPage", true);
 }
 

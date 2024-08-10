@@ -451,7 +451,7 @@ void MainWindow::on_actionLearn_Edit_Set_triggered()
     {
         GetMy::Instance().ToolsInst().DisplayPopup("Here are displayed your \"Vocabulary Sheets\". Please check Obenkyobo's github page to learn how to create your owns.\n"
                                           "Sitting down and writing your own sheets is also part of the learning proces.\n"
-                                          "Hold the \"home\" button to redefine the home folder\n\n"
+                                          "Hold the \"home\" button to redefine the \"Vocabulary\" home folder\n\n"
                                           "Click on any entry to display its content and start learning.\n");
         GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->setValue("AppSettings/firstTimeVocabListPage", false);
     }
@@ -474,9 +474,9 @@ void MainWindow::on_actionNotes_triggered()
 
     if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeNoteListPage", true).toBool() )
     {
-        GetMy::Instance().ToolsInst().DisplayPopup("Here are displayed your \"Notes\". Convenient way to check your grammar cheat sheets.\n"
+        GetMy::Instance().ToolsInst().DisplayPopup("Here are displayed your \"Notes\". This is a convenient way to check your grammar cheat sheets.\n"
                                                    "Notes can be plain .txt or Markdown .md files.\n"
-                                                   "Hold the \"home\" button to redefine the home folder\n");
+                                                   "Hold the \"home\" button to redefine the \"Notes\" home folder\n");
         GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->setValue("AppSettings/firstTimeNoteListPage", false);
     }
 }

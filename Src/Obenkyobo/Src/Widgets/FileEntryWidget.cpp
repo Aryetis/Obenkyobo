@@ -327,12 +327,6 @@ void NoteFileEntryWidget::OnClick()
     {
         GetMy::Instance().NoteDisplayPageInst().Populate(this);
         GetMy::Instance().MainWindowInst().SwitchStackedWidgetIndex(11);
-
-        if ( GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->value("AppSettings/firstTimeNoteDisplayPage", true).toBool() )
-        {
-            GetMy::Instance().ToolsInst().DisplayPopup("TODO NOW TUTORIAL FOR NOTES"); // TODO NOW
-            GetMy::Instance().AppSettingsPageInst().GetSettingsSerializer()->setValue("AppSettings/firstTimeNoteDisplayPage", false);
-        }
     }
 }
 
