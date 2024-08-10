@@ -18,13 +18,6 @@
  *                                  BaseFileEntryWidget                                   *
  ******************************************************************************************/
 
-void BaseFileEntryWidget::OnScrollbarToggled()
-{
-    std::cout << "LOG: BaseFileEntryWidget::OnScrollbarToggled()" << std::endl;
-    SetAndTrimCurDirLabel();
-    ForceTitleButtonSize();
-}
-
 void BaseFileEntryWidget::ForceTitleButtonSize(QPushButton* target)
 {
     // Hack to prevent the TitleButton from expanding the whole ListContentVLayout, fuck qt
@@ -166,9 +159,14 @@ VocabFileEntryWidget::VocabFileEntryWidget(QFileInfo fileInfo_, QWidget *parent)
             ui->checkBox->setCheckState(Qt::CheckState::Unchecked);
     }
 
-    // can't call SetAndTrimCurDirLabel(); because it's virtual, ugly
-    // TODO : bring down the SetAndTrimCurDirLabel from grand mother class
     BaseFileEntryWidget::BaseSetAndTrimCurDirLabel(ui->TitleButton);
+}
+
+void VocabFileEntryWidget::OnScrollbarToggled()
+{
+    std::cout << "LOG: VocabFileEntryWidget::OnScrollbarToggled()" << std::endl;
+    BaseFileEntryWidget::BaseSetAndTrimCurDirLabel(ui->TitleButton);
+    ForceTitleButtonSize();
 }
 
 void VocabFileEntryWidget::SetLearningScoreText(QString learningScoreText)
@@ -230,11 +228,6 @@ void VocabFileEntryWidget::on_checkBox_clicked(bool checked)
     }
 }
 
-void VocabFileEntryWidget::SetAndTrimCurDirLabel()
-{
-    BaseFileEntryWidget::BaseSetAndTrimCurDirLabel(ui->TitleButton);
-}
-
 /******************************************************************************************
  *                                  VocabFileUpDirWidget                                  *
  ******************************************************************************************/
@@ -251,13 +244,16 @@ VocabFileUpDirWidget::VocabFileUpDirWidget(QFileInfo fileInfo_, QWidget *parent)
     ui->checkBox->setText("-");
 }
 
+void VocabFileUpDirWidget::OnScrollbarToggled()
+{
+    std::cout << "LOG: VocabFileUpDirWidget::OnScrollbarToggled()" << std::endl;
+    ForceTitleButtonSize();
+}
+
 void VocabFileUpDirWidget::on_TitleButton_clicked()
 {
     static_cast<BaseExplorerPage&>(GetMy::Instance().VocabExplorerPageInst()).Populate(fileInfo.filePath());
 }
-
-void VocabFileUpDirWidget::SetAndTrimCurDirLabel()
-{ }
 
 /******************************************************************************************
  *                                 BaseNoteFileEntryWidget                                    *
@@ -311,9 +307,14 @@ NoteFileEntryWidget::NoteFileEntryWidget(QFileInfo fileInfo_, QWidget *parent /*
         setText(prefix + fileInfo.fileName()); // differentiate file with similar name but diff extensions
     }
 
-    // can't call SetAndTrimCurDirLabel(); because it's virtual, ugly
-    // TODO : bring down the SetAndTrimCurDirLabel from grand mother class
     BaseFileEntryWidget::BaseSetAndTrimCurDirLabel(this);
+}
+
+void NoteFileEntryWidget::OnScrollbarToggled()
+{
+    std::cout << "LOG: NoteFileEntryWidget::OnScrollbarToggled()" << std::endl;
+    BaseFileEntryWidget::BaseSetAndTrimCurDirLabel(this);
+    ForceTitleButtonSize();
 };
 
 void NoteFileEntryWidget::OnClick()
@@ -335,12 +336,6 @@ void NoteFileEntryWidget::OnClick()
     }
 }
 
-void NoteFileEntryWidget::SetAndTrimCurDirLabel()
-{
-    BaseFileEntryWidget::BaseSetAndTrimCurDirLabel(this);
-}
-
-
 /******************************************************************************************
  *                                   NoteFileUpDirWidget                                  *
  ******************************************************************************************/
@@ -352,12 +347,15 @@ NoteFileUpDirWidget::NoteFileUpDirWidget(QFileInfo fileInfo_, QWidget *parent /*
 
     fileInfo = fileInfo_;
     setText("[UP_DIR] ..");
+}
+
+void NoteFileUpDirWidget::OnScrollbarToggled()
+{
+    std::cout << "LOG: NoteFileUpDirWidget::OnScrollbarToggled()" << std::endl;
+    ForceTitleButtonSize();
 };
 
 void NoteFileUpDirWidget::OnClick()
 {
     static_cast<BaseExplorerPage&>(GetMy::Instance().NoteExplorerPageInst()).Populate(fileInfo.filePath());
 }
-
-void NoteFileUpDirWidget::SetAndTrimCurDirLabel()
-{ }

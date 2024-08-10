@@ -21,8 +21,7 @@ class BaseFileEntryWidget
 public:
     QFileInfo const& FileInfo() const { return fileInfo; }
     virtual void FakeClick(bool /*checked*/) {};
-
-    void OnScrollbarToggled();
+    virtual void OnScrollbarToggled() = 0;
 
 protected:
     BaseFileEntryWidget() = default;
@@ -37,7 +36,6 @@ protected:
 private:
     virtual float EntryWidth() = 0;
     virtual bool IsScrollBarDisplayed() = 0;
-    virtual void SetAndTrimCurDirLabel() = 0;
 };
 
 /********************** VOCAB FILES **********************/
@@ -74,15 +72,13 @@ public:
     VocabFileEntryWidget(QFileInfo fileInfo, QWidget *parent = nullptr);
     ~VocabFileEntryWidget() = default;
 
+    void OnScrollbarToggled() override;
     void SetLearningScoreText(QString learningScoreText) override;
     void FakeClick(bool checked) override;
 
 private slots:
     void on_TitleButton_clicked() override;
     void on_checkBox_clicked(bool checked) override;
-
-private:
-    void SetAndTrimCurDirLabel() override;
 };
 
 class VocabFileUpDirWidget : public BaseVocabFileEntryWidget
@@ -93,11 +89,10 @@ public:
     VocabFileUpDirWidget(QFileInfo fileInfo, QWidget *parent = nullptr);
     ~VocabFileUpDirWidget() = default;
 
+    void OnScrollbarToggled() override;
+
 private slots:
     void on_TitleButton_clicked() override;
-
-private:
-    void SetAndTrimCurDirLabel() override;
 };
 
 /********************** NOTES FILES **********************/
@@ -128,10 +123,8 @@ public:
     NoteFileEntryWidget(QFileInfo fileInfo_, QWidget *parent = nullptr);
     ~NoteFileEntryWidget() = default;
 
+    void OnScrollbarToggled() override;
     void OnClick() override;
-
-private:
-    void SetAndTrimCurDirLabel() override;
 };
 
 class NoteFileUpDirWidget : public BaseNoteFileEntryWidget
@@ -142,10 +135,8 @@ public:
     NoteFileUpDirWidget(QFileInfo fileInfo_, QWidget *parent = nullptr);
     ~NoteFileUpDirWidget() = default;
 
+    void OnScrollbarToggled() override;
     void OnClick() override;
-
-private:
-    void SetAndTrimCurDirLabel() override;
 };
 
 #endif // FileEntryWidget_H
