@@ -2,7 +2,6 @@
 # WORKING ON : - Handle duplicates in VocabDataPool atm it doesn't check for anything
 #              - put date of launch in log file name so it doesn't overwrite the last one
 #              - check what's happening with markdown orderered list margin left
-#              - fix use of virtual functions in constructor and destructor of Note Explorer
 #              - qpa, add support for Kobo Libra Colour
 #              - qpa, add "default handler" in descriptor + legacytouchhandler parameter + rename experimentaltouchhandler into moderntouchhandler
 #              - qpa, rewrite readme to make it more comprehensible that invertX, Y etc is only available on "legacyHandler"
