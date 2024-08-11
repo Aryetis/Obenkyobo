@@ -443,8 +443,8 @@ void QcmExercicePage::ApplyGuessesTextAndCorrection()
     int guessWidth = contentRectWidth / NbrOfEntriesRow - 3;
     int guessHeight = (contentRectHeight*0.6f) / NbrOfEntriesLine - 3;
 
-    for(QcmEntryGuess* guess : guesses)
-        guess->ApplyGuessTextAndCorrection(guessWidth, guessHeight);
+    for(QList<QcmEntryGuess*>::iterator it{guesses.begin()}; it != guesses.end(); ++it)
+        (*it)->ApplyGuessTextAndCorrection(guessWidth, guessHeight);
 }
 
 void QcmExercicePage::on_SwitchButton_clicked() // "Switch Kana"
@@ -454,8 +454,8 @@ void QcmExercicePage::on_SwitchButton_clicked() // "Switch Kana"
 
     if (currentQcmType == QcmExerciceType::Vocabulary_to_Romanji_MCQ)
     {
-        for(QcmEntryGuess* guess : guesses)
-            guess->SetGuessData(guess->GetDataEntry(), currentQcmType, stemDisplayKanji);
+        for(QList<QcmEntryGuess*>::iterator it{guesses.begin()}; it != guesses.end(); ++it)
+            (*it)->SetGuessData((*it)->GetDataEntry(), currentQcmType, stemDisplayKanji);
         ApplyGuessesTextAndCorrection();
     }
     else

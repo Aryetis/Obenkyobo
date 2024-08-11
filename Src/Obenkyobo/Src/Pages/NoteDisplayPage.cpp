@@ -12,7 +12,7 @@ NoteDisplayPage::NoteDisplayPage(QWidget *parent) :
 
     QColor baseBackgroundColor = QApplication::palette().window().color();
     // Adding margin for stuff like ordered list that can get printed out of screen otherwise
-    ui->TextWidget->document()->setDocumentMargin(GetMy::Instance().Descriptor().height/100.0f);
+    ui->TextWidget->document()->setDocumentMargin((GetMy::Instance().Descriptor().height/100.0f)*1.5f);
     QString textAreaStylesheet = QString("background-color:rgb(%1,%2,%3);").arg(
         QString::number(baseBackgroundColor.red()),
         QString::number(baseBackgroundColor.green()),
