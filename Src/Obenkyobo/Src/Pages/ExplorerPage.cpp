@@ -54,8 +54,8 @@ void BaseExplorerPage::OnWakeUp() const
 
 void BaseExplorerPage::SetAndTrimCurDirLabel()
 {
-    QString currentVocabDirString = GetMy::Instance().SettingSerializerInst()->value(curDirSerializedAdress, QString(QCoreApplication::applicationDirPath())).toString(); // TODO VOCAB
-    QString curDirLabelText {"Current Dir : "+currentVocabDirString};  // TODO VOCAB
+    QString currentDirString = GetMy::Instance().SettingSerializerInst()->value(curDirSerializedAdress, QString(QCoreApplication::applicationDirPath())).toString();
+    QString curDirLabelText {"Current Dir : "+currentDirString};
 
     QFontMetricsF fm{ui->curDirLabel->font()};
     int boundingRectFlags = ui->curDirLabel != nullptr ? (ui->curDirLabel->wordWrap() ? Qt::TextWordWrap : 0) | ui->curDirLabel->alignment() : 0;
@@ -66,11 +66,11 @@ void BaseExplorerPage::SetAndTrimCurDirLabel()
     {
         while (curW > ui->curDirLabel->width() && !finalCut) // remove directory from path one by one unti it fits (or had to cut last dir)
         {
-            int secondSlashPos = currentVocabDirString.indexOf('/', 1); // TODO VOCAB
+            int secondSlashPos = currentDirString.indexOf('/', 1);
             if (secondSlashPos == -1) // if even the last directory by itself is still too big => cut it ...
             {
-                QString cutFileNameLeft = currentVocabDirString.left(static_cast<int>(currentVocabDirString.size()/2)); // TODO VOCAB
-                QString cutFileNameRight = currentVocabDirString.mid(static_cast<int>(currentVocabDirString.size()/2)); // TODO VOCAB
+                QString cutFileNameLeft = currentDirString.left(static_cast<int>(currentDirString.size()/2));
+                QString cutFileNameRight = currentDirString.mid(static_cast<int>(currentDirString.size()/2));
 
                 int railguard {0};
                 while (railguard++ < SET_AND_TRIM_LOOPING_RAILGUARD && cutFileNameLeft.size() != 1)
@@ -95,14 +95,14 @@ void BaseExplorerPage::SetAndTrimCurDirLabel()
                     }
                 }
                 if (railguard >= SET_AND_TRIM_LOOPING_RAILGUARD)
-                    std::cerr << "VocabFileEntryWidget::SetAndTrimCurDirLabel IS STUCK LOOPING" << std::endl; // TODO VOCAB
+                    std::cerr << "BaseExplorerPage::SetAndTrimCurDirLabel() IS STUCK LOOPING" << std::endl;
                 finalCut = true;
             }
             else // remove directory from path one by one (starting left)
             {
-                currentVocabDirString = currentVocabDirString.right(currentVocabDirString.size()-secondSlashPos); // TODO VOCAB
+                currentDirString = currentDirString.right(currentDirString.size()-secondSlashPos);
 
-                curDirLabelText = "Current Dir : [...]"+currentVocabDirString; // TODO VOCAB
+                curDirLabelText = "Current Dir : [...]"+currentDirString;
                 newLabelRect = fm.boundingRect(ui->curDirLabel->rect(), boundingRectFlags, curDirLabelText);
                 curW = newLabelRect.width();
             }
