@@ -7,6 +7,10 @@
 #include "Src/QcmDataEntry.h"
 #include "Src/DefinesLand.h"
 
+
+
+                                    #include <iostream>
+
 // Everything marked as Lnk is a shortcut => isn't owned by this => isn't to be destroyed by this
 // SmartPointers ? What's that ?
 
@@ -47,10 +51,12 @@ class VocabDataEntry : public QcmDataEntry
         VocabDataEntry() = delete;
         ~VocabDataEntry() = default;
         VocabDataEntry(QString kanas_, QString kanjis_, QString trad_, int ls_, VocabDataFile* vocabDataFile_, int lineNumber_, KanaFamilyEnum fontType_) :
-            kanas(kanas_), kanjis(kanjis_), trad(trad_), learningScore(ls_), vocabDataFileLnk(vocabDataFile_), lineNumber(lineNumber_), fontType(fontType_) {} // TODO : don't copy, move instead... not quite sure if it's a good plan... will do for now
+            kanas(kanas_), kanjis(kanjis_), trad(trad_), learningScore(ls_), vocabDataFileLnk(vocabDataFile_), lineNumber(lineNumber_), fontType(fontType_)
+        {} // TODO : don't copy, move instead... not quite sure if it's a good plan... will do for now
 
         bool operator==(const VocabDataEntry& rhs) const
         {
+std::cout << "operator equals VocabDataEntry& member" << std::endl;
             return kanas == rhs.kanas && kanjis == rhs.kanjis && trad == rhs.trad && learningScore == rhs.learningScore && GetPath() == rhs.GetPath() && lineNumber == rhs.lineNumber;
         }
 
@@ -73,14 +79,16 @@ class VocabDataEntry : public QcmDataEntry
         int lineNumber;
         KanaFamilyEnum fontType;
 };
-inline uint qHash(const VocabDataEntry &key, uint seed)
+inline uint qHash(const VocabDataEntry* key, uint seed)
 {
-    // TODO NOW
+std::cout << "!!!!!!!!!!!!!!!!!! qHash VocabDataEntry*" << std::endl;  // TODO NOW : why is it never called ?
+return 0;
     // return qHash(key.Kanas(), seed) ^ qHash(key.Kanjis(), seed+1) ^ qHash(key.Romanji(), seed+2) ^ qHash(key.GetPath(), seed+3);
-    return qHash(key.Kanas(), seed) ^ qHash(key.Kanjis(), seed+1);
+    return qHash(key->Kanas(), seed) ^ qHash(key->Kanjis(), seed+1);
 }
 inline bool operator==(const VocabDataEntry& lhs, const VocabDataEntry& rhs)
 {
+std::cout << "!!!!!!!!!!!!!!!!!! operator equals VocabDataEntry& inline" << std::endl; // TODO NOW : why is it never called ?
     return lhs.Kanas() == rhs.Kanas() && lhs.Kanjis() == rhs.Kanjis();
 }
 
@@ -96,6 +104,8 @@ class VocabDataPool
         void PopulateFromPath(QString path);
         void PopulateFromPaths(QSet<QString> sheetPaths);
         void Clear();
+
+        void DebugLog();
 
     private :
         bool DoesLineContain(VocabDataEntry vde);

@@ -239,6 +239,8 @@ void VocabDataPool::PopulateFromPath(QString path)
 
     entriesLnks.unite(vdf->Entries());
     malformedLinesLnks.unite(vdf->MalformedLines());
+
+DebugLog();
 }
 
 void VocabDataPool::PopulateFromPaths(QSet<QString> sheetPaths)
@@ -269,4 +271,17 @@ void VocabDataPool::Clear()
 
     entriesLnks.clear();
     malformedLinesLnks.clear();
+}
+
+void VocabDataPool::DebugLog()
+{
+#ifdef QT_DEBUG
+    std::cout << "------ VocabDataPool::DebugLog(), count:"<< entriesLnks.count() << " ------" << std::endl;
+    for (VocabDataEntry const* vde : entriesLnks)
+    {
+        std::cout << vde->GetLineNumber() << ";" << vde->Kanjis()->toStdString() << ";"
+                  << vde->Kanas()->toStdString() << ";"  << vde->Romanji()->toStdString() << std::endl;
+    }
+    std::cout << "-------------------------------------------------" << std::endl;
+#endif
 }
