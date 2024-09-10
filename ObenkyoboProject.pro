@@ -2,9 +2,12 @@
 # WORKING ON : - Handle duplicates in VocabDataPool atm it doesn't check for anything
 #              - bug, Randomize -> Next Page -> 2nd unrandomized page is displayed
 #              - put date of launch in log file name so it doesn't overwrite the last one
-#              - qpa, add support for Kobo Libra Colour
+#              - qpa, add support for Kobo Libra Colour and other new devices
 #              - qpa, add "default handler" in descriptor + legacytouchhandler parameter + rename experimentaltouchhandler into moderntouchhandler
 #              - qpa, rewrite readme to make it more comprehensible that invertX, Y etc is only available on "legacyHandler"
+#              - get rid of KoboExtraFunk non static call and make it impossible to go any other way
+#              - add ForceWifi launch arg instead of using build flag to keep wifi alive.
+#              - make a pass on TODO
 #-------------------------------------------------
 # TODO (0.3.2) : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
 #                - Show last error's log in a popup on startup
