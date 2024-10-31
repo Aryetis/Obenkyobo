@@ -98,7 +98,7 @@ Please note that there is a <a href="https://bugreports.qt.io/browse/QTCREATORBU
 Name=qtcreator
 Icon=QtProject-qtcreator
 Comment=QtCreator-13.0.0 Qt IDE
-Exec="/home/aramir/qtcreator-13.0.0/bin/qtcreator" %f
+Exec="~/qtcreator-13.0.0/bin/qtcreator" %f
 Version=13.0.0
 Type=Application
 Categories=Development;IDE;
@@ -219,7 +219,7 @@ make sub-qmldevtools-install_subtargets
 cd [...]/kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo/qttools/src
 make sub-qdoc
 make sub-qdoc-install_subtargets
-cd /home/aramir/kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo/qtbase
+cd ~/kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo/qtbase
 make docs # it's gonna take about 30 minutes... yes for real...
 find ./ -name "*.qch" | grep doc
 # Open QtCreator, Edit -> Preferences -> Help -> Documentation and add have fun adding every single .pch listed by the command above :D (qtcore and qtdoc are the two main ones)
@@ -228,9 +228,10 @@ find ./ -name "*.qch" | grep doc
 - The dirty (yet working) way
 
 ```
-ln -s /usr/lib/qt6/bin/qdoc /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qdoc
-ln -s /usr/lib/qt6/libexec/qtattributionsscanner /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qtattributionsscanner
-ln -s /usr/lib/qt6/libexec/qhelpgenerator /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qhelpgenerator
+sudo apt install qtbase5-dev qdoc-qt5 qtattributionsscanner-qt5 qhelpgenerator-qt5
+ln -s /usr/lib/qt5/bin/qdoc ~/qt-bin/qt-linux-5.15-kde-kobo/bin/qdoc
+ln -s /usr/lib/qt5/bin/qtattributionsscanner ~/qt-bin/qt-linux-5.15-kde-kobo/bin/qtattributionsscanner
+ln -s /usr/lib/qt5/bin/qhelpgenerator ~/qt-bin/qt-linux-5.15-kde-kobo/bin/qhelpgenerator
 cd [...]kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo/qtbase
 mkdir LICENSES
 touch LICENSES/NONE.txt
@@ -239,12 +240,12 @@ make docs # it's gonna take about 30 minutes... yes for real...
 find ./ -name "*.qch" | grep doc
 # Open QtCreator, Edit -> Preferences -> Help -> Documentation and add have fun adding every single .pch listed by the command above :D
 # Ok time to clean our mess
-rm /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qdoc
-rm /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qtattributionsscanner
-rm /home/aramir/qt-bin/qt-linux-5.15-kde-kobo/bin/qhelpgenerator
+rm ~/qt-bin/qt-linux-5.15-kde-kobo/bin/qdoc
+rm ~/qt-bin/qt-linux-5.15-kde-kobo/bin/qtattributionsscanner
+rm ~/qt-bin/qt-linux-5.15-kde-kobo/bin/qhelpgenerator
 ```
 
-- The lazy way, use the compiled .qch (for qt 5.15.14) I've put in the <a href="DevReadme/qt-docs-5.15.13">DevReadme folder</a>
+- The lazy way, use the compiled .qch (for qt 5.15.15) I've put in the <a href="DevReadme/qt-docs-5.15.15">DevReadme folder</a>
 
 Now when selecting a QtClass in your code and pressing f1 it should display the local doc associated to said QtClass.
 
