@@ -164,7 +164,7 @@ kernel=C:\\Users\\aramir\\wsl_kernel\\bzImage
 
 This <a href="https://web.archive.org/web/20220627124323/http://gethighstayhigh.co.uk/kobo-self-build/">gethighstayhigh blog entry</a> used to host references for a lot of Kobo internal layout. Thanks ! 
 
-But for prosperity I saved all the layout pictures in the  <a href="DevReadme">"DevReadme" folder. And here's what the "serial port" section used to say:
+But for prosperity I saved all the layout pictures in the  <a href="DevReadme">DevReadme folder. And here's what the "serial port" section used to say:
 ```
 Most Kobo's typically have 3 or 4 serial ports, but only one is functional. The serial ports on 6 popular models can be seen in the photographs. Each Serial port has 4 connections,
 
