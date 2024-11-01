@@ -7,7 +7,7 @@ You can setup a very basic Kobo dev environment by following either
 ### How to setup Obenkyobo dev environment using kobo-qt-setup-scripts ? (as of 30th July 2024, tested with WSL2 Debian Bookworm ) 
 1. Run the following commands :
 ```
-sudo apt-get install build-essential autoconf automake bison flex gawk libtool libtool-bin libncurses-dev curl file git gperf help2man texinfo unzip wget cmake pkg-config python3 mmv lftp clang libclang-dev llvm-dev
+sudo apt-get install build-essential autoconf automake bison flex gawk libtool libtool-bin libncurses-dev curl file git gperf help2man texinfo unzip wget cmake pkg-config python3 mmv lftp clang libclang-dev llvm-dev rsync
 git clone --recurse-submodules git@github.com:Aryetis/kobo-qt-setup-scripts.git # or "git clone --recurse-submodules https://github.com/Aryetis/kobo-qt-setup-scripts.git", if you don't use ssh keys for github
 cd kobo-qt-setup-scripts
 ./install_toolchain.sh
@@ -92,7 +92,7 @@ Please note that there is a <a href="https://bugreports.qt.io/browse/QTCREATORBU
 - Fix the bug manually by following <a href="https://microhobby.com.br/blog/2023/08/08/qt-creator-v9-0-2-debug-helpers-not-working-on-ubuntu-23-04-and-debian-bookworm-12/">this tutorial</a>
 - Update to Trixie/unstable which has QtCreator v10.0.2-4. (seems to cause issue with ./install_toolchain.sh ? Will investigate when Trixie is out of testing phase)
 - Download standalone QtCreator from <a href="https://download.qt.io/official_releases/qtcreator/">offline installers</a>, in theory it shouldn't mix with system libs and packages... I'm not too fond of it but it looks likes the best bet for now. Here's a bunch of things you'll need to intall to make it work (might be missing some I didn't took notes) 
-`sudo apt install libxkbcommon-x11-0 libxcb-shape0 libxcb-render-util0 libxcb-keysyms1 libxcb-image0 libxcb-icccm4 libdbus-1-dev libwayland-cursor0 libxaw7 libxmu6 libxt6 libxtst6` . To create star menu entry for it (and others wsl apps) create a file `/usr/share/applications/qtcreator-13.desktop` and fill it like so. (And throw the icons from "DevReadme/QtCreatorIcons.zip" into `/usr/share/icons/hicolor`)
+`sudo apt install libxkbcommon-x11-0 libxcb-shape0 libxcb-render-util0 libxcb-keysyms1 libxcb-image0 libxcb-icccm4 libdbus-1-dev libwayland-cursor0 libxaw7 libxmu6 libxt6 libxtst6` . To create star menu entry for it (and others wsl apps) create a file `/usr/share/applications/qtcreator-13.desktop` and fill it like so. (And throw the icons from <a href="DevReadme/QtCreatorIcons.zip">QtCreatorIcons.zip archive</a> into `/usr/share/icons/hicolor`)
 ```
 [Desktop Entry]
 Name=qtcreator
@@ -164,7 +164,7 @@ kernel=C:\\Users\\aramir\\wsl_kernel\\bzImage
 
 This <a href="https://web.archive.org/web/20220627124323/http://gethighstayhigh.co.uk/kobo-self-build/">gethighstayhigh blog entry</a> used to host references for a lot of Kobo internal layout. Thanks ! 
 
-But for prosperity I saved all the layout pictures in the "DevReadme" folder. And here's what the "serial port" section used to say:
+But for prosperity I saved all the layout pictures in the  <a href="DevReadme">"DevReadme" folder. And here's what the "serial port" section used to say:
 ```
 Most Kobo's typically have 3 or 4 serial ports, but only one is functional. The serial ports on 6 popular models can be seen in the photographs. Each Serial port has 4 connections,
 
