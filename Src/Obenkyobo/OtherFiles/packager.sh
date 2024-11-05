@@ -52,6 +52,7 @@ do
     cp $f $BuildFolder/Output/.adds/ -rL
   else
     echo "!!!!! COULD NOT COPY (broken symbolic link ?) : "$f" !!!!!"
+    exit  1
   fi
 done
 mkdir -p $BuildFolder/Output/.adds/$QtFolder/plugins/platforms/
