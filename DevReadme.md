@@ -1,29 +1,46 @@
-### How to develop for Kobo ?
+## How to develop for Kobo ?
 
 You can setup a very basic Kobo dev environment by following either 
 - The <a href="https://github.com/koreader/koxtoolchain">koxtoolchain instructions</a> and work your way from here by cross-compiling qt for ARM and the QTPA kobo platform plugin. To validate your arm gcc, run your first non graphical "hello world" throught an ssh-server or use koreader "run command" option.
 - Go the "easy" route and use my fork of @Rain92's <a href="https://github.com/Aryetis/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> (until I eventually find time to write a clean PR for the main repository) to setup everything "libs, Qt binaries, deployment scripts".
 
-### How to setup Obenkyobo dev environment using kobo-qt-setup-scripts ? (as of 30th July 2024, tested with WSL2 Debian Bookworm ) 
-1. Run the following commands :
-```
+In this Devreadme.md page, I'll discuss my setup using a combination of kobo-qt-setup-scripts and QtCreator.
+It can be somewhat messy as I don't expect anyone else to actually read this, but I try to keep it tidy. Just in case.
+
+## How to setup Obenkyobo dev environment using kobo-qt-setup-scripts ? (as of 5th November 2024, tested with WSL2 Debian Bookworm) 
+
+### 1. Run the following commands :
+```bash
+# Getting a bunch of stuff necessaries for QtCreator, qt source compilation, additional libraries compilation, deployment, etc
 sudo apt-get install build-essential autoconf automake bison flex gawk libtool libtool-bin libncurses-dev curl file git gperf help2man texinfo unzip wget cmake pkg-config python3 mmv lftp clang libclang-dev llvm-dev rsync
+# Using kobo-qt-setup-scripts to get and install everything
 git clone --recurse-submodules git@github.com:Aryetis/kobo-qt-setup-scripts.git # or "git clone --recurse-submodules https://github.com/Aryetis/kobo-qt-setup-scripts.git", if you don't use ssh keys for github
 cd kobo-qt-setup-scripts
+# Installing Niluje's kobo toolchain
 ./install_toolchain.sh
-./get_qt.sh kobo # at this point check the "How to build and get docs working in QTCreator" section if you want to build qt docs too
+# Getting kde's qt, if you also want to build qt docs pleas check the "How to build and get docs working in QTCreator" before running the following command
+./get_qt.sh kobo
+# Getting and compiling additional libraries
 ./install_libs.sh
+# Setting permanent bash environment stuff
 echo $'\n########################################' >> ~/.bashrc
 echo 'export PATH="$HOME/x-tools/arm-kobo-linux-gnueabihf/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
+# Configuring and building qt-kde, will install everything at $HOME/qt-bin/qt-linux-5.15-kde-kobo/
 ./build_qt.sh kobo config
 ./build_qt.sh kobo make
 ./build_qt.sh kobo install
+# Deploy the previously compiled libraries to [kobo-qt-setup-scripts]/deploy/qt-linux-5.15-kde-kobo/lib folder
+# Additionaly you can add the libkobo.so path and kobo device's ip to its argument for an immediate deployment over SFTP if needed
+./deploy_qt.sh
+# Install QtCreator
+# Depending of when you re reading this you might want to use an offline installer instead of installing QtCreator from Debian's repositories.
+# cf "Setting up gdb" on why that is.
 ```
 
 That should get you a working cross commpiler and qt binaries configured with a bunch of libraries (most of them only useful for UltimateMangaReader)
 
-2. Time to get Obenkyobo's repository : 
+### 2. Time to get Obenkyobo's repository : 
 - `git clone --recurse-submodules git@github.com:Aryetis/Obenkyobo.git` (or `git clone --recurse-submodules https://github.com/Aryetis/Obenkyobo.git` if you don't use ssh keys for github)
 - And then simply open its `ObenkyoboProject.pro` file with QtCreator. Once there you'll have to setup a "kit" using the arm-kobo-linux-gnueabihf-gcc/g++ and qt binaries compiled above. cf screenshot below.
 
@@ -31,12 +48,9 @@ That should get you a working cross commpiler and qt binaries configured with a 
   <img src="DevReadme/KoboQtKit.jpg" width="807" height="528" >
 </p>
 
-- Because we're using kde's qt we also need to indicate qt5-kobo-platform-plugin to use our qt-linux-5.15-kde-kobo instead of qt-linux-5.15-kobo. Therefore run this in Obenkyobo's root folder `echo "CUSTOM_QTDIR = /mnt/onboard/.adds/qt-linux-5.15-kde-kobo" > Src/Libs/qt5-kobo-platform-plugin/koboplatformplugin.pri`
-- Once you've compiled Obenkyobo (and therefore qtpa too), time to run the `deploy_qt.sh QTPA_BUILD_FOLDER [KOBO_IP_DEVICE]` script with `QTPA_BUILD_FOLDER`as the folder holding libkobo.so and leave KOBO_IP_DEVICE empty as we'll ship everything using rsync/sftp directly from QtCreator. This should create the `/kobo-qt-setup-scripts/deploy/qt-linux-5.15-kde-kobo/` folder containing every qt binaries and libraries to be deployed on the kobo device. Make sure to fix the associated symbolic link `Obenkyobo/Src/Obenkyobo/OtherFiles/Dependencies/qt-linux-5.15-kde-kobo` so that it points towards `kobo-qt-setup-scripts/deploy/qt-linux-5.15-kde-kobo/` (that way packager.sh will be able to include it). 
-
-3. And finally, let's tweak a couple of things so you can use the packager.sh to compile and ship everything with a single press on the build button (also requires you to follow `Setup QtCreator` steps)
-- Create a symbolic link to the qt binaries like so : `ln -s [Obenkyobo]/Src/Obenkyobo/OtherFiles/Dependencies/qt-linux-5.15-kde-kobo` -> `[kobo-qt-setup-scripts]/deploy/qt-linux-5.15-kde-kobo/`
-- Modify `ObenkyoboProject/Src/Obenkyobo/Obenkyobo.pro` to set what part of the project you actually want to ship over sftp : 
+- You'll have to update the symbolic link at `[Obenkyobo]/Src/Obenkyobo/OtherFiles/Dependencies/qt-linux-5.15-kde-kobo` to point towards `[kobo-qt-setup-scripts]/deploy/qt-linux-5.15-kde-kobo` folder. So we can push/rsync both our program and everything qt related at the press of a single button in QtCreator.
+- Because we're using kde's qt we also need to indicate qt5-kobo-platform-plugin to use our qt-linux-5.15-kde-kobo instead of qt-linux-5.15-kobo. Therefore run this in Obenkyobo's root folder `echo "CUSTOM_QTDIR = /mnt/onboard/.adds/qt-linux-5.15-kde-kobo" > [Obenkyobo]/Src/Libs/qt5-kobo-platform-plugin/koboplatformplugin.pri`
+- Modify `ObenkyoboProject/Src/Obenkyobo/Obenkyobo.pro` to set what part of the project you actually want to ship over sftp, pick one of the following option : 
 ```
 INSTALLS += target everything thumbnail # will ship everything (you probably want to do this at first then switch to the last one)
 INSTALLS += target everythingButLibs thumbnail  # ship everything but libraries/dependencies
@@ -45,9 +59,9 @@ INSTALLS += target everything thumbnail # use only this for full deploy, to save
 INSTALLS += target # will only ship Obenkyobo's binary
 ```
 
-### Setup QtCreator
+### 3. Setting up QtCreator
 
-For a better workflow and one click build+deploy+launch from within QtCreator : 
+Now let's set everything on QtCreator's side (note that some instructions are on a "Per workspace" basis). 
 ```
 Settings->Build & Run->Default Build Properties->Default build directory  : 
 %{JS: Util.asciify("build-%{Project:Name}-%{Kit:FileSystemName}-%{BuildConfig:Name}")}
@@ -56,7 +70,7 @@ Projects->Kobo(Kit)->Run->Deployment->Deploy files and set flags for rsync : --c
 (prior to QtCreator 14.0.1 you can't pass more than one argument without breaking rsync, therefore skip -av)
 Projects->Kobo(Kit)->Run->Deployment->Upload files via SFTP instead of rsync
 
-# Killing nickel for our dev session (will need to relaunch it afterwards with start_nickel.sh or simply rebooting the device)
+# Killing nickel for our dev session (after your dev session you will have to use start_nickel.sh over ssh or simply reboot the device)
 Projects->Kobo(Kit)->Run->Deployment-> Add Run custom remote command with :  
 /mnt/onboard/.adds/Obenkyobo/exit_nickel.sh || true
 
@@ -64,24 +78,23 @@ Projects->Kobo(Kit)->Run->Environment->(System Environment)->Add create new vari
 # everything in here is usually set at runtime by Obenkyobo_launcher.sh when running application from device itself. But because we can't source it from QtCreator, we set everything manually in here.
 LD_LIBRARY_PATH=/mnt/onboard/.adds/qt-linux-5.15-kde-kobo/lib:/mnt/onboard/.adds/Obenkyobo/lib:
 QT_QPA_PLATFORM=kobo
-QT_QPA_EVDEV_DEBUG=true # if you want to debug libkobo.so qpa inputs
+QT_QPA_EVDEV_DEBUG=true # if you want to debug libkobo.so qpa inputs for instance
 ```
 
-The preparation of the files for sftp transfer (and creationg of a .zip file for release) should be handled by the `Src/Obenkyobo/OtherFiles/packager.sh` (triggered by Obenkyobo.pro's QMAKE_POST_LINK action)
+The preparation of the files for deployment (and creation of a .zip file for release) should be handled by the `Src/Obenkyobo/OtherFiles/packager.sh` (triggered by Obenkyobo.pro's QMAKE_POST_LINK action). Yes, compiling in release should give you a .zip file including everything (program, libs, qt, nm and kfmon entries) that you should be able to release as is for everyone to install in one step. Just unzip it on your device and voilà !  
 
-And that's it! With all of that done, you should now be able to simply click the "Run" button to compile and send eveything necessary to your kobo device over the air.
+And that's it! With all of that done, you should now be able to simply click the "Run" button to compile and send eveything necessary to your kobo device over the air. Packager.sh should also retrigger itself when needed automatically (you can always force rebuild to retrigger it manually or call it by yourself). 
 
-Also, NEVER modify any of the .sh scripts under windows... Windows end of line will mess things up when ran on linux, or at the very least use `win2unix` afterwards to fix line endings issues.
+If for some reasons you need to debug QtCreator's behavior, just run `export QT_LOGGING_RULES=qtc.*=true` before launching it.
 
-If for some reasons you need to debug QtCreator's behavior (cough cough), run `export QT_LOGGING_RULES=qtc.*=true` before it.
+Also to make sure your QtCreator can display japanese text you might have to install a japanese font (eg : `apt install fonts-takao-mincho`)
 
-ps : `apt-get install fonts-takao-mincho` to make sure you have at least one set of font capable of displaying japanese.
+### 4. Setting up gdb
 
-### Setup gdb
-
+Additionaly you ll probably want to get a working gdb too.
 Two solutions : 
 - Use cross compiled arm gdb from <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a>. 
-```
+```bash
 sudo apt install python3-dev libgmp-dev
 cd kobo-qt-setup-scripts
 ./install_gdb.sh
@@ -106,13 +119,13 @@ Terminal=false
 StartupNotify=true
 ```
 
-### Setup the Ereader
+## Setting up the Ereader
 
 Setup a fixed IP address for it and use it in <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a>  deploy_script.sh if you go this route instead of using QtCreator
 
 Ereader is rebooting upon Deployment ? Probably because kfmon/nm is scanning for the freshly installed/deployed stuff and reboots the device to update its nickelMenu entry. You should probably setup only select INSTALLS += target , when working daily
 
-Please note that the wifi indicator on your kobo can sometimes lie to you. To fix this you can either : 
+Please note that the wifi indicator on your kobo can sometimes lie to you. To work around this you can either : 
 - Turn on developer mode on the kobo by searching for a book named `devmodeon`, then force the wifi to stay on during dev session : Plus->Parameters->Technical informations->Developer options->force Wifi ON. 
 - Simply tap the wifi signal icon and keep its wifi list widget open, this should work 99% of the time.
 
@@ -121,8 +134,9 @@ Install <a href="https://www.mobileread.com/forums/showthread.php?t=254214">Nilu
 - `nano`, `gdb`, `strace`
 - `fbgrab picture.png` to take screenshots
 - etc 
+(Please note that there is no password on the ssh server for root's account. So just in case, you should probably set one up or keep your wifi turned off. You ve been warned. )
 
-### Miscellaneous
+## Miscellaneous
 
 How to read the backtrace logs : convert address to line using `addr2line -e [NonStrippedProgramBinary] [HexAddress]`
 
@@ -132,7 +146,9 @@ How to double check what kind of file I'm dealing with `file testFile`
 
 How to check input sanity in qpa / LibKoboExtraFunk ? `evdev-dump /dev/input/event0`
 
-### How to serial connect to Kobo ereader in WSL2 
+NEVER modify any of the .sh scripts under windows... Windows end of line will mess things up when ran on linux, or at the very least use `win2unix` afterwards to fix line endings issues.
+
+## How to serial connect to Kobo ereader in WSL2 
 
 1. install usbipd on windows's side to share usb device through IP with WSL2, more info on <a href="https://github.com/dorssel/usbipd-win/wiki/WSL-support">WSL-support's page</a> and <a href="https://learn.microsoft.com/fr-fr/windows/wsl/connect-usb#attach-a-usb-device.">this windows's doc page</a>.
 2. install bunch of necessary software in WSL2 with : 
@@ -141,7 +157,7 @@ How to check input sanity in qpa / LibKoboExtraFunk ? `evdev-dump /dev/input/eve
 4. link usb device to WSL2 with `usbipd bind --busid=[BUS_ID]` then `usbipd attach --wsl --busid=[BUS_ID]`
 5. check with `lsusb` if you're device shows up and if `/dev/ttyUSBxxx` entry is created. If not ... guess what ... WSL2 kernel probably doesn't have your device's driver. To be sure, check it out with `ls -l /sys/bus/usb-serial/drivers`. You'll have to build your own kernel then, cf section below.
 
-### How to build custom WSL2 kernel 
+## How to build custom WSL2 kernel 
 
 1. `sudo apt install build-essential flex bison libssl-dev libelf-dev git dwarves`
 2. `git clone https://github.com/microsoft/WSL2-Linux-Kernel.git`
@@ -160,7 +176,7 @@ kernel=C:\\Users\\aramir\\wsl_kernel\\bzImage
 11. relaunch your WSL2 and check out your new kernel with : `uname -a` 
 12. connect to your kobo with the usual `sudo minicom -D /dev/ttyUSB0` and voila !
 
-### Which serial port should I solder my UART to debug over wire ?
+## Which serial port should I solder my UART to debug over wire ?
 
 This <a href="https://web.archive.org/web/20220627124323/http://gethighstayhigh.co.uk/kobo-self-build/">gethighstayhigh blog entry</a> used to host references for a lot of Kobo internal layout. Thanks ! 
 
@@ -181,7 +197,7 @@ Layout on older Kobo models; the cables colours are: White is V, Yellow is Groun
 **at the 'kobo' end
 ```
 
-### Some Power Consumption measurements (needs to be redone with a proper methodology later on !!!)
+## Some Power Consumption measurements (needs to be redone with a proper methodology later on !!!)
 ```
 Consumption at sleep and 100% battery (numbers read after a minute of stabilized consumption at most... Needs to redo tests with stricter methodology) : 
 ============= Kobo Glo HD =============
@@ -197,10 +213,10 @@ Obenkyobo : 0.0101 A ( (after the minute of Fake Sleep))
 UMR : 0.0425 -> 0.0429 A (oscillation for long time) then 0.0103 A
 ```
 
-### How to build and get docs working in QTCreator
+## How to build and get docs working in QTCreator
 
+- The lazy way, use the compiled .qch (for qt 5.15.15) I've put in the <a href="DevReadme/qt-docs-5.15.15">DevReadme folder</a>
 - The <a href="https://wiki.qt.io/Building_Qt_Documentation">official</a> (yet broken) way : 
-
 ```
 sudo apt install llvm libclang-dev
 cd [...]/kobo-qt-setup-scripts/
@@ -224,9 +240,7 @@ make docs # it's gonna take about 30 minutes... yes for real...
 find ./ -name "*.qch" | grep doc
 # Open QtCreator, Edit -> Preferences -> Help -> Documentation and add have fun adding every single .pch listed by the command above :D (qtcore and qtdoc are the two main ones)
 ```
-
 - The dirty (yet working) way
-
 ```
 sudo apt install qtbase5-dev qdoc-qt5 qtattributionsscanner-qt5 qhelpgenerator-qt5
 ln -s /usr/lib/qt5/bin/qdoc ~/qt-bin/qt-linux-5.15-kde-kobo/bin/qdoc
@@ -245,7 +259,7 @@ rm ~/qt-bin/qt-linux-5.15-kde-kobo/bin/qtattributionsscanner
 rm ~/qt-bin/qt-linux-5.15-kde-kobo/bin/qhelpgenerator
 ```
 
-- The lazy way, use the compiled .qch (for qt 5.15.15) I've put in the <a href="DevReadme/qt-docs-5.15.15">DevReadme folder</a>
+In QtCreator, Edit->Preferences->Help->Documentation click "Add..." to install all your .qch doc files.
 
 Now when selecting a QtClass in your code and pressing f1 it should display the local doc associated to said QtClass.
 
