@@ -40,7 +40,7 @@ That should get you a working cross commpiler and qt binaries configured with a 
 
 ### 2. Time to get Obenkyobo's repository : 
 - `git clone --recurse-submodules git@github.com:Aryetis/Obenkyobo.git` (or `git clone --recurse-submodules https://github.com/Aryetis/Obenkyobo.git` if you don't use ssh keys for github)
-- And then simply open its `ObenkyoboProject.pro` file with QtCreator. Once there you'll have to setup a "kit" using the arm-kobo-linux-gnueabihf-gcc/g++ and qt binaries compiled above. cf screenshot below.
+- And then simply open its `ObenkyoboProject.pro` file with QtCreator. Once there you'll have to setup a "kit" using the arm-kobo-linux-gnueabihf-gcc/g++ and qt binaries compiled above. cf screenshot below and check "4. Setting up gdb" section if you want to setup a working gdb. 
 
 <p align="center">
   <img src="DevReadme/KoboQtKit.jpg" width="807" height="528" >
