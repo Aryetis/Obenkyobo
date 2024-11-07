@@ -75,7 +75,7 @@ Projects->Kobo(Kit)->Run->Deployment-> Add Run custom remote command with :
 Projects->Kobo(Kit)->Run->Environment->(System Environment)->Add create new variable with at least 
 # everything in here is usually set at runtime by Obenkyobo_launcher.sh when running application from device itself. But because we can't source it from QtCreator, we set everything manually in here.
 LD_LIBRARY_PATH=/mnt/onboard/.adds/qt-linux-5.15-kde-kobo/lib:/mnt/onboard/.adds/Obenkyobo/lib:
-QT_QPA_PLATFORM=kobo
+QT_QPA_PLATFORM=kobo   # depending of your device and when you pulled you might want to use this instead "kobo:debug:experimentaltouchhandler"
 QT_QPA_EVDEV_DEBUG=true # if you want to debug libkobo.so qpa inputs for instance
 ```
 
