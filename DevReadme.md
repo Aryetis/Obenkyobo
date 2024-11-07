@@ -40,7 +40,7 @@ That should get you a working cross commpiler and qt binaries configured with a 
 
 ### 2. Time to get Obenkyobo's repository : 
 - `git clone --recurse-submodules git@github.com:Aryetis/Obenkyobo.git` (or `git clone --recurse-submodules https://github.com/Aryetis/Obenkyobo.git` if you don't use ssh keys for github)
-- And then simply open its `ObenkyoboProject.pro` file with QtCreator. Once there you'll have to setup a "kit" using the arm-kobo-linux-gnueabihf-gcc/g++ and qt binaries compiled above. cf screenshot below and check "4. Setting up gdb" section if you want to setup a working gdb. 
+- And then simply open its `ObenkyoboProject.pro` file with QtCreator. Once there you'll have to setup a "kit" using the arm-kobo-linux-gnueabihf-gcc/g++ and qt binaries compiled above. Compilers should be in the `~/x-tools/arm-kobo-linux-gnueabihf` folder and you'll want to add the custom Qt in the "Qt Versions" tab by picking its qmake at `~/qt-bin/qt-linux-5.15-kde-kobo/bin`. "Run device" should be pretty much self explanatory, although now might be a good time to install <a href="https://www.mobileread.com/forums/showthread.php?t=254214">Niluje's kobo stuff</a> to get a working gdb client, rsync, sftp running on your kobo. Gdb can be setup later on (check section "4. Setting up gdb"). Once you've setup everything your kit should look somewhat like this.
 
 <p align="center">
   <img src="DevReadme/KoboQtKit.jpg" width="807" height="528" >
