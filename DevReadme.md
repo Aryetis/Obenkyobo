@@ -2,10 +2,8 @@
 
 You can setup a very basic Kobo dev environment by following either 
 - The <a href="https://github.com/koreader/koxtoolchain">koxtoolchain instructions</a> and work your way from here by cross-compiling qt for ARM and the QTPA kobo platform plugin. To validate your arm gcc, run your first non graphical "hello world" throught an ssh-server or use koreader "run command" option.
-- Go the "easy" route and use my fork of @Rain92's <a href="https://github.com/Aryetis/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> (until I eventually find time to write a clean PR for the main repository) to setup everything "libs, Qt binaries, deployment scripts".
-
-In this Devreadme.md page, I'll discuss my setup using a combination of kobo-qt-setup-scripts and QtCreator.
-It can be somewhat messy as I don't expect anyone else to actually read this, but I try to keep it tidy. Just in case.
+- If all you're interested in is getting some basic gcc working <a href="https://github.com/NiLuJe/koxtoolchain/"> Niluje's toolchain </a> is the way to go.
+- If you're interested in getting Qt binaries along with its <a href="https://github.com/Aryetis/qt5-kobo-platform-plugin"> Qt Platform Abstraction for Kobo</a> and <a href="https://github.com/Aryetis/KoboExtraFunk">KoboExtraFunk library</a> to easily manipulate kobo's specific features (such as wifi, buttons, screen settings, etc...) and a bunch of extra libraries (zlib-ng, libb2, zstd, openssl, pnglib, libjpeg-turbo, expat, pcre, libfreetype and harfbuzz). Then the "easy" route is to use my fork of @Rain92's <a href="https://github.com/Aryetis/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> to setup everything. This is what we'll discuss with this readme.
 
 ## How to setup Obenkyobo dev environment using kobo-qt-setup-scripts ? (as of 5th November 2024, tested with WSL2 Debian Bookworm) 
 
@@ -18,9 +16,9 @@ git clone --recurse-submodules git@github.com:Aryetis/kobo-qt-setup-scripts.git 
 cd kobo-qt-setup-scripts
 # Installing Niluje's kobo toolchain
 ./install_toolchain.sh
-# Getting kde's qt, if you also want to build qt docs pleas check the "How to build and get docs working in QTCreator" before running the following command
-./get_qt.sh kobo
-# Getting and compiling additional libraries
+# Getting kde's qt, if you want to build qt docs later on, use "koboWithDocs" argument. Adding "experimental" argument will get you the latest version of qt5.15 (not recommended as it will probably break compatibility among all the apps using this workflow)
+./get_qt.sh
+# Getting and compiling additional libraries, you can also use the "experimental" argument to get the latest libs version (not recommended for the same reasons)
 ./install_libs.sh
 # Setting permanent bash environment stuff
 echo $'\n########################################' >> ~/.bashrc
