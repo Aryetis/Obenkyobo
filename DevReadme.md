@@ -119,20 +119,22 @@ StartupNotify=true
 
 ## Setting up the Ereader
 
-Setup a fixed IP address for it and use it in <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a>  deploy_script.sh if you go this route instead of using QtCreator
+I'm assuming that you already have some sort of "App launcher" installed on your ereader, be it <a href="https://www.mobileread.com/forums/showthread.php?t=274231">KFMon</a> or <a href="https://www.mobileread.com/forums/showthread.php?t=329525">NickelMenu</a> and are familiar on how to add entries for them. Please note that <a href="src/branch/master/Src/Obenkyobo/OtherFiles/packager.sh">Packager.sh</a> should take care of this for you. If you intend to reuse this repository as a template for your project you will have to change packager.sh's entries.
 
-Ereader is rebooting upon Deployment ? Probably because kfmon/nm is scanning for the freshly installed/deployed stuff and reboots the device to update its nickelMenu entry. You should probably setup only select INSTALLS += target , when working daily
+You ll want to setup a fixed IP address for sure it. Be it to be used with <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a>'s deploy_script.sh, or to register your device properly within QtCreator's "run devices"
 
-Please note that the wifi indicator on your kobo can sometimes lie to you. To work around this you can either : 
+Is your Ereader rebooting upon Deployment ? That's probably because kfmon/nm is scanning for the freshly installed/deployed stuff and reboots the device to update its nickelMenu entry. You should probably select "INSTALLS += target" in Obenkyobo.pro when working daily. That way it won't resend them everytime.
+
+Note that the wifi indicator on your kobo can sometimes lie to you. To work around this you can either : 
 - Turn on developer mode on the kobo by searching for a book named `devmodeon`, then force the wifi to stay on during dev session : Plus->Parameters->Technical informations->Developer options->force Wifi ON. 
 - Simply tap the wifi signal icon and keep its wifi list widget open, this should work 99% of the time.
 
 Install <a href="https://www.mobileread.com/forums/showthread.php?t=254214">Niluje's kobo stuff</a> package to get various programs running on the kobo such as : 
-- `dropbear` ssh server (connect with root and empty password)
+- `dropbear` ssh server (connect with root and empty password, yes empty password So just in case, you should probably set one up or keep your wifi turned off. You ve been warned.)
 - `nano`, `gdb`, `strace`
 - `fbgrab picture.png` to take screenshots
+= `rsync`, `sftp` 
 - etc 
-(Please note that there is no password on the ssh server for root's account. So just in case, you should probably set one up or keep your wifi turned off. You ve been warned. )
 
 ## Miscellaneous
 
