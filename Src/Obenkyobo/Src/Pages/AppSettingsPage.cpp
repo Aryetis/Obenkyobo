@@ -51,8 +51,9 @@ void AppSettingsPage::ParseConfigFile()
 #endif
     if (wifiStatus)
     {
-        if (!KoboPlatformExtra::TestInternetConnectionStatic())
-            KoboPlatformExtra::EnableWiFiConnectionStatic();
+        // // TODO NOW
+        // if (!KoboPlatformExtra::TestInternetConnectionStatic())
+        //     KoboPlatformExtra::EnableWiFiConnectionStatic();
     }
     else
         KoboPlatformExtra::DisableWiFiConnectionStatic();
