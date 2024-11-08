@@ -119,7 +119,7 @@ StartupNotify=true
 
 ## Setting up the Ereader
 
-I'm assuming that you already have some sort of "App launcher" installed on your ereader, be it <a href="https://www.mobileread.com/forums/showthread.php?t=274231">KFMon</a> or <a href="https://www.mobileread.com/forums/showthread.php?t=329525">NickelMenu</a> and are familiar on how to add entries for them. Please note that <a href="src/branch/master/Src/Obenkyobo/OtherFiles/packager.sh">Packager.sh</a> should take care of this for you. If you intend to reuse this repository as a template for your project you will have to change packager.sh's entries.
+I'm assuming that you already have some sort of "App launcher" installed on your ereader, be it <a href="https://www.mobileread.com/forums/showthread.php?t=274231">KFMon</a> or <a href="https://www.mobileread.com/forums/showthread.php?t=329525">NickelMenu</a> and are familiar on how to add entries for them. Please note that <a href="Src/Obenkyobo/OtherFiles/packager.sh">Packager.sh</a> should take care of this for you. If you intend to reuse this repository as a template for your project you will have to change packager.sh's entries.
 
 You ll want to setup a fixed IP address for sure it. Be it to be used with <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a>'s deploy_script.sh, or to register your device properly within QtCreator's "run devices"
 
