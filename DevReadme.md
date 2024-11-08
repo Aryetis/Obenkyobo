@@ -1,9 +1,9 @@
 ## How to develop for Kobo ?
 
 You can setup a very basic Kobo dev environment by following either 
-- The <a href="https://github.com/koreader/koxtoolchain">koxtoolchain instructions</a> and work your way from here by cross-compiling qt for ARM and the QTPA kobo platform plugin. To validate your arm gcc, run your first non graphical "hello world" throught an ssh-server or use koreader "run command" option.
+- The <a href="https://github.com/koreader/koxtoolchain">koxtoolchain instructions</a> and work your way from here. To be honest, I m not totally sure what you'll end up with. No qt that s for sure, some lua support of some sort. Using it alongside some stuff like <a href="https://github.com/NiLuJe/FBInk">FBInk</a> should allow you to print some stuff on screen. To be noted, <a href="https://github.com/baskerville/plato/blob/master/doc/BUILD.md">Plato</a> also has its own toolchain for kobo, 
 - If all you're interested in is getting some basic gcc working <a href="https://github.com/NiLuJe/koxtoolchain/"> Niluje's toolchain </a> is the way to go.
-- If you're interested in getting Qt binaries along with its <a href="https://github.com/Aryetis/qt5-kobo-platform-plugin"> Qt Platform Abstraction for Kobo</a> and <a href="https://github.com/Aryetis/KoboExtraFunk">KoboExtraFunk library</a> to easily manipulate kobo's specific features (such as wifi, buttons, screen settings, etc...) and a bunch of extra libraries (zlib-ng, libb2, zstd, openssl, pnglib, libjpeg-turbo, expat, pcre, libfreetype and harfbuzz). Then the "easy" route is to use my fork of @Rain92's <a href="https://github.com/Aryetis/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> to setup everything. This is what we'll discuss with this readme.
+- But if you're interested in getting something "to get you coding fast", some Qt binaries along with its <a href="https://github.com/Aryetis/qt5-kobo-platform-plugin"> Qt Platform Abstraction for Kobo</a> and <a href="https://github.com/Aryetis/KoboExtraFunk">KoboExtraFunk library</a> to easily manipulate kobo's specific features (such as wifi, buttons, screen settings, etc...) and a bunch of extra libraries (zlib-ng, libb2, zstd, openssl, pnglib, libjpeg-turbo, expat, pcre, libfreetype and harfbuzz). Then the "easy" route is to use my fork of @Rain92's <a href="https://github.com/Aryetis/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> to setup everything. This is what we'll discuss with this readme.
 
 ## How to setup Obenkyobo dev environment using kobo-qt-setup-scripts ? (as of 5th November 2024, tested with WSL2 Debian Bookworm) 
 
@@ -40,7 +40,7 @@ That should get you a working cross commpiler and qt binaries configured with a 
 
 ### 2. Time to get Obenkyobo's repository : 
 - `git clone --recurse-submodules git@github.com:Aryetis/Obenkyobo.git` (or `git clone --recurse-submodules https://github.com/Aryetis/Obenkyobo.git` if you don't use ssh keys for github)
-- And then simply open its `ObenkyoboProject.pro` file with QtCreator. Once there you'll have to setup a "kit" using the arm-kobo-linux-gnueabihf-gcc/g++ and qt binaries compiled above. cf screenshot below.
+- And then simply open its `ObenkyoboProject.pro` file with QtCreator. Once there you'll have to setup a "kit" using the arm-kobo-linux-gnueabihf-gcc/g++ and qt binaries compiled above. Compilers should be in the `~/x-tools/arm-kobo-linux-gnueabihf` folder and you'll want to add the custom Qt in the "Qt Versions" tab by picking its qmake at `~/qt-bin/qt-linux-5.15-kde-kobo/bin`. "Run device" should be pretty much self explanatory, although now might be a good time to install <a href="https://www.mobileread.com/forums/showthread.php?t=254214">Niluje's kobo stuff</a> to get a working gdb client, rsync, sftp running on your kobo. Gdb can be setup later on (check section "4. Setting up gdb"). Once you've setup everything your kit should look somewhat like this.
 
 <p align="center">
   <img src="DevReadme/KoboQtKit.jpg" width="807" height="528" >
@@ -75,7 +75,7 @@ Projects->Kobo(Kit)->Run->Deployment-> Add Run custom remote command with :
 Projects->Kobo(Kit)->Run->Environment->(System Environment)->Add create new variable with at least 
 # everything in here is usually set at runtime by Obenkyobo_launcher.sh when running application from device itself. But because we can't source it from QtCreator, we set everything manually in here.
 LD_LIBRARY_PATH=/mnt/onboard/.adds/qt-linux-5.15-kde-kobo/lib:/mnt/onboard/.adds/Obenkyobo/lib:
-QT_QPA_PLATFORM=kobo
+QT_QPA_PLATFORM=kobo   # depending of your device and when you pulled you might want to use this instead "kobo:debug:experimentaltouchhandler"
 QT_QPA_EVDEV_DEBUG=true # if you want to debug libkobo.so qpa inputs for instance
 ```
 
@@ -103,13 +103,13 @@ Please note that there is a <a href="https://bugreports.qt.io/browse/QTCREATORBU
 - Fix the bug manually by following <a href="https://microhobby.com.br/blog/2023/08/08/qt-creator-v9-0-2-debug-helpers-not-working-on-ubuntu-23-04-and-debian-bookworm-12/">this tutorial</a>
 - Update to Trixie/unstable which has QtCreator v10.0.2-4. (seems to cause issue with ./install_toolchain.sh ? Will investigate when Trixie is out of testing phase)
 - Download standalone QtCreator from <a href="https://download.qt.io/official_releases/qtcreator/">offline installers</a>, in theory it shouldn't mix with system libs and packages... I'm not too fond of it but it looks likes the best bet for now. Here's a bunch of things you'll need to intall to make it work (might be missing some I didn't took notes) 
-`sudo apt install libxkbcommon-x11-0 libxcb-shape0 libxcb-render-util0 libxcb-keysyms1 libxcb-image0 libxcb-icccm4 libdbus-1-dev libwayland-cursor0 libxaw7 libxmu6 libxt6 libxtst6` . To create star menu entry for it (and others wsl apps) create a file `/usr/share/applications/qtcreator-13.desktop` and fill it like so. (And throw the icons from <a href="DevReadme/QtCreatorIcons.zip">QtCreatorIcons.zip archive</a> into `/usr/share/icons/hicolor`)
+`sudo apt install libxkbcommon-x11-0 libxcb-shape0 libxcb-render-util0 libxcb-keysyms1 libxcb-image0 libxcb-icccm4 libdbus-1-dev libwayland-cursor0 libxaw7 libxmu6 libxt6 libxtst6 libxcb-randr0 libxcb-sync1 libxcb-xfixes0 libx11-xcb1 libgl1-mesa-glx mesa-utils libglib2.0-cil` . To create star menu entry for it (and others wsl apps) create a file `/usr/share/applications/qtcreator-13.desktop` and fill it like so. (And throw the icons from <a href="DevReadme/QtCreatorIcons.zip">QtCreatorIcons.zip archive</a> into `/usr/share/icons/hicolor`)
 ```
 [Desktop Entry]
 Name=qtcreator
 Icon=QtProject-qtcreator
 Comment=QtCreator-13.0.0 Qt IDE
-Exec="~/qtcreator-13.0.0/bin/qtcreator" %f
+Exec="~/qtcreator-13.0.0/bin/qtcreator" %f # You might need to use hardpath here, seems like some wsl does not like using ~/ there
 Version=13.0.0
 Type=Application
 Categories=Development;IDE;
@@ -119,20 +119,22 @@ StartupNotify=true
 
 ## Setting up the Ereader
 
-Setup a fixed IP address for it and use it in <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a>  deploy_script.sh if you go this route instead of using QtCreator
+I'm assuming that you already have some sort of "App launcher" installed on your ereader, be it <a href="https://www.mobileread.com/forums/showthread.php?t=274231">KFMon</a> or <a href="https://www.mobileread.com/forums/showthread.php?t=329525">NickelMenu</a> and are familiar on how to add entries for them. Please note that <a href="Src/Obenkyobo/OtherFiles/packager.sh">Packager.sh</a> should take care of this for you. If you intend to reuse this repository as a template for your project you will have to change packager.sh's entries.
 
-Ereader is rebooting upon Deployment ? Probably because kfmon/nm is scanning for the freshly installed/deployed stuff and reboots the device to update its nickelMenu entry. You should probably setup only select INSTALLS += target , when working daily
+You ll want to setup a fixed IP address for sure it. Be it to be used with <a href="https://github.com/Rain92/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a>'s deploy_script.sh, or to register your device properly within QtCreator's "run devices"
 
-Please note that the wifi indicator on your kobo can sometimes lie to you. To work around this you can either : 
+Is your Ereader rebooting upon Deployment ? That's probably because kfmon/nm is scanning for the freshly installed/deployed stuff and reboots the device to update its nickelMenu entry. You should probably select "INSTALLS += target" in Obenkyobo.pro when working daily. That way it won't resend them everytime.
+
+Note that the wifi indicator on your kobo can sometimes lie to you. To work around this you can either : 
 - Turn on developer mode on the kobo by searching for a book named `devmodeon`, then force the wifi to stay on during dev session : Plus->Parameters->Technical informations->Developer options->force Wifi ON. 
 - Simply tap the wifi signal icon and keep its wifi list widget open, this should work 99% of the time.
 
 Install <a href="https://www.mobileread.com/forums/showthread.php?t=254214">Niluje's kobo stuff</a> package to get various programs running on the kobo such as : 
-- `dropbear` ssh server (connect with root and empty password)
+- `dropbear` ssh server (connect with root and empty password, yes empty password So just in case, you should probably set one up or keep your wifi turned off. You ve been warned.)
 - `nano`, `gdb`, `strace`
 - `fbgrab picture.png` to take screenshots
+= `rsync`, `sftp` 
 - etc 
-(Please note that there is no password on the ssh server for root's account. So just in case, you should probably set one up or keep your wifi turned off. You ve been warned. )
 
 ## Miscellaneous
 
