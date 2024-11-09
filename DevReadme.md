@@ -59,6 +59,7 @@ INSTALLS += scripts # ship debug scripts, launcher and other scripts
 
 Now let's set everything on QtCreator's side (note that some instructions are on a "Per workspace" basis). 
 ```
+Really important, packager.sh scripts expect everything to be there with that exact syntax. 
 Settings->Build & Run->Default Build Properties->Default build directory  : 
 %{JS: Util.asciify("build-%{Project:Name}-%{Kit:FileSystemName}-%{BuildConfig:Name}")}
 
