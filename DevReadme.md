@@ -47,14 +47,12 @@ That should get you a working cross commpiler and qt binaries configured with a 
 </p>
 
 - You'll have to update the symbolic link at `[Obenkyobo]/Src/Obenkyobo/OtherFiles/Dependencies/qt-linux-5.15-kde-kobo` to point towards `[kobo-qt-setup-scripts]/deploy/qt-linux-5.15-kde-kobo` folder. So we can push/rsync both our program and everything qt related at the press of a single button in QtCreator.
-- Because we're using kde's qt we also need to indicate qt5-kobo-platform-plugin to use our qt-linux-5.15-kde-kobo instead of qt-linux-5.15-kobo. Therefore run this in Obenkyobo's root folder `echo "CUSTOM_QTDIR = /mnt/onboard/.adds/qt-linux-5.15-kde-kobo" > [Obenkyobo]/Src/Libs/qt5-kobo-platform-plugin/koboplatformplugin.pri`
-- Modify `ObenkyoboProject/Src/Obenkyobo/Obenkyobo.pro` to set what part of the project you actually want to ship over sftp, pick one of the following option : 
+- We also need to indicate to our qtpa that we're using qt-linux-5.15-kde-kobo instead of the usual qt-linux-5.15-kobo. Therefore run this in Obenkyobo's root folder `echo "CUSTOM_QTDIR = /mnt/onboard/.adds/qt-linux-5.15-kde-kobo" > [Obenkyobo]/Src/Libs/qt5-kobo-platform-plugin/koboplatformplugin.pri`
+- Next, we need to set what part of the project you actually want to ship. If you're using rsync stick to everything and it will be fine. But if you had to switch to sftp for some reasons then you probably want to pay attention to this. Modify `ObenkyoboProject/Src/Obenkyobo/Obenkyobo.pro` and set the `INSTALLS +=` line to one of the following : 
 ```
-INSTALLS += target everything thumbnail # will ship everything (you probably want to do this at first then switch to the last one)
-INSTALLS += target everythingButLibs thumbnail  # ship everything but libraries/dependencies
-INSTALLS += target everythingButLibsAndSh #s ship everything but libraries/dependencies and the Obenkyobo_launcher.sh
-INSTALLS += target everything thumbnail # use only this for full deploy, to save time set it to += target afterwards  
-INSTALLS += target # will only ship Obenkyobo's binary
+INSTALLS += everything # will ship everything
+INSTALLS += everythingButQtLibs  # ship everything but Qt qt-linux-5.15-kde-kobo
+INSTALLS += scripts # ship debug scripts, launcher and other scripts  
 ```
 
 ### 3. Setting up QtCreator
