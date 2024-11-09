@@ -169,7 +169,7 @@ NEVER modify any of the .sh scripts under windows... Windows end of line will me
 9. Create the following file `C:\Users\<UserName>\.wslconfig with this content` : 
 ```
 [wsl2]
-kernel=C:\\Users\\aramir\\wsl_kernel\\bzImage
+kernel=C:\\Users\\<UserName>\\wsl_kernel\\bzImage
 ```
 10. in powershell/cmd `wsl --shutdown` (just to be sure)
 11. relaunch your WSL2 and check out your new kernel with : `uname -a` 
