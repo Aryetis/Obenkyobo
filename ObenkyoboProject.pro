@@ -7,6 +7,8 @@
 #              - fix if (!KoboPlatformExtra::TestInternetConnectionStatic())
 #              - make a NoWait wifi toggle method in KoboLibraExtraFunk
 #              - write a proper ExtraFunk manual
+#              - added IsColor to KoboExtraFunk
+#              - KILL any wifi transactions before sleeping
 #-------------------------------------------------
 # TODO (0.3.2) : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
 #                - Show last error's log in a popup on startup
