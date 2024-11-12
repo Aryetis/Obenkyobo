@@ -1,7 +1,7 @@
 ## How to develop for Kobo ?
 
 You can setup a very basic Kobo dev environment by following either 
-- The <a href="https://github.com/koreader/koxtoolchain">koxtoolchain instructions</a> and work your way from here. To be honest, I m not totally sure what you'll end up with. No qt that s for sure, some lua support of some sort. Using it alongside some stuff like <a href="https://github.com/NiLuJe/FBInk">FBInk</a> should allow you to print some stuff on screen. To be noted, <a href="https://github.com/baskerville/plato/blob/master/doc/BUILD.md">Plato</a> also has its own toolchain for kobo, 
+- Look at the <a href="https://github.com/koreader/koxtoolchain">koxtoolchain instructions</a> and work your way from here. To be honest, I m not totally sure what you'll end up with. No qt that s for sure, some lua support of some sort. Using it alongside some stuff like <a href="https://github.com/NiLuJe/FBInk">FBInk</a> should allow you to print some stuff on screen. To be noted, <a href="https://github.com/baskerville/plato/blob/master/doc/BUILD.md">Plato</a> also has its own toolchain for kobo, 
 - If all you're interested in is getting some basic gcc working <a href="https://github.com/NiLuJe/koxtoolchain/"> Niluje's toolchain </a> is the way to go.
 - But if you're interested in getting something "to get you coding fast", some Qt binaries along with its <a href="https://github.com/Aryetis/qt5-kobo-platform-plugin"> Qt Platform Abstraction for Kobo</a> and <a href="https://github.com/Aryetis/KoboExtraFunk">KoboExtraFunk library</a> to easily manipulate kobo's specific features (such as wifi, buttons, screen settings, etc...) and a bunch of extra libraries (zlib-ng, libb2, zstd, openssl, pnglib, libjpeg-turbo, expat, pcre, libfreetype and harfbuzz). Then the "easy" route is to use my fork of @Rain92's <a href="https://github.com/Aryetis/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> to setup everything. This is what we'll discuss with this readme.
 
@@ -47,20 +47,19 @@ That should get you a working cross commpiler and qt binaries configured with a 
 </p>
 
 - You'll have to update the symbolic link at `[Obenkyobo]/Src/Obenkyobo/OtherFiles/Dependencies/qt-linux-5.15-kde-kobo` to point towards `[kobo-qt-setup-scripts]/deploy/qt-linux-5.15-kde-kobo` folder. So we can push/rsync both our program and everything qt related at the press of a single button in QtCreator.
-- Because we're using kde's qt we also need to indicate qt5-kobo-platform-plugin to use our qt-linux-5.15-kde-kobo instead of qt-linux-5.15-kobo. Therefore run this in Obenkyobo's root folder `echo "CUSTOM_QTDIR = /mnt/onboard/.adds/qt-linux-5.15-kde-kobo" > [Obenkyobo]/Src/Libs/qt5-kobo-platform-plugin/koboplatformplugin.pri`
-- Modify `ObenkyoboProject/Src/Obenkyobo/Obenkyobo.pro` to set what part of the project you actually want to ship over sftp, pick one of the following option : 
+- We also need to indicate to our qtpa that we're using qt-linux-5.15-kde-kobo instead of the usual qt-linux-5.15-kobo. Therefore run this in Obenkyobo's root folder `echo "CUSTOM_QTDIR = /mnt/onboard/.adds/qt-linux-5.15-kde-kobo" > [Obenkyobo]/Src/Libs/qt5-kobo-platform-plugin/koboplatformplugin.pri`
+- Next, we need to set what part of the project you actually want to ship. If you're using rsync stick to everything and it will be fine. But if you had to switch to sftp for some reasons then you probably want to pay attention to this. Modify `ObenkyoboProject/Src/Obenkyobo/Obenkyobo.pro` and set the `INSTALLS +=` line to one of the following : 
 ```
-INSTALLS += target everything thumbnail # will ship everything (you probably want to do this at first then switch to the last one)
-INSTALLS += target everythingButLibs thumbnail  # ship everything but libraries/dependencies
-INSTALLS += target everythingButLibsAndSh #s ship everything but libraries/dependencies and the Obenkyobo_launcher.sh
-INSTALLS += target everything thumbnail # use only this for full deploy, to save time set it to += target afterwards  
-INSTALLS += target # will only ship Obenkyobo's binary
+INSTALLS += everything # will ship everything
+INSTALLS += everythingButQtLibs  # ship everything but Qt qt-linux-5.15-kde-kobo
+INSTALLS += scripts # ship debug scripts, launcher and other scripts  
 ```
 
 ### 3. Setting up QtCreator
 
 Now let's set everything on QtCreator's side (note that some instructions are on a "Per workspace" basis). 
 ```
+Really important, packager.sh scripts expect everything to be there with that exact syntax. 
 Settings->Build & Run->Default Build Properties->Default build directory  : 
 %{JS: Util.asciify("build-%{Project:Name}-%{Kit:FileSystemName}-%{BuildConfig:Name}")}
 
@@ -170,7 +169,7 @@ NEVER modify any of the .sh scripts under windows... Windows end of line will me
 9. Create the following file `C:\Users\<UserName>\.wslconfig with this content` : 
 ```
 [wsl2]
-kernel=C:\\Users\\aramir\\wsl_kernel\\bzImage
+kernel=C:\\Users\\<UserName>\\wsl_kernel\\bzImage
 ```
 10. in powershell/cmd `wsl --shutdown` (just to be sure)
 11. relaunch your WSL2 and check out your new kernel with : `uname -a` 
