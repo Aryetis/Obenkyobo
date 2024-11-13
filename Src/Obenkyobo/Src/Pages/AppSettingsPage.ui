@@ -116,6 +116,11 @@
            <string>4x3</string>
           </property>
          </item>
+         <item>
+          <property name="text">
+           <string>5x3</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>

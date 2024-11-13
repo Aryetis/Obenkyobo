@@ -20,6 +20,7 @@ AppSettingsPage::AppSettingsPage(QWidget *parent) :
     QObject::connect(&KoboPlatformExtra::GetKoboWifiManager(), &KoboWifiManager::RequestTerminated,
                      [&](KoboWifiManager::WifiManagerState state)
                      {
+                        ui->WifiCheckBox->setDisabled(false);
                         if (state == KoboWifiManager::WifiManagerState::Enabling)
                             ui->WifiCheckBox->setCheckState(Qt::CheckState::Checked);
                         else if (state == KoboWifiManager::WifiManagerState::Disabling)
@@ -113,9 +114,12 @@ bool AppSettingsPage::IsWeightedRandomEnabled() const
 void AppSettingsPage::on_WifiCheckBox_clicked(bool checked)
 {
     if (KoboPlatformExtra::IsWifiManagerBusy())
+    {
         return;
+    }
 
     ui->WifiCheckBox->setCheckState(Qt::CheckState::PartiallyChecked);
+    ui->WifiCheckBox->setDisabled(true);
     wifiStatus = checked;
     settingsSerializer->setValue("AppSettings/wifi", wifiStatus);
     if (wifiStatus)

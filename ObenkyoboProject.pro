@@ -4,8 +4,6 @@
 #              - qpa, add support for Kobo Libra Colour
 #              - qpa, add "default handler" in descriptor + legacytouchhandler parameter + rename experimentaltouchhandler into moderntouchhandler
 #              - qpa, rewrite readme to make it more comprehensible that invertX, Y etc is only available on "legacyHandler"
-#              - fix if (!KoboPlatformExtra::TestInternetConnectionStatic())
-#              - make a NoWait wifi toggle method in KoboLibraExtraFunk
 #              - write a proper ExtraFunk manual
 #              - added IsColor to KoboExtraFunk
 #              - KILL any wifi transactions before sleeping
