@@ -5,7 +5,6 @@
 #include "Src/GetMy.h"
 #include "Src/Tools.h"
 #include "Src/mainwindow.h"
-#include "Src/Widgets/PopupWidget.h"
 
 AppSettingsPage::AppSettingsPage(QWidget *parent) :
     QWidget(parent),
@@ -17,6 +16,15 @@ AppSettingsPage::AppSettingsPage(QWidget *parent) :
                                                      .arg((int)(GetMy::Instance().Descriptor().width*0.075f)));
     ui->KanaHardRefreshCheckBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
                                                      .arg((int)(GetMy::Instance().Descriptor().width*0.075f)));
+
+    QObject::connect(&KoboPlatformExtra::GetKoboWifiManager(), &KoboWifiManager::RequestTerminated,
+                     [&](KoboWifiManager::WifiManagerState state)
+                     {
+                        if (state == KoboWifiManager::WifiManagerState::Enabling)
+                            ui->WifiCheckBox->setCheckState(Qt::CheckState::Checked);
+                        else if (state == KoboWifiManager::WifiManagerState::Disabling)
+                            ui->WifiCheckBox->setCheckState(Qt::CheckState::Unchecked);
+                     });
 
     qRegisterMetaTypeStreamOperators<QSet<QString> >("QSet<QString>");
     ParseConfigFile();
@@ -104,21 +112,16 @@ bool AppSettingsPage::IsWeightedRandomEnabled() const
 
 void AppSettingsPage::on_WifiCheckBox_clicked(bool checked)
 {
+    if (KoboPlatformExtra::IsWifiManagerBusy())
+        return;
+
+    ui->WifiCheckBox->setCheckState(Qt::CheckState::PartiallyChecked);
     wifiStatus = checked;
     settingsSerializer->setValue("AppSettings/wifi", wifiStatus);
-
     if (wifiStatus)
-    {
-        GetMy::Instance().ToolsInst().DisplayPopup("Enabling wifi, please wait...", false, false);
-        KoboPlatformExtra::EnableWiFiConnectionStatic(); // blocking code ! => warn user with popup
-        GetMy::Instance().ToolsInst().GetPopupInstance()->accept();
-    }
+        KoboPlatformExtra::EnableWiFiConnectionStatic();
     else
-    {
-        GetMy::Instance().ToolsInst().DisplayPopup("Disabling wifi, please wait...", false, false);
-        KoboPlatformExtra::DisableWiFiConnectionStatic(); // blocking code ! => warn user with popup
-        GetMy::Instance().ToolsInst().GetPopupInstance()->accept();
-    }
+        KoboPlatformExtra::DisableWiFiConnectionStatic();
 }
 
 void AppSettingsPage::on_HardRefreshDropdown_currentIndexChanged(int index)
