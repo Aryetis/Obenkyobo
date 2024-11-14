@@ -6,7 +6,6 @@
 #              - qpa, rewrite readme to make it more comprehensible that invertX, Y etc is only available on "legacyHandler"
 #              - write a proper ExtraFunk manual
 #              - added IsColor to KoboExtraFunk
-#              - KILL any wifi transactions before sleeping
 #-------------------------------------------------
 # TODO (0.3.2) : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
 #                - Show last error's log in a popup on startup
@@ -18,6 +17,7 @@
 #                - investigate the size fixing bug if POPUP_FNT_GUESSES_RESIZE_ERROR_CNT is lower than 9
 #                  (it's because of popup somehow)
 #                - charging ascii symbol ⚡ expand the top bar => sizing is not fucked up but still ...
+#                - Fix wifi icon not set to "partial checking" when waking up
 #-------------------------------------------------
 
 TEMPLATE = subdirs

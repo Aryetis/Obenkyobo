@@ -8,10 +8,9 @@ set -e #-x
 #				  | [ProjectName] /   [ProjectName]
 #				  | [LauncherName].sh & exit_nickel.sh & start_nickel.sh
 LongName="Obenkyobo !"
-RemoteIp="192.168.1.18"
 Author="Aryetis"
 KfMonDbComment="Obenkyo clone-ish"
-Version="0.3.1"
+Version="0.4.0"
 LauncherName=$4_launcher.sh
 QtPluginKobo=kobo
 # for easier deployment, make your qt binary folder, this QtFolder variable and (if necessary) koboplatformplugin's .pri CUSTOM_QTDIR match with each others

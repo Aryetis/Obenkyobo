@@ -105,6 +105,8 @@ const std::string Tools::GetFirmwareStr() const
 
 void Tools::DisplayPopup(QString message, bool fullscreen /*= false*/, bool validateButton /*= true*/)
 {
+    if (popup != nullptr)
+        delete popup;
     popup = new PopupWidget(message, fullscreen, validateButton);
     if (validateButton)
         popup->exec();
@@ -231,12 +233,22 @@ void Tools::PreSleep()
 {
     std::cout << "LOG: going to PreSleep @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
-    if(IsScreenSaverNeeded())
+    if(IsScreenSaverNeeded() && !wifiHanging)
+    {
         GetMy::Instance().ToolsInst().DisplayPopup("Sleeping", true, false);
+    }
 
     std::cout << "LOG: disabling WiFi" << std::endl;
-    KoboPlatformExtra::DisableWiFiConnectionStatic(); // MANDATORY !!!!!
+    if (KoboPlatformExtra::IsWifiManagerBusy())
+    {   // Could also register to RequestTerminatedRequest instead of looping back like that, TODO later
+        std::cout << "LOG: WifiManager is busy => Looping back" << std::endl;
+        preSleepTimer.start(POWER_REQUEST_TIMER);
+        wifiHanging = true;
+        return;
+    }
 
+    wifiHanging = false;
+    KoboPlatformExtra::DisableWiFiConnectionStatic(); // MANDATORY !!!!!
     sleepTimer.start(PRESLEEP_DURATION);  // MANDATORY !!!!! <= this is it.... without this there's some bullshit background kobo/ntx stuff preventing the device from actually going to sleep (cf: battery consumption for confirmation) => need to split sleep() into fakeSleep() and Sleep() or something alike...
 }
 
@@ -322,11 +334,6 @@ void Tools::WakeUp()
 {
     std::cout << "LOG: Waking up @" << QTime::currentTime().toString("hh:mm:ss").toStdString() << std::endl;
 
-    if (IsScreenSaverNeeded())
-    {
-        GetMy::Instance().ToolsInst().GetPopupInstance()->accept();
-        GetMy::Instance().ToolsInst().DisplayPopup("Waking Up", true, false);
-    }
     GetMy::Instance().ScreenSettingsPageInst().OnWakeUp();  // TODO : replace with signals at some point
     GetMy::Instance().MainWindowInst().OnWakeUp();
 

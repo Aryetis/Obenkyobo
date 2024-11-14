@@ -92,7 +92,7 @@ private :
                                                              {SIGUSR2, "SIGUSR2"}, {SIGSYS, "SIGSYS"}};
     inline static bool isLocalTimeFormatUS;
     inline static std::string firmwareStr;
-    inline static PopupWidget* popup;
+    inline static PopupWidget* popup = nullptr;
     inline static QTimer wakeUpTimer = QTimer();
     inline static QTimer preSleepTimer = QTimer();
     inline static QTimer inactivityTimer = QTimer();
@@ -102,6 +102,7 @@ private :
     inline static bool sleepReached = false;
     inline static DeviceState deviceState = DeviceState::awake;
     inline static bool sleepError = false;
+    inline static bool wifiHanging = false;
 };
 
 #endif // TOOLS_H

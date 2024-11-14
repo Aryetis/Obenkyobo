@@ -74,7 +74,6 @@
          <property name="font">
           <font>
            <pointsize>18</pointsize>
-           <weight>75</weight>
            <bold>true</bold>
           </font>
          </property>
@@ -106,7 +105,7 @@
           <enum>QFrame::NoFrame</enum>
          </property>
          <property name="text">
-          <string>v0.3.1</string>
+          <string>v0.4.0</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignHCenter|Qt::AlignTop</set>
