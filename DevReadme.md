@@ -10,7 +10,7 @@ You can setup a Kobo dev environment by :
 ### 1. Run the following commands :
 ```bash
 # Getting a bunch of stuff necessaries for QtCreator, qt source compilation, additional libraries compilation, deployment, etc
-sudo apt-get install build-essential autoconf automake bison flex gawk libtool libtool-bin libncurses-dev curl file git gperf help2man texinfo unzip wget cmake pkg-config python3 mmv lftp clang libclang-dev llvm-dev rsync
+sudo apt-get install build-essential autoconf automake bison flex gawk libtool libtool-bin libncurses-dev curl file git gperf help2man texinfo unzip wget cmake pkg-config python3 mmv lftp clang libclang-dev llvm-dev rsync zip
 # Using kobo-qt-setup-scripts to get and install everything
 git clone --recurse-submodules git@github.com:Aryetis/kobo-qt-setup-scripts.git # or "git clone --recurse-submodules https://github.com/Aryetis/kobo-qt-setup-scripts.git", if you don't use ssh keys for github
 cd kobo-qt-setup-scripts
