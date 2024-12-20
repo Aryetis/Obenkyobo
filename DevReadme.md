@@ -1,7 +1,7 @@
 ## How to develop for Kobo ?
 
-You can setup a very basic Kobo dev environment by following either 
-- Look at the <a href="https://github.com/koreader/koxtoolchain">koxtoolchain instructions</a> and work your way from here. To be honest, I m not totally sure what you'll end up with. No qt that s for sure, some lua support of some sort. Using it alongside some stuff like <a href="https://github.com/NiLuJe/FBInk">FBInk</a> should allow you to print some stuff on screen. To be noted, <a href="https://github.com/baskerville/plato/blob/master/doc/BUILD.md">Plato</a> also has its own toolchain for kobo, 
+You can setup a Kobo dev environment by : 
+- Looking at the <a href="https://github.com/koreader/koxtoolchain">koxtoolchain instructions</a> and work your way from here. To be honest, I m not totally sure what you'll end up with. No qt that s for sure, some lua support of some sort. Using it alongside some stuff like <a href="https://github.com/NiLuJe/FBInk">FBInk</a> should allow you to print some stuff on screen. To be noted, <a href="https://github.com/baskerville/plato/blob/master/doc/BUILD.md">Plato</a> also has its own toolchain for kobo, 
 - If all you're interested in is getting some basic gcc working <a href="https://github.com/NiLuJe/koxtoolchain/"> Niluje's toolchain </a> is the way to go.
 - But if you're interested in getting something "to get you coding fast", some Qt binaries along with its <a href="https://github.com/Aryetis/qt5-kobo-platform-plugin"> Qt Platform Abstraction for Kobo</a> and <a href="https://github.com/Aryetis/KoboExtraFunk">KoboExtraFunk library</a> to easily manipulate kobo's specific features (such as wifi, buttons, screen settings, etc...) and a bunch of extra libraries (zlib-ng, libb2, zstd, openssl, pnglib, libjpeg-turbo, expat, pcre, libfreetype and harfbuzz). Then the "easy" route is to use my fork of @Rain92's <a href="https://github.com/Aryetis/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> to setup everything. This is what we'll discuss with this readme.
 
@@ -10,7 +10,7 @@ You can setup a very basic Kobo dev environment by following either
 ### 1. Run the following commands :
 ```bash
 # Getting a bunch of stuff necessaries for QtCreator, qt source compilation, additional libraries compilation, deployment, etc
-sudo apt-get install build-essential autoconf automake bison flex gawk libtool libtool-bin libncurses-dev curl file git gperf help2man texinfo unzip wget cmake pkg-config python3 mmv lftp clang libclang-dev llvm-dev rsync
+sudo apt-get install build-essential autoconf automake bison flex gawk libtool libtool-bin libncurses-dev curl file git gperf help2man texinfo unzip wget cmake pkg-config python3 mmv lftp clang libclang-dev llvm-dev rsync zip
 # Using kobo-qt-setup-scripts to get and install everything
 git clone --recurse-submodules git@github.com:Aryetis/kobo-qt-setup-scripts.git # or "git clone --recurse-submodules https://github.com/Aryetis/kobo-qt-setup-scripts.git", if you don't use ssh keys for github
 cd kobo-qt-setup-scripts
