@@ -13,7 +13,7 @@ AppSettingsPage::AppSettingsPage(QWidget *parent) :
     ui->setupUi(this);
 
     ui->WifiCheckBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
-                                                     .arg((int)(GetMy::Instance().Descriptor().width*0.075f)));
+                                                     .arg((int)(GetMy::Instance().Descriptor().width*0.075f))); // TODO : add magic value to DefineLand
     ui->KanaHardRefreshCheckBox->setStyleSheet( QString("QCheckBox::indicator { width: %1px; height: %1px;}")
                                                      .arg((int)(GetMy::Instance().Descriptor().width*0.075f)));
 

@@ -84,7 +84,7 @@ void MainWindow::AggressiveClearScreen(bool force /*=false*/) const
 {
     if (GetMy::Instance().AppSettingsPageInst().GetKanaHardRefresh() || force)
     {
-        KoboPlatformFunctions::setFullScreenRefreshMode(WaveForm::WaveForm_GC16);
+        // KoboPlatformFunctions::setFullScreenRefreshMode(WaveForm::WaveForm_GC16); // TODO .... WHY ? test without it
         KoboPlatformFunctions::clearScreen(true);
         ui->centralWidget->repaint();
         ui->menuBar->repaint();

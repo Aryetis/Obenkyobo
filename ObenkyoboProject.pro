@@ -6,6 +6,7 @@
 #              - qpa, rewrite readme to make it more comprehensible that invertX, Y etc is only available on "legacyHandler"
 #              - write a proper ExtraFunk manual
 #              - added IsColor to KoboExtraFunk
+#              - fix: fake sleep not ignoring button input
 #-------------------------------------------------
 # TODO (0.3.2) : - Use fontMetrics::boundingRect to adapt VocabDisplayPage font size AND Qcm's stem
 #                - Show last error's log in a popup on startup

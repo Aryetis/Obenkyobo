@@ -58,7 +58,7 @@ void NoteDisplayPage::Populate(NoteFileEntryWidget const* nfew)
         if (nfew->FileInfo().suffix() == "md")
         {
             ui->TextWidget->setText("");
-            ui->TextWidget->setMarkdown(GetFileInString(nfew->FileInfo()));
+            ui->TextWidget->setMarkdown(GetFileInString(nfew->FileInfo(), true));
         }
         else if (nfew->FileInfo().suffix() == "txt")
         {
@@ -73,7 +73,7 @@ void NoteDisplayPage::Populate(NoteFileEntryWidget const* nfew)
     }
 }
 
-QString NoteDisplayPage::GetFileInString(QFileInfo const& fileInfo) const
+QString NoteDisplayPage::GetFileInString(QFileInfo const& fileInfo, bool applyColorTags /*= false*/) const
 {
     QFile file(fileInfo.absoluteFilePath());
     if (!file.open(QFile::ReadOnly | QFile::Text))
@@ -85,8 +85,44 @@ QString NoteDisplayPage::GetFileInString(QFileInfo const& fileInfo) const
     {
         QTextStream fs(&file);
         QString content {fs.readAll()};
+
         if (content.trimmed() == "")
-            content = "FILE IS EMPTY :(";
+        {
+            return "FILE IS EMPTY :(";
+        }
+        else if(applyColorTags)
+        {
+            QVector<QString> colorTagStack;
+            // hard coding some colors to make sure I don't catch other things by mistake
+            QRegularExpression regex("<(azure|beige|black|blue|blueviolet|brown|"
+                                     "chocolate|coral|crimson|cyan|darkblue|darkcyan|darkgray|darkgreen|darkgrey|darkmagenta|darkorange"
+                                     "|darkviolet|fuchsia|gold|gray|green|grey|indigo|lavender|lightblue|lightcyan|lightgray|lightgreen"
+                                     "|lightgrey|lightpink|lightyellow|lime|magenta|navy|orange|pink|purple|red|salmon|silver|turquoise"
+                                     "|violet|white|yellow)>(.*?)(</\\1>°");
+                                     //"|violet|white|yellow)>([\\s\\S]*?)</\\1>");
+
+
+            // QRegularExpression regex("[<(.*?)>|(\\r?\\n)|(.*?)|</(.*?)>]");
+            // QRegularExpressionMatchIterator i = regex.globalMatch(content);
+            // int offset = 0;
+            // while (i.hasNext())
+            // {
+            //     QRegularExpressionMatch match = i.next();
+
+            //     content = content.replace(regex, "<font color='\\1'>\\2</font>");
+
+            //     QString replacement = "<font color='" + match.captured(1) + "'>" + matchedContent.toUpper() + "</font>";
+            //     result.replace(match.capturedStart(2) + offset, match.capturedLength(2), replacement);
+            //     offset += replacement.length() - matchedContent.length();
+            // }
+
+            // Keep replacing as long as there are matches
+            while (regex.globalMatch(content).hasNext())
+            {
+                content = content.replace(regex, "<font color='\\1'>\\2</font>");
+            }
+        }
+        std::cout << content.toStdString() << std::endl;
         return content;
     }
 }

@@ -7,6 +7,8 @@ namespace Ui
     class NoteDisplayPage;
 }
 
+class CustomSyntaxHighlighter;
+
 class NoteFileEntryWidget;
 class QFileInfo;
 class NoteDisplayPage : public QWidget
@@ -23,7 +25,7 @@ protected:
     bool eventFilter(QObject *obj, QEvent *ev) override;
 
 private:
-    QString GetFileInString(QFileInfo const& fileInfo) const;
+    QString GetFileInString(QFileInfo const& fileInfo, bool applyColorTags = false) const;
 
     Ui::NoteDisplayPage *ui;
 };
