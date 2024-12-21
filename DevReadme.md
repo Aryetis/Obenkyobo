@@ -144,6 +144,8 @@ How to double check what kind of file I'm dealing with `file testFile`
 
 How to check input sanity in qpa / LibKoboExtraFunk ? `evdev-dump /dev/input/event0`
 
+Need to scale QtCreator dpi ? put `export QT_SCALE_FACTOR=1.3` in ~/.bashrc 
+
 NEVER modify any of the .sh scripts under windows... Windows end of line will mess things up when ran on linux, or at the very least use `win2unix` afterwards to fix line endings issues.
 
 ## How to serial connect to Kobo ereader in WSL2 
