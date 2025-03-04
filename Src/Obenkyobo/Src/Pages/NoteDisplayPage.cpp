@@ -92,37 +92,40 @@ QString NoteDisplayPage::GetFileInString(QFileInfo const& fileInfo, bool applyCo
         }
         else if(applyColorTags)
         {
-            QVector<QString> colorTagStack;
-            // hard coding some colors to make sure I don't catch other things by mistake
-            QRegularExpression regex("<(azure|beige|black|blue|blueviolet|brown|"
-                                     "chocolate|coral|crimson|cyan|darkblue|darkcyan|darkgray|darkgreen|darkgrey|darkmagenta|darkorange"
-                                     "|darkviolet|fuchsia|gold|gray|green|grey|indigo|lavender|lightblue|lightcyan|lightgray|lightgreen"
-                                     "|lightgrey|lightpink|lightyellow|lime|magenta|navy|orange|pink|purple|red|salmon|silver|turquoise"
-                                     "|violet|white|yellow)>(.*?)(</\\1>°");
-                                     //"|violet|white|yellow)>([\\s\\S]*?)</\\1>");
-
-
-            // QRegularExpression regex("[<(.*?)>|(\\r?\\n)|(.*?)|</(.*?)>]");
-            // QRegularExpressionMatchIterator i = regex.globalMatch(content);
-            // int offset = 0;
-            // while (i.hasNext())
-            // {
-            //     QRegularExpressionMatch match = i.next();
-
-            //     content = content.replace(regex, "<font color='\\1'>\\2</font>");
-
-            //     QString replacement = "<font color='" + match.captured(1) + "'>" + matchedContent.toUpper() + "</font>";
-            //     result.replace(match.capturedStart(2) + offset, match.capturedLength(2), replacement);
-            //     offset += replacement.length() - matchedContent.length();
-            // }
-
-            // Keep replacing as long as there are matches
-            while (regex.globalMatch(content).hasNext())
+            // Goal, transform this : <red> BLAH </red>||</>
+            // into this : <font color='red'> BLAH </font>
+            // Also support multi lines and nested ones
+            QRegularExpressionMatchIterator regexMatchIterator {colorSyntaxRegex.globalMatch(content)};
+            int offset=0; // difference builds up as we replace text
+            while(regexMatchIterator.hasNext())
             {
-                content = content.replace(regex, "<font color='\\1'>\\2</font>");
+                QRegularExpressionMatch match = regexMatchIterator.next();
+
+                // closing color sequence (handle both </> and </red> but not </span>)
+                if (QString firstMatch{match.captured(1)}; firstMatch == "/"
+                    || ( firstMatch[0] == '/' && QColor::colorNames().contains(QStringRef(&firstMatch, 1, match.captured(1).length()-1))))
+                {
+                    QString replaceBy {"</font>"};
+                    // Can't use QString::replace(int i, int n, QString), cause it can go out of expected range and overwrite stuff
+                    content = content.remove(match.capturedStart()+offset, match.capturedLength());
+                    content = content.insert(match.capturedStart()+offset, replaceBy);
+                    offset += replaceBy.length()-match.captured(0).length();
+                }
+
+                // opening color sequence
+                // check that captured color match with SVG Color names spec
+                // https://www.w3.org/TR/SVG11/types.html#ColorKeywords
+                else if(QColor::colorNames().contains(match.captured(1)))
+                {
+                    QString replaceBy {"<font color='"+match.captured(1)+"'>"};
+                    content = content.remove(match.capturedStart()+offset, match.capturedLength());
+                    content = content.insert(match.capturedStart()+offset, replaceBy);
+                    offset += replaceBy.length()-match.captured(0).length();
+                }
             }
         }
-        std::cout << content.toStdString() << std::endl;
+
+        //std::cout << content.toStdString() << std::endl;
         return content;
     }
 }

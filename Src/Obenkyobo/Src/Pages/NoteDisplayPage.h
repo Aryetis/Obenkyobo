@@ -1,6 +1,8 @@
 #ifndef NOTEDISPLAYPAGE_H
 #define NOTEDISPLAYPAGE_H
 #include <QWidget>
+#include <QColor>
+#include <QRegularExpression>
 
 namespace Ui
 {
@@ -26,6 +28,7 @@ protected:
 
 private:
     QString GetFileInString(QFileInfo const& fileInfo, bool applyColorTags = false) const;
+    static const inline QRegularExpression colorSyntaxRegex {"<([\/a-zA-Z]*)>"};
 
     Ui::NoteDisplayPage *ui;
 };
