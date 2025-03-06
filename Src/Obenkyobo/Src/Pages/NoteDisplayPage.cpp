@@ -2,6 +2,8 @@
 #include "Src/GetMy.h"
 #include "Src/Widgets/FileEntryWidget.h"
 #include "Src/mainwindow.h"
+#include "Src/GetMy.h"
+#include "Src/Tools.h"
 #include <QScrollBar>
 #include <ui_NoteDisplayPage.h>
 
@@ -118,11 +120,11 @@ QString NoteDisplayPage::GetFileInString(QFileInfo const& fileInfo, bool applyCo
             QRegularExpressionMatchIterator regexMatchIterator {colorSyntaxRegex.globalMatch(content)};
             int offset=0; // difference builds up as we replace text
             QQueue<QString> colorStack;
+            QVector<int> malformedColorSqcPos;
             while(regexMatchIterator.hasNext())
             {
                 QRegularExpressionMatch match = regexMatchIterator.next();
                 QString replaceBy{""};
-
                 /******** opening color sequence ********/
                 if(QColor::colorNames().contains(match.captured(1)))
                 {
@@ -136,11 +138,15 @@ QString NoteDisplayPage::GetFileInString(QFileInfo const& fileInfo, bool applyCo
                         replaceBy = "<font color='"+match.captured(1)+"'>";
                 }
                 /******** closing color sequence (handle both </> and </red> but not </span>) ********/
-                else if (QString colorMatched{match.captured(1).mid(1, match.captured(1).length()-2)}; match.captured(1) == "/"
-                        || ( match.captured(1) == '/' && QColor::colorNames().contains(colorMatched)))
+                else if (QString colorMatched{match.captured(1).mid(1, match.captured(1).length()-1)}; match.captured(1) == "/"
+                    || ( match.captured(1).length() > 1 && match.captured(1).at(0) == '/' && QColor::colorNames().contains(colorMatched)))
                 {
                     if (colorStack.empty())
-                        std::cerr << "ERROR : <color> markdown shortcut malformed @" << match.capturedStart()+offset << std::endl;
+                    {
+                        std::cerr << "ERROR : <color> markdown shortcut malformed, ends at " << match.capturedStart()+offset << std::endl;
+                        if (malformedColorSqcPos.length() < 10) // let's not risk "infinite" logs
+                            malformedColorSqcPos.push_back(match.capturedStart()); // non offseted position, as it's for user log.
+                    }
                     else
                         colorStack.dequeue();
 
@@ -157,12 +163,25 @@ QString NoteDisplayPage::GetFileInString(QFileInfo const& fileInfo, bool applyCo
                     // Can't use QString::replace(int i, int n, QString), cause it can go out of expected range and overwrite stuff
                     content = content.remove(match.capturedStart()+offset,match.capturedLength());
                     content = content.insert(match.capturedStart()+offset, replaceBy);
-                    offset += replaceBy.length()-match.captured(0).length();
+                    offset += replaceBy.length()-match.captured().length();
                 }
+            }
+
+            if (!malformedColorSqcPos.empty())
+            {
+                QString errorMsg {[&]()
+                {
+                    QString ret {fileInfo.fileName()+" is malformed. Check the <color> tags at character position(s); "};
+                    for(int i:malformedColorSqcPos)
+                        ret += QString::number(i)+", ";
+                    ret = ret.left(ret.length()-2)+".";
+                    return ret;
+                }()};
+                GetMy::Instance().ToolsInst().DisplayPopup(errorMsg);
             }
         }
 
-        //std::cout << content.toStdString() << std::endl;
+        // std::cout << content.toStdString() << std::endl;
         return content;
     }
 }

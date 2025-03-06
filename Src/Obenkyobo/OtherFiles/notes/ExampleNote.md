@@ -4,9 +4,9 @@
 
 <span style="color:blue">blue dabudee dabuda</span>
 
-<red> red pretty please </red>
+<red> red pretty please </>
 
-<green> This is green <blue> (OH NO SOME BLUE) </blue> text </green>
+<green> This is green <blue> (OH NO SOME BLUE) </> text </>
 
 ------------------
 
