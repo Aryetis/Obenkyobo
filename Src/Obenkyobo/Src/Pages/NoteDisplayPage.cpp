@@ -92,55 +92,71 @@ QString NoteDisplayPage::GetFileInString(QFileInfo const& fileInfo, bool applyCo
         }
         else if(applyColorTags)
         {
-            // Goal, transform this : <red> BLAH </red>||</>
+            //************** ADDITIONAL COLOR MARKDOWN SHORTCUT ***************
+            // transform this : <red> BLAH </red>||</>
             // into this : <font color="red"> BLAH </font>
             // Also support multi lines and nested ones
-            // LIMITATIONS : everything in between <color> tags must be cleansed from \n \r
-            //               otherwise it can mess up the margin-left propery and even change display order /
-            //               push it further down the document... Thanks qt
-            //               Or.... we can manually introduce <font color="red" at the start of every new line
-            //               included in between tags... Let's try that...
-            // BONUS : let's remove "empty lines" <font color="green"></font> as they introduce spaces for no reasons (IMO)
-            //         And it's kinda cool to colorize multiple lines with just one nicely indented <color>\n line1\nline 2\n</> tag.
-            // BONUS 2 : "Yes but what about old mac return characters line break ? shouldn't you use "(\r\n|\r|\n)"
-            //           Can't test, don't care... Get some computer from this century.
-            static const QRegularExpression colorSyntaxRegex {"(?:<([\/a-zA-Z]*)>)|(\r?\n)"}; // reminder, (?:azeaze) non capturing group
+            // captured colors match with SVG Color names spec
+            // https://www.w3.org/TR/SVG11/types.html#ColorKeywords
+            // LIMITATION 1 : Everything in between <color> tags must be cleansed from \n \r
+            //                otherwise it can mess up the margin-left propery and even change display order /
+            //                push it further down the document... Thanks qt
+            //                Or.... we can manually introduce <font color="red" at the start of every new line
+            //                included in between tags... Let's try that...
+            // LIMITATION 2 : If you take the following text :
+            //                    <red>
+            //                    line 1
+            //                    </>
+            //                It will introcuce an empty <font color='red'></font>, creating a space before "line 1"
+            //                => let's prevent the insertion of empty <font></font> insertion
+            //                   (only) when detecting an "open sequence"/<color>. Keep in mind that chaining two+ real empty lines,
+            //                   is markdown new paragraph syntax.
+            // BONUS : "Yes but what about old mac return characters line break ? shouldn't you use "(\r\n|\r|\n) ?"
+            //         Can't test, don't care... Get some computer from this century.
+            //*****************************************************************
+            static const QRegularExpression colorSyntaxRegex {"(?:<([\/a-zA-Z]*)>)(\r?\n)?|(\r?\n)"}; // reminder, (?:azeaze) non capturing group
             QRegularExpressionMatchIterator regexMatchIterator {colorSyntaxRegex.globalMatch(content)};
             int offset=0; // difference builds up as we replace text
             QQueue<QString> colorStack;
             while(regexMatchIterator.hasNext())
             {
-                // QString replaceBy{""};
                 QRegularExpressionMatch match = regexMatchIterator.next();
                 QString replaceBy{""};
-                // closing color sequence (handle both </> and </red> but not </span>)
-                if (QString firstMatch{match.captured(1)}; firstMatch == "/"
-                    || ( firstMatch[0] == '/' && QColor::colorNames().contains(QStringRef(&firstMatch, 1, match.captured(1).length()-1))))
-                {
-                    colorStack.dequeue();
-                    replaceBy = "</font>";
-                }
-                // opening color sequence
-                // check that captured color match with SVG Color names spec
-                // https://www.w3.org/TR/SVG11/types.html#ColorKeywords
-                else if(QColor::colorNames().contains(match.captured(1)))
+
+                /******** opening color sequence ********/
+                if(QColor::colorNames().contains(match.captured(1)))
                 {
                     colorStack.enqueue(match.captured(1));
-                    // don't insert <font></font> lines !
-                    // TODO NOW : FIX ME
-                    if (QChar c = content[match.capturedEnd()+offset]; c == "\n" || c == "\r")
-                        replaceBy = "";
+                    if (QChar nextChar = content.at(match.capturedEnd()+offset); nextChar == '\n' || nextChar == '\r')
+                    {
+                        std::cout << "JACKPOT" << std::endl;
+                        content = content.remove(match.capturedStart()+offset, match.capturedLength());
+                        offset -= match.captured().length();
+                    }
                     else
                         replaceBy = "<font color='"+match.captured(1)+"'>";
                 }
-                // Repeating <font> tag for each new line
-                else if(!colorStack.empty() && !match.captured(2).isEmpty())
+                /******** closing color sequence (handle both </> and </red> but not </span>) ********/
+                else if (QString firstMatch{match.captured(1)}; firstMatch == "/"
+                    || ( firstMatch[0] == '/' && QColor::colorNames().contains(QStringRef(&firstMatch, 1, match.captured(1).length()-1))))
+                {
+                    if (colorStack.empty())
+                        std::cerr << "ERROR : <color> markdown shortcut malformed @" << match.capturedStart()+offset << std::endl;
+                    else
+                        colorStack.dequeue();
+
+                    // Don't eat the line return (if there is any) => add it back
+                    replaceBy = "</font>"+match.captured(2);
+                }
+                /******** Repeating <font> tag for each new line ********/
+                else if(!colorStack.empty() && !match.captured(3).isEmpty())
                     replaceBy = "</font>\n<font color='"+colorStack.head()+"'>";
 
-                // Can't use QString::replace(int i, int n, QString), cause it can go out of expected range and overwrite stuff
+                /******** Let's actually replace things now ********/
                 if (replaceBy != "")
                 {
-                    content = content.remove(match.capturedStart()+offset, match.capturedLength());
+                    // Can't use QString::replace(int i, int n, QString), cause it can go out of expected range and overwrite stuff
+                    content = content.remove(match.capturedStart()+offset,match.capturedLength());
                     content = content.insert(match.capturedStart()+offset, replaceBy);
                     offset += replaceBy.length()-match.captured(0).length();
                 }
