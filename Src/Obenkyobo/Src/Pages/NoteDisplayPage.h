@@ -28,7 +28,6 @@ protected:
 
 private:
     QString GetFileInString(QFileInfo const& fileInfo, bool applyColorTags = false) const;
-    static const inline QRegularExpression colorSyntaxRegex {"<([\/a-zA-Z]*)>"};
 
     Ui::NoteDisplayPage *ui;
 };

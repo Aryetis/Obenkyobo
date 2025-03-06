@@ -1,7 +1,9 @@
 #-------------------------------------------------
 # WORKING ON : - Handle duplicates in VocabDataPool atm it doesn't check for anything
+#              - Finish the last touch of custom markdown coloring tag
 #              - put date of launch in log file name so it doesn't overwrite the last one
-#              - qpa, add support for Kobo Libra Colour
+#              - fix jpg lib
+#              - fix sleep (can scroll in note when "sleeping")
 #              - qpa, add "default handler" in descriptor + legacytouchhandler parameter + rename experimentaltouchhandler into moderntouchhandler
 #              - qpa, rewrite readme to make it more comprehensible that invertX, Y etc is only available on "legacyHandler"
 #              - write a proper ExtraFunk manual
