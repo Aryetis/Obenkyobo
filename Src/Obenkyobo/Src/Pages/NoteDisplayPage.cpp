@@ -114,7 +114,7 @@ QString NoteDisplayPage::GetFileInString(QFileInfo const& fileInfo, bool applyCo
             // BONUS : "Yes but what about old mac return characters line break ? shouldn't you use "(\r\n|\r|\n) ?"
             //         Can't test, don't care... Get some computer from this century.
             //*****************************************************************
-            static const QRegularExpression colorSyntaxRegex {"(?:<([\/a-zA-Z]*)>)(\r?\n)?|(\r?\n)"}; // reminder, (?:azeaze) non capturing group
+            static const QRegularExpression colorSyntaxRegex {"(?:<([/a-zA-Z]*)>)(\r?\n)?|(\r?\n)"}; // reminder, (?:azeaze) non capturing group
             QRegularExpressionMatchIterator regexMatchIterator {colorSyntaxRegex.globalMatch(content)};
             int offset=0; // difference builds up as we replace text
             QQueue<QString> colorStack;
@@ -137,8 +137,8 @@ QString NoteDisplayPage::GetFileInString(QFileInfo const& fileInfo, bool applyCo
                         replaceBy = "<font color='"+match.captured(1)+"'>";
                 }
                 /******** closing color sequence (handle both </> and </red> but not </span>) ********/
-                else if (QString firstMatch{match.captured(1)}; firstMatch == "/"
-                    || ( firstMatch[0] == '/' && QColor::colorNames().contains(QStringRef(&firstMatch, 1, match.captured(1).length()-1))))
+                else if (QString colorMatched{match.captured(1).mid(1, match.captured(1).length()-2)}; match.captured(1) == "/"
+                        || ( match.captured(1) == '/' && QColor::colorNames().contains(colorMatched)))
                 {
                     if (colorStack.empty())
                         std::cerr << "ERROR : <color> markdown shortcut malformed @" << match.capturedStart()+offset << std::endl;
@@ -163,7 +163,7 @@ QString NoteDisplayPage::GetFileInString(QFileInfo const& fileInfo, bool applyCo
             }
         }
 
-        std::cout << content.toStdString() << std::endl;
+        //std::cout << content.toStdString() << std::endl;
         return content;
     }
 }
