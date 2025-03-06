@@ -129,7 +129,6 @@ QString NoteDisplayPage::GetFileInString(QFileInfo const& fileInfo, bool applyCo
                     colorStack.enqueue(match.captured(1));
                     if (QChar nextChar = content.at(match.capturedEnd()+offset); nextChar == '\n' || nextChar == '\r')
                     {
-                        std::cout << "JACKPOT" << std::endl;
                         content = content.remove(match.capturedStart()+offset, match.capturedLength());
                         offset -= match.captured().length();
                     }
