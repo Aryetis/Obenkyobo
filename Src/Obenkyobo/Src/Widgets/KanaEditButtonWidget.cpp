@@ -48,7 +48,12 @@ void KanaEditButtonWidget::paintEvent(QPaintEvent *event)
     painter.drawEllipse(QPointF(width() - doubleOuterSize, doubleOuterSize), outerSize, outerSize);
     if (isChecked())
     {
-        painter.setBrush(QBrush(Qt::white));
+        painter.setBrush(QBrush(GetMy::Instance().Descriptor().isColor ? QColor(50, 255, 0) : Qt::white));
+        painter.drawEllipse(QPointF(width() - doubleOuterSize, doubleOuterSize), innerSize, innerSize);
+    }
+    else if (GetMy::Instance().Descriptor().isColor) // only draw off state ellipse if color
+    {
+        painter.setBrush(QBrush(Qt::red));
         painter.drawEllipse(QPointF(width() - doubleOuterSize, doubleOuterSize), innerSize, innerSize);
     }
 }

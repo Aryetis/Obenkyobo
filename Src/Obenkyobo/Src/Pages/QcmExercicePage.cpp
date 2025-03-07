@@ -278,8 +278,6 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
 
     // print feedback informing of correct / incorrect choice
     // TODO use the correct font for the jp part
-    ui->ResultLabelLeft->setStyleSheet("QLabel { border: none }");
-    ui->ResultLabelMiddle->setStyleSheet("QLabel { border: none }");
     switch (currentQcmType)
     {
         case QcmExerciceType::Hiragana_to_Romanji_MCQ :
@@ -367,9 +365,31 @@ void QcmExercicePage::OnGuessClicked(bool correct, QcmEntryGuess* entryGuess)
     }
 
     ui->ResultLabelRight->setText((correct) ? "☑" : "☒");
-    ui->ResultLabelRight->setStyleSheet("QLabel { border: none }");
-    ui->ResultLabelGroupBox->setStyleSheet((correct) ? "QGroupBox { border : none }"
-                                                     : "QGroupBox { border : 5px solid black }");
+    if (GetMy::Instance().Descriptor().isColor)
+    {
+        static const QString errorColorRGB{"rgb(255,0,0)"};
+        ui->ResultLabelLeft->setStyleSheet(correct ? "QLabel { border: none; color : black }"
+                                                   : "QLabel { border: none ; color : "+errorColorRGB+" }");
+        ui->ResultLabelMiddle->setStyleSheet(correct ? "QLabel { border: none; color : black }"
+                                                     : "QLabel { border: none ; color : "+errorColorRGB+" }");
+        ui->ResultLabelRight->setStyleSheet(correct ? "QLabel { border: none; color : black }"
+                                                    : "QLabel { border: none ; color : "+errorColorRGB+" }");
+        ui->ResultLabelSeparator1->setStyleSheet(correct ? "QLabel { color: black }"
+                                                         : "QLabel { color: "+errorColorRGB+" }");
+        ui->ResultLabelSeparator2->setStyleSheet(correct ? "QLabel { color : black }"
+                                                         : "QLabel { color: "+errorColorRGB+" }");
+        ui->ResultLabelGroupBox->setStyleSheet(correct ? "QGroupBox { border : none }"
+                                                         : "QGroupBox { border : 5px solid red; text : "+errorColorRGB+"}");
+    }
+    else
+    {
+        ui->ResultLabelLeft->setStyleSheet("QLabel { border: none }");
+        ui->ResultLabelMiddle->setStyleSheet("QLabel { border: none }");
+        ui->ResultLabelRight->setStyleSheet("QLabel { border: none }");
+        ui->ResultLabelGroupBox->setStyleSheet((correct) ? "QGroupBox { border : none }"
+                                                         : "QGroupBox { border : 5px solid black };"
+                                                           "QGroupBox > QLabel { color : red }");
+    }
 
     InitializeExercice(currentQcmType);
 }
