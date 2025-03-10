@@ -3,7 +3,6 @@
 #              - put date of launch in log file name so it doesn't overwrite the last one
 #              - fix jpg lib
 #              - fix sleep not ignoring button input(can scroll in note when "sleeping")
-#              - qpa, add "default handler" in descriptor + legacytouchhandler parameter + rename experimentaltouchhandler into moderntouchhandler
 #              - qpa, rewrite readme to make it more comprehensible that invertX, Y etc is only available on "legacyHandler"
 #              - write a proper ExtraFunk manual
 #              - added IsColor to KoboExtraFunk
