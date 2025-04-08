@@ -81,7 +81,7 @@ echo NickelMenu - Done
 if [[ $1 == release ]];
 then
     cd $BuildFolder/Output
-    zip -FSr ${ProjectSubDirName}_AIO_Release_$Version.zip ./
+    zip -FSr $4_AIO_Release_$Version.zip ./
     echo zip - Done
 fi
 
