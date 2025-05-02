@@ -71,7 +71,7 @@ Then all you have to do is :
 
  It should work "as is" assuming you're using NickelMenu. If you're using KfMon you'll have to uncomment the associated entry file (`.adds/kfmon/config/Obenkyobo.ini`) by removing one of the `;` located at the start of each line. And you might want to delete the useless NickelMenu entry too `.adds/nm/Obenkyobo`
 
-If you're only updating Obenkyobo, you can try to install the "light" version of the archive instead.  <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_Light_Release_V*.*.*.zip</a>.  This version is stripped from qt packages you already installed with the previous AIO version and should work fine for updating except if told otherwise.
+If you don't need to update QT and its libraries, you can try to install the "light" version of the archive instead of the "AIO" one. <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_Light_Release_V\*.\*.\*.zip</a>. If you don't understand what that means, grab the AIO version.
 
 <img src="Screenshots/NickelMenu.png" width="303" height="184" align="left"/>
 <br/>
