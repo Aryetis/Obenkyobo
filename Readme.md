@@ -1,4 +1,3 @@
-
 # Obenkyobo
 
 ## What is it ?
@@ -41,6 +40,8 @@ Here's what available currently :
 - Sleep support (sleep cover supported) 
 
 Tested and working on : 
+- Libra Colour (please use <a href="releases/tag/v0.4.0">v0.4.0 pre-release</a> for now)
+- Clara Colour (please use <a href="releases/tag/v0.4.0">v0.4.0 pre-release</a> for now)
 - Libra h2o
 - Forma
 - Mini (might have minor UI scaling issues)
@@ -106,7 +107,7 @@ And big big thanks to <a href="https://github.com/Rain92/">@Rain92/OfficerAction
 
 ## Resources licensing (fonts, icons, pictures)
 
-Everything used in this software is "free-to-use and share in any way" (tldr version). Still, credit is given where credit is due. You can find the details about who made what in the following file 
+Every resource used in this software is "free-to-use and share in any way" (tldr version). Still, credit is given where credit is due. You can find the details about who made what in the following file. I m not a lawyer, trying my best to play by the rules there... 
 <a href="https://github.com/Aryetis/Obenkyobo/blob/master/Src/Obenkyobo/Resources/LICENSES">Resources Licenses and Details</a>
 
 ## For developpers, dummies, and future me. How to compile it ? And other dev related tricks and whatnot.
