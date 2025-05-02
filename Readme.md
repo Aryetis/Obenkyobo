@@ -40,8 +40,8 @@ Here's what available currently :
 - Sleep support (sleep cover supported) 
 
 Tested and working on : 
-- Libra Colour (please use <a href="releases/tag/v0.4.0">v0.4.0 pre-release</a> for now)
-- Clara Colour (please use <a href="releases/tag/v0.4.0">v0.4.0 pre-release</a> for now)
+- Libra Colour (please use <a href="https://github.com/Aryetis/Obenkyobo/releases/tag/v0.4.0">v0.4.0 pre-release</a> for now)
+- Clara Colour (please use <a href="https://github.com/Aryetis/Obenkyobo/releases/tag/v0.4.0">v0.4.0 pre-release</a> for now)
 - Libra h2o
 - Forma
 - Mini (might have minor UI scaling issues)
