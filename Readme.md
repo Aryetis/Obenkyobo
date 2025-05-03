@@ -61,7 +61,7 @@ Secondly, you'll need to install a "launcher" beforehand. Common options are :
 Once you're done installing at least one, connect your ereader to your computer, open the following file on it `.kobo/Kobo/Kobo eReader.conf` and add this at the end of it. 
 ```
 [FeatureSettings]
-ExcludeSyncFolders=\\.(?!kobo|adobe).*?
+ExcludeSyncFolders=(\\.(?!kobo|adobe).+|([^.][^/]*/)+\\..+)
 ```
 This should prevent your ereader library from picking up any undesired pictures in hidden folders.
 
