@@ -159,7 +159,7 @@ NEVER modify any of the .sh scripts under windows... Windows end of line will me
 
 ## How to build custom WSL2 kernel with Serial module
 
-1. `sudo apt install build-essential flex bison libssl-dev libelf-dev git dwarves`
+1. `sudo apt install build-essential flex bison libssl-dev libelf-dev git dwarves bc`
 2. `git clone https://github.com/microsoft/WSL2-Linux-Kernel.git`
 3. `cd WSL2-Linux-Kernel`
 4. `cp Microsoft/config-wsl .config` (might as well change CONFIG_LOCALVERSION in it while you're at it so you can differentiate your kernel later on)
@@ -174,7 +174,7 @@ NEVER modify any of the .sh scripts under windows... Windows end of line will me
 kernel=C:\\Users\\<UserName>\\wsl_kernel\\bzImage
 ```
 10. in powershell/cmd `wsl --shutdown` (just to be sure)
-11. relaunch your WSL2 and check out your new kernel with : `uname -a` 
+11. relaunch your WSL2 and check out your new kernel with : `uname -a`  (you should see the name you've set up earlier by modifying CONFIG_LOCALVERSION)
 12. connect to your kobo with the usual `sudo minicom -D /dev/ttyUSB0` and voila ! (if it's asking for credentials... try admin/admin)
 
 ## Which serial port should I solder my UART to debug over wire ?
