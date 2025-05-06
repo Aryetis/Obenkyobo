@@ -164,11 +164,11 @@ NEVER modify any of the .sh scripts under windows... Windows end of line will me
 3. `cd WSL2-Linux-Kernel`
 4. `cp Microsoft/config-wsl .config` (might as well change CONFIG_LOCALVERSION in it while you're at it so you can differentiate your kernel later on)
 5. `make menuconfig`
-6. Enable : `Device Drivers -> USB Support -> Support for Host-side USB` as built-in  (marked with a `*`)
-6. And then in the same menu : `USB Serial Converter support -> [whatever device you're using] + [USB Serial Console device support] + [USB Generic Serial Driver]`. Enable your device driver as built-in too. In my case, the necessary driver is "USB Prolific 2303 Single Port Serial Driver"
-7. `make -j xxx` (xxx being how many cores you want to build with)
-8. `cp arch/x86/boot/bzImage /mnt/c/Users/[USER_NAME]/wsl_kernel`
-9. Create the following file `C:\Users\<UserName>\.wslconfig with this content` : 
+6. Navigate to `Device Drivers -> USB Support` and enable the following elements as built-in  (marked with a `*`) :  `Support for Host-side USB`, `USB/IP support`, `VHCI hcd`. 
+7. And then in the same menu : `USB Serial Converter support -> [whatever device you're using] + [USB Serial Console device support] + [USB Generic Serial Driver]`. Enable your device driver as built-in too. In my case, the necessary driver is "USB Prolific 2303 Single Port Serial Driver"
+8. Exit and save, then `make -j xxx` (xxx being how many cores you want to build with)
+9. `cp arch/x86/boot/bzImage /mnt/c/Users/[USER_NAME]/wsl_kernel`
+10. Create the following file `C:\Users\<UserName>\.wslconfig with this content` : 
 ```
 [wsl2]
 kernel=C:\\Users\\<UserName>\\wsl_kernel\\bzImage
