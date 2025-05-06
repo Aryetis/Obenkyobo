@@ -157,14 +157,15 @@ NEVER modify any of the .sh scripts under windows... Windows end of line will me
 4. link usb device to WSL2 with `usbipd bind --busid=[BUS_ID]` then `usbipd attach --wsl --busid=[BUS_ID]`
 5. check with `lsusb` if you're device shows up and if `/dev/ttyUSBxxx` entry is created. If not ... guess what ... WSL2 kernel probably doesn't have your device's driver. To be sure, check it out with `ls -l /sys/bus/usb-serial/drivers`. You'll have to build your own kernel then, cf section below.
 
-## How to build custom WSL2 kernel 
+## How to build custom WSL2 kernel with Serial module
 
 1. `sudo apt install build-essential flex bison libssl-dev libelf-dev git dwarves`
 2. `git clone https://github.com/microsoft/WSL2-Linux-Kernel.git`
 3. `cd WSL2-Linux-Kernel`
 4. `cp Microsoft/config-wsl .config` (might as well change CONFIG_LOCALVERSION in it while you're at it so you can differentiate your kernel later on)
 5. `make menuconfig`
-6. Enable your driver : `Device Drivers -> USB Support -> USB Serial Converter support -> [whatever device you're using] + [USB Serial Console device support] + [USB Generic Serial Driver]`. It's your choice but you might as well make it "built-in" to make your life easier (marked with a `*`). In my case, the necessary driver is "USB Prolific 2303 Single Port Serial Driver"
+6. Enable : `Device Drivers -> USB Support -> Support for Host-side USB` as built-in  (marked with a `*`)
+6. And then in the same menu : `USB Serial Converter support -> [whatever device you're using] + [USB Serial Console device support] + [USB Generic Serial Driver]`. Enable your device driver as built-in too. In my case, the necessary driver is "USB Prolific 2303 Single Port Serial Driver"
 7. `make -j xxx` (xxx being how many cores you want to build with)
 8. `cp arch/x86/boot/bzImage /mnt/c/Users/[USER_NAME]/wsl_kernel`
 9. Create the following file `C:\Users\<UserName>\.wslconfig with this content` : 
