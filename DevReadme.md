@@ -175,7 +175,7 @@ kernel=C:\\Users\\<UserName>\\wsl_kernel\\bzImage
 ```
 10. in powershell/cmd `wsl --shutdown` (just to be sure)
 11. relaunch your WSL2 and check out your new kernel with : `uname -a` 
-12. connect to your kobo with the usual `sudo minicom -D /dev/ttyUSB0` and voila !
+12. connect to your kobo with the usual `sudo minicom -D /dev/ttyUSB0` and voila ! (if it's asking for credentials... try admin/admin)
 
 ## Which serial port should I solder my UART to debug over wire ?
 
