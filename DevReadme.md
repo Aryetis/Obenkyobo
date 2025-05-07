@@ -131,7 +131,7 @@ Install <a href="https://www.mobileread.com/forums/showthread.php?t=254214">Nilu
 - `dropbear` ssh server (connect with root and empty password, yes empty password So just in case, you should probably set one up or keep your wifi turned off. You ve been warned.)
 - `nano`, `gdb`, `strace`
 - `fbgrab picture.png` to take screenshots
-= `rsync`, `sftp` 
+- `rsync`, `sftp` 
 - etc 
 
 ## Miscellaneous
@@ -157,24 +157,25 @@ NEVER modify any of the .sh scripts under windows... Windows end of line will me
 4. link usb device to WSL2 with `usbipd bind --busid=[BUS_ID]` then `usbipd attach --wsl --busid=[BUS_ID]`
 5. check with `lsusb` if you're device shows up and if `/dev/ttyUSBxxx` entry is created. If not ... guess what ... WSL2 kernel probably doesn't have your device's driver. To be sure, check it out with `ls -l /sys/bus/usb-serial/drivers`. You'll have to build your own kernel then, cf section below.
 
-## How to build custom WSL2 kernel 
+## How to build custom WSL2 kernel with Serial module
 
-1. `sudo apt install build-essential flex bison libssl-dev libelf-dev git dwarves`
+1. `sudo apt install build-essential flex bison libssl-dev libelf-dev git dwarves bc`
 2. `git clone https://github.com/microsoft/WSL2-Linux-Kernel.git`
 3. `cd WSL2-Linux-Kernel`
 4. `cp Microsoft/config-wsl .config` (might as well change CONFIG_LOCALVERSION in it while you're at it so you can differentiate your kernel later on)
 5. `make menuconfig`
-6. Enable your driver : `Device Drivers -> USB Support -> USB Serial Converter support -> [whatever device you're using] + [USB Serial Console device support] + [USB Generic Serial Driver]`. It's your choice but you might as well make it "built-in" to make your life easier (marked with a `*`). In my case, the necessary driver is "USB Prolific 2303 Single Port Serial Driver"
-7. `make -j xxx` (xxx being how many cores you want to build with)
-8. `cp arch/x86/boot/bzImage /mnt/c/Users/[USER_NAME]/wsl_kernel`
-9. Create the following file `C:\Users\<UserName>\.wslconfig with this content` : 
+6. Navigate to `Device Drivers -> USB Support` and enable the following elements as built-in  (marked with a `*`) :  `Support for Host-side USB`, `USB/IP support`, `VHCI hcd`. 
+7. And then in the same menu : `USB Serial Converter support -> [whatever device you're using] + [USB Serial Console device support] + [USB Generic Serial Driver]`. Enable your device driver as built-in too. In my case, the necessary driver is "USB Prolific 2303 Single Port Serial Driver"
+8. Exit and save, then `make -j xxx` (xxx being how many cores you want to build with)
+9. `cp arch/x86/boot/bzImage /mnt/c/Users/[USER_NAME]/wsl_kernel`
+10. Create the following file `C:\Users\<UserName>\.wslconfig with this content` : 
 ```
 [wsl2]
 kernel=C:\\Users\\<UserName>\\wsl_kernel\\bzImage
 ```
 10. in powershell/cmd `wsl --shutdown` (just to be sure)
-11. relaunch your WSL2 and check out your new kernel with : `uname -a` 
-12. connect to your kobo with the usual `sudo minicom -D /dev/ttyUSB0` and voila !
+11. relaunch your WSL2 and check out your new kernel with : `uname -a`  (you should see the name you've set up earlier by modifying CONFIG_LOCALVERSION)
+12. connect to your kobo with the usual `sudo minicom -D /dev/ttyUSB0` and voila ! (if it's asking for credentials... try admin/admin)
 
 ## Which serial port should I solder my UART to debug over wire ?
 

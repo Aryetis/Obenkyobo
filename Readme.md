@@ -1,4 +1,3 @@
-
 # Obenkyobo
 
 ## What is it ?
@@ -41,6 +40,8 @@ Here's what available currently :
 - Sleep support (sleep cover supported) 
 
 Tested and working on : 
+- Libra Colour (please use <a href="https://github.com/Aryetis/Obenkyobo/releases/tag/v0.4.0">v0.4.0 pre-release</a> for now)
+- Clara Colour (please use <a href="https://github.com/Aryetis/Obenkyobo/releases/tag/v0.4.0">v0.4.0 pre-release</a> for now)
 - Libra h2o
 - Forma
 - Mini (might have minor UI scaling issues)
@@ -57,13 +58,20 @@ Secondly, you'll need to install a "launcher" beforehand. Common options are :
 - <a href="https://github.com/pgaskin/NickelMenu">NickelMenu (NM)</a>, recommended option
 - <a href="https://github.com/NiLuJe/kfmon">Kute File Monitor (KfMon)</a>
 
-Once you're done installing at least one of those you can :
-- download the archive  <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_AIO_Release_V*.*.*.zip</a> 
+Once you're done installing at least one, connect your ereader to your computer, open the following file on it `.kobo/Kobo/Kobo eReader.conf` and add this at the end of it. 
+```
+[FeatureSettings]
+ExcludeSyncFolders=(\\.(?!kobo|adobe).+|([^.][^/]*/)+\\..+)
+```
+This should prevent your ereader library from picking up any undesired pictures in hidden folders.
+
+Then all you have to do is :
+- download the archive  <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_AIO_Release_V\*.\*.\*.zip</a> 
 - connect the ereader to your computer and extract the package at its root.
 
  It should work "as is" assuming you're using NickelMenu. If you're using KfMon you'll have to uncomment the associated entry file (`.adds/kfmon/config/Obenkyobo.ini`) by removing one of the `;` located at the start of each line. And you might want to delete the useless NickelMenu entry too `.adds/nm/Obenkyobo`
 
-If you're only updating Obenkyobo, you can try to install the "light" version of the archive instead.  <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_Light_Release_V*.*.*.zip</a>.  This version is stripped from qt packages you already installed with the previous AIO version and should work fine for updating except if told otherwise.
+If you don't need to update QT and its libraries, you can try to install the "light" version of the archive instead of the "AIO" one. <a href="https://github.com/Aryetis/Obenkyobo/releases">Obenkyobo_Light_Release_V\*.\*.\*.zip</a>. If you don't understand what that means, grab the AIO version.
 
 <img src="Screenshots/NickelMenu.png" width="303" height="184" align="left"/>
 <br/>
@@ -106,7 +114,7 @@ And big big thanks to <a href="https://github.com/Rain92/">@Rain92/OfficerAction
 
 ## Resources licensing (fonts, icons, pictures)
 
-Everything used in this software is "free-to-use and share in any way" (tldr version). Still, credit is given where credit is due. You can find the details about who made what in the following file 
+Every resource used in this software is "free-to-use and share in any way" (tldr version). Still, credit is given where credit is due. You can find the details about who made what in the following file. I m not a lawyer, trying my best to play by the rules there... 
 <a href="https://github.com/Aryetis/Obenkyobo/blob/master/Src/Obenkyobo/Resources/LICENSES">Resources Licenses and Details</a>
 
 ## For developpers, dummies, and future me. How to compile it ? And other dev related tricks and whatnot.
