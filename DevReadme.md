@@ -131,7 +131,7 @@ Install <a href="https://www.mobileread.com/forums/showthread.php?t=254214">Nilu
 - `dropbear` ssh server (connect with root and empty password, yes empty password So just in case, you should probably set one up or keep your wifi turned off. You ve been warned.)
 - `nano`, `gdb`, `strace`
 - `fbgrab picture.png` to take screenshots
-= `rsync`, `sftp` 
+- `rsync`, `sftp` 
 - etc 
 
 ## Miscellaneous
