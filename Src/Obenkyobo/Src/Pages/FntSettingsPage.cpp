@@ -14,6 +14,7 @@ FntSettingsPage::FntSettingsPage(QWidget *parent) :
 
     // Fonts must be ready before switching widget => don't delay the initialization
     RegisterFntsFromResources(); // must be done before anything needing fonts => don't move into InitializeFntSetting
+    InitUIValues();
     GetMy::Instance().SetFntSettingsPageInst(this);
 }
 
@@ -98,7 +99,11 @@ void FntSettingsPage::RegisterFntsFromResources()
 //    QFont globalFont("Roboto Mono");
 //    globalFont.setStyleHint(QFont::Monospace);
 //    QApplication::setFont(globalFont);
+}
 
+void FntSettingsPage::InitUIValues()
+{
+    // Hiragana
     currentHiraganFntIdx = settingsSerializer.value("FntSettings/HiraganaFntIdx", 0).toInt();
     currentKatakanaFntIdx = settingsSerializer.value("FntSettings/KatakanaFntIdx", 0).toInt();
     currentRomanjiFntIdx = settingsSerializer.value("FntSettings/RomanjiFntIdx", 0).toInt();
@@ -108,6 +113,7 @@ void FntSettingsPage::RegisterFntsFromResources()
     ui->RomanjiFntDropdown->setCurrentIndex(currentRomanjiFntIdx);
     ui->KanjiFntDropdown->setCurrentIndex(currentKanjiFontIdx);
 
+    // Kanas
     kanasStemSize =  settingsSerializer.value("FntSettings/KanasStemSize", DEFAULT_KANAS_STEM_FNT_SIZE).toInt();
     ui->KanasStemSlider->setValue(kanasStemSize);
     ui->KanasStemValueLabel->setText(QString::number(kanasStemSize));
@@ -118,6 +124,7 @@ void FntSettingsPage::RegisterFntsFromResources()
     ui->KanasAnswerKanaRmjSlider->setValue(kanasAnswerKanaRmjSize);
     ui->KanasAnswerKanaRmjValueLabel->setText(QString::number(kanasAnswerKanaRmjSize));
 
+    // Vocab
     vocabStemSize =  settingsSerializer.value("FntSettings/VocabStemSize", DEFAULT_VOCAB_STEM_FNT_SIZE).toInt();
     ui->VocabStemSlider->setValue(vocabStemSize);
     ui->VocabStemValueLabel->setText(QString::number(vocabStemSize));
@@ -127,6 +134,11 @@ void FntSettingsPage::RegisterFntsFromResources()
     vocabAnswerKanaRmjSize =  settingsSerializer.value("FntSettings/answerVocabRmjSize", DEFAULT_VOCAB_ANSWER_KANA_RMJ_SIZE).toInt();
     ui->VocabAnswerKanaRmjSlider->setValue(vocabAnswerKanaRmjSize);
     ui->VocabAnswerKanaRmjValueLabel->setText(QString::number(vocabAnswerKanaRmjSize));
+
+    // Notes
+    notesFontSize =  settingsSerializer.value("FntSettings/NotesFontSize ", DEFAULT_NOTES_FNT_SIZE).toInt();
+    ui->NotesFontSizeSlider->setValue(notesFontSize);
+    ui->NotesFontSizeValueLabel->setText(QString::number(notesFontSize));
 }
 
 void FntSettingsPage::RegisterHiraganaFont(QString fntAddress)
@@ -237,3 +249,11 @@ void FntSettingsPage::on_VocabAnswerRmjKanaSlider_valueChanged(int size)
     ui->VocabAnswerRmjKanaValueLabel->setText(QString::number(size));
     settingsSerializer.setValue("FntSettings/answerRmjVocabSize", size);
 }
+
+void FntSettingsPage::on_NotesFontSizeSlider_valueChanged(int size)
+{
+    notesFontSize = size;
+    ui->NotesFontSizeValueLabel->setText(QString::number(size));
+    settingsSerializer.setValue("FntSettings/NotesFontSize", size);
+}
+

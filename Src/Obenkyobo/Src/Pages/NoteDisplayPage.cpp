@@ -4,6 +4,7 @@
 #include "Src/mainwindow.h"
 #include "Src/GetMy.h"
 #include "Src/Tools.h"
+#include "Src/Pages/FntSettingsPage.h"
 #include <QScrollBar>
 #include <ui_NoteDisplayPage.h>
 
@@ -11,15 +12,6 @@ NoteDisplayPage::NoteDisplayPage(QWidget *parent) :
     QWidget(parent), ui(new Ui::NoteDisplayPage)
 {
     ui->setupUi(this);
-
-    QColor baseBackgroundColor = QApplication::palette().window().color();
-    // Adding margin for stuff like ordered list that can get printed out of screen otherwise
-    ui->TextWidget->document()->setDocumentMargin((GetMy::Instance().Descriptor().height/100.0f)*1.5f);
-    QString textAreaStylesheet = QString("background-color:rgb(%1,%2,%3);").arg(
-        QString::number(baseBackgroundColor.red()),
-        QString::number(baseBackgroundColor.green()),
-        QString::number(baseBackgroundColor.blue()));
-    ui->TextWidget->setStyleSheet(textAreaStylesheet);
 
     ui->TextWidget->setReadOnly(true);
     ui->TextWidget->setTextInteractionFlags(Qt::NoTextInteraction);
@@ -40,14 +32,33 @@ bool NoteDisplayPage::eventFilter(QObject *obj, QEvent *event)
     {
         GetMy::Instance().MainWindowInst().AggressiveClearScreen();
         ui->NoteDisplayScrollArea->verticalScrollBar()->setFocus();
-
     }
 
     return false;
 }
 
+void NoteDisplayPage::ApplyStyleSheet()
+{
+    // Does not work on markdown file... keep it for .txt files
+    ui->TextWidget->setFontPointSize(GetMy::Instance().FntSettingsPageInst().GetNotesSize());
+
+    // stylesheet (+ font scaling for markdown)
+    QColor baseBackgroundColor = QApplication::palette().window().color();
+    // Adding margin for stuff like ordered list that can get printed out of screen otherwise
+    ui->TextWidget->document()->setDocumentMargin((GetMy::Instance().Descriptor().height/100.0f)*1.5f);
+    QString textAreaStylesheet = QString("background-color:rgb(%1,%2,%3); font-size: %4pt;").arg(
+        QString::number(baseBackgroundColor.red()),
+        QString::number(baseBackgroundColor.green()),
+        QString::number(baseBackgroundColor.blue()),
+        QString::number(GetMy::Instance().FntSettingsPageInst().GetNotesSize()));
+    ui->TextWidget->setStyleSheet(textAreaStylesheet);
+}
+
 void NoteDisplayPage::Populate(NoteFileEntryWidget const* nfew)
 {
+    ApplyStyleSheet();
+
+    // Refresh on scrollbar actions thingy
     ui->NoteDisplayScrollArea->verticalScrollBar()->installEventFilter(this);
 
     if (!nfew->FileInfo().isFile())

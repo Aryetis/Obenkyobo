@@ -27,8 +27,8 @@ protected:
     bool eventFilter(QObject *obj, QEvent *ev) override;
 
 private:
+    void ApplyStyleSheet();
     QString GetFileInString(QFileInfo const& fileInfo, bool applyColorTags = false) const;
-
     Ui::NoteDisplayPage *ui;
 };
 

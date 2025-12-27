@@ -38,6 +38,8 @@ public:
     void SetVocabAnswerKanaRmjSize(int size);
     void SetVocabStemSize(int size);
 
+    int GetNotesSize() const { return notesFontSize; }
+
 private slots:
     void on_HiraganaFntDropdown_activated(int index);
     void on_KatakanaFntDropdown_activated(int index);
@@ -52,10 +54,13 @@ private slots:
     void on_VocabAnswerKanaRmjSlider_valueChanged(int value);
     void on_VocabAnswerRmjKanaSlider_valueChanged(int value);
 
+    void on_NotesFontSizeSlider_valueChanged(int value);
+
 private:
     Ui::FntSettingsPage *ui;
 
     void RegisterFntsFromResources();
+    void InitUIValues();
 
     void RegisterHiraganaFont(QString fntAddress);
     void RegisterKatakanaFont(QString fntAddress);
@@ -80,6 +85,8 @@ private:
     int vocabStemSize;
     int vocabAnswerRmjKanaSize;
     int vocabAnswerKanaRmjSize;
+
+    int notesFontSize;
 
     QSettings& settingsSerializer;
 };
