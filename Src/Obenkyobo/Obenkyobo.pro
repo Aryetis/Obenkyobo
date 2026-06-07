@@ -1,4 +1,5 @@
 QT       += core gui
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Obenkyobo
@@ -14,9 +15,9 @@ LIBS += -L$$OUT_PWD/../Libs/KoboExtraFunk/ -lKoboExtraFunk
 
 # packager.sh release [/]Obenkyobo/Src/Obenkyobo [/]Obenkyobo/build-ObenkyoboProject-KoboLibraH2o-Release/Src/Obenkyobo Obenkyobo
 CONFIG(debug, debug|release) {
-QMAKE_POST_LINK += $$PWD/OtherFiles/packager.sh debug $$PWD $$OUT_PWD $$TARGET
+QMAKE_POST_LINK += "$$PWD/OtherFiles/packager.sh debug $$PWD $$OUT_PWD $$TARGET $$QT_FOLDER_NAME" $$escape_expand(\n\t)
 } else {
-QMAKE_POST_LINK += $$PWD/OtherFiles/packager.sh release $$PWD $$OUT_PWD $$TARGET
+QMAKE_POST_LINK += "$$PWD/OtherFiles/packager.sh release $$PWD $$OUT_PWD $$TARGET $$QT_FOLDER_NAME" $$escape_expand(\n\t)
 }
 
 ##########################################
