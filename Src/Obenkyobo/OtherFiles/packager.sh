@@ -15,6 +15,7 @@ LauncherName=$4_launcher.sh
 QtPluginKobo=kobo
 # for easier deployment, make your qt binary folder, this QtFolder variable and (if necessary) koboplatformplugin's .pri CUSTOM_QTDIR match with each others
 QtFolder="qt-linux-5.15-kde-kobo"
+TargetIP=192.168.1.45
 BuildFolder=$3/../..
 
 echo ===============================================================
@@ -59,6 +60,15 @@ cp $3/../Libs/qt5-kobo-platform-plugin/build/ereader/lib$QtPluginKobo.so $BuildF
 mkdir -p $BuildFolder/Output/.adds/$4/lib/
 cp -a $3/../Libs/KoboExtraFunk/libKoboExtraFunk* $BuildFolder/Output/.adds/$4/lib/
 echo Dependencies - Done
+
+#Rsync, sending Output's QtFolder
+if ping -c 1 -W 2 "$TargetIP" >/dev/null 2>&1;
+then
+  sshpass -p '' rsync --chown=root:root --progress -rltv $BuildFolder/Output/.adds/$QtFolder root@$TargetIP:/mnt/onboard/.adds/
+  echo Rsync \($QtFolder\) - Done
+else
+  echo Rsync \($QtFolder\) - Could not reach $TargetIP
+fi
 
 #kfmon
 mkdir -p $BuildFolder/Output/.adds/kfmon/config
