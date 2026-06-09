@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>415</width>
-    <height>371</height>
+    <width>730</width>
+    <height>475</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -29,6 +29,13 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
+   <item>
+    <widget class="QLabel" name="tamerelapute">
+     <property name="text">
+      <string>tamerelaputetamerelaputetamerelaputetamerelaputetamerelaputetamerelaputetamerelaputetamerelaputetamerelapute</string>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="QScrollArea" name="ScrollArea">
      <property name="frameShape">
@@ -53,10 +60,16 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-100</y>
-        <width>401</width>
-        <height>471</height>
+        <y>0</y>
+        <width>730</width>
+        <height>461</height>
        </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
       <property name="maximumSize">
        <size>
@@ -64,9 +77,9 @@
         <height>16777215</height>
        </size>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="4,4,5,2">
        <item>
-        <layout class="QVBoxLayout" name="VocabMCQFontSizesContainer" stretch="1,1,0,1">
+        <layout class="QVBoxLayout" name="VocabMCQFontSizesContainer" stretch="1,1,1,1">
          <property name="topMargin">
           <number>0</number>
          </property>
@@ -232,13 +245,6 @@
           </layout>
          </item>
         </layout>
-       </item>
-       <item>
-        <widget class="Line" name="line_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
        </item>
        <item>
         <layout class="QVBoxLayout" name="KanasMCQFontSizesContainer" stretch="1,1,1,1">
@@ -430,13 +436,6 @@
         </layout>
        </item>
        <item>
-        <widget class="Line" name="line">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
         <layout class="QVBoxLayout" name="FontFamiliesContainer" stretch="1,1,1,1,1">
          <property name="topMargin">
           <number>0</number>
@@ -549,14 +548,7 @@
         </layout>
        </item>
        <item>
-        <widget class="Line" name="line_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="NotesFontContainer">
+        <layout class="QVBoxLayout" name="NotesFontContainer" stretch="1,1">
          <property name="bottomMargin">
           <number>0</number>
          </property>
