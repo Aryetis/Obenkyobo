@@ -3,7 +3,8 @@
 You can setup a Kobo dev environment by : 
 - Looking at the <a href="https://github.com/koreader/koxtoolchain">koxtoolchain instructions</a> and work your way from here. To be honest, I m not totally sure what you'll end up with. No qt that s for sure, some lua support of some sort. Using it alongside some stuff like <a href="https://github.com/NiLuJe/FBInk">FBInk</a> should allow you to print some stuff on screen. To be noted, <a href="https://github.com/baskerville/plato/blob/master/doc/BUILD.md">Plato</a> also has its own toolchain for kobo, 
 - If all you're interested in is getting some basic gcc working <a href="https://github.com/NiLuJe/koxtoolchain/"> Niluje's toolchain </a> is the way to go.
-- But if you're interested in getting something "to get you coding fast", some Qt binaries along with its <a href="https://github.com/Aryetis/qt5-kobo-platform-plugin"> Qt Platform Abstraction for Kobo</a> and <a href="https://github.com/Aryetis/KoboExtraFunk">KoboExtraFunk library</a> to easily manipulate kobo's specific features (such as wifi, buttons, screen settings, etc...) and a bunch of extra libraries (zlib-ng, libb2, zstd, openssl, pnglib, libjpeg-turbo, expat, pcre, libfreetype and harfbuzz). Then the "easy" route is to use my fork of @Rain92's <a href="https://github.com/Aryetis/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> to setup everything. This is what we'll discuss with this readme.
+- But if you're interested in getting something "to get you coding fast", some Qt binaries along with its <a href="https://github.com/Aryetis/qt5-kobo-platform-plugin"> Qt Platform Abstraction for Kobo</a> and <a href="https://github.com/Aryetis/KoboExtraFunk">KoboExtraFunk library</a> to easily manipulate kobo's specific features (such as wifi, buttons, screen settings, etc...) and a bunch of extra libraries (zlib-ng, libb2, zstd, openssl, pnglib, libjpeg-turbo, expat, pcre, libfreetype and harfbuzz). Then the "easy" route is to use my fork of @Rain92's <a href="https://github.com/Aryetis/kobo-qt-setup-scripts">kobo-qt-setup-scripts</a> to setup everything. This is what we'll discuss with this readme. 
+- You can also set up QtCreator (with the [docker plugin](https://doc.qt.io/qtcreator/creator-reference-docker.html)) on your computer to use a docker instance based from [my docker image](https://github.com/Aryetis/KoboToolchainDocker). If you chose to go this route, obviously follow the instruction on [KoboToolchainDocker](https://github.com/Aryetis/KoboToolchainDocker)'s github page, they should roughly ammount to the same steps as the first section of this readme. It might be a bit trickier to setup the "Docker kit" in QtCreator at first but feel free to come back to this Readme page if you struggle. When comes time to setup qmake, gcc, etc... you can point to docker files directly with adress such as `docker://kobotoolchaindocker-kobodevcontainer.latest/home/kobodev/blablabla`.
 
 ## How to setup Obenkyobo dev environment using kobo-qt-setup-scripts ? (as of 5th November 2024, tested with WSL2 Debian Bookworm) 
 
@@ -16,7 +17,7 @@ git clone --recurse-submodules git@github.com:Aryetis/kobo-qt-setup-scripts.git 
 cd kobo-qt-setup-scripts
 # Installing Niluje's kobo toolchain
 ./install_toolchain.sh
-# Getting kde's qt, if you want to build qt docs later on, use "koboWithDocs" argument. Adding "experimental" argument will get you the latest version of qt5.15 (not recommended as it will probably break compatibility among all the apps using this workflow)
+# Getting qt, if you want to build qt docs later on, use "koboWithDocs" argument. Adding "experimental" argument will get you the latest version of qt5.15 (not recommended as it will probably break compatibility among all the apps using this workflow). I recommended sticking to the 5.15.17 lts branch.
 ./get_qt.sh
 # Getting and compiling additional libraries, you can also use the "experimental" argument to get the latest libs version (not recommended for the same reasons)
 ./install_libs.sh
@@ -24,11 +25,11 @@ cd kobo-qt-setup-scripts
 echo $'\n########################################' >> ~/.bashrc
 echo 'export PATH="$HOME/x-tools/arm-kobo-linux-gnueabihf/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
-# Configuring and building qt-kde, will install everything at $HOME/qt-bin/qt-linux-5.15-kde-kobo/
+# Configuring and building qt, will install everything at $HOME/qt-bin/qt-linux-5.15-kobo/
 ./build_qt.sh kobo config
 ./build_qt.sh kobo make
 ./build_qt.sh kobo install
-# Deploy the previously compiled libraries to [kobo-qt-setup-scripts]/deploy/qt-linux-5.15-kde-kobo/lib folder
+# Deploy the previously compiled libraries to [kobo-qt-setup-scripts]/deploy/qt-linux-5.15-kobo/lib folder
 # Additionaly you can add the libkobo.so path and kobo device's ip to its argument for an immediate deployment over SFTP if needed
 ./deploy_qt.sh
 # Install QtCreator
@@ -40,18 +41,18 @@ That should get you a working cross commpiler and qt binaries configured with a 
 
 ### 2. Time to get Obenkyobo's repository : 
 - `git clone --recurse-submodules git@github.com:Aryetis/Obenkyobo.git` (or `git clone --recurse-submodules https://github.com/Aryetis/Obenkyobo.git` if you don't use ssh keys for github)
-- And then simply open its `ObenkyoboProject.pro` file with QtCreator. Once there you'll have to setup a "kit" using the arm-kobo-linux-gnueabihf-gcc/g++ and qt binaries compiled above. Compilers should be in the `~/x-tools/arm-kobo-linux-gnueabihf` folder and you'll want to add the custom Qt in the "Qt Versions" tab by picking its qmake at `~/qt-bin/qt-linux-5.15-kde-kobo/bin`. "Run device" should be pretty much self explanatory, although now might be a good time to install <a href="https://www.mobileread.com/forums/showthread.php?t=254214">Niluje's kobo stuff</a> to get a working gdb client, rsync, sftp running on your kobo. Gdb can be setup later on (check section "4. Setting up gdb"). Once you've setup everything your kit should look somewhat like this.
+- And then simply open its `ObenkyoboProject.pro` file with QtCreator. Once there you'll have to setup a "kit" using the arm-kobo-linux-gnueabihf-gcc/g++ and qt binaries compiled above. Compilers should be in the `~/x-tools/arm-kobo-linux-gnueabihf` folder and you'll want to add the custom Qt in the "Qt Versions" tab by picking its qmake at `~/qt-bin/qt-linux-5.15-kobo/bin`. "Run device" should be pretty much self explanatory, although now might be a good time to install <a href="https://www.mobileread.com/forums/showthread.php?t=254214">Niluje's kobo stuff</a> to get a working gdb client, rsync, sftp running on your kobo. Gdb can be setup later on (check section "4. Setting up gdb"). Once you've setup everything your kit should look somewhat like this.
 
 <p align="center">
   <img src="DevReadme/KoboQtKit.jpg" width="807" height="528" >
 </p>
 
-- You'll have to update the symbolic link at `[Obenkyobo]/Src/Obenkyobo/OtherFiles/Dependencies/qt-linux-5.15-kde-kobo` to point towards `[kobo-qt-setup-scripts]/deploy/qt-linux-5.15-kde-kobo` folder. So we can push/rsync both our program and everything qt related at the press of a single button in QtCreator.
-- We also need to indicate to our qtpa that we're using qt-linux-5.15-kde-kobo instead of the usual qt-linux-5.15-kobo. Therefore run this in Obenkyobo's root folder `echo "CUSTOM_QTDIR = /mnt/onboard/.adds/qt-linux-5.15-kde-kobo" > [Obenkyobo]/Src/Libs/qt5-kobo-platform-plugin/koboplatformplugin.pri`
+- You'll have to update the symbolic link at `[Obenkyobo]/Src/Obenkyobo/OtherFiles/Dependencies/qt-linux-5.15-kobo` to point towards `[kobo-qt-setup-scripts]/deploy/qt-linux-5.15-kobo` folder. So we can push/rsync both our program and everything qt related at the press of a single button in QtCreator.
+- We also need to indicate to our qtpa that we're using qt-linux-5.15-kobo instead of the usual qt-linux-5.15-kobo. Therefore run this in Obenkyobo's root folder `echo "CUSTOM_QTDIR = /mnt/onboard/.adds/qt-linux-5.15-kobo" > [Obenkyobo]/Src/Libs/qt5-kobo-platform-plugin/koboplatformplugin.pri`
 - Next, we need to set what part of the project you actually want to ship. If you're using rsync stick to everything and it will be fine. But if you had to switch to sftp for some reasons then you probably want to pay attention to this. Modify `ObenkyoboProject/Src/Obenkyobo/Obenkyobo.pro` and set the `INSTALLS +=` line to one of the following : 
 ```
 INSTALLS += everything # will ship everything
-INSTALLS += everythingButQtLibs  # ship everything but Qt qt-linux-5.15-kde-kobo
+INSTALLS += everythingButQtLibs  # ship everything but Qt qt-linux-5.15-kobo
 INSTALLS += scripts # ship debug scripts, launcher and other scripts  
 ```
 
@@ -73,7 +74,7 @@ Projects->Kobo(Kit)->Run->Deployment-> Add Run custom remote command with :
 
 Projects->Kobo(Kit)->Run->Environment->(System Environment)->Add create new variable with at least 
 # everything in here is usually set at runtime by Obenkyobo_launcher.sh when running application from device itself. But because we can't source it from QtCreator, we set everything manually in here.
-LD_LIBRARY_PATH=/mnt/onboard/.adds/qt-linux-5.15-kde-kobo/lib:/mnt/onboard/.adds/Obenkyobo/lib:
+LD_LIBRARY_PATH=/mnt/onboard/.adds/qt-linux-5.15-kobo/lib:/mnt/onboard/.adds/Obenkyobo/lib:
 QT_QPA_PLATFORM=kobo   # depending of your device and when you pulled you might want to use this instead "kobo:debug:experimentaltouchhandler"
 QT_QPA_EVDEV_DEBUG=true # if you want to debug libkobo.so qpa inputs for instance
 ```
@@ -226,17 +227,17 @@ cd [...]/kobo-qt-setup-scripts/
 ./build_qt.sh kobo config (Should state "QtTools\n QtDocs ...... ok" at the end of the summary)
 ./build_qt.sh kobo make
 ./build_qt.sh kobo install
-cd [...]/kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo
-cd [...]/kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo/qttools/src/assistant
+cd [...]/kobo-qt-setup-scripts/qt-linux-5.15-kobo
+cd [...]/kobo-qt-setup-scripts/qt-linux-5.15-kobo/qttools/src/assistant
 make sub-qhelpgenerator
 make sub-qhelpgenerator-install_subtargets
-cd [...]/kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo/qtdeclarative/src
+cd [...]/kobo-qt-setup-scripts/qt-linux-5.15-kobo/qtdeclarative/src
 make sub-qmldevtools
 make sub-qmldevtools-install_subtargets
-cd [...]/kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo/qttools/src
+cd [...]/kobo-qt-setup-scripts/qt-linux-5.15-kobo/qttools/src
 make sub-qdoc
 make sub-qdoc-install_subtargets
-cd ~/kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo/qtbase
+cd ~/kobo-qt-setup-scripts/qt-linux-5.15-kobo/qtbase
 make docs # it's gonna take about 30 minutes... yes for real...
 find ./ -name "*.qch" | grep doc
 # Open QtCreator, Edit -> Preferences -> Help -> Documentation and add have fun adding every single .pch listed by the command above :D (qtcore and qtdoc are the two main ones)
@@ -244,10 +245,10 @@ find ./ -name "*.qch" | grep doc
 - The dirty (yet working) way
 ```
 sudo apt install qtbase5-dev qdoc-qt5 qtattributionsscanner-qt5 qhelpgenerator-qt5
-ln -s /usr/lib/qt5/bin/qdoc ~/qt-bin/qt-linux-5.15-kde-kobo/bin/qdoc
-ln -s /usr/lib/qt5/bin/qtattributionsscanner ~/qt-bin/qt-linux-5.15-kde-kobo/bin/qtattributionsscanner
-ln -s /usr/lib/qt5/bin/qhelpgenerator ~/qt-bin/qt-linux-5.15-kde-kobo/bin/qhelpgenerator
-cd [...]kobo-qt-setup-scripts/qt-linux-5.15-kde-kobo/qtbase
+ln -s /usr/lib/qt5/bin/qdoc ~/qt-bin/qt-linux-5.15-kobo/bin/qdoc
+ln -s /usr/lib/qt5/bin/qtattributionsscanner ~/qt-bin/qt-linux-5.15-kobo/bin/qtattributionsscanner
+ln -s /usr/lib/qt5/bin/qhelpgenerator ~/qt-bin/qt-linux-5.15-kobo/bin/qhelpgenerator
+cd [...]kobo-qt-setup-scripts/qt-linux-5.15-kobo/qtbase
 mkdir LICENSES
 touch LICENSES/NONE.txt
 cd ..
@@ -255,9 +256,9 @@ make docs # it's gonna take about 30 minutes... yes for real...
 find ./ -name "*.qch" | grep doc
 # Open QtCreator, Edit -> Preferences -> Help -> Documentation and add have fun adding every single .pch listed by the command above :D
 # Ok time to clean our mess
-rm ~/qt-bin/qt-linux-5.15-kde-kobo/bin/qdoc
-rm ~/qt-bin/qt-linux-5.15-kde-kobo/bin/qtattributionsscanner
-rm ~/qt-bin/qt-linux-5.15-kde-kobo/bin/qhelpgenerator
+rm ~/qt-bin/qt-linux-5.15-kobo/bin/qdoc
+rm ~/qt-bin/qt-linux-5.15-kobo/bin/qtattributionsscanner
+rm ~/qt-bin/qt-linux-5.15-kobo/bin/qhelpgenerator
 ```
 
 In QtCreator, Edit->Preferences->Help->Documentation click "Add..." to install all your .qch doc files.
