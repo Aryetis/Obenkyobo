@@ -136,7 +136,7 @@ void FntSettingsPage::InitUIValues()
     ui->VocabAnswerKanaRmjValueLabel->setText(QString::number(vocabAnswerKanaRmjSize));
 
     // Notes
-    notesFontSize =  settingsSerializer.value("FntSettings/NotesFontSize ", DEFAULT_NOTES_FNT_SIZE).toInt();
+    notesFontSize =  settingsSerializer.value("FntSettings/NotesFontSize", DEFAULT_NOTES_FNT_SIZE).toInt();
     ui->NotesFntSizeSlider->setValue(notesFontSize);
     ui->NotesFntSizeValueLabel->setText(QString::number(notesFontSize));
 }
