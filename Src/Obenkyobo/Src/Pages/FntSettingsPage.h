@@ -54,7 +54,7 @@ private slots:
     void on_VocabAnswerKanaRmjSlider_valueChanged(int value);
     void on_VocabAnswerRmjKanaSlider_valueChanged(int value);
 
-    void on_NotesFontSizeSlider_valueChanged(int value);
+    void on_NotesFntSizeSlider_valueChanged(int value);
 
 private:
     Ui::FntSettingsPage *ui;

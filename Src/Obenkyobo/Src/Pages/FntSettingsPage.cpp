@@ -137,8 +137,8 @@ void FntSettingsPage::InitUIValues()
 
     // Notes
     notesFontSize =  settingsSerializer.value("FntSettings/NotesFontSize ", DEFAULT_NOTES_FNT_SIZE).toInt();
-    ui->NotesFontSizeSlider->setValue(notesFontSize);
-    ui->NotesFontSizeValueLabel->setText(QString::number(notesFontSize));
+    ui->NotesFntSizeSlider->setValue(notesFontSize);
+    ui->NotesFntSizeValueLabel->setText(QString::number(notesFontSize));
 }
 
 void FntSettingsPage::RegisterHiraganaFont(QString fntAddress)
@@ -250,10 +250,10 @@ void FntSettingsPage::on_VocabAnswerRmjKanaSlider_valueChanged(int size)
     settingsSerializer.setValue("FntSettings/answerRmjVocabSize", size);
 }
 
-void FntSettingsPage::on_NotesFontSizeSlider_valueChanged(int size)
+void FntSettingsPage::on_NotesFntSizeSlider_valueChanged(int size)
 {
     notesFontSize = size;
-    ui->NotesFontSizeValueLabel->setText(QString::number(size));
+    ui->NotesFntSizeValueLabel->setText(QString::number(size));
     settingsSerializer.setValue("FntSettings/NotesFontSize", size);
 }
 
