@@ -14,7 +14,7 @@ Version="0.4.0"
 LauncherName=$4_launcher.sh
 QtPluginKobo=kobo
 # for easier deployment, make your qt binary folder, this QtFolder variable and (if necessary) koboplatformplugin's .pri CUSTOM_QTDIR match with each others
-QtFolder="qt-linux-5.15-kde-kobo"
+QtFolder="qt-linux-5.15-kobo"
 TargetIP=192.168.1.45
 BuildFolder=$3/../..
 
@@ -56,7 +56,7 @@ do
   fi
 done
 mkdir -p $BuildFolder/Output/.adds/$QtFolder/plugins/platforms/
-cp $3/../Libs/qt5-kobo-platform-plugin/build/ereader/lib$QtPluginKobo.so $BuildFolder/Output/.adds/qt-linux-5.15-kde-kobo/plugins/platforms/lib$QtPluginKobo.so
+cp $3/../Libs/qt5-kobo-platform-plugin/build/ereader/lib$QtPluginKobo.so $BuildFolder/Output/.adds/qt-linux-5.15-kobo/plugins/platforms/lib$QtPluginKobo.so
 mkdir -p $BuildFolder/Output/.adds/$4/lib/
 cp -a $3/../Libs/KoboExtraFunk/libKoboExtraFunk* $BuildFolder/Output/.adds/$4/lib/
 echo Dependencies - Done
