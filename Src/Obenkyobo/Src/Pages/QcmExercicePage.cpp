@@ -160,8 +160,12 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
 
     //************************ Initialize Shuffled Symbols Pool ************************
     std::vector<QcmDataEntry*> shuffledSymbols{};
-    shuffledSymbols.reserve(entriesPool.size()-1);
-    std::remove_copy(entriesPool.begin(), entriesPool.end(), std::back_inserter(shuffledSymbols), stem);
+    shuffledSymbols.reserve(entriesPool.size());
+    // If there is enough entries in pool, remove the previous stem for variety
+    if ((uint) entriesPool.size() > NbrOfEntriesLine*NbrOfEntriesRow)
+        std::remove_copy(entriesPool.begin(), entriesPool.end(), std::back_inserter(shuffledSymbols), stem);
+    else
+        std::copy(entriesPool.begin(), entriesPool.end(), std::back_inserter(shuffledSymbols));
     std::shuffle(std::begin(shuffledSymbols), std::end(shuffledSymbols), GetMy::Instance().ToolsInst().Rng_Engine());
 
     //************************ Initialize Stem  ************************
