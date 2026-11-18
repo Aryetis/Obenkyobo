@@ -365,7 +365,7 @@ void NoteExplorerPage::Populate()
     // ************* *.txt || *.md *************
     foreach(const QFileInfo& fileInfo, currentDir.entryInfoList(QStringList() << "*.txt" << "*.md", QDir::Files))
     {
-        NoteFileEntryWidget* bar = new NoteFileEntryWidget(fileInfo);
+        NoteFileEntryWidget* bar = new NoteFileEntryWidget(fileInfo, this);
         entryWidgets.push_back(bar);
         ui->FileListContentVLayout->insertWidget(ui->FileListContentVLayout->count()-1, (bar));
     }

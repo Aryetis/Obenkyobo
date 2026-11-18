@@ -3,6 +3,7 @@
 #include <QWidget>
 #include <QColor>
 #include <QRegularExpression>
+#include <QFileInfo>
 
 namespace Ui
 {
@@ -33,6 +34,7 @@ private:
     void ApplyStyleSheet();
     QString GetFileInString(QFileInfo const& fileInfo, bool applyColorTags = false) const;
     Ui::NoteDisplayPage *ui;
+    QFileInfo curFileInfo; // currently displayed QFileInfo
 };
 
 #endif // NOTEDISPLAYPAGE_H

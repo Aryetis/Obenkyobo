@@ -5,15 +5,18 @@
 #include "Src/GetMy.h"
 #include "Src/Tools.h"
 #include "Src/Pages/FntSettingsPage.h"
+#include "Src/Pages/AppSettingsPage.h"
 #include <QScrollBar>
 #include <ui_NoteDisplayPage.h>
 
 NoteDisplayPage::NoteDisplayPage(QWidget *parent) :
-    QWidget(parent), ui(new Ui::NoteDisplayPage)
+    QWidget(parent), ui(new Ui::NoteDisplayPage), curFileInfo()
 {
     ui->setupUi(this);
 
     ui->TextBrowser->setTextInteractionFlags( Qt::LinksAccessibleByMouse | Qt::LinksAccessibleByKeyboard);
+    ui->TextBrowser->setOpenLinks(false);
+    ui->TextBrowser->setOpenExternalLinks(false);
 
     GetMy::Instance().SetNoteDisplayPageInst(this);
 }
@@ -83,6 +86,9 @@ void NoteDisplayPage::Populate(NoteFileEntryWidget const* nfew)
             return;
         }
     }
+
+    // keep a copy of QFileInfo, used to get current path for local links in text
+    curFileInfo = nfew->FileInfo();
 }
 
 QString NoteDisplayPage::GetFileInString(QFileInfo const& fileInfo, bool applyColorTags /*= false*/) const
@@ -198,6 +204,34 @@ QString NoteDisplayPage::GetFileInString(QFileInfo const& fileInfo, bool applyCo
 
 void NoteDisplayPage::on_TextBrowser_anchorClicked(const QUrl &arg1)
 {
-    std::cout << "TEST INTERCEPTING ON LINK CLICK" << std::endl;
+    // QUrl::fromPercentEncoding otherwise ${NotesHome} is interpreted as %7BNotesHome%7D
+    QString link = QUrl::fromPercentEncoding(arg1.toString().toUtf8());
+    if (link.isEmpty())
+    {
+        GetMy::Instance().ToolsInst().DisplayPopup("Empty link");
+        return;
+    }
+
+    // Local shortcut
+    if (link.startsWith("./"))
+        link.replace(0, 2, curFileInfo.absolutePath()+'/');
+    else // NotesHome shortcut, Replace ${NotesHome} or ${NH}
+    {
+        static QRegularExpression regex(R"(\$\{(NotesHome|NH)\})");
+        QString noteHomePath = GetMy::Instance().AppSettingsPageInst().GetNoteExplorerHomePath();
+        if (noteHomePath.endsWith('/')) // which should be the case unless the user modified the config file manually
+            noteHomePath.chop(1);
+        link.replace(regex, noteHomePath);
+    }
+
+    // Sanity Checks and refresh
+    QFileInfo fileInfo {link};
+    if (fileInfo.isFile() && ( fileInfo.suffix().compare("txt", Qt::CaseInsensitive) == 0 || fileInfo.suffix().compare("md", Qt::CaseInsensitive) == 0 ))
+    {
+        NoteFileEntryWidget nfew {fileInfo, this};
+        Populate(&nfew);
+    }
+    else
+        GetMy::Instance().ToolsInst().DisplayPopup("Incorrect link to "+link);
 }
 

@@ -10,7 +10,13 @@
 
 ------------------
 
-<a href="/mnt/onboard/.add/Obenkyobo/notes/ExampleNote.txt"> Link Example </a>
+<a href="/mnt/onboard/.adds/Obenkyobo/notes/ExampleNote.txt"> Hard Link Example </a>
+
+<a href="${NotesHome}/ExampleNote.txt"> NotesHome Link Example </a>
+
+<a href="${NH}/ExampleNote.txt"> NH Example </a>
+
+<a href="./ExampleNote.txt"> Local Example </a>
 
 ------------------
 

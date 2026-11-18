@@ -36,9 +36,9 @@ public:
     DisplayLSEnum GetDisplayLSSetting() const { return displayLS; }
     int GetSleepTimerMins() const;
     bool IsDateAmPmFormat() const { return dateFormatIdx == 1; }
-    QString GetVocabExplorerHomePath() const { return vocabExplorerHomePath; }
+    QString const& GetVocabExplorerHomePath() const { return vocabExplorerHomePath; }
     void SetVocabExplorerHomePath(QString path);
-    QString GetNoteExplorerHomePath() const { return noteExplorerHomePath; }
+    QString const& GetNoteExplorerHomePath() const { return noteExplorerHomePath; }
     void SetNoteExplorerHomePath(QString path);
     ScreenSaverSetting GetScreenSaverSetting() const { return static_cast<ScreenSaverSetting>(screenSaverIdx); }
 
