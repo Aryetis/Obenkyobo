@@ -10,6 +10,10 @@
 
 ------------------
 
+<a href="/mnt/onboard/.add/Obenkyobo/notes/ExampleNote.txt"> Link Example </a>
+
+------------------
+
 <green>
 multiline
 without

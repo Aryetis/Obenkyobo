@@ -7,10 +7,6 @@
 #include "Src/QcmDataEntry.h"
 #include "Src/DefinesLand.h"
 
-
-
-                                    #include <iostream>
-
 // Everything marked as Lnk is a shortcut => isn't owned by this => isn't to be destroyed by this
 // SmartPointers ? What's that ?
 
@@ -56,7 +52,6 @@ class VocabDataEntry : public QcmDataEntry
 
         bool operator==(const VocabDataEntry& rhs) const
         {
-std::cout << "operator equals VocabDataEntry& member" << std::endl;
             return kanas == rhs.kanas && kanjis == rhs.kanjis && trad == rhs.trad && learningScore == rhs.learningScore && GetPath() == rhs.GetPath() && lineNumber == rhs.lineNumber;
         }
 
@@ -79,16 +74,14 @@ std::cout << "operator equals VocabDataEntry& member" << std::endl;
         int lineNumber;
         KanaFamilyEnum fontType;
 };
+
 inline uint qHash(const VocabDataEntry* key, uint seed)
 {
-std::cout << "!!!!!!!!!!!!!!!!!! qHash VocabDataEntry*" << std::endl;  // TODO NOW : why is it never called ?
-return 0;
     // return qHash(key.Kanas(), seed) ^ qHash(key.Kanjis(), seed+1) ^ qHash(key.Romanji(), seed+2) ^ qHash(key.GetPath(), seed+3);
     return qHash(key->Kanas(), seed) ^ qHash(key->Kanjis(), seed+1);
 }
 inline bool operator==(const VocabDataEntry& lhs, const VocabDataEntry& rhs)
 {
-std::cout << "!!!!!!!!!!!!!!!!!! operator equals VocabDataEntry& inline" << std::endl; // TODO NOW : why is it never called ?
     return lhs.Kanas() == rhs.Kanas() && lhs.Kanjis() == rhs.Kanjis();
 }
 

@@ -13,8 +13,7 @@ NoteDisplayPage::NoteDisplayPage(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->TextWidget->setReadOnly(true);
-    ui->TextWidget->setTextInteractionFlags(Qt::NoTextInteraction);
+    ui->TextBrowser->setTextInteractionFlags( Qt::LinksAccessibleByMouse | Qt::LinksAccessibleByKeyboard);
 
     GetMy::Instance().SetNoteDisplayPageInst(this);
 }
@@ -40,18 +39,18 @@ bool NoteDisplayPage::eventFilter(QObject *obj, QEvent *event)
 void NoteDisplayPage::ApplyStyleSheet()
 {
     // Does not work on markdown file... keep it for .txt files
-    ui->TextWidget->setFontPointSize(GetMy::Instance().FntSettingsPageInst().GetNotesSize());
+    ui->TextBrowser->setFontPointSize(GetMy::Instance().FntSettingsPageInst().GetNotesSize());
 
     // stylesheet (+ font scaling for markdown)
     QColor baseBackgroundColor = QApplication::palette().window().color();
     // Adding margin for stuff like ordered list that can get printed out of screen otherwise
-    ui->TextWidget->document()->setDocumentMargin((GetMy::Instance().Descriptor().height/100.0f)*1.5f);
+    ui->TextBrowser->document()->setDocumentMargin((GetMy::Instance().Descriptor().height/100.0f)*1.5f);
     QString textAreaStylesheet = QString("background-color:rgb(%1,%2,%3); font-size: %4pt;").arg(
         QString::number(baseBackgroundColor.red()),
         QString::number(baseBackgroundColor.green()),
         QString::number(baseBackgroundColor.blue()),
         QString::number(GetMy::Instance().FntSettingsPageInst().GetNotesSize()));
-    ui->TextWidget->setStyleSheet(textAreaStylesheet);
+    ui->TextBrowser->setStyleSheet(textAreaStylesheet);
 }
 
 void NoteDisplayPage::Populate(NoteFileEntryWidget const* nfew)
@@ -70,13 +69,13 @@ void NoteDisplayPage::Populate(NoteFileEntryWidget const* nfew)
     {
         if (nfew->FileInfo().suffix() == "md")
         {
-            ui->TextWidget->setText("");
-            ui->TextWidget->setMarkdown(GetFileInString(nfew->FileInfo(), true));
+            ui->TextBrowser->setText("");
+            ui->TextBrowser->setMarkdown(GetFileInString(nfew->FileInfo(), true));
         }
         else if (nfew->FileInfo().suffix() == "txt")
         {
-            ui->TextWidget->setMarkdown("");
-            ui->TextWidget->setText(GetFileInString(nfew->FileInfo()));
+            ui->TextBrowser->setMarkdown("");
+            ui->TextBrowser->setText(GetFileInString(nfew->FileInfo()));
         }
         else
         {
@@ -196,3 +195,9 @@ QString NoteDisplayPage::GetFileInString(QFileInfo const& fileInfo, bool applyCo
         return content;
     }
 }
+
+void NoteDisplayPage::on_TextBrowser_anchorClicked(const QUrl &arg1)
+{
+    std::cout << "TEST INTERCEPTING ON LINK CLICK" << std::endl;
+}
+

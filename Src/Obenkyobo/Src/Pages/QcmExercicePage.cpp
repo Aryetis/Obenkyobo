@@ -162,7 +162,7 @@ bool QcmExercicePage::InitializeExercice(QcmExerciceType qcmType, bool newQcmReq
     std::vector<QcmDataEntry*> shuffledSymbols{};
     shuffledSymbols.reserve(entriesPool.size());
     // If there is enough entries in pool, remove the previous stem for variety
-    if ((uint) entriesPool.size() > NbrOfEntriesLine*NbrOfEntriesRow)
+    if ((int) entriesPool.size() > NbrOfEntriesLine*NbrOfEntriesRow)
         std::remove_copy(entriesPool.begin(), entriesPool.end(), std::back_inserter(shuffledSymbols), stem);
     else
         std::copy(entriesPool.begin(), entriesPool.end(), std::back_inserter(shuffledSymbols));
@@ -576,6 +576,11 @@ void QcmExercicePage::ApplyCorrectStemFontSize()
                 originalSize = GetMy::Instance().FntSettingsPageInst().GetVocabStemSize();
                 GetMy::Instance().FntSettingsPageInst().SetVocabStemSize(newSize);
                 break;
+            }
+            default :
+            {
+                std::cerr << "LOG: QcmExercicePage::ApplyCorrectStemFontSize(), Unknown QcmExercice Type" << std::endl;
+                originalSize = 20;
             }
         }
 

@@ -26,6 +26,9 @@ public:
 protected:
     bool eventFilter(QObject *obj, QEvent *ev) override;
 
+private slots:
+    void on_TextBrowser_anchorClicked(const QUrl &arg1);
+
 private:
     void ApplyStyleSheet();
     QString GetFileInString(QFileInfo const& fileInfo, bool applyColorTags = false) const;
