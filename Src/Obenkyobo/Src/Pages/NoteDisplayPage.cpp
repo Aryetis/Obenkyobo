@@ -72,13 +72,14 @@ void NoteDisplayPage::Populate(NoteFileEntryWidget const* nfew)
     {
         if (nfew->FileInfo().suffix() == "md")
         {
-            ui->TextBrowser->setText("");
+            ui->TextBrowser->document()->clear();
             ui->TextBrowser->setMarkdown(GetFileInString(nfew->FileInfo(), true));
         }
         else if (nfew->FileInfo().suffix() == "txt")
         {
-            ui->TextBrowser->setMarkdown("");
-            ui->TextBrowser->setText(GetFileInString(nfew->FileInfo()));
+            // clear() needed otherwise the whole text is displayed as a hyperlink when coming from a .md link because ...
+            ui->TextBrowser->document()->clear();
+            ui->TextBrowser->setPlainText(GetFileInString(nfew->FileInfo()));
         }
         else
         {
