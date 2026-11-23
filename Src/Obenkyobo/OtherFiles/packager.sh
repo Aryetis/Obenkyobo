@@ -10,7 +10,7 @@ set -e #-x
 LongName="Obenkyobo !"
 Author="Aryetis"
 KfMonDbComment="Obenkyo clone-ish"
-Version="0.4.0"
+Version="0.4.1"
 LauncherName=$4_launcher.sh
 QtPluginKobo=kobo
 # for easier deployment, make your qt binary folder, this QtFolder variable and (if necessary) koboplatformplugin's .pri CUSTOM_QTDIR match with each others

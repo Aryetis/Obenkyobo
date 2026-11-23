@@ -16,7 +16,7 @@
 
 <a href="${NH}/ExampleNote.txt"> NH Example </a>
 
-<a href="./ExampleNote.txt"> Local Example </a>
+<a href="./ExampleNote.txt"> Relative Path Example </a>
 
 ------------------
 
